@@ -13,15 +13,11 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @since 1.0.0
  */
 class Config extends \Pronamic_WP_Pay_GatewayConfig {
-	public $merchant_id;
+	public $refresh_token;
 
-	public $secret_key;
-
-	public $key_version;
-
-	public $order_id;
+	public $signing_key;
 
 	public function get_gateway_class() {
-		return 'Pronamic_WP_Pay_Gateways_OmniKassa_Gateway';
+		return __NAMESPACE__ . '\Gateway';
 	}
 }

@@ -37,15 +37,14 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		// Client
 		$this->client = new Client();
 
-		$action_url = Client::ACTION_URL_PRUDCTION;
+		$url = Client::URL_PRUDCTION;
 		if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
-			$action_url = Client::ACTION_URL_TEST;
+			$url = Client::URL_ACCEPTANCE;
 		}
 
-		$this->client->set_action_url( $action_url );
-		$this->client->set_merchant_id( $config->merchant_id );
-		$this->client->set_key_version( $config->key_version );
-		$this->client->set_secret_key( $config->secret_key );
+		$this->client->set_url( $url );
+		$this->client->set_refresh_token( $config->refresh_token );
+		$this->client->set_signing_key( $config->signing_key );
 	}
 
 	/////////////////////////////////////////////////

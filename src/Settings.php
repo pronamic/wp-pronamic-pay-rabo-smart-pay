@@ -43,7 +43,7 @@ class Settings extends \Pronamic_WP_Pay_GatewaySettings {
 			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'omnikassa-2',
 			'meta_key'    => '_pronamic_gateway_omnikassa_2_signing_key',
-			'title'       => _x( 'Signing key', 'omnikassa', 'pronamic_ideal' ),
+			'title'       => _x( 'Signing Key', 'omnikassa', 'pronamic_ideal' ),
 			'type'        => 'text',
 			'classes'     => array( 'large-text', 'code' ),
 		);
