@@ -1,13 +1,13 @@
-# WordPress Pay Gateway: OmniKassa API
+# WordPress Pay Gateway: OmniKassa 2.0
 
-**OmniKassa API driver for the WordPress payment processing library.**
+**OmniKassa 2.0 driver for the WordPress payment processing library.**
 
-[![Build Status](https://travis-ci.org/wp-pay-gateways/omnikassa-api.svg?branch=develop)](https://travis-ci.org/wp-pay-gateways/omnikassa-api)
-[![Coverage Status](https://coveralls.io/repos/wp-pay-gateways/omnikassa-api/badge.svg?branch=master&service=github)](https://coveralls.io/github/wp-pay-gateways/omnikassa-api?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/wp-pay-gateways/omnikassa-api/v/stable.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-api)
-[![Total Downloads](https://poser.pugx.org/wp-pay-gateways/omnikassa-api/downloads.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-api)
-[![Latest Unstable Version](https://poser.pugx.org/wp-pay-gateways/omnikassa-api/v/unstable.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-api)
-[![License](https://poser.pugx.org/wp-pay-gateways/omnikassa-api/license.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-api)
+[![Build Status](https://travis-ci.org/wp-pay-gateways/omnikassa-2.svg?branch=develop)](https://travis-ci.org/wp-pay-gateways/omnikassa-2)
+[![Coverage Status](https://coveralls.io/repos/wp-pay-gateways/omnikassa-2/badge.svg?branch=master&service=github)](https://coveralls.io/github/wp-pay-gateways/omnikassa-2?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/v/stable.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![Total Downloads](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/downloads.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![Latest Unstable Version](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/v/unstable.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![License](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/license.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 
 ## Links

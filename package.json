@@ -1,10 +1,10 @@
 {
-  "name": "omnikassa",
+  "name": "omnikassa-2",
   "version": "1.0.0",
-  "description": "OmniKassa API driver for the WordPress payment processing library.",
+  "description": "OmniKassa 2.0 driver for the WordPress payment processing library.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wp-pay-gateways/omnikassa-api"
+    "url": "https://github.com/wp-pay-gateways/omnikassa-2"
   },
   "keywords": [
     "wordpress",
@@ -28,9 +28,9 @@
   ],
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/wp-pay-gateways/omnikassa-api/issues"
+    "url": "https://github.com/wp-pay-gateways/omnikassa-2/issues"
   },
-  "homepage": "http://www.wp-pay.org/gateways/omnikassa-api/",
+  "homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
   "devDependencies": {
     "grunt": "~1.0.1",
     "grunt-contrib-jshint": "^1.1.0",

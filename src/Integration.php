@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Title: OmniKassa API integration
+ * Title: OmniKassa 2.0 integration
  * Description:
  * Copyright: Copyright (c) 2005 - 2017
  * Company: Pronamic
@@ -12,11 +12,11 @@
  */
 class Pronamic_WP_Pay_Gateways_OmniKassa_API_Integration extends Pronamic_WP_Pay_Gateways_AbstractIntegration {
 	public function __construct() {
-		$this->id            = 'rabobank-omnikassa-api';
-		$this->name          = 'Rabobank - OmniKassa API';
+		$this->id            = 'rabobank-omnikassa-2';
+		$this->name          = 'Rabobank - OmniKassa 2.0';
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
 		$this->dashboard_url = array(
-			__( 'admin', 'pronamic_ideal' ) => 'https://dashboard.omnikassa.rabobank.nl/',
+			__( 'admin', 'pronamic_ideal' )    => 'https://dashboard.omnikassa.rabobank.nl/',
 			__( 'download', 'pronamic_ideal' ) => 'https://download.omnikassa.rabobank.nl/',
 		);
 		$this->provider      = 'rabobank';
@@ -40,7 +40,7 @@ class Pronamic_WP_Pay_Gateways_OmniKassa_API_Integration extends Pronamic_WP_Pay
 	public function get_settings() {
 		$settings = parent::get_settings();
 
-		$settings[] = 'omnikassa-api';
+		$settings[] = 'omnikassa-2';
 
 		return $settings;
 	}
