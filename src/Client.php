@@ -122,7 +122,7 @@ class Client {
 	public function order_announce( $access_token, $order ) {
 		$url = $this->get_url() . 'omnikassa-api/order/server/api/order';
 
-		$response = wp_remote_get( $url, array(
+		$response = wp_remote_post( $url, array(
 			'headers' => array(
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . $access_token,
