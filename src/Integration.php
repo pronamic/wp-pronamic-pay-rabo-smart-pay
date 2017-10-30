@@ -3,14 +3,14 @@
 /**
  * Title: OmniKassa 2.0 integration
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2017
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.6
+ * @version 1.0.0
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_OmniKassa_API_Integration extends Pronamic_WP_Pay_Gateways_AbstractIntegration {
+class Pronamic_WP_Pay_Gateways_OmniKassa2_Integration extends Pronamic_WP_Pay_Gateways_AbstractIntegration {
 	public function __construct() {
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';
@@ -23,11 +23,11 @@ class Pronamic_WP_Pay_Gateways_OmniKassa_API_Integration extends Pronamic_WP_Pay
 	}
 
 	public function get_config_factory_class() {
-		return 'Pronamic_WP_Pay_Gateways_OmniKassa_API_ConfigFactory';
+		return 'Pronamic_WP_Pay_Gateways_OmniKassa2_ConfigFactory';
 	}
 
 	public function get_settings_class() {
-		return 'Pronamic_WP_Pay_Gateways_OmniKassa_API_Settings';
+		return 'Pronamic_WP_Pay_Gateways_OmniKassa2_Settings';
 	}
 
 	/**
