@@ -25,7 +25,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Pronamic\\WordPress\\Pay\\Gateways\\Omnikassa2\\": "src/"
+			"Pronamic\\WordPress\\Pay\\Gateways\\OmniKassa2\\": "src/"
 		}
 	},
 	"config": {
