@@ -15,10 +15,7 @@ class Pronamic_WP_Pay_Gateways_OmniKassa2_Integration extends Pronamic_WP_Pay_Ga
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
-		$this->dashboard_url = array(
-			__( 'admin', 'pronamic_ideal' )    => 'https://dashboard.omnikassa.rabobank.nl/',
-			__( 'download', 'pronamic_ideal' ) => 'https://download.omnikassa.rabobank.nl/',
-		);
+		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
 	}
 
