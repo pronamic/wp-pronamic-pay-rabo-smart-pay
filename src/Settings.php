@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
+
 /**
  * Title: OmniKassa 2.0 settings
  * Description:
@@ -10,7 +12,7 @@
  * @version 1.0.0
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_OmniKassa2_Settings extends Pronamic_WP_Pay_GatewaySettings {
+class Settings extends \Pronamic_WP_Pay_GatewaySettings {
 	public function __construct() {
 		add_filter( 'pronamic_pay_gateway_sections', array( $this, 'sections' ) );
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );

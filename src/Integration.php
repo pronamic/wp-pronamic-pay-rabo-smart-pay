@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
+
 /**
  * Title: OmniKassa 2.0 integration
  * Description:
@@ -10,7 +12,7 @@
  * @version 1.0.0
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_OmniKassa2_Integration extends Pronamic_WP_Pay_Gateways_AbstractIntegration {
+class Integration extends \Pronamic_WP_Pay_Gateways_AbstractIntegration {
 	public function __construct() {
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';
@@ -20,11 +22,11 @@ class Pronamic_WP_Pay_Gateways_OmniKassa2_Integration extends Pronamic_WP_Pay_Ga
 	}
 
 	public function get_config_factory_class() {
-		return 'Pronamic_WP_Pay_Gateways_OmniKassa2_ConfigFactory';
+		return __NAMESPACE__ . '\ConfigFactory';
 	}
 
 	public function get_settings_class() {
-		return 'Pronamic_WP_Pay_Gateways_OmniKassa2_Settings';
+		return __NAMESPACE__ . '\Settings';
 	}
 
 	/**

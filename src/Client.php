@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
+
 /**
  * Title: OmniKassa 2.0 client
  * Description:
@@ -10,7 +12,7 @@
  * @version 1.0.0
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_OmniKassa2_Client {
+class Client {
 	/**
 	 * Action URL to start a payment request in the test environment,
 	 * the POST data is sent to.

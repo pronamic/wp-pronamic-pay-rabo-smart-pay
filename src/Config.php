@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
+
 /**
  * Title: OmniKassa 2.0 config
  * Description:
@@ -10,7 +12,7 @@
  * @version 1.0.0
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_OmniKassa2_Config extends Pronamic_WP_Pay_GatewayConfig {
+class Config extends \Pronamic_WP_Pay_GatewayConfig {
 	public $merchant_id;
 
 	public $secret_key;

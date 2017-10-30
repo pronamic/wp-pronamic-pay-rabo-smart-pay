@@ -24,7 +24,9 @@
 		"source": "https://github.com/wp-pay-gateways/omnikassa-2"
 	},
 	"autoload": {
-		"classmap": ["src/"]
+		"psr-4": {
+			"Pronamic\\WordPress\\Pay\\Gateways\\Omnikassa2\\": "src/"
+		}
 	},
 	"config": {
 		"platform": {
