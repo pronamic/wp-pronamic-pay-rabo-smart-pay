@@ -130,6 +130,22 @@ class Client {
 			'body'    => $order->get_json_string(),
 		) );
 
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
 
+		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+			return false;
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+
+		$data = json_decode( $body );
+
+		if ( ! is_object( $data ) ) {
+			return false;
+		}
+
+		return $data;
 	}
 }
