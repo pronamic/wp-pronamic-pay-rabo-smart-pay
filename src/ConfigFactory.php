@@ -10,7 +10,7 @@
  * @version 1.0.0
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_OmniKassa_ConfigFactory extends Pronamic_WP_Pay_GatewayConfigFactory {
+class Pronamic_WP_Pay_Gateways_OmniKassa2_ConfigFactory extends Pronamic_WP_Pay_GatewayConfigFactory {
 	public function get_config( $post_id ) {
 		$config = new Pronamic_WP_Pay_Gateways_OmniKassa2_Config();
 
