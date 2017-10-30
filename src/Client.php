@@ -95,7 +95,7 @@ class Client {
 		$url = $this->get_url() . 'omnikassa-api/gatekeeper/refresh';
 
 		$response = wp_remote_get( $url, array(
-			'headers' = array(
+			'headers' => array(
 				'Authorization' => 'Bearer ' . $this->get_refresh_token(),
 			),
 		) );
