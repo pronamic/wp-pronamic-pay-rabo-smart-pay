@@ -72,92 +72,33 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	 * @param Pronamic_Pay_PaymentDataInterface $data
 	 */
 	public function start( \Pronamic_Pay_Payment $payment ) {
-		$transaction_reference = $payment->get_meta( 'omnikassa_transaction_reference' );
+		$order = new Order();
+		$order->timestamp           = date( DATE_ATOM );
+		$order->merchant_order_id   = $payment->get_id();
+		$order->description         = $payment->get_description();
+		$order->amount              = $payment->get_amount();
+		$order->currency            = $payment->get_currency();
+		$order->language            = $payment->get_language();
+		$order->merchant_return_url = $payment->get_return_url();
 
-		if ( empty( $transaction_reference ) ) {
-			$transaction_reference = md5( uniqid( '', true ) );
+		if ( $this->config->access_token_valid_until->getTimestamp() < time() ) {
+			$data = $this->client->get_access_token_data();
 
-			$payment->set_meta( 'omnikassa_transaction_reference', $transaction_reference );
+			if ( false !== $data ) {
+				return;
+			}
+
+			$this->config->acces_token              = $data->token;
+			$this->config->access_token_valid_until = $data->validUntil;
+
+			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
+			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until', $data->validUntil );
 		}
 
-		$payment->set_transaction_id( $transaction_reference );
-		$payment->set_action_url( $this->client->get_action_url() );
+		$result = $this->client->order_announce( $this->config->acces_token, $order );
 
-		$this->client->set_customer_language( Pronamic_WP_Pay_Gateways_OmniKassa_LocaleHelper::transform( $payment->get_language() ) );
-		$this->client->set_currency_numeric_code( $payment->get_currency_numeric_code() );
-		$this->client->set_order_id( $payment->format_string( $this->config->order_id ) );
-		$this->client->set_normal_return_url( home_url( '/' ) );
-		$this->client->set_automatic_response_url( home_url( '/' ) );
-		$this->client->set_amount( $payment->get_amount() );
-		$this->client->set_transaction_reference( $transaction_reference );
-
-		switch ( $payment->get_method() ) {
-			/*
-			 * If this field is not supplied in the payment request, then
-			 * by default the customer will be redirected to the Rabo
-			 * OmniKassa payment page. On the payment page, the
-			 * customer can choose from the payment methods
-			 * offered by the Rabo OmniKassa. These are the payment
-			 * methods: IDEAL, VISA, MASTERCARD,
-			 * MAESTRO, V PAY and BCMC.
-			 *
-			 * Exception: the register services INCASSO (direct debit),
-			 * ACCEPTGIRO (giro collection form) and REMBOURS
-			 * (cash on delivery) are not displayed on the Rabo
-			 * OmniKassa payment page by default.
-			 * If you wish to offer these register services to the
-			 * customer on the payment page, then you need to
-			 * always populate the paymentMeanBrandList field with
-			 * all the payment methods you wish to offer (provided
-			 * these have been requested and activated): IDEAL,
-			 * VISA, MASTERCARD, MAESTRO, VPAY, BCMC,
-			 * INCASSO, ACCEPTGIRO, REMBOURS.
-			 *
-			 * If you let the customer choose the payment method
-			 * while still in your webshop, then you must populate
-			 * this field of the payment request with only the selected
-			 * payment method. Populating this field with only one
-			 * payment method will instruct the Rabo OmniKassa to
-			 * redirect the customer directly to the payment page for
-			 * this payment method.
-			 */
-			case \Pronamic_WP_Pay_PaymentMethods::BANCONTACT :
-			case \Pronamic_WP_Pay_PaymentMethods::MISTER_CASH :
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::BCMC );
-
-				break;
-			case \Pronamic_WP_Pay_PaymentMethods::CREDIT_CARD :
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::MAESTRO );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::MASTERCARD );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::VISA );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::VPAY );
-
-				break;
-			case \Pronamic_WP_Pay_PaymentMethods::DIRECT_DEBIT :
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::INCASSO );
-
-				break;
-			case \Pronamic_WP_Pay_PaymentMethods::MAESTRO :
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::MAESTRO );
-
-				break;
-			case \Pronamic_WP_Pay_PaymentMethods::IDEAL :
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::IDEAL );
-
-				break;
-			default :
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::IDEAL );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::VISA );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::MASTERCARD );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::MAESTRO );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::VPAY );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::BCMC );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::INCASSO );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::ACCEPTGIRO );
-				$this->client->add_payment_mean_brand( \Pronamic_WP_Pay_Gateways_OmniKassa_PaymentMethods::REMBOURS );
-
-				break;
-		}
+		var_dump( $result );
+		exit;
 	}
 
 	/////////////////////////////////////////////////

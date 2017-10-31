@@ -91,7 +91,7 @@ class Client {
 	/**
 	 * Get access token.
 	 */
-	public function get_access_token() {
+	public function get_access_token_data() {
 		$url = $this->get_url() . 'omnikassa-api/gatekeeper/refresh';
 
 		$response = wp_remote_get( $url, array(
@@ -122,7 +122,7 @@ class Client {
 	public function order_announce( $access_token, $order ) {
 		$url = $this->get_url() . 'omnikassa-api/order/server/api/order';
 
-		$response = wp_remote_post( $url, array(
+		$response = wp_remote_get( $url, array(
 			'headers' => array(
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . $access_token,
