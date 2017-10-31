@@ -17,6 +17,18 @@ class Config extends \Pronamic_WP_Pay_GatewayConfig {
 
 	public $signing_key;
 
+	public $access_token;
+
+	public $access_token_valid_until;
+
+	public function is_access_token_valid() {
+		if ( empty( $this->access_token ) ) {
+			return false;
+		}
+
+		return strtotime( $this->access_token_valid_until ) > time();
+	}
+
 	public function get_gateway_class() {
 		return __NAMESPACE__ . '\Gateway';
 	}

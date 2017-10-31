@@ -40,6 +40,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		$url = Client::URL_PRUDCTION;
 		if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
 			$url = Client::URL_ACCEPTANCE;
+			$url = Client::URL_SANDBOX;
 		}
 
 		$this->client->set_url( $url );
@@ -81,9 +82,9 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		$order->language            = $payment->get_language();
 		$order->merchant_return_url = $payment->get_return_url();
 
-		if ( $this->config->access_token_valid_until->getTimestamp() < time() ) {
+		if ( ! $this->config->is_access_token_valid() ) {
 			$data = $this->client->get_access_token_data();
-
+var_dump( $data );
 			if ( false !== $data ) {
 				return;
 			}
@@ -95,7 +96,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until', $data->validUntil );
 		}
 
-		$result = $this->client->order_announce( $this->config->acces_token, $order );
+		$result = $this->client->order_announce( $this->config, $order );
 
 		var_dump( $result );
 		exit;

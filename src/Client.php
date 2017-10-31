@@ -17,13 +17,15 @@ class Client {
 	 * 
 	 * @var string
 	 */
-	const URL_ACCEPTANCE = 'https://betalen-acpt3.rabobank.nl/';
+	const URL_ACCEPTANCE = 'https://betalen-acpt3.rabobank.nl/omnikassa-api/';
 
 	/**
 	 * 
 	 * @var string
 	 */
-	const URL_PRUDCTION = 'https://betalen.rabobank.nl/';
+	const URL_PRUDCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
+
+	const URL_SANDBOX =  'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	//////////////////////////////////////////////////
 
@@ -92,25 +94,30 @@ class Client {
 	 * Get access token.
 	 */
 	public function get_access_token_data() {
-		$url = $this->get_url() . 'omnikassa-api/gatekeeper/refresh';
+		$url = $this->get_url() . 'gatekeeper/refresh';
 
 		$response = wp_remote_get( $url, array(
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $this->get_refresh_token(),
 			),
 		) );
-
+var_dump( $url );
+var_dump( $response );
 		if ( is_wp_error( $response ) ) {
-			return false;
-		}
-
-		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
 			return false;
 		}
 
 		$body = wp_remote_retrieve_body( $response );
 
 		$data = json_decode( $body );
+
+		if ( is_object( $data ) && isset( $data->errorCode ) && isset( $data->errorMessage ) ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
+		}
+
+		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+			return false;
+		}
 
 		if ( ! is_object( $data ) ) {
 			return false;
@@ -119,28 +126,35 @@ class Client {
 		return $data;
 	}
 
-	public function order_announce( $access_token, $order ) {
-		$url = $this->get_url() . 'omnikassa-api/order/server/api/order';
+	public function order_announce( $config, $order ) {
+		$url = $this->get_url() . 'order/server/api/order';
+
+		$object = $order->get_json();
+		$object->signature = Security::get_order_signature( $order, $config->signing_key );
 
 		$response = wp_remote_get( $url, array(
 			'headers' => array(
 				'Content-Type'  => 'application/json',
-				'Authorization' => 'Bearer ' . $access_token,
+				'Authorization' => 'Bearer ' . $config->access_token,
 			),
-			'body'    => $order->get_json_string(),
+			'body'    => $object,
 		) );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
 		}
 
-		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			return false;
-		}
-
 		$body = wp_remote_retrieve_body( $response );
 
 		$data = json_decode( $body );
+
+		if ( is_object( $data ) && isset( $data->errorCode ) && isset( $data->errorMessage ) ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
+		}
+
+		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+			return false;
+		}
 
 		if ( ! is_object( $data ) ) {
 			return false;

@@ -17,6 +17,7 @@ class ConfigFactory extends \Pronamic_WP_Pay_GatewayConfigFactory {
 		$config = new Config();
 
 		$config->post_id       = $post_id;
+		$config->mode          = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
 		$config->refresh_token = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_refresh_token', true );
 		$config->signing_key   = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_signing_key', true );
 		$config->access_token  = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token', true );

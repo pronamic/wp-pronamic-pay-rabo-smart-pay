@@ -37,22 +37,19 @@ class Order {
 
 	public $payment_brand_force;
 
-	public function get_json_string() {
-		$object = (object) array(
+	public function get_json() {
+		return (object) array(
 			'timestamp'         => $this->timestamp,
 			'merchantOrderId'   => $this->merchant_order_id,
 			'description'       => $this->description,
-			'amount'            => Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
+			'amount'            => \Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
 			'currency'          => $this->currency,
 			'language'          => $this->language,
 			'merchantReturnURL' => $this->merchant_return_url,
-			'signature'         => $this->signature,
 			'orderItems'        => $this->order_items,
 			'shippingDetail'    => $this->shipping_detail,
 			'paymentBrand'      => $this->payment_brand,
 			'paymentBrandForce' => $this->payment_brand_force,
 		);
-
-		return json_encode( $object );
 	}
 }
