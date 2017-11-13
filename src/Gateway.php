@@ -37,7 +37,8 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		// Client
 		$this->client = new Client();
 
-		$url = Client::URL_PRUDCTION;
+		$url = Client::URL_PRODUCTION;
+
 		if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
 			$url = Client::URL_ACCEPTANCE;
 			$url = Client::URL_SANDBOX;
