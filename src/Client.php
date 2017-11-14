@@ -30,11 +30,31 @@ class Client {
 	//////////////////////////////////////////////////
 
 	/**
+	 * Error
+	 *
+	 * @var WP_Error
+	 */
+	private $error;
+
+	//////////////////////////////////////////////////
+
+	/**
 	 * The URL.
 	 *
 	 * @var string
 	 */
 	private $url;
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Error
+	 *
+	 * @return WP_Error
+	 */
+	public function get_error() {
+		return $this->error;
+	}
 
 	//////////////////////////////////////////////////
 
@@ -101,9 +121,10 @@ class Client {
 				'Authorization' => 'Bearer ' . $this->get_refresh_token(),
 			),
 		) );
-var_dump( $url );
-var_dump( $response );
+
 		if ( is_wp_error( $response ) ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
+
 			return false;
 		}
 
@@ -113,6 +134,8 @@ var_dump( $response );
 
 		if ( is_object( $data ) && isset( $data->errorCode ) && isset( $data->errorMessage ) ) {
 			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
+
+			return false;
 		}
 
 		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
@@ -120,6 +143,8 @@ var_dump( $response );
 		}
 
 		if ( ! is_object( $data ) ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
+
 			return false;
 		}
 
@@ -132,12 +157,12 @@ var_dump( $response );
 		$object = $order->get_json();
 		$object->signature = Security::get_order_signature( $order, $config->signing_key );
 
-		$response = wp_remote_get( $url, array(
+		$response = wp_remote_post( $url, array(
 			'headers' => array(
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . $config->access_token,
 			),
-			'body'    => $object,
+			'body'    => json_encode( $object ),
 		) );
 
 		if ( is_wp_error( $response ) ) {
@@ -152,7 +177,7 @@ var_dump( $response );
 			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
 		}
 
-		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+		if ( '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
 			return false;
 		}
 

@@ -42,8 +42,10 @@ class Order {
 			'timestamp'         => $this->timestamp,
 			'merchantOrderId'   => $this->merchant_order_id,
 			'description'       => $this->description,
-			'amount'            => \Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
-			'currency'          => $this->currency,
+			'amount'            => (object) array(
+				'currency'      => $this->currency,
+				'amount'        => \Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
+			),
 			'language'          => $this->language,
 			'merchantReturnURL' => $this->merchant_return_url,
 			'orderItems'        => $this->order_items,

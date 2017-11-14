@@ -14,9 +14,9 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/**
-	 * The OmniKassa client object
+	 * The OmniKassa 2 client object
 	 *
-	 * @var Pronamic_WP_Pay_Gateways_OmniKassa_Client
+	 * @var \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Client
 	 */
 	private $client;
 
@@ -25,12 +25,12 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/**
 	 * Constructs and initializes an OmniKassa gateway
 	 *
-	 * @param Pronamic_WP_Pay_Gateways_OmniKassa_Config $config
+	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
 
-		$this->set_method( \Pronamic_WP_Pay_Gateway::METHOD_HTML_FORM );
+		$this->set_method( \Pronamic_WP_Pay_Gateway::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
 
@@ -54,7 +54,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/**
 	 * Get supported payment methods
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
+	 * @see \Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -70,8 +70,9 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/**
 	 * Start
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::start()
-	 * @param Pronamic_Pay_PaymentDataInterface $data
+	 * @see \Pronamic_WP_Pay_Gateway::start()
+	 *
+	 * @param \Pronamic_Pay_Payment $payment
 	 */
 	public function start( \Pronamic_Pay_Payment $payment ) {
 		$order = new Order();
@@ -85,12 +86,16 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 
 		if ( ! $this->config->is_access_token_valid() ) {
 			$data = $this->client->get_access_token_data();
-var_dump( $data );
-			if ( false !== $data ) {
+
+			$error = $this->client->get_error();
+
+			if ( is_wp_error( $error ) ) {
+				$this->error = $error;
+
 				return;
 			}
 
-			$this->config->acces_token              = $data->token;
+			$this->config->access_token             = $data->token;
 			$this->config->access_token_valid_until = $data->validUntil;
 
 			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
@@ -99,8 +104,9 @@ var_dump( $data );
 
 		$result = $this->client->order_announce( $this->config, $order );
 
-		var_dump( $result );
-		exit;
+		if ( $result ) { // && $result->signature IS VALID
+			$payment->set_action_url( $result->redirectUrl );
+		}
 	}
 
 	/////////////////////////////////////////////////

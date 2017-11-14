@@ -19,8 +19,8 @@ class Security {
 		$fields = array(
 			$object->timestamp,
 			$object->merchantOrderId,
-			$object->currency,
-			$object->amount,
+			$object->amount->currency,
+			$object->amount->amount,
 			$object->language,
 			$object->description,
 			$object->merchantReturnURL,
