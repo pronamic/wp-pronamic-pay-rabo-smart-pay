@@ -110,6 +110,14 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 
 		$result = $this->client->order_announce( $this->config, $order );
 
+		$error = $this->client->get_error();
+
+		if ( is_wp_error( $error ) ) {
+			$this->error = $error;
+
+			return;
+		}
+
 		if ( $result ) { // && $result->signature IS VALID
 			$payment->set_action_url( $result->redirectUrl );
 		}

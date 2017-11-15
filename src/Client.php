@@ -138,7 +138,7 @@ class Client {
 			return false;
 		}
 
-		if ( '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+		if ( is_object( $data ) && '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
 			return false;
 		}
 
@@ -177,11 +177,15 @@ class Client {
 			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
 		}
 
-		if ( '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+		if ( is_object( $data ) && '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+			$this->error = new \WP_Error( 'omnikassa_2_error', $data->consumerMessage, $data );
+
 			return false;
 		}
 
 		if ( ! is_object( $data ) ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
+
 			return false;
 		}
 
