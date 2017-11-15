@@ -58,10 +58,10 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			\Pronamic_WP_Pay_PaymentMethods::IDEAL,
-			\Pronamic_WP_Pay_PaymentMethods::CREDIT_CARD,
-			\Pronamic_WP_Pay_PaymentMethods::DIRECT_DEBIT,
 			\Pronamic_WP_Pay_PaymentMethods::BANCONTACT,
+			\Pronamic_WP_Pay_PaymentMethods::CREDIT_CARD,
+			\Pronamic_WP_Pay_PaymentMethods::IDEAL,
+			\Pronamic_WP_Pay_PaymentMethods::PAYPAL,
 		);
 	}
 
@@ -83,6 +83,12 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		$order->currency            = $payment->get_currency();
 		$order->language            = $payment->get_language();
 		$order->merchant_return_url = $payment->get_return_url();
+		$order->payment_brand       = PaymentMethods::transform( $payment->get_method() );
+
+		if ( null !== $order->payment_brand ) {
+			// Payment brand force should only be set if payment brand is not empty.
+			$order->payment_brand_force = PaymentBrandForce::FORCE_ONCE;
+		}
 
 		if ( ! $this->config->is_access_token_valid() ) {
 			$data = $this->client->get_access_token_data();

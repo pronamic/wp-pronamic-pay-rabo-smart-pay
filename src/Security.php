@@ -13,7 +13,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @since 1.0.0
  */
 class Security {
-	public static function get_order_signature( $order, $signing_key ) {
+	public static function get_order_signature( Order $order, $signing_key ) {
 		$object = $order->get_json();
 
 		$fields = array(
@@ -25,6 +25,24 @@ class Security {
 			$object->description,
 			$object->merchantReturnURL,
 		);
+
+		$optional_fields = array();
+
+		if ( $object->orderItems ) {
+			// Add order items
+		}
+
+		if ( $object->shippingDetail ) {
+			// Add shipping detail
+		}
+
+		$optional_fields[] = $object->paymentBrand;
+		$optional_fields[] = $object->paymentBrandForce;
+
+		// Do not include empty optional fields in signature calculation.
+		$optional_fields = array_filter( $optional_fields );
+
+		$fields = array_merge( $fields, $optional_fields );
 
 		$string = implode( ',', $fields );
 		
