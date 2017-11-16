@@ -19,6 +19,13 @@ class Integration extends \Pronamic_WP_Pay_Gateways_AbstractIntegration {
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
+
+		// Actions
+		$function = array( Listener::class, 'listen' );
+
+		if ( ! has_action( 'wp_loaded', $function ) ) {
+			add_action( 'wp_loaded', $function );
+		}
 	}
 
 	public function get_config_factory_class() {

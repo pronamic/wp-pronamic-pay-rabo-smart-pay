@@ -50,4 +50,12 @@ class Security {
 
 		return $signature;
 	}
+
+	public static function calculate_signature( $fields, $signing_key ) {
+		$string = implode( ',', $fields );
+
+		$signature = hash_hmac( 'sha512', $string, base64_decode( $signing_key ) );
+
+		return $signature;
+	}
 }
