@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/**
-	 * The OmniKassa 2 client object
+	 * The OmniKassa 2 client object.
 	 *
 	 * @var \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Client
 	 */
@@ -23,7 +23,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/////////////////////////////////////////////////
 
 	/**
-	 * Constructs and initializes an OmniKassa gateway
+	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
 	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config
 	 */
@@ -52,7 +52,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/////////////////////////////////////////////////
 
 	/**
-	 * Get supported payment methods
+	 * Get supported payment methods.
 	 *
 	 * @see \Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
 	 */
@@ -68,7 +68,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/////////////////////////////////////////////////
 
 	/**
-	 * Start
+	 * Start.
 	 *
 	 * @see \Pronamic_WP_Pay_Gateway::start()
 	 *
@@ -126,10 +126,10 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/////////////////////////////////////////////////
 
 	/**
-	 * Get the output HTML
+	 * Get the output HTML.
 	 *
 	 * @since 1.1.2
-	 * @see Pronamic_WP_Pay_Gateway::get_output_html()
+	 * @see \Pronamic_WP_Pay_Gateway::get_output_html()
 	 */
 	public function get_output_fields() {
 		return $this->client->get_fields();
@@ -138,11 +138,45 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/////////////////////////////////////////////////
 
 	/**
-	 * Update status of the specified payment
+	 * Update status of the specified payment.
 	 *
-	 * @param Pronamic_Pay_Payment $payment
+	 * @param \Pronamic_Pay_Payment $payment
 	 */
 	public function update_status( \Pronamic_Pay_Payment $payment ) {
-		
+		// Input data
+		$input_status    = filter_input( INPUT_GET, 'status', FILTER_SANITIZE_STRING );
+		$input_signature = filter_input( INPUT_GET, 'signature', FILTER_SANITIZE_STRING );
+
+		// Get gateway
+		$gateway = \Pronamic_WP_Pay_Plugin::get_gateway( $payment->config_id );
+
+		if ( ! $gateway ) {
+			return;
+		}
+
+		// Check for non-empty signing key
+		$signing_key = get_post_meta( $payment->config_id, '_pronamic_gateway_omnikassa_2_signing_key', true );
+
+		if ( '' === $signing_key ) {
+			return;
+		}
+
+		// Validate signature based on input
+		$data = array(
+			$payment->get_id(),
+			$input_status,
+		);
+
+		$signature = Security::calculate_signature( $data, $signing_key );
+
+		if ( 0 !== strcasecmp( $input_signature, $signature ) ) {
+			// Invalid signature
+			return;
+		}
+
+		// Update payment status
+		$status = Statuses::transform( $input_status );
+
+		$payment->set_status( $status );
 	}
 }
