@@ -12,7 +12,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 1.0.0
  * @since 1.0.0
  */
-class Order {
+class Order extends Signable {
 	public $timestamp;
 
 	public $merchant_order_id;
@@ -53,5 +53,37 @@ class Order {
 			'paymentBrand'      => $this->payment_brand,
 			'paymentBrandForce' => $this->payment_brand_force,
 		);
+	}
+
+	public function get_signature_data() {
+		// Required fields
+		$fields = array(
+			$this->timestamp,
+			$this->merchant_order_id,
+			$this->currency,
+			\Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
+			$this->language,
+			$this->description,
+			$this->merchant_return_url,
+		);
+
+		// Optional fields; do not change field order!
+		$optional = array();
+
+		if ( is_array( $this->order_items ) ) {
+			// Add order items
+		}
+
+		if ( is_array( $this->shipping_detail ) ) {
+			// Add shipping detail
+		}
+
+		$optional[] = $this->payment_brand;
+		$optional[] = $this->payment_brand_force;
+
+		// Remove empty optional fields
+		$optional = array_filter( $optional );
+
+		return array_merge( $fields, $optional );
 	}
 }

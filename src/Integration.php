@@ -21,9 +21,16 @@ class Integration extends \Pronamic_WP_Pay_Gateways_AbstractIntegration {
 		$this->provider      = 'rabobank';
 
 		// Actions
-		$function = array( Listener::class, 'listen' );
+		$actions = array(
+			array( Listener::class, 'listen' ),
+			array( Listener::class, 'listen_webhook' ),
+		);
 
-		if ( ! has_action( 'wp_loaded', $function ) ) {
+		foreach ( $actions as $function ) {
+			if ( has_action( 'wp_loaded', $function ) ) {
+				continue;
+			}
+
 			add_action( 'wp_loaded', $function );
 		}
 	}

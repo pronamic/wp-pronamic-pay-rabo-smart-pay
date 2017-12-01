@@ -151,11 +151,13 @@ class Client {
 		return $data;
 	}
 
-	public function order_announce( $config, $order ) {
+	public function order_announce( $config, Order $order ) {
 		$url = $this->get_url() . 'order/server/api/order';
 
-		$object = $order->get_json();
-		$object->signature = Security::get_order_signature( $order, $config->signing_key );
+		$order->set_signing_key( $config->signing_key );
+
+		$object            = $order->get_json();
+		$object->signature = $order->get_signature();
 
 		$response = wp_remote_post( $url, array(
 			'headers' => array(
@@ -178,6 +180,46 @@ class Client {
 		}
 
 		if ( is_object( $data ) && '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
+			$this->error = new \WP_Error( 'omnikassa_2_error', $data->consumerMessage, $data );
+
+			return false;
+		}
+
+		if ( ! is_object( $data ) ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
+
+			return false;
+		}
+
+		return $data;
+	}
+
+	public function retrieve_announcement( $announcement ) {
+		if ( ! is_object( $announcement ) ) {
+			return;
+		}
+
+		$url = $this->get_url() . 'order/server/api/events/results/' . $announcement->eventName;
+
+		$response = wp_remote_get( $url, array(
+			'headers' => array(
+				'Authorization' => 'Bearer ' . $announcement->authentication,
+			),
+		) );
+
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+
+		$data = json_decode( $body );
+
+		if ( is_object( $data ) && isset( $data->errorCode ) && isset( $data->errorMessage ) ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
+		}
+
+		if ( is_object( $data ) && '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
 			$this->error = new \WP_Error( 'omnikassa_2_error', $data->consumerMessage, $data );
 
 			return false;

@@ -39,7 +39,7 @@ class PaymentMethods {
 	const IDEAL = PaymentBrands::IDEAL;
 
 	/**
-	 * Constant for the iDEAL payment method.
+	 * Constant for the PayPal payment method.
 	 *
 	 * @var string
 	 */

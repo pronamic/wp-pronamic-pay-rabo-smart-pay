@@ -40,7 +40,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		$url = Client::URL_PRODUCTION;
 
 		if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
-			$url = Client::URL_ACCEPTANCE;
+			//$url = Client::URL_ACCEPTANCE;
 			$url = Client::URL_SANDBOX;
 		}
 
@@ -143,34 +143,35 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	 * @param \Pronamic_Pay_Payment $payment
 	 */
 	public function update_status( \Pronamic_Pay_Payment $payment ) {
-		// Input data
-		$input_status    = filter_input( INPUT_GET, 'status', FILTER_SANITIZE_STRING );
-		$input_signature = filter_input( INPUT_GET, 'signature', FILTER_SANITIZE_STRING );
+		$input_status = null;
 
-		// Get gateway
-		$gateway = \Pronamic_WP_Pay_Plugin::get_gateway( $payment->config_id );
+		if ( filter_has_var( INPUT_GET, 'status' ) && filter_has_var( INPUT_GET, 'signature' ) ) {
+			// Input data
+			$input_status    = filter_input( INPUT_GET, 'status', FILTER_SANITIZE_STRING );
+			$input_signature = filter_input( INPUT_GET, 'signature', FILTER_SANITIZE_STRING );
 
-		if ( ! $gateway ) {
-			return;
+			// Signature data
+			$data = array(
+				$payment->get_id(),
+				$input_status,
+			);
+
+			// Validate signature
+			$signature   = Security::calculate_signature( $data, $this->config->signing_key );
+
+			if ( ! Security::validate_signature( $input_signature, $signature ) ) {
+				// Invalid signature
+				return;
+			}
 		}
 
-		// Check for non-empty signing key
-		$signing_key = get_post_meta( $payment->config_id, '_pronamic_gateway_omnikassa_2_signing_key', true );
+		if ( '' !== $payment->get_meta( 'omnikassa_2_update_order_status' ) ) {
+			$input_status = $payment->get_meta( 'omnikassa_2_update_status' );
 
-		if ( '' === $signing_key ) {
-			return;
+			$payment->set_meta( 'omnikassa_2_update_status', null );
 		}
 
-		// Validate signature based on input
-		$data = array(
-			$payment->get_id(),
-			$input_status,
-		);
-
-		$signature = Security::calculate_signature( $data, $signing_key );
-
-		if ( 0 !== strcasecmp( $input_signature, $signature ) ) {
-			// Invalid signature
+		if ( ! $input_status ) {
 			return;
 		}
 

@@ -13,49 +13,36 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @since 1.0.0
  */
 class Security {
-	public static function get_order_signature( Order $order, $signing_key ) {
-		$object = $order->get_json();
+	public static function calculate_signature( $data, $signing_key ) {
+		if ( ! is_array( $data ) ) {
+			return;
+		}
 
-		$fields = array(
-			$object->timestamp,
-			$object->merchantOrderId,
-			$object->amount->currency,
-			$object->amount->amount,
-			$object->language,
-			$object->description,
-			$object->merchantReturnURL,
+		if ( '' === $signing_key ) {
+			return;
+		}
+
+		$signature = hash_hmac(
+			'sha512',
+			implode( ',', $data ),
+			base64_decode( $signing_key )
 		);
-
-		$optional_fields = array();
-
-		if ( $object->orderItems ) {
-			// Add order items
-		}
-
-		if ( $object->shippingDetail ) {
-			// Add shipping detail
-		}
-
-		$optional_fields[] = $object->paymentBrand;
-		$optional_fields[] = $object->paymentBrandForce;
-
-		// Do not include empty optional fields in signature calculation.
-		$optional_fields = array_filter( $optional_fields );
-
-		$fields = array_merge( $fields, $optional_fields );
-
-		$string = implode( ',', $fields );
-		
-		$signature = hash_hmac( 'sha512', $string, base64_decode( $signing_key ) );
 
 		return $signature;
 	}
 
-	public static function calculate_signature( $fields, $signing_key ) {
-		$string = implode( ',', $fields );
+	public static function validate_signature( $signature_a, $signature_b ) {
+		if ( empty( $signature_a ) || empty( $signature_b ) ) {
+			// Empty signature string or null from calculation.
 
-		$signature = hash_hmac( 'sha512', $string, base64_decode( $signing_key ) );
+			return false;
+		}
 
-		return $signature;
+		if ( 0 === strcasecmp( $signature_a, $signature_b ) ) {
+			// Valid signature
+			return true;
+		}
+
+		return false;
 	}
 }
