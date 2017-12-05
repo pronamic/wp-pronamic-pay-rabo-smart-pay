@@ -14,23 +14,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 	public static function listen() {
-		if (
-			filter_has_var( INPUT_GET, 'order_id' )
-				&&
-			filter_has_var( INPUT_GET, 'status' )
-				&&
-			filter_has_var( INPUT_GET, 'signature' )
-		) {
-			// This is the request when customer returns from OmniKassa, NOT the webhook.
-			$payment_id = filter_input( INPUT_GET, 'order_id', FILTER_SANITIZE_STRING );
-
-			$payment = get_pronamic_payment( $payment_id );
-
-			\Pronamic_WP_Pay_Plugin::update_payment( $payment );
-		}
-	}
-
-	public static function listen_webhook() {
 		if ( filter_has_var( INPUT_GET, 'omnikassa2_webhook' ) ) {
 			/**
 			 * Notification POST request body JSON sample:
@@ -79,7 +62,6 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 				$url = Client::URL_PRODUCTION;
 
 				if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
-					//$url = Client::URL_ACCEPTANCE;
 					$url = Client::URL_SANDBOX;
 				}
 
@@ -97,15 +79,18 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 
 					$order_results = new OrderResults();
 
+					$order_results->set_signing_key( $config->signing_key );
+
 					$order_results->more_order_results_available = $response->moreOrderResultsAvailable;
+					$order_results->order_results                = $response->orderResults;
 
-					$order_results->order_results = $response->orderResults;
-
+					// Validate signature
 					if ( ! Security::validate_signature( $response->signature, $order_results->get_signature() ) ) {
+						// Invalid signature
 						continue;
 					}
 
-					foreach ( $response->orderResults as $order ) {
+					foreach ( $order_results->order_results as $order ) {
 						$payment = get_pronamic_payment( $order->merchantOrderId );
 
 						$payment->set_meta( 'omnikassa_2_update_order_status', $order->orderStatus );

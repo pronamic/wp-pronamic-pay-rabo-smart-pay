@@ -14,13 +14,13 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class Client {
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	const URL_ACCEPTANCE = 'https://betalen-acpt3.rabobank.nl/omnikassa-api/';
 
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';

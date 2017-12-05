@@ -145,19 +145,16 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	public function update_status( \Pronamic_Pay_Payment $payment ) {
 		$input_status = null;
 
+		// Update status on customer return
 		if ( filter_has_var( INPUT_GET, 'status' ) && filter_has_var( INPUT_GET, 'signature' ) ) {
 			// Input data
 			$input_status    = filter_input( INPUT_GET, 'status', FILTER_SANITIZE_STRING );
 			$input_signature = filter_input( INPUT_GET, 'signature', FILTER_SANITIZE_STRING );
 
-			// Signature data
-			$data = array(
-				$payment->get_id(),
-				$input_status,
-			);
-
 			// Validate signature
-			$signature   = Security::calculate_signature( $data, $this->config->signing_key );
+			$data = array( $payment->get_id(), $input_status );
+
+			$signature = Security::calculate_signature( $data, $this->config->signing_key );
 
 			if ( ! Security::validate_signature( $input_signature, $signature ) ) {
 				// Invalid signature
@@ -165,10 +162,11 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 			}
 		}
 
-		if ( '' !== $payment->get_meta( 'omnikassa_2_update_order_status' ) ) {
-			$input_status = $payment->get_meta( 'omnikassa_2_update_status' );
+		// Update status via webhook
+		if ( isset( $payment->meta['omnikassa_2_update_order_status'] ) ) {
+			$input_status = $payment->meta['omnikassa_2_update_order_status'];
 
-			$payment->set_meta( 'omnikassa_2_update_status', null );
+			$payment->set_meta( 'omnikassa_2_update_order_status', null );
 		}
 
 		if ( ! $input_status ) {

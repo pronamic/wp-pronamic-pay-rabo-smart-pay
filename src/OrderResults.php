@@ -19,7 +19,7 @@ class OrderResults extends Signable {
 
 	public function get_signature_data() {
 		$data = array(
-			var_export( $this->more_order_results_available ),
+			var_export( $this->more_order_results_available, true ),
 		);
 
 		if ( ! $this->order_results ) {
