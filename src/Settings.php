@@ -31,7 +31,7 @@ class Settings extends \Pronamic_WP_Pay_GatewaySettings {
 			'description' => sprintf(
 			/* translators: %s: OmniKassa 2 */
 				__( 'Set the Webhook URL in the %s dashboard to receive automatic transaction status updates.', 'pronamic_ideal' ),
-				__( 'OmniKassa 2', 'pronamic_ideal' )
+				__( 'OmniKassa 2.0', 'pronamic_ideal' )
 			),
 		);
 
