@@ -21,7 +21,7 @@ class Integration extends \Pronamic_WP_Pay_Gateways_AbstractIntegration {
 		$this->provider      = 'rabobank';
 
 		// Actions
-		$function = array( 'Pronamic\WordPress\Pay\Gateways\OmniKassa2\Listener', 'listen' );
+		$function = array( __NAMESPACE__ . '\Listener', 'listen' );
 
 		if ( ! has_action( 'wp_loaded', $function ) ) {
 			add_action( 'wp_loaded', $function );
