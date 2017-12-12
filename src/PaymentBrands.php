@@ -28,8 +28,8 @@ class PaymentBrands {
 	const V_PAY = 'V_PAY';
 
 	/**
-	 * Dutch: De waarde CARDS zorgt ervoor dat de consument 
-	 * kan kiezen uit de betaalmethoden: MASTERCARD, VISA, 
+	 * Dutch: De waarde CARDS zorgt ervoor dat de consument
+	 * kan kiezen uit de betaalmethoden: MASTERCARD, VISA,
 	 * BANCONTACT, MAESTRO en V_PAY.
 	 */
 	const CARDS = 'CARDS';

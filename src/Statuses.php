@@ -49,15 +49,15 @@ class Statuses {
 	 */
 	public static function transform( $status ) {
 		switch ( $status ) {
-			case self::CANCELLED :
+			case self::CANCELLED:
 				return \Pronamic_WP_Pay_Statuses::CANCELLED;
-			case self::COMPLETED :
+			case self::COMPLETED:
 				return \Pronamic_WP_Pay_Statuses::SUCCESS;
-			case self::EXPIRED :
+			case self::EXPIRED:
 				return \Pronamic_WP_Pay_Statuses::EXPIRED;
-			case self::IN_PROGRESS :
+			case self::IN_PROGRESS:
 				return \Pronamic_WP_Pay_Statuses::OPEN;
-			default :
+			default:
 				return null;
 		}
 	}

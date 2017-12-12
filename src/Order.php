@@ -43,8 +43,8 @@ class Order extends Signable {
 			'merchantOrderId'   => $this->merchant_order_id,
 			'description'       => $this->description,
 			'amount'            => (object) array(
-				'currency'      => $this->currency,
-				'amount'        => \Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
+				'currency' => $this->currency,
+				'amount'   => \Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
 			),
 			'language'          => $this->language,
 			'merchantReturnURL' => $this->merchant_return_url,

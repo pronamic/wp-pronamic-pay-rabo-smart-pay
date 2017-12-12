@@ -41,10 +41,10 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 				'nopaging'    => true,
 				'meta_query'  => array(
 					array(
-						'key'     => '_pronamic_gateway_id',
-						'value'   => 'rabobank-omnikassa-2',
+						'key'   => '_pronamic_gateway_id',
+						'value' => 'rabobank-omnikassa-2',
 					),
-				)
+				),
 			) );
 
 			foreach ( $query->posts as $post ) {

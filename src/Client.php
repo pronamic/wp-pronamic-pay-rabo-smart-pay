@@ -25,7 +25,7 @@ class Client {
 	 */
 	const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
 
-	const URL_SANDBOX =  'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
+	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	//////////////////////////////////////////////////
 

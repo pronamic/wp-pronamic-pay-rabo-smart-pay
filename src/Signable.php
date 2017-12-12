@@ -15,7 +15,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 abstract class Signable {
 	protected $signing_key;
 
-	public abstract function get_signature_data();
+	abstract public function get_signature_data();
 
 	/**
 	 * Set sigining key.

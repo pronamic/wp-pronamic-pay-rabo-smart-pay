@@ -76,6 +76,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	 */
 	public function start( \Pronamic_Pay_Payment $payment ) {
 		$order = new Order();
+
 		$order->timestamp           = date( DATE_ATOM );
 		$order->merchant_order_id   = $payment->get_id();
 		$order->description         = $payment->get_description();
