@@ -20,11 +20,17 @@ class Client {
 	const URL_ACCEPTANCE = 'https://betalen-acpt3.rabobank.nl/omnikassa-api/';
 
 	/**
+	 * URL OmniKassa API.
 	 *
 	 * @var string
 	 */
 	const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
 
+	/**
+	 * URL OmniKassa sandbox API.
+	 *
+	 * @var string
+	 */
 	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	//////////////////////////////////////////////////
