@@ -68,18 +68,10 @@ class Order extends Signable {
 		);
 
 		// Optional fields; do not change field order!
-		$optional = array();
-
-		if ( is_array( $this->order_items ) ) {
-			// Add order items
-		}
-
-		if ( is_array( $this->shipping_detail ) ) {
-			// Add shipping detail
-		}
-
-		$optional[] = $this->payment_brand;
-		$optional[] = $this->payment_brand_force;
+		$optional = array(
+			$this->payment_brand,
+			$this->payment_brand_force,
+		);
 
 		// Remove empty optional fields
 		$optional = array_filter( $optional );

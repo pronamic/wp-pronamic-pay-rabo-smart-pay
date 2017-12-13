@@ -40,7 +40,6 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		$url = Client::URL_PRODUCTION;
 
 		if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
-			//$url = Client::URL_ACCEPTANCE;
 			$url = Client::URL_SANDBOX;
 		}
 
@@ -119,7 +118,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 			return;
 		}
 
-		if ( $result ) { // && $result->signature IS VALID
+		if ( $result ) {
 			$payment->set_action_url( $result->redirectUrl );
 		}
 	}

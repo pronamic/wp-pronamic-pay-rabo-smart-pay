@@ -36,10 +36,10 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 			}
 
 			$query = new \WP_Query( array(
-				'post_type'   => \Pronamic_WP_Pay_Admin_GatewayPostType::POST_TYPE,
-				'post_status' => 'publish',
-				'nopaging'    => true,
-				'meta_query'  => array(
+				'post_type'      => \Pronamic_WP_Pay_Admin_GatewayPostType::POST_TYPE,
+				'post_status'    => 'publish',
+				'posts_per_page' => - 1,
+				'meta_query'     => array(
 					array(
 						'key'   => '_pronamic_gateway_id',
 						'value' => 'rabobank-omnikassa-2',
