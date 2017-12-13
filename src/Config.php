@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
+
 /**
  * Title: OmniKassa 2.0 config
  * Description:
@@ -10,16 +12,24 @@
  * @version 1.0.0
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_OmniKassa2_Config extends Pronamic_WP_Pay_GatewayConfig {
-	public $merchant_id;
+class Config extends \Pronamic_WP_Pay_GatewayConfig {
+	public $refresh_token;
 
-	public $secret_key;
+	public $signing_key;
 
-	public $key_version;
+	public $access_token;
 
-	public $order_id;
+	public $access_token_valid_until;
+
+	public function is_access_token_valid() {
+		if ( empty( $this->access_token ) ) {
+			return false;
+		}
+
+		return strtotime( $this->access_token_valid_until ) > time();
+	}
 
 	public function get_gateway_class() {
-		return 'Pronamic_WP_Pay_Gateways_OmniKassa_Gateway';
+		return __NAMESPACE__ . '\Gateway';
 	}
 }
