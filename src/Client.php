@@ -14,6 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class Client {
 	/**
+	 * URL OmniKassa acceptance API.
 	 *
 	 * @var string
 	 */
@@ -85,14 +86,14 @@ class Client {
 	//////////////////////////////////////////////////
 
 	/**
-	 *
+	 * Get refresh token.
 	 */
 	public function get_refresh_token() {
 		return $this->refresh_token;
 	}
 
 	/**
-	 *
+	 * Set refresh token.
 	 */
 	public function set_refresh_token( $refresh_token ) {
 		$this->refresh_token = $refresh_token;
@@ -101,14 +102,14 @@ class Client {
 	//////////////////////////////////////////////////
 
 	/**
-	 *
+	 * Get signing key.
 	 */
 	public function get_signing_key() {
 		return $this->signing_key;
 	}
 
 	/**
-	 *
+	 * Set signing key.
 	 */
 	public function set_signing_key( $signing_key ) {
 		$this->signing_key = $signing_key;
@@ -170,7 +171,7 @@ class Client {
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . $config->access_token,
 			),
-			'body'    => json_encode( $object ),
+			'body'    => wp_json_encode( $object ),
 		) );
 
 		if ( is_wp_error( $response ) ) {
