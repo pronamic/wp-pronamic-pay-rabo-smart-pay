@@ -5,7 +5,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Title: OmniKassa 2.0 payment methods
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
  * @author Reüel van der Steege
