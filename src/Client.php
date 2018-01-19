@@ -187,7 +187,7 @@ class Client {
 		}
 
 		if ( is_object( $data ) && '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->consumerMessage, $data );
+			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
 
 			return false;
 		}
@@ -227,7 +227,7 @@ class Client {
 		}
 
 		if ( is_object( $data ) && '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->consumerMessage, $data );
+			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
 
 			return false;
 		}
