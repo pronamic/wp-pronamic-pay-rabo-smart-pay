@@ -187,7 +187,15 @@ class Client {
 		}
 
 		if ( is_object( $data ) && '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
+			if ( isset( $data->consumerMessage ) ) {
+				$message = $data->consumerMessage;
+			} elseif ( isset( $data->errorMessage ) ) {
+				$message = $data->errorMessage;
+			} else {
+				$message = 'Unknown error.';
+			}
+
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}
@@ -227,7 +235,15 @@ class Client {
 		}
 
 		if ( is_object( $data ) && '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
+			if ( isset( $data->consumerMessage ) ) {
+				$message = $data->consumerMessage;
+			} elseif ( isset( $data->errorMessage ) ) {
+				$message = $data->errorMessage;
+			} else {
+				$message = 'Unknown error.';
+			}
+
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}
