@@ -2,6 +2,9 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\GatewayPostType;
+use Pronamic\WordPress\Pay\Plugin;
+
 /**
  * Title: OmniKassa 2.0 listener
  * Description:
@@ -36,7 +39,7 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 			}
 
 			$query = new \WP_Query( array(
-				'post_type'      => \Pronamic_WP_Pay_Admin_GatewayPostType::POST_TYPE,
+				'post_type'      => GatewayPostType::POST_TYPE,
 				'post_status'    => 'publish',
 				'posts_per_page' => - 1,
 				'meta_query'     => array(
@@ -95,7 +98,7 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 
 						$payment->set_meta( 'omnikassa_2_update_order_status', $order->orderStatus );
 
-						\Pronamic_WP_Pay_Plugin::update_payment( $payment );
+						Plugin::update_payment( $payment );
 					}
 				} while ( $response->moreOrderResultsAvailable );
 			}
