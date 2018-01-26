@@ -2,6 +2,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\Util as Core_Util;
+
 /**
  * Title: OmniKassa 2.0 order
  * Description:
@@ -44,7 +46,7 @@ class Order extends Signable {
 			'description'       => $this->description,
 			'amount'            => (object) array(
 				'currency' => $this->currency,
-				'amount'   => \Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
+				'amount'   => Core_Util::amount_to_cents( $this->amount ),
 			),
 			'language'          => $this->language,
 			'merchantReturnURL' => $this->merchant_return_url,
@@ -61,7 +63,7 @@ class Order extends Signable {
 			$this->timestamp,
 			$this->merchant_order_id,
 			$this->currency,
-			\Pronamic_WP_Pay_Util::amount_to_cents( $this->amount ),
+			Core_Util::amount_to_cents( $this->amount ),
 			$this->language,
 			$this->description,
 			$this->merchant_return_url,

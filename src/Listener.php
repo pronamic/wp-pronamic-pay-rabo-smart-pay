@@ -4,6 +4,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Pay\GatewayPostType;
 use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Core\Gateway;
 
 /**
  * Title: OmniKassa 2.0 listener
@@ -15,7 +16,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * @version 1.0.0
  * @since 1.0.0
  */
-class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
+class Listener {
 	public static function listen() {
 		if ( filter_has_var( INPUT_GET, 'omnikassa2_webhook' ) ) {
 			/**
@@ -64,7 +65,7 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 
 				$url = Client::URL_PRODUCTION;
 
-				if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
+				if ( Gateway::MODE_TEST === $config->mode ) {
 					$url = Client::URL_SANDBOX;
 				}
 

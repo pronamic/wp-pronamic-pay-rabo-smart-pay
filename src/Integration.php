@@ -2,6 +2,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
+
 /**
  * Title: OmniKassa 2.0 integration
  * Description:
@@ -12,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 1.0.0
  * @since 1.0.0
  */
-class Integration extends \Pronamic_WP_Pay_Gateways_AbstractIntegration {
+class Integration extends AbstractIntegration {
 	public function __construct() {
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';

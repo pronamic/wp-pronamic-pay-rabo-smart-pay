@@ -2,6 +2,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
+
 /**
  * Title: OmniKassa 2.0 statuses constants
  * Description:
@@ -46,17 +48,23 @@ class Statuses {
 	 * Transform an OmniKassa 2.0 status to Pronamic Pay status.
 	 *
 	 * @param string $status
+	 *
+	 * @return string|null
 	 */
 	public static function transform( $status ) {
 		switch ( $status ) {
 			case self::CANCELLED:
-				return \Pronamic_WP_Pay_Statuses::CANCELLED;
+				return Core_Statuses::CANCELLED;
+
 			case self::COMPLETED:
-				return \Pronamic_WP_Pay_Statuses::SUCCESS;
+				return Core_Statuses::SUCCESS;
+
 			case self::EXPIRED:
-				return \Pronamic_WP_Pay_Statuses::EXPIRED;
+				return Core_Statuses::EXPIRED;
+
 			case self::IN_PROGRESS:
-				return \Pronamic_WP_Pay_Statuses::OPEN;
+				return Core_Statuses::OPEN;
+
 			default:
 				return null;
 		}

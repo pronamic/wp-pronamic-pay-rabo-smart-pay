@@ -2,6 +2,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
+
 /**
  * Title: OmniKassa 2.0 config factory
  * Description:
@@ -12,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 1.0.0
  * @since 1.0.0
  */
-class ConfigFactory extends \Pronamic_WP_Pay_GatewayConfigFactory {
+class ConfigFactory extends GatewayConfigFactory {
 	public function get_config( $post_id ) {
 		$config = new Config();
 

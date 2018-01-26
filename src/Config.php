@@ -2,6 +2,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\GatewayConfig;
+
 /**
  * Title: OmniKassa 2.0 config
  * Description:
@@ -12,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 1.0.0
  * @since 1.0.0
  */
-class Config extends \Pronamic_WP_Pay_GatewayConfig {
+class Config extends GatewayConfig {
 	public $refresh_token;
 
 	public $signing_key;

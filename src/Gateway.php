@@ -2,6 +2,10 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Payments\Payment;
+
 /**
  * Title: OmniKassa 2.0 gateway
  * Description:
@@ -12,16 +16,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 1.0.0
  * @since 1.0.0
  */
-class Gateway extends \Pronamic_WP_Pay_Gateway {
-	/**
-	 * The OmniKassa 2 client object.
-	 *
-	 * @var \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Client
-	 */
-	private $client;
-
-	/////////////////////////////////////////////////
-
+class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
@@ -30,7 +25,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
 
-		$this->set_method( \Pronamic_WP_Pay_Gateway::METHOD_HTTP_REDIRECT );
+		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
 
@@ -39,7 +34,7 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 
 		$url = Client::URL_PRODUCTION;
 
-		if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
+		if ( Gateway::MODE_TEST === $config->mode ) {
 			$url = Client::URL_SANDBOX;
 		}
 
@@ -57,10 +52,10 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			\Pronamic_WP_Pay_PaymentMethods::BANCONTACT,
-			\Pronamic_WP_Pay_PaymentMethods::CREDIT_CARD,
-			\Pronamic_WP_Pay_PaymentMethods::IDEAL,
-			\Pronamic_WP_Pay_PaymentMethods::PAYPAL,
+			PaymentMethods::BANCONTACT,
+			PaymentMethods::CREDIT_CARD,
+			PaymentMethods::IDEAL,
+			PaymentMethods::PAYPAL,
 		);
 	}
 
@@ -69,11 +64,11 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/**
 	 * Start.
 	 *
-	 * @see \Pronamic_WP_Pay_Gateway::start()
+	 * @see Core_Gateway::start()
 	 *
-	 * @param \Pronamic_Pay_Payment $payment
+	 * @param Payment $payment
 	 */
-	public function start( \Pronamic_Pay_Payment $payment ) {
+	public function start( Payment $payment ) {
 		$order = new Order();
 
 		$order->timestamp           = date( DATE_ATOM );
@@ -82,8 +77,8 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 		$order->amount              = $payment->get_amount();
 		$order->currency            = $payment->get_currency();
 		$order->language            = $payment->get_language();
-		$order->merchant_return_url = $payment->get_return_url();
-		$order->payment_brand       = PaymentMethods::transform( $payment->get_method() );
+		$order->merchant_return_url = str_replace( '.test', '.dev', $payment->get_return_url() );
+		$order->payment_brand       = Methods::transform( $payment->get_method() );
 
 		if ( null !== $order->payment_brand ) {
 			// Payment brand force should only be set if payment brand is not empty.
@@ -140,9 +135,9 @@ class Gateway extends \Pronamic_WP_Pay_Gateway {
 	/**
 	 * Update status of the specified payment.
 	 *
-	 * @param \Pronamic_Pay_Payment $payment
+	 * @param Payment $payment
 	 */
-	public function update_status( \Pronamic_Pay_Payment $payment ) {
+	public function update_status( Payment $payment ) {
 		$input_status = null;
 
 		// Update status on customer return
