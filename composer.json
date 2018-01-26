@@ -3,7 +3,7 @@
 	"description": "OmniKassa 2.0 driver for the WordPress payment processing library.",
 	"keywords": ["wordpress", "wp", "pay", "omnikassa", "gateway", "pronamic"],
 	"homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
-	"license": "GPL",
+	"license": "GPL-3.0-or-later" ,
 	"authors": [
 		{
 			"name": "Pronamic",
