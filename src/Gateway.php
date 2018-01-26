@@ -77,7 +77,7 @@ class Gateway extends Core_Gateway {
 		$order->amount              = $payment->get_amount();
 		$order->currency            = $payment->get_currency();
 		$order->language            = $payment->get_language();
-		$order->merchant_return_url = str_replace( '.test', '.dev', $payment->get_return_url() );
+		$order->merchant_return_url = $payment->get_return_url();
 		$order->payment_brand       = Methods::transform( $payment->get_method() );
 
 		if ( null !== $order->payment_brand ) {
