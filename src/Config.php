@@ -23,6 +23,8 @@ class Config extends GatewayConfig {
 
 	public $access_token_valid_until;
 
+	public $order_id;
+
 	public function is_access_token_valid() {
 		if ( empty( $this->access_token ) ) {
 			return false;

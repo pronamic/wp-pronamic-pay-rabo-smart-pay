@@ -95,7 +95,15 @@ class Listener {
 					}
 
 					foreach ( $order_results->order_results as $order ) {
-						$payment = get_pronamic_payment( $order->merchantOrderId );
+						$payment = null;
+
+						if ( '{order_id}' === $config->order_id ) {
+							$payment = get_pronamic_payment_by_meta( '_pronamic_payment_order_id', $order->merchantOrderId );
+						}
+
+						if ( ! $payment ) {
+							$payment = get_pronamic_payment( $order->merchantOrderId );
+						}
 
 						$payment->set_meta( 'omnikassa_2_update_order_status', $order->orderStatus );
 

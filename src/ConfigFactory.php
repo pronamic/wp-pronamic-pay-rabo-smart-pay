@@ -24,6 +24,7 @@ class ConfigFactory extends GatewayConfigFactory {
 		$config->signing_key              = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_signing_key', true );
 		$config->access_token             = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token', true );
 		$config->access_token_valid_until = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until', true );
+		$config->order_id                 = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_order_id', true );
 
 		return $config;
 	}

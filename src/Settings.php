@@ -26,6 +26,12 @@ class Settings extends GatewaySettings {
 			'methods' => array( 'omnikassa-2' ),
 		);
 
+		// Advanced
+		$sections['omnikassa-2_advanced'] = array(
+			'title'   => __( 'Advanced', 'pronamic_ideal' ),
+			'methods' => array( 'omnikassa-2' ),
+		);
+
 		// Transaction eedback
 		$sections['omnikassa-2_feedback'] = array(
 			'title'       => __( 'Transaction feedback', 'pronamic_ideal' ),
@@ -69,6 +75,33 @@ class Settings extends GatewaySettings {
 			'html'    => sprintf(
 				'<span class="dashicons dashicons-warning"></span> %s',
 				__( 'Receiving payment status updates needs additional configuration, if not yet completed.', 'pronamic_ideal' )
+			),
+		);
+
+		// Purchase ID
+		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
+			'section'     => 'omnikassa-2_advanced',
+			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
+			'title'       => __( 'Order ID', 'pronamic_ideal' ),
+			'type'        => 'text',
+			'classes'     => array( 'regular-text', 'code' ),
+			'tooltip'     => sprintf(
+				__( 'The OmniKassa %s parameter.', 'pronamic_ideal' ),
+				sprintf( '<code>%s</code>', 'orderId' )
+			),
+			'description' => sprintf(
+				'%s %s<br />%s',
+				__( 'Available tags:', 'pronamic_ideal' ),
+				sprintf(
+					'<code>%s</code> <code>%s</code>',
+					'{order_id}',
+					'{payment_id}'
+				),
+				sprintf(
+					__( 'Default: <code>%s</code>', 'pronamic_ideal' ),
+					'{payment_id}'
+				)
 			),
 		);
 

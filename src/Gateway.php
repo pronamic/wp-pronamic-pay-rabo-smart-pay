@@ -72,7 +72,7 @@ class Gateway extends Core_Gateway {
 		$order = new Order();
 
 		$order->timestamp           = date( DATE_ATOM );
-		$order->merchant_order_id   = $payment->get_id();
+		$order->merchant_order_id   = $payment->format_string( $this->config->order_id );
 		$order->description         = $payment->get_description();
 		$order->amount              = $payment->get_amount();
 		$order->currency            = $payment->get_currency();
@@ -147,7 +147,13 @@ class Gateway extends Core_Gateway {
 			$input_signature = filter_input( INPUT_GET, 'signature', FILTER_SANITIZE_STRING );
 
 			// Validate signature
-			$data = array( $payment->get_id(), $input_status );
+			$merchant_order_id = $payment->get_id();
+
+			if ( '{order_id}' === $this->config->order_id ) {
+				$merchant_order_id = $payment->get_order_id();
+			}
+
+			$data = array( $merchant_order_id, $input_status );
 
 			$signature = Security::calculate_signature( $data, $this->config->signing_key );
 
