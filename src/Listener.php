@@ -105,6 +105,7 @@ class Listener {
 							$payment = get_pronamic_payment( $order->merchantOrderId );
 						}
 
+						$payment->set_transaction_id( $order->omnikassaOrderId );
 						$payment->set_meta( 'omnikassa_2_update_order_status', $order->orderStatus );
 
 						Plugin::update_payment( $payment );
