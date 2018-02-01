@@ -32,8 +32,4 @@ class Config extends GatewayConfig {
 
 		return strtotime( $this->access_token_valid_until ) > time();
 	}
-
-	public function get_gateway_class() {
-		return __NAMESPACE__ . '\Gateway';
-	}
 }
