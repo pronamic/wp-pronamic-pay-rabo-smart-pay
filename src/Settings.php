@@ -87,6 +87,7 @@ class Settings extends GatewaySettings {
 			'type'        => 'text',
 			'classes'     => array( 'regular-text', 'code' ),
 			'tooltip'     => sprintf(
+				/* translators: %s: Parameter */
 				__( 'The OmniKassa %s parameter.', 'pronamic_ideal' ),
 				sprintf( '<code>%s</code>', 'orderId' )
 			),
@@ -99,6 +100,7 @@ class Settings extends GatewaySettings {
 					'{payment_id}'
 				),
 				sprintf(
+					/* translators: %s: {payment_id} */
 					__( 'Default: <code>%s</code>', 'pronamic_ideal' ),
 					'{payment_id}'
 				)
