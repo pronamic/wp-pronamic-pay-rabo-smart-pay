@@ -43,8 +43,6 @@ class Gateway extends Core_Gateway {
 		$this->client->set_signing_key( $config->signing_key );
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get supported payment methods.
 	 *
@@ -58,8 +56,6 @@ class Gateway extends Core_Gateway {
 			PaymentMethods::PAYPAL,
 		);
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Start.
@@ -118,8 +114,6 @@ class Gateway extends Core_Gateway {
 		}
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get the output HTML.
 	 *
@@ -129,8 +123,6 @@ class Gateway extends Core_Gateway {
 	public function get_output_fields() {
 		return $this->client->get_fields();
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Update status of the specified payment.

@@ -34,8 +34,6 @@ class Client {
 	 */
 	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Error
 	 *
@@ -43,16 +41,12 @@ class Client {
 	 */
 	private $error;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The URL.
 	 *
 	 * @var string
 	 */
 	private $url;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Error
@@ -62,8 +56,6 @@ class Client {
 	public function get_error() {
 		return $this->error;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the URL
@@ -83,8 +75,6 @@ class Client {
 		$this->url = $url;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get refresh token.
 	 */
@@ -99,8 +89,6 @@ class Client {
 		$this->refresh_token = $refresh_token;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get signing key.
 	 */
@@ -114,8 +102,6 @@ class Client {
 	public function set_signing_key( $signing_key ) {
 		$this->signing_key = $signing_key;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get access token.

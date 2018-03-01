@@ -47,8 +47,6 @@ class Methods {
 	 */
 	const PAYPAL = PaymentBrands::PAYPAL;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Transform WordPress payment method to OmniKassa 2.0 method.
 	 *

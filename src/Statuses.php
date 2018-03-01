@@ -42,8 +42,6 @@ class Statuses {
 	 */
 	const IN_PROGRESS = 'IN_PROGRESS';
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Transform an OmniKassa 2.0 status to Pronamic Pay status.
 	 *
