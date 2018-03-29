@@ -115,16 +115,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get the output HTML.
-	 *
-	 * @since 1.1.2
-	 * @see \Pronamic_WP_Pay_Gateway::get_output_html()
-	 */
-	public function get_output_fields() {
-		return $this->client->get_fields();
-	}
-
-	/**
 	 * Update status of the specified payment.
 	 *
 	 * @param Payment $payment
