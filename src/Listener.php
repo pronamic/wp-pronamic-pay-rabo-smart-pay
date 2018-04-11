@@ -101,13 +101,23 @@ class Listener {
 							$payment = get_pronamic_payment_by_meta( '_pronamic_payment_order_id', $order->merchantOrderId );
 						}
 
-						if ( ! $payment ) {
+						if ( null === $payment ) {
 							$payment = get_pronamic_payment( $order->merchantOrderId );
 						}
 
 						$payment->set_transaction_id( $order->omnikassaOrderId );
 						$payment->set_meta( 'omnikassa_2_update_order_status', $order->orderStatus );
 
+						// Add note.
+						$note = sprintf(
+							/* translators: %s: OmniKassa 2.0 */
+							__( 'Webhook requested by %s.', 'pronamic_ideal' ),
+							__( 'OmniKassa 2.0', 'pronamic_ideal' )
+						);
+
+						$payment->add_note( $note );
+
+						// Update payment.
 						Plugin::update_payment( $payment );
 					}
 				} while ( $response->moreOrderResultsAvailable );
