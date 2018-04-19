@@ -70,7 +70,7 @@ class Gateway extends Core_Gateway {
 		$order->timestamp           = date( DATE_ATOM );
 		$order->merchant_order_id   = $payment->format_string( $this->config->order_id );
 		$order->description         = $payment->get_description();
-		$order->amount              = $payment->get_amount();
+		$order->amount              = $payment->get_amount()->get_amount();
 		$order->currency            = $payment->get_currency();
 		$order->language            = $payment->get_language();
 		$order->merchant_return_url = $payment->get_return_url();
