@@ -5,12 +5,12 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Title: OmniKassa 2.0 client
  * Description:
- * Copyright: Copyright (c) 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.0
  */
 class Client {
 	/**
@@ -34,8 +34,6 @@ class Client {
 	 */
 	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Error
 	 *
@@ -43,16 +41,12 @@ class Client {
 	 */
 	private $error;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The URL.
 	 *
 	 * @var string
 	 */
 	private $url;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Error
@@ -62,8 +56,6 @@ class Client {
 	public function get_error() {
 		return $this->error;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the URL
@@ -83,8 +75,6 @@ class Client {
 		$this->url = $url;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get refresh token.
 	 */
@@ -99,8 +89,6 @@ class Client {
 		$this->refresh_token = $refresh_token;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get signing key.
 	 */
@@ -114,8 +102,6 @@ class Client {
 	public function set_signing_key( $signing_key ) {
 		$this->signing_key = $signing_key;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get access token.
@@ -187,7 +173,15 @@ class Client {
 		}
 
 		if ( is_object( $data ) && '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->consumerMessage, $data );
+			if ( isset( $data->consumerMessage ) ) {
+				$message = $data->consumerMessage;
+			} elseif ( isset( $data->errorMessage ) ) {
+				$message = $data->errorMessage;
+			} else {
+				$message = 'Unknown error.';
+			}
+
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}
@@ -227,7 +221,15 @@ class Client {
 		}
 
 		if ( is_object( $data ) && '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->consumerMessage, $data );
+			if ( isset( $data->consumerMessage ) ) {
+				$message = $data->consumerMessage;
+			} elseif ( isset( $data->errorMessage ) ) {
+				$message = $data->errorMessage;
+			} else {
+				$message = 'Unknown error.';
+			}
+
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}

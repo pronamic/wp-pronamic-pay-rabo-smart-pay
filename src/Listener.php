@@ -2,17 +2,21 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\GatewayPostType;
+use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Core\Gateway;
+
 /**
  * Title: OmniKassa 2.0 listener
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Reüel van der Steege
- * @version 1.0.0
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.0
  */
-class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
+class Listener {
 	public static function listen() {
 		if ( filter_has_var( INPUT_GET, 'omnikassa2_webhook' ) ) {
 			/**
@@ -36,7 +40,7 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 			}
 
 			$query = new \WP_Query( array(
-				'post_type'      => \Pronamic_WP_Pay_Admin_GatewayPostType::POST_TYPE,
+				'post_type'      => GatewayPostType::POST_TYPE,
 				'post_status'    => 'publish',
 				'posts_per_page' => - 1,
 				'meta_query'     => array(
@@ -61,7 +65,7 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 
 				$url = Client::URL_PRODUCTION;
 
-				if ( \Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
+				if ( Gateway::MODE_TEST === $config->mode ) {
 					$url = Client::URL_SANDBOX;
 				}
 
@@ -91,11 +95,30 @@ class Listener implements \Pronamic_Pay_Gateways_ListenerInterface {
 					}
 
 					foreach ( $order_results->order_results as $order ) {
-						$payment = get_pronamic_payment( $order->merchantOrderId );
+						$payment = null;
 
+						if ( '{order_id}' === $config->order_id ) {
+							$payment = get_pronamic_payment_by_meta( '_pronamic_payment_order_id', $order->merchantOrderId );
+						}
+
+						if ( null === $payment ) {
+							$payment = get_pronamic_payment( $order->merchantOrderId );
+						}
+
+						$payment->set_transaction_id( $order->omnikassaOrderId );
 						$payment->set_meta( 'omnikassa_2_update_order_status', $order->orderStatus );
 
-						\Pronamic_WP_Pay_Plugin::update_payment( $payment );
+						// Add note.
+						$note = sprintf(
+							/* translators: %s: OmniKassa 2.0 */
+							__( 'Webhook requested by %s.', 'pronamic_ideal' ),
+							__( 'OmniKassa 2.0', 'pronamic_ideal' )
+						);
+
+						$payment->add_note( $note );
+
+						// Update payment.
+						Plugin::update_payment( $payment );
 					}
 				} while ( $response->moreOrderResultsAvailable );
 			}

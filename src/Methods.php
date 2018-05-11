@@ -2,17 +2,19 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
+
 /**
  * Title: OmniKassa 2.0 payment methods
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Reüel van der Steege
- * @version 1.0.0
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.0
  */
-class PaymentMethods {
+class Methods {
 	/**
 	 * Constant for the Bancontact method.
 	 *
@@ -45,8 +47,6 @@ class PaymentMethods {
 	 */
 	const PAYPAL = PaymentBrands::PAYPAL;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Transform WordPress payment method to OmniKassa 2.0 method.
 	 *
@@ -58,13 +58,13 @@ class PaymentMethods {
 	 */
 	public static function transform( $payment_method ) {
 		switch ( $payment_method ) {
-			case \Pronamic_WP_Pay_PaymentMethods::BANCONTACT:
+			case PaymentMethods::BANCONTACT:
 				return self::BANCONTACT;
-			case \Pronamic_WP_Pay_PaymentMethods::CREDIT_CARD:
+			case PaymentMethods::CREDIT_CARD:
 				return self::CREDIT_CARD;
-			case \Pronamic_WP_Pay_PaymentMethods::IDEAL:
+			case PaymentMethods::IDEAL:
 				return self::IDEAL;
-			case \Pronamic_WP_Pay_PaymentMethods::PAYPAL:
+			case PaymentMethods::PAYPAL:
 				return self::PAYPAL;
 			default:
 				return null;
