@@ -18,3 +18,10 @@
 ## Documentation
 
 *	https://www.ideal-checkout.nl/payment-providers/rabobank/TB6jSGOVPr$HhqTg*rS$c9ThjxpTSPXbCifkWG0yrT-URES==v7e:A:mdmpjXdDFPayFkIfsvMgBFKKYRPyF1ScJVP
+
+## Examples
+
+```
+curl -X GET https://betalen.rabobank.nl/omnikassa-api/gatekeeper/refresh \
+    -H "Authorization: Bearer __refresh_token__" \
+```
