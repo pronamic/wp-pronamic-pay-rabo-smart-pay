@@ -116,7 +116,9 @@ class Client {
 		) );
 
 		if ( is_wp_error( $response ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
+			$this->error = $response;
+
+			$this->error->add( 'omnikassa_2_error', 'HTTP Request Failed' );
 
 			return false;
 		}
