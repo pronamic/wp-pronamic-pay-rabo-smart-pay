@@ -22,6 +22,9 @@
 ## Examples
 
 ```
-curl -X GET https://betalen.rabobank.nl/omnikassa-api/gatekeeper/refresh \
-    -H "Authorization: Bearer __refresh_token__" \
+curl --request GET https://betalen.rabobank.nl/omnikassa-api/gatekeeper/refresh \
+    --header "Authorization: Bearer __refresh_token__" \
+    --connect-timeout 5 \
+    --max-time 5 \
+    --user-agent "WordPress/4.9.8; https://example.com/"
 ```

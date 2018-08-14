@@ -112,6 +112,7 @@ class Client {
 		$response = wp_remote_get( $url, array(
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $this->get_refresh_token(),
+				'Content-Type'  => 'application/json',
 			),
 		) );
 
