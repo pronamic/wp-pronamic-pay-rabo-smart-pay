@@ -8,7 +8,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 -
 
 ## [2.0.1] - 2018-08-15
-- Send empty empty User-Agent string to OmniKassa servers, Rabobank is blocking "WordPress" User-Agent.
+- Send empty User-Agent string to OmniKassa servers, Rabobank is blocking "WordPress/4.9.8; https://example.com/" User-Agent.
 
 ## [2.0.0] - 2018-05-11
 - Switched to PHP namespaces.
