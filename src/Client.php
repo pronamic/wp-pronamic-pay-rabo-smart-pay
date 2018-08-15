@@ -104,17 +104,33 @@ class Client {
 	}
 
 	/**
+	 * Get remote request arguments.
+	 *
+	 * @link https://github.com/WordPress/WordPress/blob/4.9.8/wp-includes/class-http.php#L176-L183
+	 *
+	 * @param array $args Arguments.
+	 * @return array
+	 */
+	private function get_remote_request_args( $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			// We send an empty User-Agent string so OmniKassa 2.0 servers can't block requests based on the User-Agent.
+			'user-agent' => '',
+		) );
+
+		return $args;
+	}
+
+	/**
 	 * Get access token.
 	 */
 	public function get_access_token_data() {
 		$url = $this->get_url() . 'gatekeeper/refresh';
 
-		$response = wp_remote_get( $url, array(
+		$response = wp_remote_get( $url, $this->get_remote_request_args( array(
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $this->get_refresh_token(),
-				'Content-Type'  => 'application/json',
 			),
-		) );
+		) ) );
 
 		if ( is_wp_error( $response ) ) {
 			$this->error = $response;
@@ -155,13 +171,13 @@ class Client {
 		$object            = $order->get_json();
 		$object->signature = $order->get_signature();
 
-		$response = wp_remote_post( $url, array(
+		$response = wp_remote_post( $url, $this->get_remote_request_args( array(
 			'headers' => array(
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . $config->access_token,
 			),
 			'body'    => wp_json_encode( $object ),
-		) );
+		) ) );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
@@ -205,11 +221,11 @@ class Client {
 
 		$url = $this->get_url() . 'order/server/api/events/results/' . $announcement->eventName;
 
-		$response = wp_remote_get( $url, array(
+		$response = wp_remote_get( $url, $this->get_remote_request_args( array(
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $announcement->authentication,
 			),
-		) );
+		) ) );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
