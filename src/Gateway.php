@@ -25,7 +25,7 @@ class Gateway extends Core_Gateway {
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
 
-		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
+		$this->set_method( self::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
 
@@ -34,7 +34,7 @@ class Gateway extends Core_Gateway {
 
 		$url = Client::URL_PRODUCTION;
 
-		if ( Gateway::MODE_TEST === $config->mode ) {
+		if ( self::MODE_TEST === $config->mode ) {
 			$url = Client::URL_SANDBOX;
 		}
 

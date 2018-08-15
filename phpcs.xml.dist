@@ -10,9 +10,10 @@
 	<rule ref="PHPCompatibility" />
 
 	<rule ref="WordPress">
-		<exclude name="Generic.Files.LowercasedFilename.NotFound" />
-
 		<exclude name="Squiz.Commenting" />
+
+		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_key" />
+		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query" />
 
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
@@ -21,10 +22,5 @@
 
         <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
 		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_file_get_contents" />
-
-		<exclude name="WordPress.VIP.RestrictedFunctions.file_get_contents_file_get_contents" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.wp_remote_get_wp_remote_get" />
-		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_meta_key" />
-		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_meta_query" />
 	</rule>
 </ruleset>
