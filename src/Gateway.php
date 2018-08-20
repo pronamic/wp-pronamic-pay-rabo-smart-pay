@@ -120,6 +120,8 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment
 	 */
 	public function update_status( Payment $payment ) {
+		ReturnListener::listen( $payment );
+
 		$input_status = null;
 
 		// Update status on customer return

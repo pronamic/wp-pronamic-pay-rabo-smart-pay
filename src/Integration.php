@@ -23,10 +23,16 @@ class Integration extends AbstractIntegration {
 		$this->provider      = 'rabobank';
 
 		// Actions
-		$function = array( __NAMESPACE__ . '\Listener', 'listen' );
+		$return_listener_function = array( __NAMESPACE__ . '\ReturnListener', 'listen' );
 
-		if ( ! has_action( 'wp_loaded', $function ) ) {
-			add_action( 'wp_loaded', $function );
+		if ( ! has_action( 'wp_loaded', $return_listener_function ) ) {
+			add_action( 'wp_loaded', $return_listener_function );
+		}
+
+		$webhook_listener_function = array( __NAMESPACE__ . '\WebhookListener', 'listen' );
+
+		if ( ! has_action( 'wp_loaded', $webhook_listener_function ) ) {
+			add_action( 'wp_loaded', $webhook_listener_function );
 		}
 	}
 
