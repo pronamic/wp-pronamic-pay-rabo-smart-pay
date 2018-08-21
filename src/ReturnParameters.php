@@ -21,7 +21,7 @@ use Pronamic\WordPress\Pay\Core\Gateway;
  * @version 2.0.0
  * @since   1.0.0
  */
-class ReturnParameters implements Signable {
+class ReturnParameters extends Message implements Signable {
 	/**
 	 * The "merchantOrderId" as used in the Order announce.
 	 *
@@ -35,13 +35,6 @@ class ReturnParameters implements Signable {
 	 * @var string
 	 */
 	public $status;
-
-	/**
-	 * Signature.
-	 *
-	 * @var string
-	 */
-	public $signature;
 
 	/**
 	 * Get signature data.
