@@ -146,9 +146,9 @@ class Gateway extends Core_Gateway {
 				$merchant_order_id = $payment->get_order_id();
 			}
 
-			$data = array( $merchant_order_id, $input_status );
+			$return_parameters = ReturnParameters::from_array( $_GET );
 
-			$signature = Security::calculate_signature( $data, $this->config->signing_key );
+			$signature = Security::get_signature( $return_parameters, $this->config->signing_key );
 
 			if ( ! Security::validate_signature( $input_signature, $signature ) ) {
 				// Invalid signature.

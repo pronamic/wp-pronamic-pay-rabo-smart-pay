@@ -24,6 +24,6 @@ class NotificationHandlerTest extends \PHPUnit_Framework_TestCase {
 	public function test_notification_handler() {
 		$result = NotificationHandler::handle_notification( file_get_contents( __DIR__ . '/../json/notification.json' ) );
 
-		var_dump( $result );
+		
 	}
 }

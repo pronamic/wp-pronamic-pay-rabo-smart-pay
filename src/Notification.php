@@ -1,6 +1,6 @@
 <?php
 /**
- * Signable
+ * Notification
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2018 Pronamic
@@ -11,17 +11,16 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 /**
- * Signable
+ * Notification
  *
  * @author  Remco Tolsma
  * @version 2.0.0
  * @since   1.0.0
  */
-interface Signable {
-	/**
-	 * Get signature data.
-	 *
-	 * @return array
-	 */
-	public function get_signature_data();
+class Notification {
+	public static function from_object( stdClass $object ) {
+		$notification = new self();
+
+		return $notification;
+	}
 }

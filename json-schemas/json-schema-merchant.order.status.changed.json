@@ -26,7 +26,7 @@
 		}
 	},
 	"definitions": {
-		"amount": {
+		"money": {
 			"type": "object",
 			"required": [
 				"currency",
@@ -79,10 +79,10 @@
 					"description": "Future field, for now: always empty."
 				},
 				"paidAmount": {
-					"$ref": "#/definitions/amount"
+					"$ref": "#/definitions/money"
 				},
 				"totalAmount": {
-					"$ref": "#/definitions/amount"
+					"$ref": "#/definitions/money"
 				}
 			}
 		}

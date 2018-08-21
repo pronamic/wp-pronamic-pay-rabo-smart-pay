@@ -195,10 +195,8 @@ class Client {
 	public function order_announce( $config, Order $order ) {
 		$url = $this->get_url() . 'order/server/api/order';
 
-		$order->set_signing_key( $config->signing_key );
-
 		$object            = $order->get_json();
-		$object->signature = $order->get_signature();
+		$object->signature = Security::get_signature( $order, $config->signing_key );
 
 		$response = wp_remote_post( $url, $this->get_remote_request_args( array(
 			'headers' => array(

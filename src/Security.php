@@ -28,8 +28,14 @@ class Security {
 	 * @param string $signing_key Signing Key.
 	 * @return string|null
 	 */
-	public static function calculate_signature( $data, $signing_key ) {
-		if ( ! is_array( $data ) ) {
+	public static function get_signature( Signable $signable, $signing_key ) {
+		$data = $signable->get_signature_data();
+
+		if ( empty( $data ) ) {
+			return;
+		}
+
+		if ( empty( $signing_key ) ) {
 			return;
 		}
 
