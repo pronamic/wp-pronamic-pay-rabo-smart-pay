@@ -19,12 +19,40 @@
 
 *	https://www.ideal-checkout.nl/payment-providers/rabobank/TB6jSGOVPr$HhqTg*rS$c9ThjxpTSPXbCifkWG0yrT-URES==v7e:A:mdmpjXdDFPayFkIfsvMgBFKKYRPyF1ScJVP
 
-## Examples
+## Simulate Requests
+
+### Refresh
 
 ```
 curl --request GET https://betalen.rabobank.nl/omnikassa-api/gatekeeper/refresh \
-    --header "Authorization: Bearer __refresh_token__" \
-    --connect-timeout 5 \
-    --max-time 5 \
-    --user-agent "WordPress/4.9.8; https://example.com/"
+	--header "Authorization: Bearer __refresh_token__" \
+	--connect-timeout 5 \
+	--max-time 5 \
+	--user-agent "WordPress/4.9.8; https://example.com/"
+```
+
+### Notification
+
+```
+curl --request POST "https://example.com/?omnikassa2_webhook" \
+	--data-binary "@tests/json/notification.json" \
+	--user-agent "Java/1.8.0"
+```
+
+### Event
+
+```
+curl --request GET https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/events/results/merchant.order.status.changed \
+	--header "Authorization: Bearer __refresh_token__" \
+	--connect-timeout 5 \
+	--max-time 5 \
+	--user-agent "WordPress/4.9.8; https://example.com/"
+```
+
+```
+curl --request GET https://betalen.rabobank.nl/omnikassa-api/order/server/api/events/results/merchant.order.status.changed \
+	--header "Authorization: Bearer __refresh_token__" \
+	--connect-timeout 5 \
+	--max-time 5 \
+	--user-agent "WordPress/4.9.8; https://example.com/"
 ```

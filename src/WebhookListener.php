@@ -66,7 +66,7 @@ class WebhookListener {
 		) );
 
 		foreach ( $query->posts as $post ) {
-			$this->retrieve_announcement( $post->ID, $data );
+			self::retrieve_announcement( $post->ID, $data );
 		}
 	}
 
@@ -76,7 +76,7 @@ class WebhookListener {
 	 * @param string   $gateway_id Gateway ID.
 	 * @param stdClass $data       Notification data.
 	 */
-	private function retrieve_announcement( $gateway_id, $data ) {
+	private static function retrieve_announcement( $gateway_id, $data ) {
 		$gateway = Plugin::get_gateway( $gateway_id );
 
 		$client = $gateway->client;
