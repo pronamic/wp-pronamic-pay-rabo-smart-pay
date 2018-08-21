@@ -29,7 +29,7 @@ class MethodsTest extends \PHPUnit_Framework_TestCase {
 	 * @dataProvider status_matrix_provider
 	 */
 	public function test_transform( $pronamic_pay_method, $expected ) {
-		$omnikassa_2_method = Statuses::transform( $pronamic_pay_method );
+		$omnikassa_2_method = Methods::transform( $pronamic_pay_method );
 
 		$this->assertEquals( $expected, $omnikassa_2_method );
 	}
