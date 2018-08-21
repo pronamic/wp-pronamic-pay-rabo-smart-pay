@@ -45,7 +45,7 @@ class MethodsTest extends \PHPUnit_Framework_TestCase {
 			array( PaymentMethods::CREDIT_CARD, PaymentBrands::CARDS ),
 			array( PaymentMethods::IDEAL,       PaymentBrands::IDEAL ),
 			array( PaymentMethods::PAYPAL,      PaymentBrands::PAYPAL ),
-			array( 'not existing status', null ),
+			array( 'not existing status',       null ),
 		);
 	}
 }

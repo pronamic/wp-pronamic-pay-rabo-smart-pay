@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use WP_Error;
+
 /**
  * Title: OmniKassa 2.0 client
  * Description:
@@ -58,7 +60,7 @@ class Client {
 	private $url;
 
 	/**
-	 * Error
+	 * Error.
 	 *
 	 * @return WP_Error
 	 */
@@ -67,9 +69,9 @@ class Client {
 	}
 
 	/**
-	 * Get the URL
+	 * Get the URL.
 	 *
-	 * @return the action URL
+	 * @return string
 	 */
 	public function get_url() {
 		return $this->url;
