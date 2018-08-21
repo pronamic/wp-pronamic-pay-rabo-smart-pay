@@ -24,6 +24,7 @@ class Client {
 	/**
 	 * URL OmniKassa acceptance API.
 	 *
+	 * @deprecated No longer used.
 	 * @var string
 	 */
 	const URL_ACCEPTANCE = 'https://betalen-acpt3.rabobank.nl/omnikassa-api/';
