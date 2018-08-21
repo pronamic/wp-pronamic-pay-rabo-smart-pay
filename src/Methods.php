@@ -1,4 +1,12 @@
 <?php
+/**
+ * Methods
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -52,8 +60,7 @@ class Methods {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param $payment_method
-	 *
+	 * @param string $payment_method Payment method.
 	 * @return string
 	 */
 	public static function transform( $payment_method ) {

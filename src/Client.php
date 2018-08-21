@@ -1,4 +1,12 @@
 <?php
+/**
+ * Client
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -69,7 +77,7 @@ class Client {
 	/**
 	 * Set the action URL
 	 *
-	 * @param string $url an URL
+	 * @param string $url URL.
 	 */
 	public function set_url( $url ) {
 		$this->url = $url;
@@ -77,6 +85,8 @@ class Client {
 
 	/**
 	 * Get refresh token.
+	 *
+	 * @return string
 	 */
 	public function get_refresh_token() {
 		return $this->refresh_token;
@@ -84,6 +94,8 @@ class Client {
 
 	/**
 	 * Set refresh token.
+	 *
+	 * @param string $refresh_token Refresh token.
 	 */
 	public function set_refresh_token( $refresh_token ) {
 		$this->refresh_token = $refresh_token;
@@ -91,6 +103,8 @@ class Client {
 
 	/**
 	 * Get signing key.
+	 *
+	 * @return string
 	 */
 	public function get_signing_key() {
 		return $this->signing_key;
@@ -98,6 +112,8 @@ class Client {
 
 	/**
 	 * Set signing key.
+	 *
+	 * @param string $signing_key Signing key.
 	 */
 	public function set_signing_key( $signing_key ) {
 		$this->signing_key = $signing_key;
@@ -123,6 +139,8 @@ class Client {
 
 	/**
 	 * Get access token.
+	 *
+	 * @return string
 	 */
 	public function get_access_token_data() {
 		$url = $this->get_url() . 'gatekeeper/refresh';
@@ -164,6 +182,13 @@ class Client {
 		return $data;
 	}
 
+	/**
+	 * Order announce.
+	 *
+	 * @param Config $config Config.
+	 * @param Order  $order  Order.
+	 * @return object|bool
+	 */
 	public function order_announce( $config, Order $order ) {
 		$url = $this->get_url() . 'order/server/api/order';
 
@@ -215,6 +240,12 @@ class Client {
 		return $data;
 	}
 
+	/**
+	 * Retrieve announcement.
+	 *
+	 * @param object $announcement Announcement object.
+	 * @return object
+	 */
 	public function retrieve_announcement( $announcement ) {
 		if ( ! is_object( $announcement ) ) {
 			return;

@@ -12,3 +12,10 @@
 # Node.js
 /node_modules/
 /npm-debug.log
+
+# WordPress
+/wordpress/
+/wp-content/
+
+# SASS
+.sass-cache

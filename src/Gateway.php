@@ -1,4 +1,12 @@
 <?php
+/**
+ * Gateway
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -20,7 +28,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
-	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config
+	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -29,7 +37,7 @@ class Gateway extends Core_Gateway {
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
 
-		// Client
+		// Client.
 		$this->client = new Client();
 
 		$url = Client::URL_PRODUCTION;
@@ -47,6 +55,7 @@ class Gateway extends Core_Gateway {
 	 * Get supported payment methods.
 	 *
 	 * @see \Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
+	 * @return array
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -62,7 +71,7 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @see Core_Gateway::start()
 	 *
-	 * @param Payment $payment
+	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
 		$order = new Order();
@@ -117,20 +126,20 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Update status of the specified payment.
 	 *
-	 * @param Payment $payment
+	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
 		ReturnListener::listen( $payment );
 
 		$input_status = null;
 
-		// Update status on customer return
+		// Update status on customer return.
 		if ( filter_has_var( INPUT_GET, 'status' ) && filter_has_var( INPUT_GET, 'signature' ) ) {
-			// Input data
+			// Input data.
 			$input_status    = filter_input( INPUT_GET, 'status', FILTER_SANITIZE_STRING );
 			$input_signature = filter_input( INPUT_GET, 'signature', FILTER_SANITIZE_STRING );
 
-			// Validate signature
+			// Validate signature.
 			$merchant_order_id = $payment->get_id();
 
 			if ( '{order_id}' === $this->config->order_id ) {
@@ -142,12 +151,12 @@ class Gateway extends Core_Gateway {
 			$signature = Security::calculate_signature( $data, $this->config->signing_key );
 
 			if ( ! Security::validate_signature( $input_signature, $signature ) ) {
-				// Invalid signature
+				// Invalid signature.
 				return;
 			}
 		}
 
-		// Update status via webhook
+		// Update status via webhook.
 		if ( isset( $payment->meta['omnikassa_2_update_order_status'] ) ) {
 			$input_status = $payment->meta['omnikassa_2_update_order_status'];
 
@@ -158,7 +167,7 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		// Update payment status
+		// Update payment status.
 		$status = Statuses::transform( $input_status );
 
 		$payment->set_status( $status );

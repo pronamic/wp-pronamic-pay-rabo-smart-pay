@@ -1,4 +1,12 @@
 <?php
+/**
+ * Webhook listener
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -17,6 +25,9 @@ use Pronamic\WordPress\Pay\Core\Gateway;
  * @since   1.0.0
  */
 class WebhookListener {
+	/**
+	 * Listen to OmniKassa 2.0 webhook requests.
+	 */
 	public static function listen() {
 		if ( ! filter_has_var( INPUT_GET, 'omnikassa2_webhook' ) ) {
 			return;
@@ -59,6 +70,12 @@ class WebhookListener {
 		}
 	}
 
+	/**
+	 * Retreive announcement for the specific gateway.
+	 *
+	 * @param string   $gateway_id Gateway ID.
+	 * @param stdClass $data       Notification data.
+	 */
 	private function retrieve_announcement( $gateway_id, $data ) {
 		$gateway = Plugin::get_gateway( $gateway_id );
 
@@ -78,9 +95,9 @@ class WebhookListener {
 			$order_results->more_order_results_available = $response->moreOrderResultsAvailable;
 			$order_results->order_results                = $response->orderResults;
 
-			// Validate signature
+			// Validate signature.
 			if ( ! Security::validate_signature( $response->signature, $order_results->get_signature() ) ) {
-				// Invalid signature
+				// Invalid signature.
 				return;
 			}
 

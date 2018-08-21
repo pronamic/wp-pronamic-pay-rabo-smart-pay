@@ -1,4 +1,12 @@
 <?php
+/**
+ * Integration
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -15,6 +23,9 @@ use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
  * @since   1.0.0
  */
 class Integration extends AbstractIntegration {
+	/**
+	 * Construct and initialize integration.
+	 */
 	public function __construct() {
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';
@@ -22,13 +33,7 @@ class Integration extends AbstractIntegration {
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
 
-		// Actions
-		$return_listener_function = array( __NAMESPACE__ . '\ReturnListener', 'listen' );
-
-		if ( ! has_action( 'wp_loaded', $return_listener_function ) ) {
-			add_action( 'wp_loaded', $return_listener_function );
-		}
-
+		// Actions.
 		$webhook_listener_function = array( __NAMESPACE__ . '\WebhookListener', 'listen' );
 
 		if ( ! has_action( 'wp_loaded', $webhook_listener_function ) ) {
@@ -36,10 +41,20 @@ class Integration extends AbstractIntegration {
 		}
 	}
 
+	/**
+	 * Get config factory class.
+	 *
+	 * @return string
+	 */
 	public function get_config_factory_class() {
 		return __NAMESPACE__ . '\ConfigFactory';
 	}
 
+	/**
+	 * Get settings class.
+	 *
+	 * @return string
+	 */
 	public function get_settings_class() {
 		return __NAMESPACE__ . '\Settings';
 	}

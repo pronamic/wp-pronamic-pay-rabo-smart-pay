@@ -7,11 +7,15 @@
 
 	<config name="testVersion" value="5.3-99.0" />
 
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>tests/wp-config.php</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>wordpress/*</exclude-pattern>
+	<exclude-pattern>wp-content/*</exclude-pattern>
+
 	<rule ref="PHPCompatibility" />
 
 	<rule ref="WordPress">
-		<exclude name="Squiz.Commenting" />
-
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_key" />
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query" />
 

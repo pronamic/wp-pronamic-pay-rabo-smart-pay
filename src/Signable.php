@@ -1,4 +1,12 @@
 <?php
+/**
+ * Signable
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -13,14 +21,24 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @since   1.0.0
  */
 abstract class Signable {
+	/**
+	 * Signing key.
+	 *
+	 * @var string
+	 */
 	protected $signing_key;
 
+	/**
+	 * Get signature data.
+	 *
+	 * @return array
+	 */
 	abstract public function get_signature_data();
 
 	/**
 	 * Set sigining key.
 	 *
-	 * @param $signing_key
+	 * @param string $signing_key Signing key.
 	 */
 	public function set_signing_key( $signing_key ) {
 		$this->signing_key = $signing_key;

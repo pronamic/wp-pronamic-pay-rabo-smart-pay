@@ -1,4 +1,12 @@
 <?php
+/**
+ * Return listener
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -17,6 +25,9 @@ use Pronamic\WordPress\Pay\Core\Gateway;
  * @since   1.0.0
  */
 class ReturnListener {
+	/**
+	 * Listen to OmniKassa 2.0 return requests.
+	 */
 	public static function listen() {
 		// Check if all the return URL parameters are set to make sure we deal with a OmniKassa 2.0 return request.
 		if ( ! filter_has_var( INPUT_GET, 'order_id' ) ) {

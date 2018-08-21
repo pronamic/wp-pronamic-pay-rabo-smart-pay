@@ -1,4 +1,12 @@
 <?php
+/**
+ * Statuses
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -35,6 +43,7 @@ class Statuses {
 	 * @var string
 	 */
 	const EXPIRED = 'EXPIRED';
+
 	/**
 	 * In progress
 	 *
@@ -45,8 +54,7 @@ class Statuses {
 	/**
 	 * Transform an OmniKassa 2.0 status to Pronamic Pay status.
 	 *
-	 * @param string $status
-	 *
+	 * @param string $status OmniKassa 2.0 status.
 	 * @return string|null
 	 */
 	public static function transform( $status ) {

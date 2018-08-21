@@ -1,4 +1,12 @@
 <?php
+/**
+ * Order
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -15,30 +23,95 @@ use Pronamic\WordPress\Pay\Core\Util as Core_Util;
  * @since   1.0.0
  */
 class Order extends Signable {
+	/**
+	 * Order timestamp.
+	 *
+	 * @var string
+	 */
 	public $timestamp;
 
+	/**
+	 * Merchant order ID.
+	 *
+	 * @var string
+	 */
 	public $merchant_order_id;
 
+	/**
+	 * Description.
+	 *
+	 * @var string
+	 */
 	public $description;
 
+	/**
+	 * Amount.
+	 *
+	 * @var string
+	 */
 	public $amount;
 
+	/**
+	 * Currency.
+	 *
+	 * @var string
+	 */
 	public $currency;
 
+	/**
+	 * Language.
+	 *
+	 * @var string
+	 */
 	public $language;
 
+	/**
+	 * Merchant return URL.
+	 *
+	 * @var string
+	 */
 	public $merchant_return_url;
 
+	/**
+	 * Signature.
+	 *
+	 * @var string
+	 */
 	public $signature;
 
+	/**
+	 * Order items.
+	 *
+	 * @var string
+	 */
 	public $order_items;
 
+	/**
+	 * Shipping detail.
+	 *
+	 * @var string
+	 */
 	public $shipping_detail;
 
+	/**
+	 * Payment brand.
+	 *
+	 * @var string
+	 */
 	public $payment_brand;
 
+	/**
+	 * Payment brand force.
+	 *
+	 * @var string
+	 */
 	public $payment_brand_force;
 
+	/**
+	 * Get JSON object.
+	 *
+	 * @return object
+	 */
 	public function get_json() {
 		return (object) array(
 			'timestamp'         => $this->timestamp,
@@ -57,8 +130,13 @@ class Order extends Signable {
 		);
 	}
 
+	/**
+	 * Get signature data.
+	 *
+	 * @return array
+	 */
 	public function get_signature_data() {
-		// Required fields
+		// Required fields.
 		$fields = array(
 			$this->timestamp,
 			$this->merchant_order_id,
@@ -75,7 +153,7 @@ class Order extends Signable {
 			$this->payment_brand_force,
 		);
 
-		// Remove empty optional fields
+		// Remove empty optional fields.
 		$optional = array_filter( $optional );
 
 		return array_merge( $fields, $optional );

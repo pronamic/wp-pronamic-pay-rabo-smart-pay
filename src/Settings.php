@@ -1,4 +1,12 @@
 <?php
+/**
+ * Settings
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
@@ -15,24 +23,33 @@ use Pronamic\WordPress\Pay\Core\GatewaySettings;
  * @since   1.0.0
  */
 class Settings extends GatewaySettings {
+	/**
+	 * Constructs and initialize settings.
+	 */
 	public function __construct() {
 		add_filter( 'pronamic_pay_gateway_sections', array( $this, 'sections' ) );
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );
 	}
 
+	/**
+	 * Sections.
+	 *
+	 * @param array $sections Sections.
+	 * @return array
+	 */
 	public function sections( array $sections ) {
 		$sections['omnikassa-2'] = array(
 			'title'   => __( 'OmniKassa 2.0', 'pronamic_ideal' ),
 			'methods' => array( 'omnikassa-2' ),
 		);
 
-		// Advanced
+		// Advanced.
 		$sections['omnikassa-2_advanced'] = array(
 			'title'   => __( 'Advanced', 'pronamic_ideal' ),
 			'methods' => array( 'omnikassa-2' ),
 		);
 
-		// Transaction eedback
+		// Transaction feedback.
 		$sections['omnikassa-2_feedback'] = array(
 			'title'       => __( 'Transaction feedback', 'pronamic_ideal' ),
 			'methods'     => array( 'omnikassa-2' ),
@@ -46,8 +63,14 @@ class Settings extends GatewaySettings {
 		return $sections;
 	}
 
+	/**
+	 * Fields.
+	 *
+	 * @param array $fields Fields.
+	 * @return array
+	 */
 	public function fields( array $fields ) {
-		// Refresh Token
+		// Refresh Token.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'omnikassa-2',
@@ -57,7 +80,7 @@ class Settings extends GatewaySettings {
 			'classes'  => array( 'code' ),
 		);
 
-		// Signing Key
+		// Signing Key.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'omnikassa-2',
@@ -67,7 +90,7 @@ class Settings extends GatewaySettings {
 			'classes'  => array( 'large-text', 'code' ),
 		);
 
-		// Transaction feedback
+		// Transaction feedback.
 		$fields[] = array(
 			'section' => 'omnikassa-2',
 			'title'   => __( 'Transaction feedback', 'pronamic_ideal' ),
@@ -78,7 +101,7 @@ class Settings extends GatewaySettings {
 			),
 		);
 
-		// Purchase ID
+		// Purchase ID.
 		$fields[] = array(
 			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'omnikassa-2_advanced',
@@ -107,7 +130,7 @@ class Settings extends GatewaySettings {
 			),
 		);
 
-		// Webhook
+		// Webhook.
 		$fields[] = array(
 			'section'  => 'omnikassa-2_feedback',
 			'title'    => __( 'Webhook URL', 'pronamic_ideal' ),
