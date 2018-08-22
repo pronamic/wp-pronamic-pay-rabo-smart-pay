@@ -1,0 +1,4 @@
+{
+	"errorCode": 5001,
+	"consumerMessage": "The timestamp of the order announcement is invalid"
+}
