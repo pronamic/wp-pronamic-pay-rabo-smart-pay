@@ -126,18 +126,43 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		ReturnListener::listen( $payment );
-
 		if ( ! ReturnParameters::contains( $_GET ) ) { // WPCS: CSRF ok.
 			return;
 		}
 
 		$parameters = ReturnParameters::from_array( $_GET ); // WPCS: CSRF ok.
 
+		// Note.
+		$note_values = array(
+			'order_id'  => $parameters->get_order_id(),
+			'status'    => $parameters->get_status(),
+			'signature' => $parameters->get_signature(),
+			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
+		);
+
+		$note = '';
+
+		$note .= '<p>';
+		$note .= __( 'OmniKassa 2.0 return URL requested:', 'pronamic_ideal' );
+		$note .= '</p>';
+
+		$note .= '<dl>';
+
+		foreach ( $note_values as $key => $value ) {
+			$note .= sprintf( '<dt>%s</dt>', esc_html( $key ) );
+			$note .= sprintf( '<dd>%s</dd>', esc_html( $value ) );
+		}
+
+		$note .= '</dl>';
+
+		$payment->add_note( $note );
+
+		// Validate.
 		if ( ! $parameters->is_valid( $this->config->signing_key ) ) {
 			return;
 		}
 
+		// Status.
 		$payment->set_status( Statuses::transform( $parameters->get_status() ) );
 	}
 
@@ -180,12 +205,15 @@ class Gateway extends Core_Gateway {
 				$payment->set_transaction_id( $order_result->get_omnikassa_order_id() );
 				$payment->set_status( Statuses::transform( $order_result->get_order_status() ) );
 
-				// Add note.
-				$note = sprintf(
-					/* translators: %s: OmniKassa 2.0 */
-					__( 'Webhook requested by %s.', 'pronamic_ideal' ),
-					__( 'OmniKassa 2.0', 'pronamic_ideal' )
-				);
+				// Note.
+				$note = '';
+
+				$note .= '<p>';
+				$note .= __( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' );
+				$note .= '</p>';
+				$note .= '<pre>';
+				$note .= wp_json_encode( $order_result->get_json() );
+				$note .= '</pre>';
 
 				$payment->add_note( $note );
 
