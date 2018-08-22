@@ -112,36 +112,35 @@ class Client {
 	}
 
 	/**
-	 * Get remote request arguments.
+	 * Request URL with specified method, token.
 	 *
-	 * @since 2.0.1
-	 * @link https://github.com/WordPress/WordPress/blob/4.9.8/wp-includes/class-http.php#L176-L183
-	 *
-	 * @param array $args Arguments.
-	 * @return array
+	 * @param string      $method   HTTP request method.
+	 * @param string      $endpoint URL endpoint to request.
+	 * @param string      $token    Authorization token.
+	 * @param object|null $object   Object.
 	 */
-	private function get_remote_request_args( $args = array() ) {
-		$args = wp_parse_args( $args, array(
+	private function request( $method, $endpoint, $token, $object = null ) {
+		// URL.
+		$url = $this->get_url() . $endpoint;
+
+		// Arguments.
+		$args = array(
+			'method'     => $method,
+			'headers'    => array(
+				'Authorization' => 'Bearer ' . $token,
+			),
 			// We send an empty User-Agent string so OmniKassa 2.0 servers can't block requests based on the User-Agent.
 			'user-agent' => '',
-		) );
+		);
 
-		return $args;
-	}
+		if ( null !== $object ) {
+			$args['headers']['Content-Type'] = 'application/json';
 
-	/**
-	 * Get access token.
-	 *
-	 * @return string
-	 */
-	public function get_access_token_data() {
-		$url = $this->get_url() . 'gatekeeper/refresh';
+			$args['body'] = wp_json_encode( $object );
+		}
 
-		$response = wp_remote_get( $url, $this->get_remote_request_args( array(
-			'headers' => array(
-				'Authorization' => 'Bearer ' . $this->get_refresh_token(),
-			),
-		) ) );
+		// Request.
+		$response = wp_remote_request( $url, $args );
 
 		if ( is_wp_error( $response ) ) {
 			$this->error = $response;
@@ -151,27 +150,43 @@ class Client {
 			return false;
 		}
 
+		// Body.
 		$body = wp_remote_retrieve_body( $response );
 
 		$data = json_decode( $body );
 
-		if ( is_object( $data ) && isset( $data->errorCode ) && isset( $data->errorMessage ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
-
-			return false;
-		}
-
-		if ( is_object( $data ) && '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			return false;
-		}
-
 		if ( ! is_object( $data ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
+			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.'. $data );
 
 			return false;
 		}
 
+		// Error.
+		if ( isset( $data->errorCode ) ) {
+			$message = 'Unknown error.';
+
+			if ( isset( $data->consumerMessage ) ) {
+				$message = $data->consumerMessage;
+			} elseif ( isset( $data->errorMessage ) ) {
+				$message = $data->errorMessage;
+			}
+
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
+
+			return false;
+		}
+
+		// Ok.
 		return $data;
+	}
+
+	/**
+	 * Get access token.
+	 *
+	 * @return string
+	 */
+	public function get_access_token_data() {
+		return $this->request( 'GET', 'gatekeeper/refresh', $this->get_refresh_token() );
 	}
 
 	/**
@@ -182,52 +197,11 @@ class Client {
 	 * @return object|bool
 	 */
 	public function order_announce( $config, Order $order ) {
-		$url = $this->get_url() . 'order/server/api/order';
+		$object = $order->get_json();
 
-		$object            = $order->get_json();
 		$object->signature = Security::get_signature( $order, $config->signing_key );
 
-		$response = wp_remote_post( $url, $this->get_remote_request_args( array(
-			'headers' => array(
-				'Content-Type'  => 'application/json',
-				'Authorization' => 'Bearer ' . $config->access_token,
-			),
-			'body'    => wp_json_encode( $object ),
-		) ) );
-
-		if ( is_wp_error( $response ) ) {
-			return false;
-		}
-
-		$body = wp_remote_retrieve_body( $response );
-
-		$data = json_decode( $body );
-
-		if ( is_object( $data ) && isset( $data->errorCode ) && isset( $data->errorMessage ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
-		}
-
-		if ( is_object( $data ) && '201' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			if ( isset( $data->consumerMessage ) ) {
-				$message = $data->consumerMessage;
-			} elseif ( isset( $data->errorMessage ) ) {
-				$message = $data->errorMessage;
-			} else {
-				$message = 'Unknown error.';
-			}
-
-			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
-
-			return false;
-		}
-
-		if ( ! is_object( $data ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
-
-			return false;
-		}
-
-		return $data;
+		return $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
 	}
 
 	/**
@@ -237,28 +211,6 @@ class Client {
 	 * @return object
 	 */
 	public function get_order_results( $notification_token ) {
-		$url = $this->get_url() . 'order/server/api/events/results/merchant.order.status.changed';
-
-		$response = wp_remote_get( $url, $this->get_remote_request_args( array(
-			'headers' => array(
-				'Authorization' => 'Bearer ' . $notification_token,
-			),
-		) ) );
-
-		if ( is_wp_error( $response ) ) {
-			return false;
-		}
-
-		$body = wp_remote_retrieve_body( $response );
-
-		$data = json_decode( $body );
-
-		if ( ! is_object( $data ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );
-
-			return false;
-		}
-
-		return $data;
+		return $this->request( 'GET', 'order/server/api/events/results/merchant.order.status.changed', $notification_token );
 	}
 }
