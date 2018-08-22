@@ -68,6 +68,18 @@ class Money {
 	}
 
 	/**
+	 * Get JSON.
+	 *
+	 * @return object
+	 */
+	public function get_json() {
+		return (object) array(
+			'currency' => $this->get_currency(),
+			'amount'   => $this->get_amount(),
+		);
+	}
+
+	/**
 	 * Create money from object.
 	 *
 	 * @param stdClass $object Object.

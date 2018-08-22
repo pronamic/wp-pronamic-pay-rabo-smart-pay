@@ -179,6 +179,24 @@ class OrderResult {
 	}
 
 	/**
+	 * Get JSON.
+	 *
+	 * @return object
+	 */
+	public function get_json() {
+		return (object) array(
+			'merchantOrderId'     => $this->get_merchant_order_id(),
+			'omnikassaOrderId'    => $this->get_omnikassa_order_id(),
+			'poiId'               => $this->get_poi_id(),
+			'orderStatus'         => $this->get_order_status(),
+			'orderStatusDateTime' => $this->get_order_status_datetime(),
+			'errorCode'           => $this->get_error_code(),
+			'paidAmount'          => $this->get_paid_amount()->get_json(),
+			'totalAmount'         => $this->get_total_amount()->get_json(),
+		);
+	}
+
+	/**
 	 * Create order result from object.
 	 *
 	 * @param stdClass $object Object.
