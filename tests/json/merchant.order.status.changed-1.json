@@ -1,22 +1,22 @@
 {
-    "signature": "9384f4387cd03b7d7e49a34a6037fe97ea901a830f466d2bc5e852388d1a95302278b229639de51e2f841dc35a4c282685fb2de9ad6d579a8d8efd950231e12f",
-    "moreOrderResultsAvailable": false,
-    "orderResults": [
-        {
-            "merchantOrderId": "73",
-            "omnikassaOrderId": "2273c19c-d7b3-45d4-82cd-5612c4fd0957",
-            "poiId": "5000",
-            "orderStatus": "COMPLETED",
-            "orderStatusDateTime": "2018-08-21T14:37:54.853+02:00",
-            "errorCode": "",
-            "paidAmount": {
-                "currency": "EUR",
-                "amount": "100"
-            },
-            "totalAmount": {
-                "currency": "EUR",
-                "amount": "100"
-            }
-        }
-    ]
+	"signature": "9384f4387cd03b7d7e49a34a6037fe97ea901a830f466d2bc5e852388d1a95302278b229639de51e2f841dc35a4c282685fb2de9ad6d579a8d8efd950231e12f",
+	"moreOrderResultsAvailable": false,
+	"orderResults": [
+		{
+			"merchantOrderId": "73",
+			"omnikassaOrderId": "2273c19c-d7b3-45d4-82cd-5612c4fd0957",
+			"poiId": "5000",
+			"orderStatus": "COMPLETED",
+			"orderStatusDateTime": "2018-08-21T14:37:54.853+02:00",
+			"errorCode": "",
+			"paidAmount": {
+				"currency": "EUR",
+				"amount": "100"
+			},
+			"totalAmount": {
+				"currency": "EUR",
+				"amount": "100"
+			}
+		}
+	]
 }

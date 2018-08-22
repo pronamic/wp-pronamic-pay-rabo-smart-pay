@@ -11,10 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 /**
- * Title: OmniKassa 2.0 security
- * Description:
- * Copyright: Copyright (c) 2005 - 2018
- * Company: Pronamic
+ * Security
  *
  * @author  Remco Tolsma
  * @version 2.0.0
@@ -24,8 +21,8 @@ class Security {
 	/**
 	 * Calculdate signature for specific data.
 	 *
-	 * @param array  $data        Data.
-	 * @param string $signing_key Signing Key.
+	 * @param Signable $signable    Signable object.
+	 * @param string   $signing_key Signing Key.
 	 * @return string|null
 	 */
 	public static function get_signature( Signable $signable, $signing_key ) {
@@ -36,10 +33,6 @@ class Security {
 		}
 
 		if ( empty( $signing_key ) ) {
-			return;
-		}
-
-		if ( '' === $signing_key ) {
 			return;
 		}
 
@@ -65,11 +58,6 @@ class Security {
 			return false;
 		}
 
-		if ( 0 === strcasecmp( $signature_a, $signature_b ) ) {
-			// Valid signature.
-			return true;
-		}
-
-		return false;
+		return ( 0 === strcasecmp( $signature_a, $signature_b ) );
 	}
 }

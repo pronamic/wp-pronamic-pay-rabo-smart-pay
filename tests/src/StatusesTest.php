@@ -39,9 +39,9 @@ class StatusesTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function status_matrix_provider() {
 		return array(
-			array( Statuses::CANCELLED,   \Pronamic\WordPress\Pay\Core\Statuses::CANCELLED ),
-			array( Statuses::COMPLETED,   \Pronamic\WordPress\Pay\Core\Statuses::SUCCESS ),
-			array( Statuses::EXPIRED,     \Pronamic\WordPress\Pay\Core\Statuses::EXPIRED ),
+			array( Statuses::CANCELLED, \Pronamic\WordPress\Pay\Core\Statuses::CANCELLED ),
+			array( Statuses::COMPLETED, \Pronamic\WordPress\Pay\Core\Statuses::SUCCESS ),
+			array( Statuses::EXPIRED, \Pronamic\WordPress\Pay\Core\Statuses::EXPIRED ),
 			array( Statuses::IN_PROGRESS, \Pronamic\WordPress\Pay\Core\Statuses::OPEN ),
 			array( 'not existing status', null ),
 		);

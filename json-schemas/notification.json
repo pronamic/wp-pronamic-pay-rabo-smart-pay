@@ -2,6 +2,7 @@
 	"$id": "https://example.com/person.schema.json",
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"title": "OmniKassa 2.0 notification message.",
+	"type": "object",
 	"required": [
 		"authentication",
 		"expiry",
@@ -9,7 +10,6 @@
 		"poiId",
 		"signature"
 	],
-	"type": "object",
 	"properties": {
 		"authentication": {
 			"type": "string",

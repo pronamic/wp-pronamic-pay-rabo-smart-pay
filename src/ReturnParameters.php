@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use InvalidArgumentException;
 use Pronamic\WordPress\Pay\GatewayPostType;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Core\Gateway;
@@ -21,20 +22,52 @@ use Pronamic\WordPress\Pay\Core\Gateway;
  * @version 2.0.0
  * @since   1.0.0
  */
-class ReturnParameters extends Message implements Signable {
+class ReturnParameters extends Message {
 	/**
 	 * The "merchantOrderId" as used in the Order announce.
 	 *
 	 * @var string
 	 */
-	public $order_id;
+	private $order_id;
 
 	/**
 	 * The status of the order, see below for more details.
 	 *
 	 * @var string
 	 */
-	public $status;
+	private $status;
+
+	/**
+	 * Construct return parameters object.
+	 *
+	 * @param string $order_id  Order ID.
+	 * @param string $status    Status.
+	 * @param string $signature Signature.
+	 */
+	public function __construct( $order_id, $status, $signature ) {
+		parent::__construct( $signature );
+
+		$this->order_id = $order_id;
+		$this->status   = $status;
+	}
+
+	/**
+	 * Get order ID.
+	 *
+	 * @return string
+	 */
+	public function get_order_id() {
+		return $this->order_id;
+	}
+
+	/**
+	 * Get status.
+	 *
+	 * @return string
+	 */
+	public function get_status() {
+		return $this->status;
+	}
 
 	/**
 	 * Get signature data.
@@ -45,8 +78,24 @@ class ReturnParameters extends Message implements Signable {
 	 */
 	public function get_signature_data() {
 		return array(
-			$this->order_id,
-			$this->status,
+			$this->get_order_id(),
+			$this->get_status(),
+		);
+	}
+
+	/**
+	 * Check if data array contains return parameters.
+	 *
+	 * @param array $data Data array.
+	 * @return bool True if array contains return parameters, false otherwise.
+	 */
+	public static function contains( array $data ) {
+		return (
+			array_key_exists( 'order_id', $data )
+				&&
+			array_key_exists( 'status', $data )
+				&&
+			array_key_exists( 'signature', $data )
 		);
 	}
 
@@ -55,22 +104,25 @@ class ReturnParameters extends Message implements Signable {
 	 *
 	 * @param array $data Data array.
 	 * @return ReturnParameters
+	 * @throws InvalidArgumentException Throws invalid argument exception when array does not contains the required keys.
 	 */
-	public static function from_array( $data ) {
-		$object = new self();
-
-		if ( array_key_exists( 'order_id', $data ) ) {
-			$object->order_id = $data['order_id'];
+	public static function from_array( array $data ) {
+		if ( ! array_key_exists( 'order_id', $data ) ) {
+			throw new InvalidArgumentException( 'Data array must contain `order_id` field.' );
 		}
 
-		if ( array_key_exists( 'status', $data ) ) {
-			$object->status = $data['status'];
+		if ( ! array_key_exists( 'status', $data ) ) {
+			throw new InvalidArgumentException( 'Data array must contain `status` field.' );
 		}
 
-		if ( array_key_exists( 'signature', $data ) ) {
-			$object->signature = $data['signature'];
+		if ( ! array_key_exists( 'signature', $data ) ) {
+			throw new InvalidArgumentException( 'Data array must contain `signature` field.' );
 		}
 
-		return $object;
+		return new self(
+			$data['order_id'],
+			$data['status'],
+			$data['signature']
+		);
 	}
 }

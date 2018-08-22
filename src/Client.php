@@ -13,10 +13,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use WP_Error;
 
 /**
- * Title: OmniKassa 2.0 client
- * Description:
- * Copyright: Copyright (c) 2005 - 2018
- * Company: Pronamic
+ * Client
  *
  * @author  Remco Tolsma
  * @version 2.0.1
@@ -242,21 +239,17 @@ class Client {
 	}
 
 	/**
-	 * Retrieve announcement.
+	 * Get order results by the notification token.
 	 *
-	 * @param object $announcement Announcement object.
+	 * @param string $notification_token Notification token.
 	 * @return object
 	 */
-	public function retrieve_announcement( $announcement ) {
-		if ( ! is_object( $announcement ) ) {
-			return;
-		}
-
-		$url = $this->get_url() . 'order/server/api/events/results/' . $announcement->eventName;
+	public function get_order_results( $notification_token ) {
+		$url = $this->get_url() . 'order/server/api/events/results/merchant.order.status.changed';
 
 		$response = wp_remote_get( $url, $this->get_remote_request_args( array(
 			'headers' => array(
-				'Authorization' => 'Bearer ' . $announcement->authentication,
+				'Authorization' => 'Bearer ' . $notification_token,
 			),
 		) ) );
 
@@ -267,24 +260,6 @@ class Client {
 		$body = wp_remote_retrieve_body( $response );
 
 		$data = json_decode( $body );
-
-		if ( is_object( $data ) && isset( $data->errorCode ) && isset( $data->errorMessage ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', $data->errorMessage, $data );
-		}
-
-		if ( is_object( $data ) && '200' != wp_remote_retrieve_response_code( $response ) ) { // WPCS: loose comparison ok.
-			if ( isset( $data->consumerMessage ) ) {
-				$message = $data->consumerMessage;
-			} elseif ( isset( $data->errorMessage ) ) {
-				$message = $data->errorMessage;
-			} else {
-				$message = 'Unknown error.';
-			}
-
-			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
-
-			return false;
-		}
 
 		if ( ! is_object( $data ) ) {
 			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.' );

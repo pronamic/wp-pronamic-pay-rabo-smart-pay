@@ -41,11 +41,11 @@ class MethodsTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function status_matrix_provider() {
 		return array(
-			array( PaymentMethods::BANCONTACT,  PaymentBrands::BANCONTACT ),
+			array( PaymentMethods::BANCONTACT, PaymentBrands::BANCONTACT ),
 			array( PaymentMethods::CREDIT_CARD, PaymentBrands::CARDS ),
-			array( PaymentMethods::IDEAL,       PaymentBrands::IDEAL ),
-			array( PaymentMethods::PAYPAL,      PaymentBrands::PAYPAL ),
-			array( 'not existing status',       null ),
+			array( PaymentMethods::IDEAL, PaymentBrands::IDEAL ),
+			array( PaymentMethods::PAYPAL, PaymentBrands::PAYPAL ),
+			array( 'not existing status', null ),
 		);
 	}
 }

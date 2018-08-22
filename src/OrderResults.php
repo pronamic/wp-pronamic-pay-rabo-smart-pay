@@ -10,30 +10,58 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use ArrayIterator;
+use InvalidArgumentException;
+use IteratorAggregate;
+use stdClass;
+use JsonSchema\Constraints\Constraint;
+use JsonSchema\Exception\ValidationException;
+use JsonSchema\Validator;
+
 /**
- * Title: OmniKassa 2.0 order
- * Description:
- * Copyright: Copyright (c) 2005 - 2018
- * Company: Pronamic
+ * Order results
  *
  * @author  Remco Tolsma
  * @version 2.0.0
  * @since   1.0.0
  */
-class OrderResults implements Signable {
+class OrderResults extends Message implements IteratorAggregate {
 	/**
 	 * More order results available flag.
 	 *
 	 * @var bool
 	 */
-	public $more_order_results_available;
+	private $more_available;
 
 	/**
 	 * Order results.
 	 *
 	 * @var array
 	 */
-	public $order_results;
+	private $order_results;
+
+	/**
+	 * Construct order results message.
+	 *
+	 * @param bool   $more_available True if more order results available, false oterwise.
+	 * @param array  $order_results  Order results.
+	 * @param string $signature      Signature.
+	 */
+	public function __construct( $more_available, array $order_results, $signature ) {
+		parent::__construct( $signature );
+
+		$this->more_available = $more_available;
+		$this->order_results  = $order_results;
+	}
+
+	/**
+	 * More available.
+	 *
+	 * @return bool True if more order results available, false oterwise.
+	 */
+	public function more_available() {
+		return $this->more_available;
+	}
 
 	/**
 	 * Get signature data.
@@ -41,33 +69,88 @@ class OrderResults implements Signable {
 	 * @return array
 	 */
 	public function get_signature_data() {
-		$more_results_available = $this->more_order_results_available ? 'true' : 'false';
+		$data = array();
 
-		$data = array(
-			$more_results_available,
-		);
+		$data[] = $this->more_available() ? 'true' : 'false';
 
-		if ( ! $this->order_results ) {
-			return $data;
-		}
-
-		foreach ( $this->order_results as $order ) {
-			$order_data = array(
-				$order->merchantOrderId,
-				$order->omnikassaOrderId,
-				$order->poiId,
-				$order->orderStatus,
-				$order->orderStatusDateTime,
-				$order->errorCode,
-				$order->paidAmount->currency,
-				$order->paidAmount->amount,
-				$order->totalAmount->currency,
-				$order->totalAmount->amount,
-			);
-
-			$data = array_merge( $data, $order_data );
+		foreach ( $this->order_results as $order_result ) {
+			$data[] = $order_result->get_merchant_order_id();
+			$data[] = $order_result->get_omnikassa_order_id();
+			$data[] = $order_result->get_poi_id();
+			$data[] = $order_result->get_order_status();
+			$data[] = $order_result->get_order_status_datetime();
+			$data[] = $order_result->get_error_code();
+			$data[] = $order_result->get_paid_amount()->get_currency();
+			$data[] = $order_result->get_paid_amount()->get_amount();
+			$data[] = $order_result->get_total_amount()->get_currency();
+			$data[] = $order_result->get_total_amount()->get_amount();
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Get iterator.
+	 *
+	 * @return ArrayIterator
+	 */
+	public function getIterator() {
+		return new ArrayIterator( $this->order_results );
+	}
+
+	/**
+	 * Create order results from object.
+	 *
+	 * @param stdClass $object Object.
+	 * @return OrderResults
+	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 */
+	public static function from_object( stdClass $object ) {
+		if ( ! isset( $object->signature ) ) {
+			throw new InvalidArgumentException( 'Object must contain `signature` property.' );
+		}
+
+		if ( ! isset( $object->moreOrderResultsAvailable ) ) {
+			throw new InvalidArgumentException( 'Object must contain `moreOrderResultsAvailable` property.' );
+		}
+
+		if ( ! isset( $object->orderResults ) ) {
+			throw new InvalidArgumentException( 'Object must contain `orderResults` property.' );
+		}
+
+		if ( ! is_array( $object->orderResults ) ) {
+			throw new InvalidArgumentException( 'The `orderResults` property must be an array.' );
+		}
+
+		$order_results = array();
+
+		foreach ( $object->orderResults as $o ) {
+			$order_results[] = OrderResult::from_object( $o );
+		}
+
+		return new self(
+			$object->moreOrderResultsAvailable,
+			$order_results,
+			$object->signature
+		);
+	}
+
+	/**
+	 * Create notification from JSON string.
+	 *
+	 * @param string $json JSON string.
+	 * @return Notification
+	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
+	 */
+	public static function from_json( $json ) {
+		$data = json_decode( $json );
+
+		$validator = new Validator();
+
+		$validator->validate( $data, (object) array(
+			'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/order-results.json' ),
+		), Constraint::CHECK_MODE_EXCEPTIONS );
+
+		return self::from_object( $data );
 	}
 }
