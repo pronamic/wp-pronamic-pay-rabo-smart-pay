@@ -24,7 +24,7 @@ use JsonSchema\Validator;
  * @version 2.0.0
  * @since   1.0.0
  */
-class Error extends Exception {
+class Error {
 	/**
 	 * Code.
 	 *
@@ -40,25 +40,14 @@ class Error extends Exception {
 	private $message;
 
 	/**
-	 * Consumer message.
-	 *
-	 * @var string
-	 */
-	private $consumer_message
-
-	/**
 	 * Construct error.
 	 *
-	 * @param string $code             Code.
-	 * @param string $message          Message.
-	 * @param string $consumer_message Consumer message.
+	 * @param string $code    Code.
+	 * @param string $message Message.
 	 */
-	public function __construct( $code, $message, $consumer_message = null ) {
-		parent::__construct( $message, $code );
-
-		$this->code             = $code;
-		$this->message          = $message;
-		$this->consumer_message = $consumer_message;
+	public function __construct( $code, $message ) {
+		$this->code    = $code;
+		$this->message = $message;
 	}
 
 	/**
@@ -76,7 +65,7 @@ class Error extends Exception {
 	 * @return int
 	 */
 	public function get_message() {
-		return $this->message;
+		return $this->getMessage();
 	}
 
 	/**
@@ -91,21 +80,19 @@ class Error extends Exception {
 			throw new InvalidArgumentException( 'Object must contain `errorCode` property.' );
 		}
 
-		$message          = null;
-		$consumer_message = null;
+		$message = null;
 
-		if ( ! isset( $object->errorMessage ) ) {
+		if ( isset( $object->errorMessage ) ) {
 			$message = $object->errorMessage;
 		}
 
-		if ( ! isset( $object->consumerMessage ) ) {
-			$consumer_message = $object->consumerMessage;
+		if ( isset( $object->consumerMessage ) ) {
+			$message = $object->consumerMessage;
 		}
 
 		return new self(
 			$object->errorCode,
-			$message,
-			$consumer_message
+			$message
 		);
 	}
 

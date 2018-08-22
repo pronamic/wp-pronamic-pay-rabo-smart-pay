@@ -156,7 +156,7 @@ class Client {
 		$data = json_decode( $body );
 
 		if ( ! is_object( $data ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.'. $data );
+			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.', $data );
 
 			return false;
 		}
