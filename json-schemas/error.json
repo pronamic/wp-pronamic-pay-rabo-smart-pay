@@ -4,8 +4,7 @@
 	"title": "OmniKassa 2.0 error.",
 	"type": "object",
 	"required": [
-		"errorCode",
-		"errorMessage"
+		"errorCode"
 	],
 	"properties": {
 		"errorCode": {
