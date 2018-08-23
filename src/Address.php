@@ -49,7 +49,7 @@ class Address {
 	 * Street.
 	 *
 	 * Note: In case of payment via Visa, Mastercard, V PAY,
-	 * Bancontact and Maestro the street name will be 
+	 * Bancontact and Maestro the street name will be
 	 * truncated to 50 characters.
 	 *
 	 * @var string
@@ -59,9 +59,9 @@ class Address {
 	/**
 	 * House number.
 	 *
-	 * Note: In case of payment via Visa, Mastercard, V PAY, 
+	 * Note: In case of payment via Visa, Mastercard, V PAY,
 	 * Bancontact and Maestro the houseNumber concatenated
-	 * with houseNumberAddition (see below) will be 
+	 * with houseNumberAddition (see below) will be
 	 * truncated to 10 characters.
 	 *
 	 * @var string

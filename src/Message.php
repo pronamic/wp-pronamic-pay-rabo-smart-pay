@@ -23,16 +23,7 @@ abstract class Message implements Signable {
 	 *
 	 * @var string
 	 */
-	public $signature;
-
-	/**
-	 * Construct message.
-	 *
-	 * @param string $signature Signature.
-	 */
-	public function __construct( $signature ) {
-		$this->signature = $signature;
-	}
+	private $signature;
 
 	/**
 	 * Get signature.
@@ -41,6 +32,15 @@ abstract class Message implements Signable {
 	 */
 	public function get_signature() {
 		return $this->signature;
+	}
+
+	/**
+	 * Set signature.
+	 *
+	 * @param string $signature Signature.
+	 */
+	protected function set_signature( $signature ) {
+		$this->signature = $signature;
 	}
 
 	/**

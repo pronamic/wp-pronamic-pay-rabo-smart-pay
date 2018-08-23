@@ -1,6 +1,6 @@
 <?php
 /**
- * Methods test
+ * Payment brands test
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2018 Pronamic
@@ -13,13 +13,13 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
- * Methods test
+ * Payment brands test
  *
  * @author  Remco Tolsma
  * @version 2.0.3
  * @since   1.0.0
  */
-class MethodsTest extends \PHPUnit_Framework_TestCase {
+class PaymentBrandsTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Test transform.
 	 *
@@ -29,9 +29,9 @@ class MethodsTest extends \PHPUnit_Framework_TestCase {
 	 * @dataProvider status_matrix_provider
 	 */
 	public function test_transform( $pronamic_pay_method, $expected ) {
-		$omnikassa_2_method = Methods::transform( $pronamic_pay_method );
+		$omnikassa_2_payment_brand = PaymentBrands::transform( $pronamic_pay_method );
 
-		$this->assertEquals( $expected, $omnikassa_2_method );
+		$this->assertEquals( $expected, $omnikassa_2_payment_brand );
 	}
 
 	/**

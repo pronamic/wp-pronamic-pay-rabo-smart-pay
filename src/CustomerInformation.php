@@ -60,6 +60,15 @@ class CustomerInformation {
 	private $telephone_number;
 
 	/**
+	 * Set the e-mailadress of the consumer.
+	 *
+	 * @param string $email_address E-mailadress of the consumer
+	 */
+	public function set_email_address( $email_address ) {
+		$this->email_address = $email_address;
+	}
+
+	/**
 	 * Get JSON.
 	 *
 	 * @return object

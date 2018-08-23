@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
+
 /**
  * Payment brands
  *
@@ -86,4 +88,27 @@ class PaymentBrands {
 	 * @var string
 	 */
 	const CARDS = 'CARDS';
+
+	/**
+	 * Transform WordPress payment method to OmniKassa 2.0 method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $payment_method Payment method.
+	 * @return string
+	 */
+	public static function transform( $payment_method ) {
+		switch ( $payment_method ) {
+			case PaymentMethods::BANCONTACT:
+				return self::BANCONTACT;
+			case PaymentMethods::CREDIT_CARD:
+				return self::CARDS;
+			case PaymentMethods::IDEAL:
+				return self::IDEAL;
+			case PaymentMethods::PAYPAL:
+				return self::PAYPAL;
+			default:
+				return null;
+		}
+	}
 }

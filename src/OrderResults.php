@@ -25,7 +25,7 @@ use JsonSchema\Validator;
  * @version 2.0.0
  * @since   1.0.0
  */
-class OrderResults extends Message implements IteratorAggregate {
+class OrderResults extends ResponseMessage implements IteratorAggregate {
 	/**
 	 * More order results available flag.
 	 *

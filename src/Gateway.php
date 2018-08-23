@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -71,20 +72,28 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
-		$order = new Order();
+		$merchant_order_id = $payment->format_string( $this->config->order_id );
 
-		$order->timestamp           = date( DATE_ATOM );
-		$order->merchant_order_id   = $payment->format_string( $this->config->order_id );
-		$order->description         = $payment->get_description();
-		$order->amount              = $payment->get_amount()->get_amount();
-		$order->currency            = $payment->get_currency();
-		$order->language            = $payment->get_language();
-		$order->merchant_return_url = $payment->get_return_url();
-		$order->payment_brand       = Methods::transform( $payment->get_method() );
+		$amount = new Money(
+			$payment->get_currency(),
+			Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
+		);
 
-		if ( null !== $order->payment_brand ) {
+		$merchant_return_url = $payment->get_return_url();
+
+		$order = new Order( $merchant_order_id, $amount, $merchant_return_url );
+
+		$order->set_description( $payment->get_description() );
+		$order->set_language( $payment->get_language() );
+
+		// Payment brand.
+		$payment_brand = PaymentBrands::transform( $payment->get_method() );
+
+		$order->set_payment_brand( $payment_brand );
+
+		if ( null !== $payment_brand ) {
 			// Payment brand force should only be set if payment brand is not empty.
-			$order->payment_brand_force = PaymentBrandForce::FORCE_ONCE;
+			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
 		}
 
 		if ( ! $this->config->is_access_token_valid() ) {

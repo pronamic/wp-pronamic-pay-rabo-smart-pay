@@ -23,7 +23,7 @@ use JsonSchema\Validator;
  * @version 2.0.0
  * @since   1.0.0
  */
-class Notification extends Message {
+class Notification extends ResponseMessage {
 	/**
 	 * The token that can be used to do the status pull.
 	 *

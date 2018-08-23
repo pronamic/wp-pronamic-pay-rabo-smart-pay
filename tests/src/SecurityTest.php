@@ -34,6 +34,6 @@ class SecurityTest extends \PHPUnit_Framework_TestCase {
 
 		$signature = Security::get_signature( $return_parameters, $signing_key );
 
-		$this->assertEquals( $return_parameters->signature, $signature );
+		$this->assertEquals( $return_parameters->get_signature(), $signature );
 	}
 }
