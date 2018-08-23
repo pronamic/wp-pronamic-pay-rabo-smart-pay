@@ -127,7 +127,7 @@ class Order extends Message {
 	 * Payment brand force.
 	 *
 	 * This field should only be delivered if the paymentBrand field (see
-	 * above) is also specified. This field can be used to send or, after 
+	 * above) is also specified. This field can be used to send or, after
 	 * a failed payment, the consumer can or can not select another payment
 	 * method to still pay the payment.
 	 *
