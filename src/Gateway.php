@@ -74,6 +74,8 @@ class Gateway extends Core_Gateway {
 	public function start( Payment $payment ) {
 		$merchant_order_id = $payment->format_string( $this->config->order_id );
 
+		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
+
 		$amount = new Money(
 			$payment->get_currency(),
 			Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
@@ -205,7 +207,7 @@ class Gateway extends Core_Gateway {
 			}
 
 			foreach ( $order_results as $order_result ) {
-				$payment = get_pronamic_payment_by_meta( '_pronamic_payment_order_id', $order_result->get_merchant_order_id() );
+				$payment = get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
 
 				if ( empty( $payment ) ) {
 					continue;
@@ -221,7 +223,7 @@ class Gateway extends Core_Gateway {
 				$note .= __( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' );
 				$note .= '</p>';
 				$note .= '<pre>';
-				$note .= wp_json_encode( $order_result->get_json() );
+				$note .= wp_json_encode( $order_result->get_json(), JSON_PRETTY_PRINT );
 				$note .= '</pre>';
 
 				$payment->add_note( $note );
