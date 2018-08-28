@@ -1,26 +1,32 @@
 <?php
+/**
+ * Gateway
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
- * Title: OmniKassa 2.0 gateway
- * Description:
- * Copyright: Copyright (c) 2005 - 2018
- * Company: Pronamic
+ * Gateway
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.2
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
-	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config
+	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -29,7 +35,7 @@ class Gateway extends Core_Gateway {
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
 
-		// Client
+		// Client.
 		$this->client = new Client();
 
 		$url = Client::URL_PRODUCTION;
@@ -47,6 +53,7 @@ class Gateway extends Core_Gateway {
 	 * Get supported payment methods.
 	 *
 	 * @see \Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
+	 * @return array
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -62,23 +69,33 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @see Core_Gateway::start()
 	 *
-	 * @param Payment $payment
+	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
-		$order = new Order();
+		$merchant_order_id = $payment->format_string( $this->config->order_id );
 
-		$order->timestamp           = date( DATE_ATOM );
-		$order->merchant_order_id   = $payment->format_string( $this->config->order_id );
-		$order->description         = $payment->get_description();
-		$order->amount              = $payment->get_amount()->get_amount();
-		$order->currency            = $payment->get_currency();
-		$order->language            = $payment->get_language();
-		$order->merchant_return_url = $payment->get_return_url();
-		$order->payment_brand       = Methods::transform( $payment->get_method() );
+		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
-		if ( null !== $order->payment_brand ) {
+		$amount = new Money(
+			$payment->get_currency(),
+			Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
+		);
+
+		$merchant_return_url = $payment->get_return_url();
+
+		$order = new Order( $merchant_order_id, $amount, $merchant_return_url );
+
+		$order->set_description( $payment->get_description() );
+		$order->set_language( $payment->get_language() );
+
+		// Payment brand.
+		$payment_brand = PaymentBrands::transform( $payment->get_method() );
+
+		$order->set_payment_brand( $payment_brand );
+
+		if ( null !== $payment_brand ) {
 			// Payment brand force should only be set if payment brand is not empty.
-			$order->payment_brand_force = PaymentBrandForce::FORCE_ONCE;
+			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
 		}
 
 		if ( ! $this->config->is_access_token_valid() ) {
@@ -117,48 +134,102 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Update status of the specified payment.
 	 *
-	 * @param Payment $payment
+	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		$input_status = null;
-
-		// Update status on customer return
-		if ( filter_has_var( INPUT_GET, 'status' ) && filter_has_var( INPUT_GET, 'signature' ) ) {
-			// Input data
-			$input_status    = filter_input( INPUT_GET, 'status', FILTER_SANITIZE_STRING );
-			$input_signature = filter_input( INPUT_GET, 'signature', FILTER_SANITIZE_STRING );
-
-			// Validate signature
-			$merchant_order_id = $payment->get_id();
-
-			if ( '{order_id}' === $this->config->order_id ) {
-				$merchant_order_id = $payment->get_order_id();
-			}
-
-			$data = array( $merchant_order_id, $input_status );
-
-			$signature = Security::calculate_signature( $data, $this->config->signing_key );
-
-			if ( ! Security::validate_signature( $input_signature, $signature ) ) {
-				// Invalid signature
-				return;
-			}
-		}
-
-		// Update status via webhook
-		if ( isset( $payment->meta['omnikassa_2_update_order_status'] ) ) {
-			$input_status = $payment->meta['omnikassa_2_update_order_status'];
-
-			$payment->set_meta( 'omnikassa_2_update_order_status', null );
-		}
-
-		if ( ! $input_status ) {
+		if ( ! ReturnParameters::contains( $_GET ) ) { // WPCS: CSRF ok.
 			return;
 		}
 
-		// Update payment status
-		$status = Statuses::transform( $input_status );
+		$parameters = ReturnParameters::from_array( $_GET ); // WPCS: CSRF ok.
 
-		$payment->set_status( $status );
+		// Note.
+		$note_values = array(
+			'order_id'  => $parameters->get_order_id(),
+			'status'    => $parameters->get_status(),
+			'signature' => $parameters->get_signature(),
+			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
+		);
+
+		$note = '';
+
+		$note .= '<p>';
+		$note .= __( 'OmniKassa 2.0 return URL requested:', 'pronamic_ideal' );
+		$note .= '</p>';
+
+		$note .= '<dl>';
+
+		foreach ( $note_values as $key => $value ) {
+			$note .= sprintf( '<dt>%s</dt>', esc_html( $key ) );
+			$note .= sprintf( '<dd>%s</dd>', esc_html( $value ) );
+		}
+
+		$note .= '</dl>';
+
+		$payment->add_note( $note );
+
+		// Validate.
+		if ( ! $parameters->is_valid( $this->config->signing_key ) ) {
+			return;
+		}
+
+		// Status.
+		$payment->set_status( Statuses::transform( $parameters->get_status() ) );
+	}
+
+	/**
+	 * Handle notification.
+	 *
+	 * @param Notification $notification Notification.
+	 */
+	public function handle_notification( Notification $notification ) {
+		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
+			return;
+		}
+
+		switch ( $notification->get_event_name() ) {
+			case 'merchant.order.status.changed':
+				return $this->handle_merchant_order_staus_changed( $notification );
+		}
+	}
+
+	/**
+	 * Handle `merchant.order.status.changed` event.
+	 *
+	 * @param Notification $notification Notification.
+	 */
+	private function handle_merchant_order_staus_changed( Notification $notification ) {
+		do {
+			$order_results = $this->client->get_order_results( $notification->get_authentication() );
+
+			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
+				return;
+			}
+
+			foreach ( $order_results as $order_result ) {
+				$payment = get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
+
+				if ( empty( $payment ) ) {
+					continue;
+				}
+
+				$payment->set_transaction_id( $order_result->get_omnikassa_order_id() );
+				$payment->set_status( Statuses::transform( $order_result->get_order_status() ) );
+
+				// Note.
+				$note = '';
+
+				$note .= '<p>';
+				$note .= __( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' );
+				$note .= '</p>';
+				$note .= '<pre>';
+				$note .= wp_json_encode( $order_result->get_json(), JSON_PRETTY_PRINT );
+				$note .= '</pre>';
+
+				$payment->add_note( $note );
+
+				$payment->save();
+			}
+		} while ( $order_results->more_available() );
 	}
 }

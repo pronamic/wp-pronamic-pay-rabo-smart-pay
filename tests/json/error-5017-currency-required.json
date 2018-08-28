@@ -1,0 +1,4 @@
+{
+	"errorCode": 5017,
+	"consumerMessage": "currency required and should be one of: [AUD, CAD, CHF, DKK, EUR, GBP, JPY, NOK, SEK, USD]"
+}

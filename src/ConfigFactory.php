@@ -1,20 +1,31 @@
 <?php
+/**
+ * Config factory
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
 
 /**
- * Title: OmniKassa 2.0 config factory
- * Description:
- * Copyright: Copyright (c) 2005 - 2018
- * Company: Pronamic
+ * Config factory
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.2
  * @since   1.0.0
  */
 class ConfigFactory extends GatewayConfigFactory {
+	/**
+	 * Get configuration by post ID.
+	 *
+	 * @param string $post_id Post ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$config = new Config();
 

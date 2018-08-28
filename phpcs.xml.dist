@@ -7,11 +7,18 @@
 
 	<config name="testVersion" value="5.3-99.0" />
 
-	<rule ref="PHPCompatibility" />
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>tests/wp-config.php</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>wordpress/*</exclude-pattern>
+	<exclude-pattern>wp-content/*</exclude-pattern>
+
+	<rule ref="PHPCompatibility">
+		<!-- https://github.com/WordPress/WordPress/blob/4.9.8/wp-includes/compat.php#L355-L359 -->
+		<exclude name="PHPCompatibility.PHP.NewConstants.json_pretty_printFound" />
+	</rule>
 
 	<rule ref="WordPress">
-		<exclude name="Squiz.Commenting" />
-
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_key" />
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query" />
 

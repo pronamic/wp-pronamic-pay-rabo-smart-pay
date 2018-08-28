@@ -36,7 +36,8 @@
 	"require": {
 		"php": "^5.3",
 		"wp-pay/core": "^2.0",
-		"wp-pay-gateways/common": "^2.0"
+		"wp-pay-gateways/common": "^2.0",
+		"justinrainbow/json-schema": "^5.2"
 	},
 	"require-dev": {
 		"php-coveralls/php-coveralls": "^1.0",
@@ -44,6 +45,8 @@
 		"phpunit/phpunit": "^4.5",
 		"squizlabs/php_codesniffer": "^2.7",
 		"wp-coding-standards/wpcs": "^1.0",
-		"wimg/php-compatibility": "^8.0"
+		"wimg/php-compatibility": "^8.0",
+		"johnpbloch/wordpress": "^4.9",
+		"wp-phpunit/wp-phpunit": "^4.9"
 	}
 }

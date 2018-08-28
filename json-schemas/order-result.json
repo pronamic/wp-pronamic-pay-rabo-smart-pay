@@ -1,0 +1,48 @@
+{
+	"$id": "https://example.com/person.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "OmniKassa 2.0 order result.",
+	"type": "object",
+	"required": [
+		"merchantOrderId",
+		"omnikassaOrderId",
+		"poiId",
+		"orderStatus",
+		"orderStatusDateTime",
+		"errorCode",
+		"paidAmount"
+	],
+	"properties": {
+		"merchantOrderId": {
+			"type": "string",
+			"description": "OrderId as delivered during the Order Announce."
+		},
+		"omnikassaOrderId": {
+			"type": "string",
+			"description": "The unique id that the omnikassa has assigned to this order."
+		},
+		"poiId": {
+			"type": ["number", "string"],
+			"description": "Unique identification of the webshop (point of interaction), seen from ROK. This is relevant if several webshops use the same webhook URL."
+		},
+		"orderStatus": {
+			"type": "string",
+			"description": "The status of the order. See chapter 'Consumer returns at the webshop' for an overview of the possible statuses."
+		},
+		"orderStatusDateTime": {
+			"type": "string",
+			"format": "date-time",
+			"description": "The moment this status is reached."
+		},
+		"errorCode": {
+			"type": "string",
+			"description": "Future field, for now: always empty."
+		},
+		"paidAmount": {
+			"$ref": "money.json"
+		},
+		"totalAmount": {
+			"$ref": "money.json"
+		}
+	}
+}

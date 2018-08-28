@@ -1,0 +1,36 @@
+{
+	"$id": "https://example.com/person.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "OmniKassa 2.0 notification message.",
+	"type": "object",
+	"required": [
+		"authentication",
+		"expiry",
+		"eventName",
+		"poiId",
+		"signature"
+	],
+	"properties": {
+		"authentication": {
+			"type": "string",
+			"description": "The token that can be used to do the status pull."
+		},
+		"expiry": {
+			"type": "string",
+			"format": "date-time",
+			"description": "The validity period of the token, in the ISO-8601 format (yyyy- MM-ddTHH: mm: ss.SSSZZ)."
+		},
+		"eventName": {
+			"type": "string",
+			"description": "The type of notification. For the time being this is always: merchant.order.status.changed."
+		},
+		"poiId": {
+			"type": ["number", "string"],
+			"description": "Identification of the webshop (point of interaction), seen from ROK. This is relevant if several webshops use the same webhook URL."
+		},
+		"signature": {
+			"type": "string",
+			"description": "The signature of the message, see heading signature for details.."
+		}
+	}
+}

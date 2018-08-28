@@ -1,0 +1,4 @@
+{
+	"errorCode": 5017,
+	"consumerMessage": "order amount must be greater than zero"
+}

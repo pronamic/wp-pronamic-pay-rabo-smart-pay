@@ -1,57 +1,67 @@
+/**
+ * Grunt
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
+ */
+
 module.exports = function( grunt ) {
 	require( 'load-grunt-tasks' )( grunt );
 
 	// Project configuration.
 	grunt.initConfig( {
-		// Package
+		// Package.
 		pkg: grunt.file.readJSON( 'package.json' ),
 
-		// JSHint
+		// JSHint.
 		jshint: {
 			all: [ 'Gruntfile.js', 'composer.json', 'package.json' ]
 		},
 
-		// PHP Code Sniffer
+		// PHP Code Sniffer.
 		phpcs: {
-			application: {
-				src: [
-					'**/*.php',
-					'!node_modules/**',
-					'!vendor/**'
-				],
-			},
 			options: {
 				bin: 'vendor/bin/phpcs',
 				standard: 'phpcs.xml.dist',
 				showSniffCodes: true
-			}
+			},
+			application: {
+				src: [
+					'**/*.php',
+					'!node_modules/**',
+					'!vendor/**',
+					'!wordpress/**',
+				]
+			},
 		},
 
-		// PHPLint
+		// PHPLint.
 		phplint: {
 			all: [ 'src/**/*.php' ]
 		},
 
-		// PHP Mess Detector
+		// PHP Mess Detector.
 		phpmd: {
-			application: {
-				dir: 'src'
-			},
 			options: {
 				bin: 'vendor/bin/phpmd',
 				exclude: 'node_modules',
 				reportFormat: 'xml',
 				rulesets: 'phpmd.ruleset.xml'
+			},
+			application: {
+				dir: 'src'
 			}
 		},
-		
-		// PHPUnit
+
+		// PHPUnit.
 		phpunit: {
 			options: {
 				bin: 'vendor/bin/phpunit'
 			},
-			classes: {
-				
+			application: {
+
 			}
 		}
 	} );

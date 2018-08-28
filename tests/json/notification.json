@@ -1,0 +1,7 @@
+{
+	"signature": "f709c6a8be921774ebe52af3ea194d3029e56b1256ec750a056cce6344b1795329f3869b3f4afa7c8e45a9814bbcf08c43f27a0a902b52c06abbb90e7ab1407e",
+	"authentication": "eyJraWQiOiJOTyIsImFsZyI6IkVTMjU2In0.eyJubyMiOjUwMDAsIm1raWQiOjIwODYsIm5vJCI6Im1lcmNoYW50Lm9yZGVyLnN0YXR1cy5jaGFuZ2VkIiwiY2lkIjoiYWZhOC0yMWZlIiwiZXhwIjoxNTM0ODUzMTg5fQ.yjqAdg_GKJHiOWsflbM9EJs8RrvJi8eBB0gHBCIKOJ4XLca32eXUEE26S-hy1PtPhz3-R-afS7tzw-Pt3STcuA",
+	"expiry": "2018-08-21T14:06:29.456+02:00",
+	"eventName": "merchant.order.status.changed",
+	"poiId": 5000
+}
