@@ -125,8 +125,8 @@ class Client {
 
 		// Arguments.
 		$args = array(
-			'method'     => $method,
-			'headers'    => array(
+			'method'  => $method,
+			'headers' => array(
 				'Authorization' => 'Bearer ' . $token,
 			),
 		);
