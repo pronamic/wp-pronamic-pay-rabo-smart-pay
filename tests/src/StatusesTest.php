@@ -14,8 +14,8 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Statuses test
  *
  * @author  Remco Tolsma
- * @version 2.0.3
- * @since   1.0.0
+ * @version 2.0.2
+ * @since   2.0.2
  */
 class StatusesTest extends \PHPUnit_Framework_TestCase {
 	/**

@@ -22,7 +22,7 @@ use JsonSchema\Validator;
  * Order results
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.2
  * @since   1.0.0
  */
 class OrderResults extends ResponseMessage implements IteratorAggregate {

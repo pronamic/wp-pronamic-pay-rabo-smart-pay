@@ -16,7 +16,7 @@ use WP_Error;
  * Client
  *
  * @author  Remco Tolsma
- * @version 2.0.1
+ * @version 2.0.2
  * @since   1.0.0
  */
 class Client {
