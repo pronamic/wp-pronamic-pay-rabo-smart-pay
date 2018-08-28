@@ -65,7 +65,7 @@ class Error {
 	 * @return int
 	 */
 	public function get_message() {
-		return $this->getMessage();
+		return $this->message;
 	}
 
 	/**
