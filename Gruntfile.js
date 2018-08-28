@@ -22,19 +22,19 @@ module.exports = function( grunt ) {
 
 		// PHP Code Sniffer.
 		phpcs: {
+			options: {
+				bin: 'vendor/bin/phpcs',
+				standard: 'phpcs.xml.dist',
+				showSniffCodes: true
+			},
 			application: {
 				src: [
 					'**/*.php',
 					'!node_modules/**',
 					'!vendor/**',
 					'!wordpress/**',
-				],
+				]
 			},
-			options: {
-				bin: 'vendor/bin/phpcs',
-				standard: 'phpcs.xml.dist',
-				showSniffCodes: true
-			}
 		},
 
 		// PHPLint.
@@ -44,14 +44,14 @@ module.exports = function( grunt ) {
 
 		// PHP Mess Detector.
 		phpmd: {
-			application: {
-				dir: 'src'
-			},
 			options: {
 				bin: 'vendor/bin/phpmd',
 				exclude: 'node_modules',
 				reportFormat: 'xml',
 				rulesets: 'phpmd.ruleset.xml'
+			},
+			application: {
+				dir: 'src'
 			}
 		},
 
@@ -59,6 +59,9 @@ module.exports = function( grunt ) {
 		phpunit: {
 			options: {
 				bin: 'vendor/bin/phpunit'
+			},
+			application: {
+
 			}
 		}
 	} );
