@@ -208,9 +208,11 @@ class Client {
 	 * Get order results by the notification token.
 	 *
 	 * @param string $notification_token Notification token.
-	 * @return object
+	 * @return OrderResults
 	 */
 	public function get_order_results( $notification_token ) {
-		return $this->request( 'GET', 'order/server/api/events/results/merchant.order.status.changed', $notification_token );
+		$result = $this->request( 'GET', 'order/server/api/events/results/merchant.order.status.changed', $notification_token );
+
+		return OrderResults::from_object( $result );
 	}
 }
