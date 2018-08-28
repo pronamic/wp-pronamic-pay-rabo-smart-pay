@@ -129,8 +129,6 @@ class Client {
 			'headers'    => array(
 				'Authorization' => 'Bearer ' . $token,
 			),
-			// We send an empty User-Agent string so OmniKassa 2.0 servers can't block requests based on the User-Agent.
-			'user-agent' => '',
 		);
 
 		if ( null !== $object ) {
