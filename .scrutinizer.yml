@@ -17,4 +17,4 @@ checks:
     duplication: true
 
 build_failure_conditions:
-  issues.exists
+  - issues.exists
