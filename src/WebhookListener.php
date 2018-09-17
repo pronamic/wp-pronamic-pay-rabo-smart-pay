@@ -31,6 +31,10 @@ class WebhookListener {
 
 		$json = file_get_contents( 'php://input' );
 
+		if ( false === $json ) {
+			return;
+		}
+
 		$notification = Notification::from_json( $json );
 
 		$query = new \WP_Query(
