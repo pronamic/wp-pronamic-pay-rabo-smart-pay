@@ -79,7 +79,7 @@ class CustomerInformation {
 			'dateOfBirth'     => $this->date_of_birth,
 			'gender'          => $this->gender,
 			'initials'        => $this->initials,
-			'telephoneNumber' => $this->telephoneNumber,
+			'telephoneNumber' => $this->telephone_number,
 		);
 
 		$data = array_filter( $data );

@@ -51,7 +51,7 @@ class Error {
 	}
 
 	/**
-	 * Get codecode.
+	 * Get error code.
 	 *
 	 * @return string
 	 */
@@ -60,9 +60,9 @@ class Error {
 	}
 
 	/**
-	 * Get amount.
+	 * Get error message.
 	 *
-	 * @return int
+	 * @return string
 	 */
 	public function get_message() {
 		return $this->message;

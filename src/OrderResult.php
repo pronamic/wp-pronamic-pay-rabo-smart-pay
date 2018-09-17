@@ -252,7 +252,7 @@ class OrderResult {
 	 * Create notification from JSON string.
 	 *
 	 * @param string $json JSON string.
-	 * @return Notification
+	 * @return OrderResult
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {

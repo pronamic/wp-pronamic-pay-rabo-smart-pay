@@ -26,7 +26,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
-	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config Config.
+	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -79,7 +79,7 @@ class Gateway extends Core_Gateway {
 			Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
 		);
 
-		$merchant_return_url = $payment->get_return_url();
+		$merchant_return_url = str_replace( '.test', '.nl', $payment->get_return_url() );
 
 		$order = new Order( $merchant_order_id, $amount, $merchant_return_url );
 
@@ -179,6 +179,8 @@ class Gateway extends Core_Gateway {
 	 * Handle notification.
 	 *
 	 * @param Notification $notification Notification.
+	 *
+	 * @return void
 	 */
 	public function handle_notification( Notification $notification ) {
 		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
@@ -187,7 +189,7 @@ class Gateway extends Core_Gateway {
 
 		switch ( $notification->get_event_name() ) {
 			case 'merchant.order.status.changed':
-				return $this->handle_merchant_order_staus_changed( $notification );
+				$this->handle_merchant_order_status_changed( $notification );
 		}
 	}
 
@@ -195,12 +197,14 @@ class Gateway extends Core_Gateway {
 	 * Handle `merchant.order.status.changed` event.
 	 *
 	 * @param Notification $notification Notification.
+	 *
+	 * @return void
 	 */
-	private function handle_merchant_order_staus_changed( Notification $notification ) {
+	private function handle_merchant_order_status_changed( Notification $notification ) {
 		do {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
-			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
+			if ( ! $order_results || $order_results->is_valid( $this->config->signing_key ) ) {
 				return;
 			}
 
