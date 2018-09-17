@@ -127,7 +127,7 @@ class OrderResult {
 	/**
 	 * Get point of interaction ID.
 	 *
-	 * @return string
+	 * @return int|string
 	 */
 	public function get_poi_id() {
 		return $this->poi_id;
