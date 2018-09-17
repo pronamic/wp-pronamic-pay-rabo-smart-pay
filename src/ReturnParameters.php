@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use InvalidArgumentException;
 use Pronamic\WordPress\Pay\GatewayPostType;
 use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Core\Gateway;
 
 /**
  * Return parameters
