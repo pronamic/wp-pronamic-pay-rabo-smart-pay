@@ -1,0 +1,9 @@
+parameters:
+	customRulesetUsed: false
+	level: max
+	autoload_files:
+		- wordpress/wp-includes/class-wp-query.php
+		- wordpress/wp-includes/l10n.php
+		- wordpress/wp-includes/plugin.php
+	paths:
+		- src
