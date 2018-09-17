@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Webhook listener
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.3
  * @since   2.0.2
  */
 class WebhookListener {
@@ -35,10 +35,10 @@ class WebhookListener {
 
 		$query = new \WP_Query(
 			array(
-				'post_type'      => GatewayPostType::POST_TYPE,
-				'post_status'    => 'publish',
-				'posts_per_page' => - 1,
-				'meta_query'     => array(
+				'post_type'   => GatewayPostType::POST_TYPE,
+				'post_status' => 'publish',
+				'nopaging'    => true,
+				'meta_query'  => array(
 					array(
 						'key'   => '_pronamic_gateway_id',
 						'value' => 'rabobank-omnikassa-2',
