@@ -71,7 +71,7 @@ class CustomerInformation {
 	/**
 	 * Get JSON.
 	 *
-	 * @return object
+	 * @return object|null
 	 */
 	public function get_json() {
 		$data = array(

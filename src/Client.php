@@ -154,7 +154,7 @@ class Client {
 		// Request.
 		$response = wp_remote_request( $url, $args );
 
-		if ( is_wp_error( $response ) ) {
+		if ( $response instanceof WP_Error ) {
 			$this->error = $response;
 
 			$this->error->add( 'omnikassa_2_error', 'HTTP Request Failed' );
@@ -168,7 +168,7 @@ class Client {
 		$data = json_decode( $body );
 
 		if ( ! is_object( $data ) ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', 'Could not parse response.', $data );
+			$this->error = new WP_Error( 'omnikassa_2_error', 'Could not parse response.', $data );
 
 			return false;
 		}
@@ -183,7 +183,7 @@ class Client {
 				$message = $data->errorMessage;
 			}
 
-			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
+			$this->error = new WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}

@@ -119,7 +119,7 @@ class Order extends Message {
 	 * between payment methods: MASTERCARD, VISA, BANCONTACT,
 	 * MAESTRO and V_PAY
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $payment_brand;
 
@@ -140,7 +140,7 @@ class Order extends Message {
 	 * can still choose another payment method. When FORCE_ALWAYS is
 	 * chosen, the consumer can not choose another payment method.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $payment_brand_force;
 
@@ -179,7 +179,7 @@ class Order extends Message {
 	/**
 	 * Set payment brand.
 	 *
-	 * @param string $payment_brand Payment brand.
+	 * @param string|null $payment_brand Payment brand.
 	 */
 	public function set_payment_brand( $payment_brand ) {
 		$this->payment_brand = $payment_brand;

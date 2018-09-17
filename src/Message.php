@@ -52,6 +52,10 @@ abstract class Message implements Signable {
 	public function is_valid( $signing_key ) {
 		$signature = Security::get_signature( $this, $signing_key );
 
+		if ( empty( $signature ) ) {
+			return false;
+		}
+
 		return Security::validate_signature( $signature, $this->get_signature() );
 	}
 }
