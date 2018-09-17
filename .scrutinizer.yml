@@ -15,3 +15,6 @@ checks:
       name: WordPress
     code_rating: true
     duplication: true
+
+build_failure_conditions:
+  issues.exists
