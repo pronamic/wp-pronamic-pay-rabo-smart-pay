@@ -12,7 +12,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Pay\GatewayPostType;
 use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Core\Gateway;
 
 /**
  * Webhook listener
@@ -34,17 +33,19 @@ class WebhookListener {
 
 		$notification = Notification::from_json( $json );
 
-		$query = new \WP_Query( array(
-			'post_type'      => GatewayPostType::POST_TYPE,
-			'post_status'    => 'publish',
-			'posts_per_page' => - 1,
-			'meta_query'     => array(
-				array(
-					'key'   => '_pronamic_gateway_id',
-					'value' => 'rabobank-omnikassa-2',
+		$query = new \WP_Query(
+			array(
+				'post_type'      => GatewayPostType::POST_TYPE,
+				'post_status'    => 'publish',
+				'posts_per_page' => - 1,
+				'meta_query'     => array(
+					array(
+						'key'   => '_pronamic_gateway_id',
+						'value' => 'rabobank-omnikassa-2',
+					),
 				),
-			),
-		) );
+			)
+		);
 
 		foreach ( $query->posts as $post ) {
 			$gateway = Plugin::get_gateway( $post->ID );
