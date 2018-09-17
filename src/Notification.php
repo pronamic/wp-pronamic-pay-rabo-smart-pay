@@ -184,9 +184,13 @@ class Notification extends ResponseMessage {
 
 		$validator = new Validator();
 
-		$validator->validate( $data, (object) array(
-			'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/notification.json' ),
-		), Constraint::CHECK_MODE_EXCEPTIONS );
+		$validator->validate(
+			$data,
+			(object) array(
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/notification.json' ),
+			),
+			Constraint::CHECK_MODE_EXCEPTIONS
+		);
 
 		return self::from_object( $data );
 	}
