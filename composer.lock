@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45c36ff0bdaad4f40e4a325d7dc8351b",
+    "content-hash": "15a37270a5562c3cbd8e9b0f80ba57db",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -220,16 +220,16 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "dev-develop",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "1dec574aab835700ad5b4bfe5c7efb325537ecb2"
+                "reference": "0f8675a06896f32428c9796173cd861da431b1fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/1dec574aab835700ad5b4bfe5c7efb325537ecb2",
-                "reference": "1dec574aab835700ad5b4bfe5c7efb325537ecb2",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/0f8675a06896f32428c9796173cd861da431b1fa",
+                "reference": "0f8675a06896f32428c9796173cd861da431b1fa",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +285,7 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2018-09-18T07:28:09+00:00"
+            "time": "2018-09-14T10:18:46+00:00"
         }
     ],
     "packages-dev": [
@@ -2236,18 +2236,9 @@
             "time": "2018-07-06T07:56:42+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "2.0",
-            "alias_normalized": "2.0.0.0",
-            "version": "dev-develop",
-            "package": "wp-pay/core"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wp-pay/core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
