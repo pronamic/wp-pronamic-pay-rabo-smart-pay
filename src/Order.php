@@ -58,27 +58,6 @@ class Order extends Message {
 	private $amount;
 
 	/**
-	 * The shippingadress, see below for more details.
-	 *
-	 * @var Address
-	 */
-	private $shipping_detail;
-
-	/**
-	 * The billingadress, see below for more details.
-	 *
-	 * @var Address
-	 */
-	private $billing_detail;
-
-	/**
-	 * The customer details, see below for more details.
-	 *
-	 * @var CustomerInformation
-	 */
-	private $customer_information;
-
-	/**
 	 * Language.
 	 *
 	 * ISO 639-1 standard. Not Case sensitive.
