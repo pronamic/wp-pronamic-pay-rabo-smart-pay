@@ -39,31 +39,4 @@ class ConfigFactory extends GatewayConfigFactory {
 
 		return $config;
 	}
-
-	/**
-	 * Get meta value.
-	 *
-	 * @param string|int $post_id Post ID.
-	 * @param string     $key     Shortened meta key.
-	 *
-	 * @return string
-	 */
-	private function get_meta( $post_id, $key ) {
-		if ( empty( $post_id ) ) {
-			return '';
-		}
-
-		$post_id = intval( $post_id );
-
-		$meta_key = sprintf( '_pronamic_gateway_%s', $key );
-
-		// Get post meta.
-		$meta_value = get_post_meta( $post_id, $meta_key, true );
-
-		if ( false === $meta_value ) {
-			$meta_value = '';
-		}
-
-		return $meta_value;
-	}
 }
