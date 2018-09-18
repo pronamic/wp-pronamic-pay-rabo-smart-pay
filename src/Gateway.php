@@ -24,6 +24,13 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  */
 class Gateway extends Core_Gateway {
 	/**
+	 * Client.
+	 *
+	 * @var Client
+	 */
+	private $client;
+
+	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
 	 * @param Config $config Config.
