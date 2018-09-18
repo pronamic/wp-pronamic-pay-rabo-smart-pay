@@ -29,7 +29,7 @@ class ConfigFactory extends GatewayConfigFactory {
 	public function get_config( $post_id ) {
 		$config = new Config();
 
-		$config->post_id                  = $post_id;
+		$config->post_id                  = intval( $post_id );
 		$config->mode                     = $this->get_meta( $post_id, 'mode' );
 		$config->refresh_token            = $this->get_meta( $post_id, 'omnikassa_2_refresh_token' );
 		$config->signing_key              = $this->get_meta( $post_id, 'omnikassa_2_signing_key' );
