@@ -27,6 +27,8 @@
 
 		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
 
+        <exclude name="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_putenv" />
+
         <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
 		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_file_get_contents" />
 	</rule>
