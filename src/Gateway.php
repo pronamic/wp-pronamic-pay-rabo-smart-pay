@@ -130,7 +130,7 @@ class Gateway extends Core_Gateway {
 
 		$order->set_description( $payment->get_description() );
 		$order->set_language( $payment->get_contact()->get_language() );
-		$order->set_items( $payment->get_order_items() );
+		$order->set_order_items( $payment->get_order_items() );
 		$order->set_shipping_detail( $shipping_detail );
 		$order->set_billing_detail( $billing_detail );
 		$order->set_customer_information( $customer_information );
