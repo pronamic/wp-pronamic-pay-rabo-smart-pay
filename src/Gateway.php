@@ -84,6 +84,40 @@ class Gateway extends Core_Gateway {
 
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
+		// Billing and shipping details.
+		$shipping_address = $payment->get_shipping_address();
+		$billing_address  = $payment->get_billing_address();
+
+		$shipping_detail = new Address();
+		$shipping_detail->set_first_name( $shipping_address->get_name()->get_first_name() );
+		$shipping_detail->set_middle_name( $shipping_address->get_name()->get_middle_name() );
+		$shipping_detail->set_last_name( $shipping_address->get_name()->get_last_name() );
+		$shipping_detail->set_street( $shipping_address->get_street_name() );
+		$shipping_detail->set_house_number( $shipping_address->get_house_number() );
+		$shipping_detail->set_house_number_addition( $shipping_address->get_house_number_addition() );
+		$shipping_detail->set_postal_code( $shipping_address->get_postal_code() );
+		$shipping_detail->set_city( $shipping_address->get_city() );
+		$shipping_detail->set_country_code( $shipping_address->get_country_code() );
+
+		$billing_detail = new Address();
+		$billing_detail->set_first_name( $billing_address->get_name()->get_first_name() );
+		$billing_detail->set_middle_name( $billing_address->get_name()->get_middle_name() );
+		$billing_detail->set_last_name( $billing_address->get_name()->get_last_name() );
+		$billing_detail->set_street( $billing_address->get_street_name() );
+		$billing_detail->set_house_number( $billing_address->get_house_number() );
+		$billing_detail->set_house_number_addition( $billing_address->get_house_number_addition() );
+		$billing_detail->set_postal_code( $billing_address->get_postal_code() );
+		$billing_detail->set_city( $billing_address->get_city() );
+		$billing_detail->set_country_code( $billing_address->get_country_code() );
+
+		// Customer information.
+		$customer_information = new CustomerInformation();
+		$customer_information->set_email_address( $payment->get_contact()->get_email() );
+		$customer_information->set_telephone_number( $payment->get_contact()->get_phone() );
+
+		// Payment brand.
+		$payment_brand = PaymentBrands::transform( $payment->get_method() );
+
 		// New order.
 		$order = new Order(
 			$merchant_order_id,
@@ -95,11 +129,11 @@ class Gateway extends Core_Gateway {
 		);
 
 		$order->set_description( $payment->get_description() );
-		$order->set_language( $payment->get_language() );
-
-		// Payment brand.
-		$payment_brand = PaymentBrands::transform( $payment->get_method() );
-
+		$order->set_language( $payment->get_contact()->get_language() );
+		$order->set_items( $payment->get_order_items() );
+		$order->set_shipping_detail( $shipping_detail );
+		$order->set_billing_detail( $billing_detail );
+		$order->set_customer_information( $customer_information );
 		$order->set_payment_brand( $payment_brand );
 
 		if ( null !== $payment_brand ) {

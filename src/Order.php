@@ -10,6 +10,9 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Core\Util;
+use Pronamic\WordPress\Pay\Payments\Items;
+
 /**
  * Order
  *
@@ -56,6 +59,27 @@ class Order extends Message {
 	 * @var Money
 	 */
 	private $amount;
+
+	/**
+	 * The shipping address.
+	 *
+	 * @var Address
+	 */
+	private $shipping_detail;
+
+	/**
+	 * The billing address.
+	 *
+	 * @var Address
+	 */
+	private $billing_detail;
+
+	/**
+	 * The customer information.
+	 *
+	 * @var CustomerInformation
+	 */
+	private $customer_information;
 
 	/**
 	 * Language.
@@ -174,22 +198,117 @@ class Order extends Message {
 	}
 
 	/**
+	 * Set order items.
+	 *
+	 * @param OrderItems $order_items Order items.
+	 *
+	 * @return void
+	 */
+	public function set_order_items( OrderItems $order_items ) {
+		$this->order_items = $order_items;
+	}
+
+	/**
+	 * Set items.
+	 *
+	 * @param Items $items Payment items.
+	 *
+	 * @return void
+	 */
+	public function set_items( Items $items ) {
+		$order_items = new OrderItems();
+
+		$items = $items->getIterator();
+
+		while ( $items->valid() ) {
+			$item = $items->current();
+
+			// New order item.
+			$order_item = new OrderItem(
+				array(
+					'id'       => $item->get_id(),
+					'name'     => $item->get_description(),
+					'quantity' => $item->get_quantity(),
+					'amount'   => new Money(
+						$this->amount->get_currency(),
+						Util::amount_to_cents( $item->get_price() )
+					),
+					'category' => ProductCategories::DIGITAL,
+				)
+			);
+
+			// Add order item.
+			$order_items->add_item( $order_item );
+
+			$items->next();
+		}
+
+		$this->set_order_items( $order_items );
+	}
+
+	/**
+	 * Set shipping detail.
+	 *
+	 * @param Address $shipping_detail Shipping address details.
+	 */
+	public function set_shipping_detail( $shipping_detail ) {
+		$this->billing_detail = $shipping_detail;
+	}
+
+	/**
+	 * Set billing detail.
+	 *
+	 * @param Address $billing_detail Billing address details.
+	 */
+	public function set_billing_detail( $billing_detail ) {
+		$this->billing_detail = $billing_detail;
+	}
+
+	/**
+	 * Set customer information.
+	 *
+	 * @param CustomerInformation $customer_information Customer information.
+	 */
+	public function set_customer_information( $customer_information ) {
+		$this->customer_information = $customer_information;
+	}
+
+	/**
 	 * Get JSON object.
 	 *
 	 * @return object
 	 */
 	public function get_json() {
-		return (object) array(
-			'timestamp'         => $this->timestamp,
-			'merchantOrderId'   => $this->merchant_order_id,
-			'description'       => $this->description,
-			'amount'            => $this->amount->get_json(),
-			'language'          => $this->language,
-			'merchantReturnURL' => $this->merchant_return_url,
-			'orderItems'        => $this->order_items,
-			'paymentBrand'      => $this->payment_brand,
-			'paymentBrandForce' => $this->payment_brand_force,
+		$data = array(
+			'timestamp'       => $this->timestamp,
+			'merchantOrderId' => $this->merchant_order_id,
+			'description'     => $this->description,
 		);
+
+		if ( $this->order_items instanceof OrderItems ) {
+			$data['orderItems'] = $this->order_items->get_json();
+		}
+
+		$data['amount'] = $this->amount->get_json();
+
+		if ( $this->shipping_detail instanceof Address ) {
+			$data['shippingDetail'] = $this->shipping_detail->get_json();
+		}
+
+		if ( $this->billing_detail instanceof Address ) {
+			$data['billingDetail'] = $this->billing_detail->get_json();
+		}
+
+		if ( $this->customer_information instanceof CustomerInformation ) {
+			$data['customerInformation'] = $this->customer_information->get_json();
+		}
+
+		$data['language']          = $this->language;
+		$data['merchantReturnURL'] = $this->merchant_return_url;
+		$data['paymentBrand']      = $this->payment_brand;
+		$data['paymentBrandForce'] = $this->payment_brand_force;
+
+		return (object) $data;
 	}
 
 	/**
@@ -209,10 +328,35 @@ class Order extends Message {
 			$this->merchant_return_url,
 		);
 
-		// Optional fields; do not change field order!
+		// Optional fields.
+		$order_items          = null;
+		$shipping_detail      = null;
+		$customer_information = null;
+		$billing_detail       = null;
+
+		if ( $this->order_items instanceof OrderItems ) {
+			$order_items = $this->order_items->get_signature_data();
+		}
+
+		if ( $this->shipping_detail instanceof Address ) {
+			$shipping_detail = $this->shipping_detail->get_signature_data();
+		}
+
+		if ( $this->customer_information instanceof CustomerInformation ) {
+			$customer_information = $this->customer_information->get_signature_data();
+		}
+
+		if ( $this->billing_detail instanceof Address ) {
+			$billing_detail = $this->billing_detail->get_signature_data();
+		}
+
 		$optional = array(
-			$this->payment_brand,
-			$this->payment_brand_force,
+			'order_items'          => $order_items,
+			'shipping_detail'      => $shipping_detail,
+			'payment_brand'        => $this->payment_brand,
+			'payment_brand_force'  => $this->payment_brand_force,
+			'customer_information' => $customer_information,
+			'billing_detail'       => $billing_detail,
 		);
 
 		// Remove empty optional fields.
