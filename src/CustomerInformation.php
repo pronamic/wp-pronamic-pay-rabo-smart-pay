@@ -10,12 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-use stdClass;
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Exception\ValidationException;
-use JsonSchema\Validator;
-
 /**
  * Customer information
  *
