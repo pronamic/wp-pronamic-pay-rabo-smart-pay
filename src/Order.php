@@ -200,22 +200,11 @@ class Order extends Message {
 	/**
 	 * Set order items.
 	 *
-	 * @param OrderItems $order_items Order items.
-	 *
-	 * @return void
-	 */
-	public function set_order_items( OrderItems $order_items ) {
-		$this->order_items = $order_items;
-	}
-
-	/**
-	 * Set items.
-	 *
 	 * @param Items $items Payment items.
 	 *
 	 * @return void
 	 */
-	public function set_items( Items $items ) {
+	public function set_order_items( Items $items ) {
 		$order_items = new OrderItems();
 
 		$items = $items->getIterator();
@@ -243,7 +232,7 @@ class Order extends Message {
 			$items->next();
 		}
 
-		$this->set_order_items( $order_items );
+		$this->order_items = $order_items;
 	}
 
 	/**
@@ -251,8 +240,8 @@ class Order extends Message {
 	 *
 	 * @param Address $shipping_detail Shipping address details.
 	 */
-	public function set_shipping_detail( $shipping_detail ) {
-		$this->billing_detail = $shipping_detail;
+	public function set_shipping_detail( Address $shipping_detail ) {
+		$this->shipping_detail = $shipping_detail;
 	}
 
 	/**
@@ -260,7 +249,7 @@ class Order extends Message {
 	 *
 	 * @param Address $billing_detail Billing address details.
 	 */
-	public function set_billing_detail( $billing_detail ) {
+	public function set_billing_detail( Address $billing_detail ) {
 		$this->billing_detail = $billing_detail;
 	}
 
@@ -269,7 +258,7 @@ class Order extends Message {
 	 *
 	 * @param CustomerInformation $customer_information Customer information.
 	 */
-	public function set_customer_information( $customer_information ) {
+	public function set_customer_information( CustomerInformation $customer_information ) {
 		$this->customer_information = $customer_information;
 	}
 
@@ -285,21 +274,21 @@ class Order extends Message {
 			'description'     => $this->description,
 		);
 
-		if ( $this->order_items instanceof OrderItems ) {
+		if ( null !== $this->order_items ) {
 			$data['orderItems'] = $this->order_items->get_json();
 		}
 
 		$data['amount'] = $this->amount->get_json();
 
-		if ( $this->shipping_detail instanceof Address ) {
+		if ( null !== $this->shipping_detail ) {
 			$data['shippingDetail'] = $this->shipping_detail->get_json();
 		}
 
-		if ( $this->billing_detail instanceof Address ) {
+		if ( null !== $this->billing_detail ) {
 			$data['billingDetail'] = $this->billing_detail->get_json();
 		}
 
-		if ( $this->customer_information instanceof CustomerInformation ) {
+		if ( null !== $this->customer_information ) {
 			$data['customerInformation'] = $this->customer_information->get_json();
 		}
 
@@ -329,35 +318,26 @@ class Order extends Message {
 		);
 
 		// Optional fields.
-		$order_items          = null;
-		$shipping_detail      = null;
-		$customer_information = null;
-		$billing_detail       = null;
+		$optional = array();
 
-		if ( $this->order_items instanceof OrderItems ) {
-			$order_items = $this->order_items->get_signature_data();
+		if ( null !== $this->order_items ) {
+			$optional['order_items'] = $this->order_items->get_signature_data();
 		}
 
-		if ( $this->shipping_detail instanceof Address ) {
-			$shipping_detail = $this->shipping_detail->get_signature_data();
+		if ( null !== $this->shipping_detail ) {
+			$optional['shipping_detail'] = $this->shipping_detail->get_signature_data();
 		}
 
-		if ( $this->customer_information instanceof CustomerInformation ) {
-			$customer_information = $this->customer_information->get_signature_data();
+		$optional['payment_brand']       = $this->payment_brand;
+		$optional['payment_brand_force'] = $this->payment_brand_force;
+
+		if ( null !== $this->customer_information ) {
+			$optional['customer_information'] = $this->customer_information->get_signature_data();
 		}
 
-		if ( $this->billing_detail instanceof Address ) {
-			$billing_detail = $this->billing_detail->get_signature_data();
+		if ( null !== $this->billing_detail ) {
+			$optional['billing_detail'] = $this->billing_detail->get_signature_data();
 		}
-
-		$optional = array(
-			'order_items'          => $order_items,
-			'shipping_detail'      => $shipping_detail,
-			'payment_brand'        => $this->payment_brand,
-			'payment_brand_force'  => $this->payment_brand_force,
-			'customer_information' => $customer_information,
-			'billing_detail'       => $billing_detail,
-		);
 
 		// Remove empty optional fields.
 		$optional = array_filter( $optional );

@@ -70,7 +70,7 @@ class OrderItem {
 	/**
 	 * VAT category.
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $vat_category;
 

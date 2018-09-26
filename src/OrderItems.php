@@ -65,7 +65,7 @@ class OrderItems {
 	/**
 	 * Get JSON.
 	 *
-	 * @return object|null
+	 * @return array|null
 	 */
 	public function get_json() {
 		$data = array();
