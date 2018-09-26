@@ -42,7 +42,7 @@ class Money {
 	 * Construct notification message.
 	 *
 	 * @param string $currency Authentication.
-	 * @param int    $amount   Amount.
+	 * @param int    $amount   Amount in cents.
 	 */
 	public function __construct( $currency, $amount ) {
 		$this->currency = $currency;

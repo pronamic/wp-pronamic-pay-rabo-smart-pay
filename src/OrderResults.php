@@ -19,7 +19,7 @@ use JsonSchema\Exception\ValidationException;
 use JsonSchema\Validator;
 
 /**
- * Order results
+ * Order results.
  *
  * @author  Remco Tolsma
  * @version 2.0.2

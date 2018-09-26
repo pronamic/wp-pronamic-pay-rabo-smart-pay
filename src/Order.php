@@ -44,9 +44,9 @@ class Order extends Message {
 	private $description;
 
 	/**
-	 * The orderlines, see below for more details.
+	 * The order items.
 	 *
-	 * @var array
+	 * @var OrderItems
 	 */
 	private $order_items;
 
