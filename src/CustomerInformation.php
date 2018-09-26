@@ -63,6 +63,42 @@ class CustomerInformation {
 	}
 
 	/**
+	 * Set date of birth.
+	 *
+	 * @param string $date_of_birth Date of birth.
+	 */
+	public function set_date_of_birth( $date_of_birth ) {
+		$this->date_of_birth = $date_of_birth;
+	}
+
+	/**
+	 * Set gender.
+	 *
+	 * @param string $gender Gender.
+	 */
+	public function set_gender( $gender ) {
+		$this->gender = $gender;
+	}
+
+	/**
+	 * Set initials.
+	 *
+	 * @param string $initials Initials.
+	 */
+	public function set_initials( $initials ) {
+		$this->initials = $initials;
+	}
+
+	/**
+	 * Set telephone number.
+	 *
+	 * @param string $telephone_number Telephone number.
+	 */
+	public function set_telephone_number( $telephone_number ) {
+		$this->telephone_number = $telephone_number;
+	}
+
+	/**
 	 * Get JSON.
 	 *
 	 * @return object|null
@@ -83,5 +119,22 @@ class CustomerInformation {
 		}
 
 		return (object) $data;
+	}
+
+	/**
+	 * Get signature data.
+	 *
+	 * @return array
+	 */
+	public function get_signature_data() {
+		$data = array(
+			$this->email_address,
+			$this->date_of_birth,
+			$this->gender,
+			$this->initials,
+			$this->telephone_number,
+		);
+
+		return $data;
 	}
 }
