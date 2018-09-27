@@ -112,8 +112,8 @@ class Gateway extends Core_Gateway {
 
 		// Customer information.
 		$customer_information = new CustomerInformation();
-		$customer_information->set_email_address( $payment->get_contact()->get_email() );
-		$customer_information->set_telephone_number( $payment->get_contact()->get_phone() );
+		$customer_information->set_email_address( $payment->get_customer()->get_email() );
+		$customer_information->set_telephone_number( $payment->get_customer()->get_phone() );
 
 		// Payment brand.
 		$payment_brand = PaymentBrands::transform( $payment->get_method() );
@@ -129,7 +129,7 @@ class Gateway extends Core_Gateway {
 		);
 
 		$order->set_description( $payment->get_description() );
-		$order->set_language( $payment->get_contact()->get_language() );
+		$order->set_language( $payment->get_customer()->get_language() );
 		$order->set_order_items( $payment->get_order_items() );
 		$order->set_shipping_detail( $shipping_detail );
 		$order->set_billing_detail( $billing_detail );
