@@ -22,7 +22,7 @@ use JsonSchema\Validator;
  * Order result
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.4
  * @since   2.0.2
  */
 class OrderResult {
