@@ -22,7 +22,7 @@ use JsonSchema\Validator;
  * Order result
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.4
  * @since   2.0.2
  */
 class OrderResult {
@@ -127,7 +127,7 @@ class OrderResult {
 	/**
 	 * Get point of interaction ID.
 	 *
-	 * @return string
+	 * @return int|string
 	 */
 	public function get_poi_id() {
 		return $this->poi_id;
@@ -252,7 +252,7 @@ class OrderResult {
 	 * Create notification from JSON string.
 	 *
 	 * @param string $json JSON string.
-	 * @return Notification
+	 * @return OrderResult
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
@@ -260,9 +260,13 @@ class OrderResult {
 
 		$validator = new Validator();
 
-		$validator->validate( $data, (object) array(
-			'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-order-result.json' ),
-		), Constraint::CHECK_MODE_EXCEPTIONS );
+		$validator->validate(
+			$data,
+			(object) array(
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-order-result.json' ),
+			),
+			Constraint::CHECK_MODE_EXCEPTIONS
+		);
 
 		return self::from_object( $data );
 	}

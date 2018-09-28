@@ -20,7 +20,7 @@ use JsonSchema\Validator;
  * Customer information
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.4
  * @since   2.0.2
  */
 class CustomerInformation {
@@ -71,7 +71,7 @@ class CustomerInformation {
 	/**
 	 * Get JSON.
 	 *
-	 * @return object
+	 * @return object|null
 	 */
 	public function get_json() {
 		$data = array(
@@ -79,7 +79,7 @@ class CustomerInformation {
 			'dateOfBirth'     => $this->date_of_birth,
 			'gender'          => $this->gender,
 			'initials'        => $this->initials,
-			'telephoneNumber' => $this->telephoneNumber,
+			'telephoneNumber' => $this->telephone_number,
 		);
 
 		$data = array_filter( $data );

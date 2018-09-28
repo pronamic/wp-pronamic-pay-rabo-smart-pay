@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Order
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.4
  * @since   1.0.0
  */
 class Order extends Message {
@@ -58,27 +58,6 @@ class Order extends Message {
 	private $amount;
 
 	/**
-	 * The shippingadress, see below for more details.
-	 *
-	 * @var Address
-	 */
-	private $shipping_detail;
-
-	/**
-	 * The billingadress, see below for more details.
-	 *
-	 * @var Address
-	 */
-	private $billing_detail;
-
-	/**
-	 * The customer details, see below for more details.
-	 *
-	 * @var CustomerInformation
-	 */
-	private $customer_information;
-
-	/**
 	 * Language.
 	 *
 	 * ISO 639-1 standard. Not Case sensitive.
@@ -119,7 +98,7 @@ class Order extends Message {
 	 * between payment methods: MASTERCARD, VISA, BANCONTACT,
 	 * MAESTRO and V_PAY
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $payment_brand;
 
@@ -140,7 +119,7 @@ class Order extends Message {
 	 * can still choose another payment method. When FORCE_ALWAYS is
 	 * chosen, the consumer can not choose another payment method.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $payment_brand_force;
 
@@ -179,7 +158,7 @@ class Order extends Message {
 	/**
 	 * Set payment brand.
 	 *
-	 * @param string $payment_brand Payment brand.
+	 * @param string|null $payment_brand Payment brand.
 	 */
 	public function set_payment_brand( $payment_brand ) {
 		$this->payment_brand = $payment_brand;

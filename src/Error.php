@@ -21,7 +21,7 @@ use JsonSchema\Validator;
  * Error
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.4
  * @since   2.0.2
  */
 class Error {
@@ -51,7 +51,7 @@ class Error {
 	}
 
 	/**
-	 * Get codecode.
+	 * Get error code.
 	 *
 	 * @return string
 	 */
@@ -60,9 +60,9 @@ class Error {
 	}
 
 	/**
-	 * Get amount.
+	 * Get error message.
 	 *
-	 * @return int
+	 * @return string
 	 */
 	public function get_message() {
 		return $this->message;
@@ -108,9 +108,13 @@ class Error {
 
 		$validator = new Validator();
 
-		$validator->validate( $data, (object) array(
-			'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-error.json' ),
-		), Constraint::CHECK_MODE_EXCEPTIONS );
+		$validator->validate(
+			$data,
+			(object) array(
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-error.json' ),
+			),
+			Constraint::CHECK_MODE_EXCEPTIONS
+		);
 
 		return self::from_object( $data );
 	}

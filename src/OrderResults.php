@@ -139,7 +139,7 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	 * Create notification from JSON string.
 	 *
 	 * @param string $json JSON string.
-	 * @return Notification
+	 * @return OrderResults
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
@@ -147,9 +147,13 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 
 		$validator = new Validator();
 
-		$validator->validate( $data, (object) array(
-			'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/order-results.json' ),
-		), Constraint::CHECK_MODE_EXCEPTIONS );
+		$validator->validate(
+			$data,
+			(object) array(
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/order-results.json' ),
+			),
+			Constraint::CHECK_MODE_EXCEPTIONS
+		);
 
 		return self::from_object( $data );
 	}

@@ -19,14 +19,21 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Gateway
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.4
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
 	/**
+	 * Client.
+	 *
+	 * @var Client
+	 */
+	private $client;
+
+	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
-	 * @param \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Config $config Config.
+	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -70,18 +77,20 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
+		// Merchant order ID.
 		$merchant_order_id = $payment->format_string( $this->config->order_id );
 
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
-		$amount = new Money(
-			$payment->get_currency(),
-			Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
+		// New order.
+		$order = new Order(
+			$merchant_order_id,
+			new Money(
+				$payment->get_currency(),
+				Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
+			),
+			$payment->get_return_url()
 		);
-
-		$merchant_return_url = $payment->get_return_url();
-
-		$order = new Order( $merchant_order_id, $amount, $merchant_return_url );
 
 		$order->set_description( $payment->get_description() );
 		$order->set_language( $payment->get_language() );
@@ -96,31 +105,19 @@ class Gateway extends Core_Gateway {
 			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
 		}
 
-		if ( ! $this->config->is_access_token_valid() ) {
-			$data = $this->client->get_access_token_data();
+		// Maybe update access token.
+		$this->maybe_update_access_token();
 
-			$error = $this->client->get_error();
-
-			if ( is_wp_error( $error ) ) {
-				$this->error = $error;
-
-				return;
-			}
-
-			$this->config->access_token             = $data->token;
-			$this->config->access_token_valid_until = $data->validUntil;
-
-			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
-			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until', $data->validUntil );
+		// Handle errors.
+		if ( $this->get_client_error() ) {
+			return;
 		}
 
+		// Announce order.
 		$result = $this->client->order_announce( $this->config, $order );
 
-		$error = $this->client->get_error();
-
-		if ( is_wp_error( $error ) ) {
-			$this->error = $error;
-
+		// Handle errors.
+		if ( $this->get_client_error() ) {
 			return;
 		}
 
@@ -179,6 +176,8 @@ class Gateway extends Core_Gateway {
 	 * Handle notification.
 	 *
 	 * @param Notification $notification Notification.
+	 *
+	 * @return void
 	 */
 	public function handle_notification( Notification $notification ) {
 		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
@@ -187,7 +186,7 @@ class Gateway extends Core_Gateway {
 
 		switch ( $notification->get_event_name() ) {
 			case 'merchant.order.status.changed':
-				return $this->handle_merchant_order_staus_changed( $notification );
+				$this->handle_merchant_order_status_changed( $notification );
 		}
 	}
 
@@ -195,12 +194,14 @@ class Gateway extends Core_Gateway {
 	 * Handle `merchant.order.status.changed` event.
 	 *
 	 * @param Notification $notification Notification.
+	 *
+	 * @return void
 	 */
-	private function handle_merchant_order_staus_changed( Notification $notification ) {
+	private function handle_merchant_order_status_changed( Notification $notification ) {
 		do {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
-			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
+			if ( ! $order_results || $order_results->is_valid( $this->config->signing_key ) ) {
 				return;
 			}
 
@@ -229,5 +230,49 @@ class Gateway extends Core_Gateway {
 				$payment->save();
 			}
 		} while ( $order_results->more_available() );
+	}
+
+	/**
+	 * Maybe update access token.
+	 *
+	 * @return void
+	 */
+	private function maybe_update_access_token() {
+		if ( $this->config->is_access_token_valid() ) {
+			return;
+		}
+
+		$data = $this->client->get_access_token_data();
+
+		if ( ! is_object( $data ) ) {
+			return;
+		}
+
+		$this->config->access_token             = $data->token;
+		$this->config->access_token_valid_until = $data->validUntil;
+
+		update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
+		update_post_meta(
+			$this->config->post_id,
+			'_pronamic_gateway_omnikassa_2_access_token_valid_until',
+			$data->validUntil
+		);
+	}
+
+	/**
+	 * Get client error.
+	 *
+	 * @return \WP_Error|bool
+	 */
+	private function get_client_error() {
+		$error = $this->client->get_error();
+
+		if ( is_wp_error( $error ) ) {
+			$this->error = $error;
+
+			return $error;
+		}
+
+		return false;
 	}
 }

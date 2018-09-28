@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Webhook listener
  *
  * @author  Remco Tolsma
- * @version 2.0.3
+ * @version 2.0.4
  * @since   2.0.2
  */
 class WebhookListener {
@@ -30,6 +30,10 @@ class WebhookListener {
 		}
 
 		$json = file_get_contents( 'php://input' );
+
+		if ( false === $json ) {
+			return;
+		}
 
 		$notification = Notification::from_json( $json );
 
@@ -50,7 +54,9 @@ class WebhookListener {
 		foreach ( $query->posts as $post ) {
 			$gateway = Plugin::get_gateway( $post->ID );
 
-			$gateway->handle_notification( $notification );
+			if ( $gateway instanceof Gateway ) {
+				$gateway->handle_notification( $notification );
+			}
 		}
 	}
 }

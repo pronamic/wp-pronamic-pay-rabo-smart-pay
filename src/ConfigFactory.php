@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
  * Config factory
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.4
  * @since   1.0.0
  */
 class ConfigFactory extends GatewayConfigFactory {
@@ -29,13 +29,13 @@ class ConfigFactory extends GatewayConfigFactory {
 	public function get_config( $post_id ) {
 		$config = new Config();
 
-		$config->post_id                  = $post_id;
-		$config->mode                     = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
-		$config->refresh_token            = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_refresh_token', true );
-		$config->signing_key              = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_signing_key', true );
-		$config->access_token             = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token', true );
-		$config->access_token_valid_until = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until', true );
-		$config->order_id                 = get_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_order_id', true );
+		$config->post_id                  = intval( $post_id );
+		$config->mode                     = $this->get_meta( $post_id, 'mode' );
+		$config->refresh_token            = $this->get_meta( $post_id, 'omnikassa_2_refresh_token' );
+		$config->signing_key              = $this->get_meta( $post_id, 'omnikassa_2_signing_key' );
+		$config->access_token             = $this->get_meta( $post_id, 'omnikassa_2_access_token' );
+		$config->access_token_valid_until = $this->get_meta( $post_id, 'omnikassa_2_access_token_valid_until' );
+		$config->order_id                 = $this->get_meta( $post_id, 'omnikassa_2_order_id' );
 
 		return $config;
 	}

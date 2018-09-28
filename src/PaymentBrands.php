@@ -95,7 +95,7 @@ class PaymentBrands {
 	 * @since 1.0.0
 	 *
 	 * @param string $payment_method Payment method.
-	 * @return string
+	 * @return string|null
 	 */
 	public static function transform( $payment_method ) {
 		switch ( $payment_method ) {

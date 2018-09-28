@@ -29,17 +29,23 @@ class Security {
 		$data = $signable->get_signature_data();
 
 		if ( empty( $data ) ) {
-			return;
+			return null;
 		}
 
 		if ( empty( $signing_key ) ) {
-			return;
+			return null;
+		}
+
+		$decoded_signing_key = base64_decode( $signing_key );
+
+		if ( false === $decoded_signing_key ) {
+			return null;
 		}
 
 		$signature = hash_hmac(
 			'sha512',
 			implode( ',', $data ),
-			base64_decode( $signing_key )
+			$decoded_signing_key
 		);
 
 		return $signature;
