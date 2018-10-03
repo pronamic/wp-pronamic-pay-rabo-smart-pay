@@ -146,7 +146,7 @@ class Gateway extends Core_Gateway {
 			$merchant_order_id,
 			new Money(
 				$payment->get_currency(),
-				Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
+				$payment->get_amount()->get_cents()
 			),
 			$payment->get_return_url()
 		);
