@@ -84,36 +84,59 @@ class Gateway extends Core_Gateway {
 
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
-		// Billing and shipping details.
+		// Shipping address.
 		$shipping_address = $payment->get_shipping_address();
+
+		if ( null !== $shipping_address ) {
+			$shipping_detail = new Address();
+
+			$name = $shipping_address->get_name();
+
+			if ( null !== $name ) {
+				$shipping_detail->set_first_name( $name->get_first_name() );
+				$shipping_detail->set_middle_name( $name->get_middle_name() );
+				$shipping_detail->set_last_name( $name->get_last_name() );
+			}
+
+			$shipping_detail->set_street( $shipping_address->get_street_name() );
+			$shipping_detail->set_house_number( $shipping_address->get_house_number() );
+			$shipping_detail->set_house_number_addition( $shipping_address->get_house_number_addition() );
+			$shipping_detail->set_postal_code( $shipping_address->get_postal_code() );
+			$shipping_detail->set_city( $shipping_address->get_city() );
+			$shipping_detail->set_country_code( $shipping_address->get_country_code() );
+		}
+
+		// Billing address.
 		$billing_address  = $payment->get_billing_address();
 
-		$shipping_detail = new Address();
-		$shipping_detail->set_first_name( $shipping_address->get_name()->get_first_name() );
-		$shipping_detail->set_middle_name( $shipping_address->get_name()->get_middle_name() );
-		$shipping_detail->set_last_name( $shipping_address->get_name()->get_last_name() );
-		$shipping_detail->set_street( $shipping_address->get_street_name() );
-		$shipping_detail->set_house_number( $shipping_address->get_house_number() );
-		$shipping_detail->set_house_number_addition( $shipping_address->get_house_number_addition() );
-		$shipping_detail->set_postal_code( $shipping_address->get_postal_code() );
-		$shipping_detail->set_city( $shipping_address->get_city() );
-		$shipping_detail->set_country_code( $shipping_address->get_country_code() );
+		if ( null !== $billing_address ) {
+			$billing_detail = new Address();
 
-		$billing_detail = new Address();
-		$billing_detail->set_first_name( $billing_address->get_name()->get_first_name() );
-		$billing_detail->set_middle_name( $billing_address->get_name()->get_middle_name() );
-		$billing_detail->set_last_name( $billing_address->get_name()->get_last_name() );
-		$billing_detail->set_street( $billing_address->get_street_name() );
-		$billing_detail->set_house_number( $billing_address->get_house_number() );
-		$billing_detail->set_house_number_addition( $billing_address->get_house_number_addition() );
-		$billing_detail->set_postal_code( $billing_address->get_postal_code() );
-		$billing_detail->set_city( $billing_address->get_city() );
-		$billing_detail->set_country_code( $billing_address->get_country_code() );
+			$name = $billing_address->get_name();
+
+			if ( null !== $name ) {
+				$billing_detail->set_first_name( $name->get_first_name() );
+				$billing_detail->set_middle_name( $name->get_middle_name() );
+				$billing_detail->set_last_name( $name->get_last_name() );
+			}
+
+			$billing_detail->set_street( $billing_address->get_street_name() );
+			$billing_detail->set_house_number( $billing_address->get_house_number() );
+			$billing_detail->set_house_number_addition( $billing_address->get_house_number_addition() );
+			$billing_detail->set_postal_code( $billing_address->get_postal_code() );
+			$billing_detail->set_city( $billing_address->get_city() );
+			$billing_detail->set_country_code( $billing_address->get_country_code() );
+		}
 
 		// Customer information.
-		$customer_information = new CustomerInformation();
-		$customer_information->set_email_address( $payment->get_customer()->get_email() );
-		$customer_information->set_telephone_number( $payment->get_customer()->get_phone() );
+		$customer = $payment->get_customer();
+
+		if ( null !== $customer ) {
+			$customer_information = new CustomerInformation();
+			
+			$customer_information->set_email_address( $customer->get_email() );
+			$customer_information->set_telephone_number( $customer->get_phone() );
+		}
 
 		// Payment brand.
 		$payment_brand = PaymentBrands::transform( $payment->get_method() );
