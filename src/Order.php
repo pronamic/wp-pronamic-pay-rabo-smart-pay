@@ -10,8 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Core\Util;
-use Pronamic\WordPress\Pay\Payments\Items;
+use Pronamic\WordPress\Pay\Payments\PaymentLines;
 
 /**
  * Order
@@ -200,36 +199,30 @@ class Order extends Message {
 	/**
 	 * Set order items.
 	 *
-	 * @param Items $items Payment items.
+	 * @param PaymentLines $payment_lines Payment lines.
 	 *
 	 * @return void
 	 */
-	public function set_order_items( Items $items ) {
+	public function set_order_items( PaymentLines $payment_lines ) {
 		$order_items = new OrderItems();
 
-		$items = $items->getIterator();
-
-		while ( $items->valid() ) {
-			$item = $items->current();
-
+		foreach ( $payment_lines as $line ) {
 			// New order item.
 			$order_item = new OrderItem(
 				array(
-					'id'       => $item->get_id(),
-					'name'     => $item->get_description(),
-					'quantity' => $item->get_quantity(),
+					'id'       => $line->get_id(),
+					'name'     => $line->get_name(),
+					'quantity' => $line->get_quantity(),
 					'amount'   => new Money(
-						$this->amount->get_currency(),
-						Util::amount_to_cents( $item->get_price() )
+						$line->get_total_amount()->get_currency()->get_alphabetic_code(),
+						intval( $line->get_total_amount()->get_cents() )
 					),
-					'category' => ProductCategories::DIGITAL,
+					'category' => $line->get_type(),
 				)
 			);
 
 			// Add order item.
 			$order_items->add_item( $order_item );
-
-			$items->next();
 		}
 
 		$this->order_items = $order_items;

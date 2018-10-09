@@ -107,7 +107,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Billing address.
-		$billing_address  = $payment->get_billing_address();
+		$billing_address = $payment->get_billing_address();
 
 		if ( null !== $billing_address ) {
 			$billing_detail = new Address();
@@ -133,7 +133,7 @@ class Gateway extends Core_Gateway {
 
 		if ( null !== $customer ) {
 			$customer_information = new CustomerInformation();
-			
+
 			$customer_information->set_email_address( $customer->get_email() );
 			$customer_information->set_telephone_number( $customer->get_phone() );
 		}
@@ -153,10 +153,20 @@ class Gateway extends Core_Gateway {
 
 		$order->set_description( $payment->get_description() );
 		$order->set_language( $payment->get_customer()->get_language() );
-		$order->set_order_items( $payment->get_order_items() );
-		$order->set_shipping_detail( $shipping_detail );
-		$order->set_billing_detail( $billing_detail );
-		$order->set_customer_information( $customer_information );
+		$order->set_order_items( $payment->get_lines() );
+
+		if ( isset( $shipping_detail ) ) {
+			$order->set_shipping_detail( $shipping_detail );
+		}
+
+		if ( isset( $billing_detail ) ) {
+			$order->set_billing_detail( $billing_detail );
+		}
+
+		if ( isset( $customer_information ) ) {
+			$order->set_customer_information( $customer_information );
+		}
+
 		$order->set_payment_brand( $payment_brand );
 
 		if ( null !== $payment_brand ) {
