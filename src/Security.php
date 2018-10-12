@@ -42,18 +42,13 @@ class Security {
 			return null;
 		}
 
-		// Convert array to comma separated string.
-		foreach ( $data as &$part ) {
-			if ( ! is_array( $part ) ) {
-				continue;
-			}
+		$combined = implode( ',', $data );
 
-			$part = implode( ',', $part );
-		}
+		var_dump( $combined );
 
 		$signature = hash_hmac(
 			'sha512',
-			implode( ',', $data ),
+			$combined,
 			$decoded_signing_key
 		);
 

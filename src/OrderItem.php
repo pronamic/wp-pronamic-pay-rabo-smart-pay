@@ -77,42 +77,16 @@ class OrderItem {
 	/**
 	 * Construct order result.
 	 *
-	 * @param array $item Order item data.
-	 *
-	 * @return self
+	 * @param string $name     Name.
+	 * @param int    $quantity Quantity.
+	 * @param Money  $amount   Amount.
+	 * @param string $category Category.
 	 */
-	public function __construct( array $item ) {
-		if ( isset( $item['id'] ) ) {
-			$this->id = $item['id'];
-		}
-
-		if ( isset( $item['name'] ) ) {
-			$this->name = $item['name'];
-		}
-
-		if ( isset( $item['description'] ) ) {
-			$this->description = $item['description'];
-		}
-
-		if ( isset( $item['quantity'] ) ) {
-			$this->quantity = intval( $item['quantity'] );
-		}
-
-		if ( isset( $item['amount'] ) ) {
-			$this->amount = $item['amount'];
-		}
-
-		if ( isset( $item['tax'] ) ) {
-			$this->tax = $item['tax'];
-		}
-
-		if ( isset( $item['category'] ) ) {
-			$this->category = $item['category'];
-		}
-
-		if ( isset( $item['vat_category'] ) ) {
-			$this->vat_category = intval( $item['vat_category'] );
-		}
+	public function __construct( $name, $quantity, Money $amount, $category ) {
+		$this->name     = $name;
+		$this->quantity = $quantity;
+		$this->amount   = $amount;
+		$this->category = $category;
 	}
 
 	/**

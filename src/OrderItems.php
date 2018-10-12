@@ -77,7 +77,7 @@ class OrderItems {
 			$tax    = $item->get_tax();
 
 			$item_data = array(
-				'id'          => $item->get_id(),
+				'id'          => strval( $item->get_id() ),
 				'name'        => $item->get_name(),
 				'description' => $item->get_description(),
 				'quantity'    => $item->get_quantity(),
@@ -116,7 +116,7 @@ class OrderItems {
 			$item_id = $item->get_id();
 
 			if ( ! empty( $item_id ) ) {
-				$data[] = $item_id;
+				$data[] = strval( $item_id );
 			}
 
 			// Required fields.
@@ -127,10 +127,14 @@ class OrderItems {
 			$data[] = $item->get_amount()->get_amount();
 
 			// Required tax field.
+			/*
+			 * tax is an optional field, if it is not present, it is considered as a single empty field.
+			 * If it is present, the amount and currency are added as two separate fields.
+			 */
 			$tax = $item->get_tax();
 
 			if ( empty( $tax ) ) {
-				$data[] = $tax;
+				$data[] = '';
 			} else {
 				$data[] = $tax->get_currency();
 				$data[] = $tax->get_amount();
@@ -145,6 +149,8 @@ class OrderItems {
 			if ( ! empty( $vat_category ) ) {
 				$data[] = $vat_category;
 			}
+
+			var_dump( $data );
 		}
 
 		return $data;

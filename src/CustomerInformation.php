@@ -124,16 +124,15 @@ class CustomerInformation {
 	/**
 	 * Get signature data.
 	 *
+	 * @param array $data Data.
 	 * @return array
 	 */
-	public function get_signature_data() {
-		$data = array(
-			$this->email_address,
-			$this->date_of_birth,
-			$this->gender,
-			$this->initials,
-			$this->telephone_number,
-		);
+	public function get_signature_data( $data = array() ) {
+		$data[] = $this->email_address;
+		$data[] = $this->date_of_birth;
+		$data[] = $this->gender;
+		$data[] = $this->initials;
+		$data[] = $this->telephone_number;
 
 		return $data;
 	}

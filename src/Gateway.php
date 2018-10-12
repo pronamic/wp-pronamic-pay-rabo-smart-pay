@@ -146,14 +146,33 @@ class Gateway extends Core_Gateway {
 			$merchant_order_id,
 			new Money(
 				$payment->get_currency(),
-				$payment->get_amount()->get_cents()
+				intval( $payment->get_amount()->get_cents() )
 			),
 			$payment->get_return_url()
 		);
 
 		$order->set_description( $payment->get_description() );
 		$order->set_language( $payment->get_customer()->get_language() );
-		$order->set_order_items( $payment->get_lines() );
+		
+		if ( null !== $payment->get_lines() ) {
+			$order_items = new OrderItems();
+
+			foreach ( $payment->get_lines() as $line ) {
+				$item = new OrderItem(
+					$line->get_name(),
+					$line->get_quantity(),
+					new Money(
+						$line->get_total_amount()->get_currency()->get_alphabetic_code(),
+						intval( $line->get_total_amount()->get_cents() )
+					),
+					Category::transform( $line->get_type() )
+				);
+
+				$order_items->add_item( $item );
+			}
+
+			//$order->set_order_items( $order_items );
+		}
 
 		if ( isset( $shipping_detail ) ) {
 			$order->set_shipping_detail( $shipping_detail );

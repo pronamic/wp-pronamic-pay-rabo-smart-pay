@@ -199,32 +199,9 @@ class Order extends Message {
 	/**
 	 * Set order items.
 	 *
-	 * @param PaymentLines $payment_lines Payment lines.
-	 *
-	 * @return void
+	 * @param OrderItems|null $order_items Order items.
 	 */
-	public function set_order_items( PaymentLines $payment_lines ) {
-		$order_items = new OrderItems();
-
-		foreach ( $payment_lines as $line ) {
-			// New order item.
-			$order_item = new OrderItem(
-				array(
-					'id'       => $line->get_id(),
-					'name'     => $line->get_name(),
-					'quantity' => $line->get_quantity(),
-					'amount'   => new Money(
-						$line->get_total_amount()->get_currency()->get_alphabetic_code(),
-						intval( $line->get_total_amount()->get_cents() )
-					),
-					'category' => $line->get_type(),
-				)
-			);
-
-			// Add order item.
-			$order_items->add_item( $order_item );
-		}
-
+	public function set_order_items( OrderItems $order_items = null ) {
 		$this->order_items = $order_items;
 	}
 
@@ -296,45 +273,40 @@ class Order extends Message {
 	/**
 	 * Get signature data.
 	 *
+	 * @param array $data Data.
 	 * @return array
 	 */
-	public function get_signature_data() {
+	public function get_signature_data( $data = array() ) {
 		// Required fields.
 		$fields = array(
 			$this->timestamp,
 			$this->merchant_order_id,
 			$this->amount->get_currency(),
 			$this->amount->get_amount(),
-			$this->language,
-			$this->description,
+			empty( $this->language ) ? '' : $this->language,
+			empty( $this->description ) ? '' : $this->description,
 			$this->merchant_return_url,
 		);
 
-		// Optional fields.
-		$optional = array();
-
 		if ( null !== $this->order_items ) {
-			$optional['order_items'] = $this->order_items->get_signature_data();
+			$fields = array_merge( $fields, $this->order_items->get_signature_data() );
 		}
 
 		if ( null !== $this->shipping_detail ) {
-			$optional['shipping_detail'] = $this->shipping_detail->get_signature_data();
+			$fields = array_merge( $fields, $this->shipping_detail->get_signature_data() );
 		}
 
-		$optional['payment_brand']       = $this->payment_brand;
-		$optional['payment_brand_force'] = $this->payment_brand_force;
+		$fields[] = $this->payment_brand;
+		$fields[] = $this->payment_brand_force;
 
 		if ( null !== $this->customer_information ) {
-			$optional['customer_information'] = $this->customer_information->get_signature_data();
+			$fields = $this->customer_information->get_signature_data( $fields );
 		}
 
 		if ( null !== $this->billing_detail ) {
-			$optional['billing_detail'] = $this->billing_detail->get_signature_data();
+			$fields = $this->billing_detail->get_signature_data( $fields );
 		}
 
-		// Remove empty optional fields.
-		$optional = array_filter( $optional );
-
-		return array_merge( $fields, $optional );
+		return $fields;
 	}
 }

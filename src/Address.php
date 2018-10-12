@@ -258,42 +258,40 @@ class Address {
 	 * @return object|null
 	 */
 	public function get_json() {
-		$data = array(
-			'firstName'           => $this->first_name,
-			'middleName'          => $this->middle_name,
-			'lastName'            => $this->last_name,
-			'street'              => $this->street,
-			'houseNumber'         => $this->house_number,
-			'houseNumberAddition' => $this->house_number_addition,
-			'postalCode'          => $this->postal_code,
-			'city'                => $this->city,
-			'countryCode'         => $this->country_code,
-		);
+		$object = (object) array();
 
-		$data = array_filter( $data );
+		$object->firstName  = $this->first_name;
+		$object->middleName = $this->middle_name;
+		$object->lastName   = $this->last_name;
+		$object->street     = $this->street;
 
-		if ( empty( $data ) ) {
-			return null;
+		if ( null !== $this->house_number ) {
+			$object->houseNumber = $this->house_number;
 		}
 
-		return (object) $data;
+		if ( null !== $this->house_number_addition ) {
+			$object->houseNumberAddition = $this->house_number_addition;
+		}
+
+		$object->postalCode  = $this->postal_code;
+		$object->city        = $this->city;
+		$object->countryCode = $this->country_code;
+
+		return $object;
 	}
 
 	/**
 	 * Get signature data.
 	 *
+	 * @param array $data Data.
 	 * @return array
 	 */
-	public function get_signature_data() {
-		// Required fields.
-		$data = array(
-			$this->first_name,
-			$this->middle_name,
-			$this->last_name,
-			$this->street,
-		);
+	public function get_signature_data( $data = array() ) {
+		$data[] = $this->first_name;
+		$data[] = $this->middle_name;
+		$data[] = $this->last_name;
+		$data[] = $this->street;
 
-		// Optional house number fields.
 		if ( null !== $this->house_number ) {
 			$data[] = $this->house_number;
 		}
@@ -301,11 +299,6 @@ class Address {
 		if ( null !== $this->house_number_addition ) {
 			$data[] = $this->house_number_addition;
 		}
-
-		// Required fields.
-		$data[] = $this->postal_code;
-		$data[] = $this->city;
-		$data[] = $this->country_code;
 
 		return $data;
 	}
