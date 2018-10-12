@@ -1,0 +1,54 @@
+{
+"timestamp": "2017-09-11T14:54:57+02:00", "merchantOrderId": "order123",
+"description": "Aankoop mijn webwinkel ordernummer 123", "orderItems": [
+{
+"id": "A1000",
+"name": "Jackie O Round Sunglasses",
+"description": "These distinct, feminine frames balance a classic Jackie-O styling with a modern look.", "quantity": 1,
+      "amount": {
+        "currency": "EUR",
+        "amount": 22500
+}, "tax": {
+        "currency": "EUR",
+        "amount": 4725
+      },
+      "category": "PHYSICAL",
+      "vatCategory": "1"
+    }
+  ],
+  "amount": {
+    "currency": "EUR",
+    "amount": 22500
+  },
+  "shippingDetail": {
+    "firstName": "Jan",
+    "middleName": "van",
+    "lastName": "Jansen",
+    "street": "Beukenlaan",
+    "houseNumber": "12",
+    "houseNumberAddition": "a",
+    "postalCode": "1234AA",
+    "city": "Amsterdam",
+    "countryCode": "NL"
+},
+  "billingDetail": {
+    "firstName": "Jan",
+    "middleName": "van",
+    "lastName": "Jansen",
+    "street": "Kersenstraat",
+    "houseNumber": "385",
+    "houseNumberAddition": "b",
+    "postalCode": "1234BB",
+    "city": "Haarlem",
+    "countryCode": "NL"
+  },
+  "customerInformation": {
+"emailAddress": "jan@example.org", "dateOfBirth": "21-11-1977", "gender": "M",
+"initials": "J.A.N.", "telephoneNumber": "+31204971111"
+},
+"language": "nl",
+"merchantReturnURL": "https://mijn.webwinkel.nl/betalingsresultaat", "paymentBrand": "IDEAL",
+"paymentBrandForce": "FORCE_ONCE",
+"signature":
+"1a0f6e4526fb81d5bf70fe2a9d7a3c46a2a1e85993b5df08cd2a7ff5324d48da6a12f b38a38ccb4c4d44b9901f7f3a5b5fe6aec475db6fe24c57fcc4f2d6eff2"
+}

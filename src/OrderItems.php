@@ -39,18 +39,25 @@ class OrderItems {
 	}
 
 	/**
+	 * Create and add new order item.
+	 *
+	 * @return OrderItem
+	 */
+	public function new_item( $name, $quantity, Money $amount, $category ) {
+		$item = new OrderItem( $name, $quantity, $amount, $category );
+
+		$this->add_item( $item ):
+
+		return $item;
+	}
+
+	/**
 	 * Add order item.
 	 *
-	 * @param OrderItem|array $order_item Order item.
-	 *
-	 * @return void
+	 * @param OrderItem $item Order item.
 	 */
-	public function add_item( $order_item ) {
-		if ( ! ( $order_item instanceof OrderItem ) ) {
-			$order_item = new OrderItem( $order_item );
-		}
-
-		$this->order_items[] = $order_item;
+	public function add_item( OrderItem $item ) {
+		$this->order_items[] = $item;
 	}
 
 	/**
@@ -68,91 +75,27 @@ class OrderItems {
 	 * @return array|null
 	 */
 	public function get_json() {
-		$data = array();
-
-		$items = $this->get_order_items();
-
-		foreach ( $items as $item ) {
-			$amount = $item->get_amount();
-			$tax    = $item->get_tax();
-
-			$item_data = array(
-				'id'          => strval( $item->get_id() ),
-				'name'        => $item->get_name(),
-				'description' => $item->get_description(),
-				'quantity'    => $item->get_quantity(),
-				'amount'      => ( $amount instanceof Money ) ? $amount->get_json() : null,
-				'tax'         => ( $tax instanceof Money ) ? $tax->get_json() : null,
-				'category'    => $item->get_category(),
-				'vatCategory' => $item->get_vat_category(),
-			);
-
-			$item_data = array_filter( $item_data );
-
-			if ( ! empty( $item_data ) ) {
-				$data[] = (object) $item_data;
-			}
-		}
-
-		if ( empty( $data ) ) {
-			return null;
-		}
+		$data = array_map(
+			function( $item ) {
+				return $item->get_json();
+			},
+			$this->get_order_items()
+		);
 
 		return $data;
 	}
 
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
+	 * @param array $fields Fields.
 	 * @return array
 	 */
-	public function get_signature_data() {
-		$data = array();
-
-		$order_items = $this->get_order_items();
-
-		foreach ( $order_items as $item ) {
-			// Optional ID.
-			$item_id = $item->get_id();
-
-			if ( ! empty( $item_id ) ) {
-				$data[] = strval( $item_id );
-			}
-
-			// Required fields.
-			$data[] = $item->get_name();
-			$data[] = $item->get_description();
-			$data[] = $item->get_quantity();
-			$data[] = $item->get_amount()->get_currency();
-			$data[] = $item->get_amount()->get_amount();
-
-			// Required tax field.
-			/*
-			 * tax is an optional field, if it is not present, it is considered as a single empty field.
-			 * If it is present, the amount and currency are added as two separate fields.
-			 */
-			$tax = $item->get_tax();
-
-			if ( empty( $tax ) ) {
-				$data[] = '';
-			} else {
-				$data[] = $tax->get_currency();
-				$data[] = $tax->get_amount();
-			}
-
-			// Required category.
-			$data[] = $item->get_category();
-
-			// Optional VAT category.
-			$vat_category = $item->get_vat_category();
-
-			if ( ! empty( $vat_category ) ) {
-				$data[] = $vat_category;
-			}
-
-			var_dump( $data );
+	public function get_signature_fields( $fields = array() ) {
+		foreach ( $this->get_order_items() as $item ) {
+			$fields = $item->get_signature_fields( $fields );
 		}
 
-		return $data;
+		return $fields;
 	}
 }

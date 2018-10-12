@@ -122,11 +122,11 @@ class Notification extends ResponseMessage {
 	}
 
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
 	 * @return array
 	 */
-	public function get_signature_data() {
+	public function get_signature_fields() {
 		return array(
 			$this->get_authentication(),
 			$this->get_expiry(),

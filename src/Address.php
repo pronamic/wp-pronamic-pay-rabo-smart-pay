@@ -91,6 +91,23 @@ class Address {
 	private $country_code;
 
 	/**
+	 * Construct address.
+	 *
+	 * @param string $last_name    Last name.
+	 * @param string $street       Street.
+	 * @param string $postal_code  Postal code.
+	 * @param string $city         City.
+	 * @param string $country_code Country code.
+	 */
+	public function __construct( $last_name, $street, $postal_code, $city, $country_code ) {
+		$this->last_name    = $last_name;
+		$this->street       = $street;
+		$this->postal_code  = $postal_code;
+		$this->city         = $city;
+		$this->country_code = $country_code;
+	}
+
+	/**
 	 * Get first name.
 	 *
 	 * @return string
@@ -281,25 +298,25 @@ class Address {
 	}
 
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
-	 * @param array $data Data.
+	 * @param array $fields Fields.
 	 * @return array
 	 */
-	public function get_signature_data( $data = array() ) {
-		$data[] = $this->first_name;
-		$data[] = $this->middle_name;
-		$data[] = $this->last_name;
-		$data[] = $this->street;
+	public function get_signature_fields( $fields = array() ) {
+		$fields[] = $this->first_name;
+		$fields[] = $this->middle_name;
+		$fields[] = $this->last_name;
+		$fields[] = $this->street;
 
 		if ( null !== $this->house_number ) {
-			$data[] = $this->house_number;
+			$fields[] = $this->house_number;
 		}
 
 		if ( null !== $this->house_number_addition ) {
-			$data[] = $this->house_number_addition;
+			$fields[] = $this->house_number_addition;
 		}
 
-		return $data;
+		return $fields;
 	}
 }

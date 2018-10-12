@@ -160,4 +160,71 @@ class OrderItem {
 	public function get_vat_category() {
 		return $this->vat_category;
 	}
+
+	/**
+	 * Get JSON.
+	 *
+	 * @return object
+	 */
+	public function get_json() {
+		$object = (object) array();
+
+		if ( null !== $this->id ) {
+			$object->id = $this->id;
+		}
+
+		$object->name = $this->name;
+
+		if ( null !== $this->description ) {
+			$object->description = $this->description;
+		}
+
+		$object->quantity = $this->quantity;
+		$object->amount   = $this->amount->get_json();
+
+		if ( null !== $this->tax ) {
+			$object->tax = $this->tax->get_json();
+		}
+
+		$object->category = $this->category;
+
+		if ( null !== $this->vat_category ) {
+			$object->vatCategory = $this->vat_category;
+		}
+
+		return $object;
+	}
+
+	/**
+	 * Get signature data.
+	 *
+	 * @param array $data Data.
+	 * @return array
+	 */
+	public function get_signature_fields( $data = array() ) {
+		if ( null !== $this->id ) {
+			$data[] = $this->id;
+		}
+
+		$data[] = $this->name;
+		$data[] = $this->description;
+		$data[] = $this->quantity;
+		$data[] = $this->amount->get_currency();
+		$data[] = $this->amount->get_amount();
+
+		if ( null === $this->tax ) {
+			$data[] = null;
+		} else {
+			$data[] = $this->tax->get_currency();
+			$data[] = $this->tax->get_amount();
+		}
+
+		$data[] = $this->category;
+
+		if ( null !== $this->vatCategory ) {
+			$data[] = $this->vatCategory;
+		}
+
+		return $data;
+	}
 }

@@ -19,6 +19,16 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class Security {
 	/**
+	 * Get signature fields combined.
+	 *
+	 * @param array $fields Fields.
+	 * @return string
+	 */
+	public static function get_signature_fields_combined( $fields ) {
+		return implode( ',', $fields );
+	}
+
+	/**
 	 * Calculdate signature for specific data.
 	 *
 	 * @param Signable $signable    Signable object.
@@ -26,9 +36,9 @@ class Security {
 	 * @return string|null
 	 */
 	public static function get_signature( Signable $signable, $signing_key ) {
-		$data = $signable->get_signature_data();
+		$fields = $signable->get_signature_fields();
 
-		if ( empty( $data ) ) {
+		if ( empty( $fields ) ) {
 			return null;
 		}
 
@@ -42,9 +52,7 @@ class Security {
 			return null;
 		}
 
-		$combined = implode( ',', $data );
-
-		var_dump( $combined );
+		$combined = self::get_signature_fields_combined( $fields );
 
 		$signature = hash_hmac(
 			'sha512',

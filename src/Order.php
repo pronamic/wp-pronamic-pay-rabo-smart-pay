@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use DateTime;
 use Pronamic\WordPress\Pay\Payments\PaymentLines;
 
 /**
@@ -27,7 +28,7 @@ class Order extends Message {
 	 * This field is mandatory and provides protection against so-called
 	 * replay (playback) attacks
 	 *
-	 * @var string
+	 * @var DateTime
 	 */
 	private $timestamp;
 
@@ -154,10 +155,19 @@ class Order extends Message {
 	 * @param string $merchant_return_url  Merchant return URL.
 	 */
 	public function __construct( $merchant_order_id, $amount, $merchant_return_url ) {
-		$this->timestamp           = date( DATE_ATOM );
+		$this->timestamp           = new DateTime();
 		$this->merchant_order_id   = $merchant_order_id;
 		$this->amount              = $amount;
 		$this->merchant_return_url = $merchant_return_url;
+	}
+
+	/**
+	 * Set timestamp.
+	 *
+	 * @param DateTime $timestamp Timestamp.
+	 */
+	public function set_timestamp( DateTime $timestamp ) {
+		$this->timestamp = $timestamp;
 	}
 
 	/**
@@ -197,6 +207,17 @@ class Order extends Message {
 	}
 
 	/**
+	 * Create and set new order items.
+	 *
+	 * @return OrderItems
+	 */
+	public function new_items() {
+		$this->order_items = new OrderItems();
+
+		return $this->order_items;
+	}
+
+	/**
 	 * Set order items.
 	 *
 	 * @param OrderItems|null $order_items Order items.
@@ -208,18 +229,18 @@ class Order extends Message {
 	/**
 	 * Set shipping detail.
 	 *
-	 * @param Address $shipping_detail Shipping address details.
+	 * @param Address|null $shipping_detail Shipping address details.
 	 */
-	public function set_shipping_detail( Address $shipping_detail ) {
+	public function set_shipping_detail( Address $shipping_detail = null ) {
 		$this->shipping_detail = $shipping_detail;
 	}
 
 	/**
 	 * Set billing detail.
 	 *
-	 * @param Address $billing_detail Billing address details.
+	 * @param Address|null $billing_detail Billing address details.
 	 */
-	public function set_billing_detail( Address $billing_detail ) {
+	public function set_billing_detail( Address $billing_detail = null ) {
 		$this->billing_detail = $billing_detail;
 	}
 
@@ -238,73 +259,87 @@ class Order extends Message {
 	 * @return object
 	 */
 	public function get_json() {
-		$data = array(
-			'timestamp'       => $this->timestamp,
-			'merchantOrderId' => $this->merchant_order_id,
-			'description'     => $this->description,
-		);
+		$object = (object) array();
 
-		if ( null !== $this->order_items ) {
-			$data['orderItems'] = $this->order_items->get_json();
+		$object->timestamp       = $this->timestamp->format( DATE_ATOM );
+		$object->merchantOrderId = $this->merchant_order_id;
+
+		if ( null !== $this->description ) {
+			$object->description = $this->description;
 		}
 
-		$data['amount'] = $this->amount->get_json();
+		if ( null !== $this->order_items ) {
+			$object->orderItems = $this->order_items->get_json();
+		}
+
+		$object->amount = $this->amount->get_json();
 
 		if ( null !== $this->shipping_detail ) {
-			$data['shippingDetail'] = $this->shipping_detail->get_json();
+			$object->shippingDetail = $this->shipping_detail->get_json();
 		}
 
 		if ( null !== $this->billing_detail ) {
-			$data['billingDetail'] = $this->billing_detail->get_json();
+			$object->billingDetail = $this->billing_detail->get_json();
 		}
 
 		if ( null !== $this->customer_information ) {
-			$data['customerInformation'] = $this->customer_information->get_json();
+			$object->customerInformation = $this->customer_information->get_json();
 		}
 
-		$data['language']          = $this->language;
-		$data['merchantReturnURL'] = $this->merchant_return_url;
-		$data['paymentBrand']      = $this->payment_brand;
-		$data['paymentBrandForce'] = $this->payment_brand_force;
+		if ( null !== $this->language ) {
+			$object->language = $this->language;
+		}
 
-		return (object) $data;
+		$object->merchantReturnURL = $this->merchant_return_url;
+
+		if ( null !== $this->payment_brand ) {
+			$object->paymentBrand = $this->payment_brand;
+		}
+
+		if ( null !== $this->payment_brand_force ) {
+			$object->paymentBrandForce = $this->payment_brand_force;
+		}
+
+		return $object;
 	}
 
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
-	 * @param array $data Data.
+	 * @param array $fields Fields.
 	 * @return array
 	 */
-	public function get_signature_data( $data = array() ) {
-		// Required fields.
-		$fields = array(
-			$this->timestamp,
-			$this->merchant_order_id,
-			$this->amount->get_currency(),
-			$this->amount->get_amount(),
-			empty( $this->language ) ? '' : $this->language,
-			empty( $this->description ) ? '' : $this->description,
-			$this->merchant_return_url,
-		);
+	public function get_signature_fields( $fields = array() ) {
+		$fields[] = $this->timestamp->format( DATE_ATOM );
+		$fields[] = $this->merchant_order_id;
+		$fields[] = $this->amount->get_currency();
+		$fields[] = $this->amount->get_amount();
+		$fields[] = $this->language;
+		$fields[] = $this->description;
+		$fields[] = $this->merchant_return_url;
 
 		if ( null !== $this->order_items ) {
-			$fields = array_merge( $fields, $this->order_items->get_signature_data() );
+			$fields = $this->order_items->get_signature_fields( $fields );
 		}
 
 		if ( null !== $this->shipping_detail ) {
-			$fields = array_merge( $fields, $this->shipping_detail->get_signature_data() );
+			$fields = $this->shipping_detail->get_signature_fields( $fields );
 		}
 
-		$fields[] = $this->payment_brand;
-		$fields[] = $this->payment_brand_force;
+		if ( null !== $this->payment_brand ) {
+			$fields[] = $this->payment_brand;
+		}
+
+		if ( null !== $this->payment_brand_force ) {
+			$fields[] = $this->payment_brand_force;
+		}
 
 		if ( null !== $this->customer_information ) {
-			$fields = $this->customer_information->get_signature_data( $fields );
+			$fields = $this->customer_information->get_signature_fields( $fields );
 		}
 
 		if ( null !== $this->billing_detail ) {
-			$fields = $this->billing_detail->get_signature_data( $fields );
+			$fields = $this->billing_detail->get_signature_fields( $fields );
 		}
 
 		return $fields;

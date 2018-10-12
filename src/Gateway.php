@@ -84,76 +84,47 @@ class Gateway extends Core_Gateway {
 
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
+		// New order.
+		$order = new Order(
+			$merchant_order_id,
+			MoneyTransformer::transform( $payment->get_amount() ),
+			$payment->get_return_url()
+		);
+
 		// Shipping address.
-		$shipping_address = $payment->get_shipping_address();
-
-		if ( null !== $shipping_address ) {
-			$shipping_detail = new Address();
-
-			$name = $shipping_address->get_name();
-
-			if ( null !== $name ) {
-				$shipping_detail->set_first_name( $name->get_first_name() );
-				$shipping_detail->set_middle_name( $name->get_middle_name() );
-				$shipping_detail->set_last_name( $name->get_last_name() );
-			}
-
-			$shipping_detail->set_street( $shipping_address->get_street_name() );
-			$shipping_detail->set_house_number( $shipping_address->get_house_number() );
-			$shipping_detail->set_house_number_addition( $shipping_address->get_house_number_addition() );
-			$shipping_detail->set_postal_code( $shipping_address->get_postal_code() );
-			$shipping_detail->set_city( $shipping_address->get_city() );
-			$shipping_detail->set_country_code( $shipping_address->get_country_code() );
-		}
+		$order->set_shipping_detail( AddressTransformer::transform( $payment->get_shipping_address() ) );
 
 		// Billing address.
-		$billing_address = $payment->get_billing_address();
-
-		if ( null !== $billing_address ) {
-			$billing_detail = new Address();
-
-			$name = $billing_address->get_name();
-
-			if ( null !== $name ) {
-				$billing_detail->set_first_name( $name->get_first_name() );
-				$billing_detail->set_middle_name( $name->get_middle_name() );
-				$billing_detail->set_last_name( $name->get_last_name() );
-			}
-
-			$billing_detail->set_street( $billing_address->get_street_name() );
-			$billing_detail->set_house_number( $billing_address->get_house_number() );
-			$billing_detail->set_house_number_addition( $billing_address->get_house_number_addition() );
-			$billing_detail->set_postal_code( $billing_address->get_postal_code() );
-			$billing_detail->set_city( $billing_address->get_city() );
-			$billing_detail->set_country_code( $billing_address->get_country_code() );
-		}
+		$order->set_billing_detail( AddressTransformer::transform( $payment->get_billing_address() ) );
 
 		// Customer information.
 		$customer = $payment->get_customer();
 
 		if ( null !== $customer ) {
+			$order->set_language( $customer->get_language() );
+
 			$customer_information = new CustomerInformation();
 
 			$customer_information->set_email_address( $customer->get_email() );
 			$customer_information->set_telephone_number( $customer->get_phone() );
+
+			$order->set_customer_information( $customer_information );
 		}
 
 		// Payment brand.
 		$payment_brand = PaymentBrands::transform( $payment->get_method() );
 
-		// New order.
-		$order = new Order(
-			$merchant_order_id,
-			new Money(
-				$payment->get_currency(),
-				intval( $payment->get_amount()->get_cents() )
-			),
-			$payment->get_return_url()
-		);
+		$order->set_payment_brand( $payment_brand );
 
+		if ( null !== $payment_brand ) {
+			// Payment brand force should only be set if payment brand is not empty.
+			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
+		}
+
+		// Description.
 		$order->set_description( $payment->get_description() );
-		$order->set_language( $payment->get_customer()->get_language() );
-		
+
+		// Lines.
 		if ( null !== $payment->get_lines() ) {
 			$order_items = new OrderItems();
 
@@ -161,36 +132,14 @@ class Gateway extends Core_Gateway {
 				$item = new OrderItem(
 					$line->get_name(),
 					$line->get_quantity(),
-					new Money(
-						$line->get_total_amount()->get_currency()->get_alphabetic_code(),
-						intval( $line->get_total_amount()->get_cents() )
-					),
+					MoneyTransformer::transform( $line->get_total_amount() ),
 					Category::transform( $line->get_type() )
 				);
 
 				$order_items->add_item( $item );
 			}
 
-			//$order->set_order_items( $order_items );
-		}
-
-		if ( isset( $shipping_detail ) ) {
-			$order->set_shipping_detail( $shipping_detail );
-		}
-
-		if ( isset( $billing_detail ) ) {
-			$order->set_billing_detail( $billing_detail );
-		}
-
-		if ( isset( $customer_information ) ) {
-			$order->set_customer_information( $customer_information );
-		}
-
-		$order->set_payment_brand( $payment_brand );
-
-		if ( null !== $payment_brand ) {
-			// Payment brand force should only be set if payment brand is not empty.
-			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
+			$order->set_order_items( $order_items );
 		}
 
 		// Maybe update access token.

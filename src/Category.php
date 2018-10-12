@@ -35,10 +35,10 @@ class Category {
 	const DIGITAL = 'DIGITAL';
 
 	/**
-	 * Transform an OmniKassa 2.0 status to Pronamic Pay status.
+	 * Transform Pronamic payment line type to OmniKassa 2.0 category.
 	 *
-	 * @param string $status OmniKassa 2.0 status.
-	 * @return string|null
+	 * @param string $type Pronamic payment line type.
+	 * @return string
 	 */
 	public static function transform( $type ) {
 		switch ( $type ) {
