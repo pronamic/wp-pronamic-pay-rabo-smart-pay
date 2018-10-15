@@ -41,12 +41,16 @@ class OrderItems {
 	/**
 	 * Create and add new order item.
 	 *
+	 * @param string $name     Name.
+	 * @param int    $quantity Quantity.
+	 * @param Money  $amount   Amount.
+	 * @param string $category Category.
 	 * @return OrderItem
 	 */
 	public function new_item( $name, $quantity, Money $amount, $category ) {
 		$item = new OrderItem( $name, $quantity, $amount, $category );
 
-		$this->add_item( $item ):
+		$this->add_item( $item );
 
 		return $item;
 	}

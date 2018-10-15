@@ -99,6 +99,15 @@ class OrderItem {
 	}
 
 	/**
+	 * Set item ID.
+	 *
+	 * @param string|null $id ID.
+	 */
+	public function set_id( $id = null ) {
+		$this->id = $id;
+	}
+
+	/**
 	 * Get item name.
 	 *
 	 * @return string
@@ -110,10 +119,19 @@ class OrderItem {
 	/**
 	 * Get item description.
 	 *
-	 * @return int|string
+	 * @return string
 	 */
 	public function get_description() {
 		return $this->description;
+	}
+
+	/**
+	 * Set item description.
+	 *
+	 * @param string $description Description.
+	 */
+	public function set_description( $description ) {
+		$this->description = $description;
 	}
 
 	/**
@@ -144,6 +162,15 @@ class OrderItem {
 	}
 
 	/**
+	 * Set tax.
+	 *
+	 * @param Money|null $tax Tax.
+	 */
+	public function set_tax( Money $tax = null ) {
+		$this->tax = $tax;
+	}
+
+	/**
 	 * Get category.
 	 *
 	 * @return string
@@ -159,6 +186,15 @@ class OrderItem {
 	 */
 	public function get_vat_category() {
 		return $this->vat_category;
+	}
+
+	/**
+	 * Set VAT category.
+	 *
+	 * @param int $vat_category VAT category.
+	 */
+	public function set_vat_category( $vat_category ) {
+		$this->vat_category = $vat_category;
 	}
 
 	/**
@@ -221,8 +257,8 @@ class OrderItem {
 
 		$data[] = $this->category;
 
-		if ( null !== $this->vatCategory ) {
-			$data[] = $this->vatCategory;
+		if ( null !== $this->vat_category ) {
+			$data[] = $this->vat_category;
 		}
 
 		return $data;

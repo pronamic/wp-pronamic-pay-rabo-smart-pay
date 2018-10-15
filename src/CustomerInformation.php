@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use DateTimeInterface;
+
 /**
  * Customer information.
  *
@@ -28,7 +30,7 @@ class CustomerInformation {
 	/**
 	 * The date of birth of the consumer.
 	 *
-	 * @var string
+	 * @var DateTimeInterface
 	 */
 	private $date_of_birth;
 
@@ -65,9 +67,9 @@ class CustomerInformation {
 	/**
 	 * Set date of birth.
 	 *
-	 * @param string $date_of_birth Date of birth.
+	 * @param DateTimeInterface $date_of_birth Date of birth.
 	 */
-	public function set_date_of_birth( $date_of_birth ) {
+	public function set_date_of_birth( DateTimeInterface $date_of_birth ) {
 		$this->date_of_birth = $date_of_birth;
 	}
 
@@ -104,18 +106,26 @@ class CustomerInformation {
 	 * @return object|null
 	 */
 	public function get_json() {
-		$data = array(
-			'emailAddress'    => $this->email_address,
-			'dateOfBirth'     => $this->date_of_birth,
-			'gender'          => $this->gender,
-			'initials'        => $this->initials,
-			'telephoneNumber' => $this->telephone_number,
-		);
+		$object = (object) array();
 
-		$data = array_filter( $data );
+		if ( null !== $this->email_address ) {
+			$object->emailAddress = $this->email_address;
+		}
 
-		if ( empty( $data ) ) {
-			return null;
+		if ( null !== $this->date_of_birth ) {
+			$object->dateOfBirth = $this->date_of_birth->format( 'd-m-Y' );
+		}
+
+		if ( null !== $this->gender ) {
+			$object->gender = $this->gender;
+		}
+
+		if ( null !== $this->initials ) {
+			$object->initials = $this->initials;
+		}
+
+		if ( null !== $this->telephone_number ) {
+			$object->telephoneNumber = $this->telephone_number;
 		}
 
 		return (object) $data;
@@ -129,7 +139,7 @@ class CustomerInformation {
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		$fields[] = $this->email_address;
-		$fields[] = $this->date_of_birth;
+		$fields[] = ( null === $this->date_of_birth ) ? null : $this->date_of_birth->format( 'd-m-Y' );
 		$fields[] = $this->gender;
 		$fields[] = $this->initials;
 		$fields[] = $this->telephone_number;

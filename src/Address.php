@@ -317,6 +317,10 @@ class Address {
 			$fields[] = $this->house_number_addition;
 		}
 
+		$fields[] = $this->postal_code;
+		$fields[] = $this->city;
+		$fields[] = $this->country_code;
+
 		return $fields;
 	}
 }
