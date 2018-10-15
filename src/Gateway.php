@@ -141,7 +141,7 @@ class Gateway extends Core_Gateway {
 				$item->set_id( $line->get_id() );
 				$item->set_description( $line->get_description() );
 
-				if ( null != $line->get_tax_amount() ) {
+				if ( null !== $line->get_tax_amount() ) {
 					$item->set_tax( MoneyTransformer::transform( $line->get_tax_amount() ) );
 				}
 			}
