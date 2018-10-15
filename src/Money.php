@@ -123,4 +123,17 @@ class Money {
 
 		return self::from_object( $data );
 	}
+
+	/**
+	 * Get signature fields.
+	 *
+	 * @param array $fields Fields.
+	 * @return array
+	 */
+	public function get_signature_fields( $fields = array() ) {
+		$fields[] = $this->get_currency();
+		$fields[] = strval( $this->get_amount() );
+
+		return $fields;
+	}
 }

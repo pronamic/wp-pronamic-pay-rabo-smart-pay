@@ -232,35 +232,34 @@ class OrderItem {
 	}
 
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
-	 * @param array $data Data.
+	 * @param array $fields Fields.
 	 * @return array
 	 */
-	public function get_signature_fields( $data = array() ) {
+	public function get_signature_fields( $fields = array() ) {
 		if ( null !== $this->id ) {
-			$data[] = $this->id;
+			$fields[] = $this->id;
 		}
 
-		$data[] = $this->name;
-		$data[] = $this->description;
-		$data[] = $this->quantity;
-		$data[] = $this->amount->get_currency();
-		$data[] = $this->amount->get_amount();
+		$fields[] = $this->name;
+		$fields[] = $this->description;
+		$fields[] = strval( $this->quantity );
+
+		$fields = $this->amount->get_signature_fields( $fields );
 
 		if ( null === $this->tax ) {
-			$data[] = null;
+			$fields[] = null;
 		} else {
-			$data[] = $this->tax->get_currency();
-			$data[] = $this->tax->get_amount();
+			$fields = $this->tax->get_signature_fields( $fields );
 		}
 
-		$data[] = $this->category;
+		$fields[] = $this->category;
 
 		if ( null !== $this->vat_category ) {
-			$data[] = $this->vat_category;
+			$fields[] = $this->vat_category;
 		}
 
-		return $data;
+		return $fields;
 	}
 }

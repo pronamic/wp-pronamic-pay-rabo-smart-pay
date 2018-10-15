@@ -155,10 +155,10 @@ class Order extends Message {
 	 * @param string $merchant_return_url  Merchant return URL.
 	 */
 	public function __construct( $merchant_order_id, $amount, $merchant_return_url ) {
-		$this->timestamp           = new DateTime();
-		$this->merchant_order_id   = $merchant_order_id;
-		$this->amount              = $amount;
-		$this->merchant_return_url = $merchant_return_url;
+		$this->set_timestamp( new DateTime() );
+		$this->set_merchant_order_id( $merchant_order_id );
+		$this->set_amount( $amount );
+		$this->set_merchant_return_url( $merchant_return_url );
 	}
 
 	/**
@@ -171,9 +171,45 @@ class Order extends Message {
 	}
 
 	/**
+	 * Set merchant order ID.
+	 *
+	 * @param string $merchant_order_id Merchant order ID.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 10`.
+	 */
+	public function set_merchant_order_id( $merchant_order_id ) {
+		DataHelper::validate_an( $merchant_order_id, 10 );
+
+		$this->merchant_order_id = $merchant_order_id;
+	}
+
+	/**
+	 * Set amount.
+	 *
+	 * @param Money $amount Amount.
+	 */
+	public function set_amount( Money $amount ) {
+		$this->amount = $amount;
+	}
+
+	/**
+	 * Set merchant return URL.
+	 *
+	 * The URL to which the consumer's browser will be sent after the payment.
+	 *
+	 * @param string $url Merchant return URL.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 1024`.
+	 */
+	public function set_merchant_return_url( $url ) {
+		DataHelper::validate_an( $url, 1024 );
+
+		$this->merchant_return_url = $url;
+	}
+
+	/**
 	 * Set description.
 	 *
-	 * @param string $description Description.
+	 * @param string|null $description Description.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
 	 */
 	public function set_description( $description ) {
 		$this->description = $description;
@@ -182,9 +218,12 @@ class Order extends Message {
 	/**
 	 * Set language.
 	 *
-	 * @param string $language Language.
+	 * @param string|null $language Language.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..2`.
 	 */
 	public function set_language( $language ) {
+		DataHelper::validate_null_or_an( $language, 2 );
+
 		$this->language = $language;
 	}
 
@@ -192,17 +231,23 @@ class Order extends Message {
 	 * Set payment brand.
 	 *
 	 * @param string|null $payment_brand Payment brand.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand( $payment_brand ) {
+		DataHelper::validate_null_or_an( $payment_brand, 50 );
+
 		$this->payment_brand = $payment_brand;
 	}
 
 	/**
 	 * Set payment brand force.
 	 *
-	 * @param string $payment_brand_force Payment brand force.
+	 * @param string|null $payment_brand_force Payment brand force.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand_force( $payment_brand_force ) {
+		DataHelper::validate_null_or_an( $payment_brand_force, 50 );
+
 		$this->payment_brand_force = $payment_brand_force;
 	}
 
@@ -312,8 +357,9 @@ class Order extends Message {
 	public function get_signature_fields( $fields = array() ) {
 		$fields[] = $this->timestamp->format( DATE_ATOM );
 		$fields[] = $this->merchant_order_id;
-		$fields[] = $this->amount->get_currency();
-		$fields[] = $this->amount->get_amount();
+
+		$fields = $this->amount->get_signature_fields( $fields );
+
 		$fields[] = $this->language;
 		$fields[] = $this->description;
 		$fields[] = $this->merchant_return_url;

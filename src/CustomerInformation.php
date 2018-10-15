@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use DateTimeInterface;
+use DateTime;
 
 /**
  * Customer information.
@@ -30,7 +30,7 @@ class CustomerInformation {
 	/**
 	 * The date of birth of the consumer.
 	 *
-	 * @var DateTimeInterface
+	 * @var DateTime
 	 */
 	private $date_of_birth;
 
@@ -67,9 +67,9 @@ class CustomerInformation {
 	/**
 	 * Set date of birth.
 	 *
-	 * @param DateTimeInterface $date_of_birth Date of birth.
+	 * @param DateTime $date_of_birth Date of birth.
 	 */
-	public function set_date_of_birth( DateTimeInterface $date_of_birth ) {
+	public function set_date_of_birth( DateTime $date_of_birth ) {
 		$this->date_of_birth = $date_of_birth;
 	}
 
@@ -128,7 +128,7 @@ class CustomerInformation {
 			$object->telephoneNumber = $this->telephone_number;
 		}
 
-		return (object) $data;
+		return $object;
 	}
 
 	/**
