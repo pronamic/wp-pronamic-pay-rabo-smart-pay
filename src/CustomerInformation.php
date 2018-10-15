@@ -23,42 +23,42 @@ class CustomerInformation {
 	/**
 	 * The e-mailadress of the consumer.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $email_address;
 
 	/**
 	 * The date of birth of the consumer.
 	 *
-	 * @var DateTime
+	 * @var DateTime|null
 	 */
 	private $date_of_birth;
 
 	/**
 	 * The gender of the consumer.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $gender;
 
 	/**
 	 * The initials of the consumer.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $initials;
 
 	/**
 	 * The consumer's telephone number.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $telephone_number;
 
 	/**
 	 * Set the e-mailadress of the consumer.
 	 *
-	 * @param string $email_address E-mailadress of the consumer.
+	 * @param string|null $email_address E-mailadress of the consumer.
 	 */
 	public function set_email_address( $email_address ) {
 		$this->email_address = $email_address;
@@ -67,16 +67,16 @@ class CustomerInformation {
 	/**
 	 * Set date of birth.
 	 *
-	 * @param DateTime $date_of_birth Date of birth.
+	 * @param DateTime|null $date_of_birth Date of birth.
 	 */
-	public function set_date_of_birth( DateTime $date_of_birth ) {
+	public function set_date_of_birth( DateTime $date_of_birth = null ) {
 		$this->date_of_birth = $date_of_birth;
 	}
 
 	/**
 	 * Set gender.
 	 *
-	 * @param string $gender Gender.
+	 * @param string|null $gender Gender.
 	 */
 	public function set_gender( $gender ) {
 		$this->gender = $gender;
@@ -85,7 +85,7 @@ class CustomerInformation {
 	/**
 	 * Set initials.
 	 *
-	 * @param string $initials Initials.
+	 * @param string|null $initials Initials.
 	 */
 	public function set_initials( $initials ) {
 		$this->initials = $initials;
@@ -94,7 +94,7 @@ class CustomerInformation {
 	/**
 	 * Set telephone number.
 	 *
-	 * @param string $telephone_number Telephone number.
+	 * @param string|null $telephone_number Telephone number.
 	 */
 	public function set_telephone_number( $telephone_number ) {
 		$this->telephone_number = $telephone_number;
@@ -103,7 +103,7 @@ class CustomerInformation {
 	/**
 	 * Get JSON.
 	 *
-	 * @return object|null
+	 * @return object
 	 */
 	public function get_json() {
 		$object = (object) array();

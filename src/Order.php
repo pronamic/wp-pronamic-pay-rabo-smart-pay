@@ -11,6 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use DateTime;
+use InvalidArgumentException;
 use Pronamic\WordPress\Pay\Payments\PaymentLines;
 
 /**
@@ -42,14 +43,14 @@ class Order extends Message {
 	/**
 	 * Description of the order.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $description;
 
 	/**
 	 * The order items.
 	 *
-	 * @var OrderItems
+	 * @var OrderItems|null
 	 */
 	private $order_items;
 
@@ -63,21 +64,21 @@ class Order extends Message {
 	/**
 	 * The shipping address.
 	 *
-	 * @var Address
+	 * @var Address|null
 	 */
 	private $shipping_detail;
 
 	/**
 	 * The billing address.
 	 *
-	 * @var Address
+	 * @var Address|null
 	 */
 	private $billing_detail;
 
 	/**
 	 * The customer information.
 	 *
-	 * @var CustomerInformation
+	 * @var CustomerInformation|null
 	 */
 	private $customer_information;
 
@@ -86,7 +87,7 @@ class Order extends Message {
 	 *
 	 * ISO 639-1 standard. Not Case sensitive.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $language;
 

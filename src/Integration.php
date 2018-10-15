@@ -30,7 +30,11 @@ class Integration extends AbstractIntegration {
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
 
-		// Actions.
+		/**
+		 * Webhook listener function.
+		 *
+		 * @var callable $webhook_listener_function
+		 */
 		$webhook_listener_function = array( __NAMESPACE__ . '\WebhookListener', 'listen' );
 
 		if ( ! has_action( 'wp_loaded', $webhook_listener_function ) ) {

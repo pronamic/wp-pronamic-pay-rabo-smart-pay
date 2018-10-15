@@ -24,7 +24,7 @@ class MoneyTransformer {
 	 * Transform Pronamic address to OmniKassa 2.0 address.
 	 *
 	 * @param PronamicMoney|null $pronamic_money Pronamic money to convert.
-	 * @return Money
+	 * @return Money|null
 	 */
 	public static function transform( PronamicMoney $pronamic_money = null ) {
 		if ( null === $pronamic_money ) {

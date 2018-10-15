@@ -58,14 +58,14 @@ class Address {
 	 * with houseNumberAddition (see below) will be
 	 * truncated to 10 characters.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $house_number;
 
 	/**
 	 * House number additions.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $house_number_addition;
 
@@ -182,7 +182,7 @@ class Address {
 	/**
 	 * Get house number.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_house_number() {
 		return $this->house_number;
@@ -191,7 +191,7 @@ class Address {
 	/**
 	 * Set house number.
 	 *
-	 * @param string $house_number House number.
+	 * @param string|null $house_number House number.
 	 */
 	public function set_house_number( $house_number ) {
 		$this->house_number = $house_number;
@@ -200,7 +200,7 @@ class Address {
 	/**
 	 * Get house number addition.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_house_number_addition() {
 		return $this->house_number_addition;
@@ -209,7 +209,7 @@ class Address {
 	/**
 	 * Set house number addition.
 	 *
-	 * @param string $house_number_addition House number addition.
+	 * @param string|null $house_number_addition House number addition.
 	 */
 	public function set_house_number_addition( $house_number_addition ) {
 		$this->house_number_addition = $house_number_addition;

@@ -108,8 +108,8 @@ class PaymentBrands {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $payment_method Payment method.
-	 * @param mixed  $default        Default payment method.
+	 * @param string|null $payment_method Payment method.
+	 * @param mixed       $default        Default payment method.
 	 *
 	 * @return string|null
 	 */
