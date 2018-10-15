@@ -45,10 +45,11 @@
 		"phpmd/phpmd": "^2.2.3",
 		"phpunit/phpunit": "^4.5",
 		"squizlabs/php_codesniffer": "^2.7",
-		"wp-coding-standards/wpcs": "^1.0",
+		"wp-coding-standards/wpcs": "^1.1",
 		"wimg/php-compatibility": "^8.0",
 		"johnpbloch/wordpress": "^4.9",
-		"wp-phpunit/wp-phpunit": "^4.9"
+		"wp-phpunit/wp-phpunit": "^4.9",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.4.4"
 	},
 	"scripts": {
 		"coveralls": "vendor/bin/coveralls -v",
