@@ -106,6 +106,8 @@ class Gateway extends Core_Gateway {
 			$customer_information = new CustomerInformation();
 
 			$customer_information->set_email_address( $customer->get_email() );
+			$customer_information->set_date_of_birth( $customer->get_birth_date() );
+			$customer_information->set_gender( $customer->get_gender() );
 			$customer_information->set_telephone_number( $customer->get_phone() );
 
 			$order->set_customer_information( $customer_information );
@@ -126,20 +128,23 @@ class Gateway extends Core_Gateway {
 
 		// Lines.
 		if ( null !== $payment->get_lines() ) {
-			$order_items = new OrderItems();
+			$order_items = $order->new_items();
 
 			foreach ( $payment->get_lines() as $line ) {
-				$item = new OrderItem(
+				$item = $order_items->new_item(
 					$line->get_name(),
 					$line->get_quantity(),
 					MoneyTransformer::transform( $line->get_total_amount() ),
 					Category::transform( $line->get_type() )
 				);
 
-				$order_items->add_item( $item );
-			}
+				$item->set_id( $line->get_id() );
+				$item->set_description( $line->get_description() );
 
-			$order->set_order_items( $order_items );
+				if ( null != $line->get_tax_amount() ) {
+					$item->set_tax( MoneyTransformer::transform( $line->get_tax_amount() ) );
+				}
+			}
 		}
 
 		// Maybe update access token.
