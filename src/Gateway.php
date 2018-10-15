@@ -156,16 +156,22 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Announce order.
-		$result = $this->client->order_announce( $this->config, $order );
+		$response = $this->client->order_announce( $this->config, $order );
 
 		// Handle errors.
 		if ( $this->get_client_error() ) {
 			return;
 		}
 
-		if ( $result ) {
-			$payment->set_action_url( $result->redirectUrl );
+		if ( false === $response ) {
+			return;
 		}
+
+		if ( ! $response->is_valid( $this->config->signing_key ) ) {
+			return;
+		}
+
+		$payment->set_action_url( $response->get_redirect_url() );
 	}
 
 	/**
@@ -211,7 +217,11 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Status.
-		$payment->set_status( Statuses::transform( $parameters->get_status() ) );
+		$pronamic_status = Statuses::transform( $parameters->get_status() );
+
+		if ( null !== $pronamic_status ) {
+			$payment->set_status( $pronamic_status );
+		}
 	}
 
 	/**
@@ -255,7 +265,12 @@ class Gateway extends Core_Gateway {
 				}
 
 				$payment->set_transaction_id( $order_result->get_omnikassa_order_id() );
-				$payment->set_status( Statuses::transform( $order_result->get_order_status() ) );
+
+				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
+
+				if ( null !== $pronamic_status ) {
+					$payment->set_status( $pronamic_status );
+				}
 
 				// Note.
 				$note = '';
@@ -290,15 +305,21 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		$this->config->access_token             = $data->token;
-		$this->config->access_token_valid_until = $data->validUntil;
+		if ( isset( $data->token ) ) {
+			$this->config->access_token = $data->token;
 
-		update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
-		update_post_meta(
-			$this->config->post_id,
-			'_pronamic_gateway_omnikassa_2_access_token_valid_until',
-			$data->validUntil
-		);
+			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
+		}
+
+		if ( isset( $data->validUntil ) ) {
+			$this->config->access_token_valid_until = $data->validUntil;
+
+			update_post_meta(
+				$this->config->post_id,
+				'_pronamic_gateway_omnikassa_2_access_token_valid_until',
+				$data->validUntil
+			);
+		}
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Error
+ * Order announce response
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2018 Pronamic
@@ -10,97 +10,85 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Exception;
 use InvalidArgumentException;
-use stdClass;
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Exception\ValidationException;
 use JsonSchema\Validator;
 
 /**
- * Error
+ * Order announce response
  *
  * @author  Remco Tolsma
  * @version 2.0.2
  * @since   2.0.2
  */
-class Error {
+class OrderAnnounceResponse extends ResponseMessage {
 	/**
-	 * Code.
+	 * Redirect URL.
 	 *
 	 * @var string
 	 */
-	private $code;
+	private $redirect_url;
 
 	/**
-	 * Message.
+	 * Construct notification message.
 	 *
-	 * @var string
+	 * @param string $redirect_url Redirect URL.
+	 * @param string $signature    Signature.
 	 */
-	private $message;
+	public function __construct( $redirect_url, $signature ) {
+		parent::__construct( $signature );
 
-	/**
-	 * Construct error.
-	 *
-	 * @param string $code    Code.
-	 * @param string $message Message.
-	 */
-	public function __construct( $code, $message ) {
-		$this->code    = $code;
-		$this->message = $message;
+		$this->redirect_url = $redirect_url;
 	}
 
 	/**
-	 * Get error code.
+	 * Get redirect URL.
 	 *
 	 * @return string
 	 */
-	public function get_code() {
-		return $this->code;
+	public function get_redirect_url() {
+		return $this->redirect_url;
 	}
 
 	/**
-	 * Get error message.
+	 * Get signature fields.
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function get_message() {
-		return $this->message;
-	}
-
-	/**
-	 * Create error from object.
-	 *
-	 * @param object $object Object.
-	 * @return Error
-	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
-	 */
-	public static function from_object( $object ) {
-		if ( ! isset( $object->errorCode ) ) {
-			throw new InvalidArgumentException( 'Object must contain `errorCode` property.' );
-		}
-
-		$message = null;
-
-		if ( isset( $object->errorMessage ) ) {
-			$message = $object->errorMessage;
-		}
-
-		if ( isset( $object->consumerMessage ) ) {
-			$message = $object->consumerMessage;
-		}
-
-		return new self(
-			$object->errorCode,
-			$message
+	public function get_signature_fields() {
+		return array(
+			$this->get_redirect_url(),
 		);
 	}
 
 	/**
-	 * Create error from JSON string.
+	 * Create notification from object.
+	 *
+	 * @param object $object Object.
+	 * @return OrderAnnounceResponse
+	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 */
+	public static function from_object( $object ) {
+		if ( ! isset( $object->signature ) ) {
+			throw new InvalidArgumentException( 'Object must contain `signature` property.' );
+		}
+
+		if ( ! isset( $object->redirectUrl ) ) {
+			throw new InvalidArgumentException( 'Object must contain `redirectUrl` property.' );
+		}
+
+		return new self(
+			$object->redirectUrl,
+			$object->signature
+		);
+	}
+
+	/**
+	 * Create order announce response from JSON string.
 	 *
 	 * @param string $json JSON string.
-	 * @return Error
+	 * @return OrderAnnounceResponse
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
@@ -111,7 +99,7 @@ class Error {
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-error.json' ),
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/order-announce-response.json' ),
 			),
 			Constraint::CHECK_MODE_EXCEPTIONS
 		);

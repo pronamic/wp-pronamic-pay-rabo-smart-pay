@@ -44,6 +44,17 @@ abstract class Message implements Signable {
 	}
 
 	/**
+	 * Sign this message with specified signing key.
+	 *
+	 * @param string $signing_key Signing key.
+	 */
+	public function sign( $signing_key ) {
+		$signature = Security::get_signature( $this, $signing_key );
+
+		$this->set_signature( $signature );
+	}
+
+	/**
 	 * Check if this message is valid.
 	 *
 	 * @param string $signing_key Signing key.

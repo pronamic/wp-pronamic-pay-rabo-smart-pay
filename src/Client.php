@@ -206,14 +206,20 @@ class Client {
 	 *
 	 * @param Config $config Config.
 	 * @param Order  $order  Order.
-	 * @return object|bool
+	 * @return OrderAnnounceResponse|false
 	 */
 	public function order_announce( $config, Order $order ) {
+		$order->sign( $config->signing_key );
+
 		$object = $order->get_json();
 
-		$object->signature = Security::get_signature( $order, $config->signing_key );
+		$result = $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
 
-		return $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
+		if ( ! is_object( $result ) ) {
+			return false;
+		}
+
+		return OrderAnnounceResponse::from_object( $result );
 	}
 
 	/**

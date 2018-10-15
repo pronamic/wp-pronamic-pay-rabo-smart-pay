@@ -346,6 +346,8 @@ class Order extends Message {
 			$object->paymentBrandForce = $this->payment_brand_force;
 		}
 
+		$object->signature = $this->get_signature();
+
 		return $object;
 	}
 

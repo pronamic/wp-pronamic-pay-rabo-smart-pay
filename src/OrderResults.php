@@ -101,11 +101,11 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	/**
 	 * Create order results from object.
 	 *
-	 * @param stdClass $object Object.
+	 * @param object $object Object.
 	 * @return OrderResults
 	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( stdClass $object ) {
+	public static function from_object( $object ) {
 		if ( ! isset( $object->signature ) ) {
 			throw new InvalidArgumentException( 'Object must contain `signature` property.' );
 		}

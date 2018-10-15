@@ -1,0 +1,19 @@
+{
+	"$id": "https://example.com/person.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "OmniKassa 2.0 order announce response.",
+	"type": "object",
+	"required": [
+		"redirectUrl",
+		"signature"
+	],
+	"properties": {
+		"redirectUrl": {
+			"type": "string"
+		},
+		"signature": {
+			"type": "string",
+			"description": "The signature of the message, see heading signature for details."
+		}
+	}
+}
