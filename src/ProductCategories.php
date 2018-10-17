@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Payments\PaymentLineType;
+
 /**
  * Product categories.
  *
@@ -31,4 +33,24 @@ class ProductCategories {
 	 * @var string
 	 */
 	const DIGITAL = 'DIGITAL';
+
+	/**
+	 * Transform Pronamic payment line type to OmniKassa 2.0 product category.
+	 *
+	 * @param string $type Pronamic payment line type.
+	 *
+	 * @return string
+	 */
+	public static function transform( $type ) {
+		switch ( $type ) {
+			case PaymentLineType::PHYSICAL:
+				return self::PHYSICAL;
+
+			case PaymentLineType::DIGITAL:
+			case PaymentLineType::DISCOUNT:
+			case PaymentLineType::SHIPPING:
+			default:
+				return self::DIGITAL;
+		}
+	}
 }

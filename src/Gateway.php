@@ -135,7 +135,7 @@ class Gateway extends Core_Gateway {
 					$line->get_name(),
 					$line->get_quantity(),
 					MoneyTransformer::transform( $line->get_total_amount() ),
-					Category::transform( $line->get_type() )
+					ProductCategories::transform( $line->get_type() )
 				);
 
 				$item->set_id( $line->get_id() );
