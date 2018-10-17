@@ -57,7 +57,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase {
 			'Jackie O Round Sunglasses',
 			1,
 			new Money( 'EUR', 22500 ),
-			Category::PHYSICAL
+			ProductCategories::PHYSICAL
 		);
 
 		$order_item->set_id( 'A1000' );
