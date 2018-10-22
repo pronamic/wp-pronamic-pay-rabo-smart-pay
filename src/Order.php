@@ -213,6 +213,8 @@ class Order extends Message {
 	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
 	 */
 	public function set_description( $description ) {
+		DataHelper::validate_an( $description, 35 );
+
 		$this->description = $description;
 	}
 

@@ -124,7 +124,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Description.
-		$order->set_description( $payment->get_description() );
+		$order->set_description( substr( $payment->get_description(), 0, 35 ) );
 
 		// Lines.
 		if ( null !== $payment->get_lines() ) {
