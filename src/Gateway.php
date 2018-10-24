@@ -87,7 +87,7 @@ class Gateway extends Core_Gateway {
 		// New order.
 		$order = new Order(
 			$merchant_order_id,
-			MoneyTransformer::transform( $payment->get_amount() ),
+			MoneyTransformer::transform( $payment->get_total_amount() ),
 			$payment->get_return_url()
 		);
 
