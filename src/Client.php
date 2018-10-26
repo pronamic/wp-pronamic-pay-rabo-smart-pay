@@ -132,6 +132,8 @@ class Client {
 	 * @param string      $endpoint URL endpoint to request.
 	 * @param string      $token    Authorization token.
 	 * @param object|null $object   Object.
+	 *
+	 * @return bool|object
 	 */
 	private function request( $method, $endpoint, $token, $object = null ) {
 		// URL.
@@ -174,14 +176,18 @@ class Client {
 		}
 
 		// Error.
+		// @codingStandardsIgnoreStart
 		if ( isset( $data->errorCode ) ) {
+			// @codingStandardsIgnoreEnd
 			$message = 'Unknown error.';
 
+			// @codingStandardsIgnoreStart
 			if ( isset( $data->consumerMessage ) ) {
 				$message = $data->consumerMessage;
 			} elseif ( isset( $data->errorMessage ) ) {
 				$message = $data->errorMessage;
 			}
+			// @codingStandardsIgnoreEnd
 
 			$this->error = new WP_Error( 'omnikassa_2_error', $message, $data );
 
