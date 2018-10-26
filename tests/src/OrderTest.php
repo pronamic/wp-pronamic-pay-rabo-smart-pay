@@ -48,7 +48,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase {
 		$order = new Order( 'order123', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
 
 		$order->set_timestamp( new DateTime( '2017-09-11T14:54:57+02:00' ) );
-		$order->set_description( 'Aankoop mijn webwinkel ordernummer 123' );
+		$order->set_description( 'Aankoop webwinkel ordernummer 123' );
 
 		// Order items.
 		$order_items = $order->new_items();
@@ -118,7 +118,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase {
 		// Fields.
 		$fields = $order->get_signature_fields();
 
-		$expected = '2017-09-11T14:54:57+02:00,order123,EUR,22500,nl,Aankoop mijn webwinkel ordernummer 123,https://mijn.webwinkel.nl/betalingsresultaat,A1000,Jackie O Round Sunglasses,These distinct, feminine frames balance a classic Jackie-O styling with a modern look.,1,EUR,22500,EUR,4725,PHYSICAL,1,Jan,van,Jansen,Beukenlaan,12,a,1234AA,Amsterdam,NL,IDEAL,FORCE_ONCE,jan@example.org,21-11-1977,M,J.A.N.,+31204971111,Jan,van,Jansen,Kersenstraat,385,b,1234BB,Haarlem,NL';
+		$expected = '2017-09-11T14:54:57+02:00,order123,EUR,22500,nl,Aankoop webwinkel ordernummer 123,https://mijn.webwinkel.nl/betalingsresultaat,A1000,Jackie O Round Sunglasses,These distinct, feminine frames balance a classic Jackie-O styling with a modern look.,1,EUR,22500,EUR,4725,PHYSICAL,1,Jan,van,Jansen,Beukenlaan,12,a,1234AA,Amsterdam,NL,IDEAL,FORCE_ONCE,jan@example.org,21-11-1977,M,J.A.N.,+31204971111,Jan,van,Jansen,Kersenstraat,385,b,1234BB,Haarlem,NL';
 
 		$this->assertEquals( $expected, Security::get_signature_fields_combined( $fields ) );
 	}
