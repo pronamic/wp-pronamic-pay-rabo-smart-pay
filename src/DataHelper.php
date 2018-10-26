@@ -26,6 +26,9 @@ class DataHelper {
 	 *
 	 * @param string $value Value to validate.
 	 * @param int    $max   Max length of value.
+	 *
+	 * @return bool
+	 *
 	 * @throws InvalidArgumentException Throws invalid argument exception when string is longer then max length.
 	 */
 	public static function validate_an( $value, $max ) {
@@ -47,6 +50,9 @@ class DataHelper {
 	 *
 	 * @param string|null $value Value to validate.
 	 * @param int         $max   Max length of value.
+	 *
+	 * @return bool
+	 *
 	 * @throws InvalidArgumentException Throws invalid argument exception when value is not null and longer then max length.
 	 */
 	public static function validate_null_or_an( $value, $max ) {
