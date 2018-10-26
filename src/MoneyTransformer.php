@@ -28,7 +28,7 @@ class MoneyTransformer {
 	 */
 	public static function transform( PronamicMoney $pronamic_money ) {
 		$money = new Money(
-			$pronamic_money->get_currency()->get_alphabetic_code(),
+			strval( $pronamic_money->get_currency()->get_alphabetic_code() ),
 			intval( $pronamic_money->get_cents() )
 		);
 
