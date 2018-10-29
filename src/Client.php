@@ -140,11 +140,24 @@ class Client {
 		$url = $this->get_url() . $endpoint;
 
 		// Arguments.
+		$timeout = 5;
+
+		$brands_increased_timeout = array(
+			PaymentBrands::AFTERPAY,
+		);
+
+		// @codingStandardsIgnoreStart
+		if ( is_object( $object ) && isset( $object->paymentBrand ) && in_array( $object->paymentBrand, $brands_increased_timeout, true ) ) {
+			// @codingStandardsIgnoreEnd
+			$timeout = 30;
+		}
+
 		$args = array(
 			'method'  => $method,
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $token,
 			),
+			'timeout' => $timeout,
 		);
 
 		if ( null !== $object ) {
