@@ -67,7 +67,7 @@ class OrderItems {
 	/**
 	 * Get order items.
 	 *
-	 * @return array
+	 * @return OrderItem[]
 	 */
 	public function get_order_items() {
 		return $this->order_items;
