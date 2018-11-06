@@ -56,7 +56,7 @@ class AddressTransformer {
 			$address->set_middle_name( $name->get_middle_name() );
 		}
 
-		$address->set_house_number( $pronamic_address->get_house_number() );
+		$address->set_house_number( $pronamic_address->get_house_number_base() );
 		$address->set_house_number_addition( $pronamic_address->get_house_number_addition() );
 
 		return $address;
