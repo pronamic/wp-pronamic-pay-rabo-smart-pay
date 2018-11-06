@@ -151,6 +151,8 @@ class Client {
 			$args['body'] = wp_json_encode( $object );
 		}
 
+		$args = apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
+
 		// Request.
 		$response = wp_remote_request( $url, $args );
 

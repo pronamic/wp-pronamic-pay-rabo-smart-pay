@@ -10,6 +10,18 @@
 [![License](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/license.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 
+## WordPress Filters
+
+### pronamic_pay_omnikassa_2_request_args
+
+```php
+add_filter( 'pronamic_pay_omnikassa_2_request_args', function( $args ) {
+	$args['timeout'] = 3600;
+
+	return $args;
+} );
+```
+
 ## Links
 
 *	https://betalen-acpt3.rabobank.nl/omnikassa-api/
