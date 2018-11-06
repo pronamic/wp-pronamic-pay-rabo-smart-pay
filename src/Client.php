@@ -132,17 +132,32 @@ class Client {
 	 * @param string      $endpoint URL endpoint to request.
 	 * @param string      $token    Authorization token.
 	 * @param object|null $object   Object.
+	 *
+	 * @return bool|object
 	 */
 	private function request( $method, $endpoint, $token, $object = null ) {
 		// URL.
 		$url = $this->get_url() . $endpoint;
 
 		// Arguments.
+		$timeout = 5;
+
+		$brands_increased_timeout = array(
+			PaymentBrands::AFTERPAY,
+		);
+
+		// @codingStandardsIgnoreStart
+		if ( is_object( $object ) && isset( $object->paymentBrand ) && in_array( $object->paymentBrand, $brands_increased_timeout, true ) ) {
+			// @codingStandardsIgnoreEnd
+			$timeout = 30;
+		}
+
 		$args = array(
 			'method'  => $method,
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $token,
 			),
+			'timeout' => $timeout,
 		);
 
 		if ( null !== $object ) {
@@ -176,14 +191,18 @@ class Client {
 		}
 
 		// Error.
+		// @codingStandardsIgnoreStart
 		if ( isset( $data->errorCode ) ) {
+			// @codingStandardsIgnoreEnd
 			$message = 'Unknown error.';
 
+			// @codingStandardsIgnoreStart
 			if ( isset( $data->consumerMessage ) ) {
 				$message = $data->consumerMessage;
 			} elseif ( isset( $data->errorMessage ) ) {
 				$message = $data->errorMessage;
 			}
+			// @codingStandardsIgnoreEnd
 
 			$this->error = new WP_Error( 'omnikassa_2_error', $message, $data );
 

@@ -240,12 +240,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-money.git",
-                "reference": "c508c09055fa5b043a5bc7c9e18cb921e4ff0a54"
+                "reference": "374756c96075e5f89b1a14d41d6ff5ab271520cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/c508c09055fa5b043a5bc7c9e18cb921e4ff0a54",
-                "reference": "c508c09055fa5b043a5bc7c9e18cb921e4ff0a54",
+                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/374756c96075e5f89b1a14d41d6ff5ab271520cd",
+                "reference": "374756c96075e5f89b1a14d41d6ff5ab271520cd",
                 "shasum": ""
             },
             "require": {
@@ -274,7 +274,7 @@
             "license": [
                 "GPL-3.0-or-later"
             ],
-            "time": "2018-10-03T14:52:11+00:00"
+            "time": "2018-10-24T14:27:04+00:00"
         },
         {
             "name": "viison/address-splitter",
@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "5109d8d03fb9326ed307d3b107572fb124ee9c6f"
+                "reference": "89ae8004fc1a06a1c133de004ac20ed1362090a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/5109d8d03fb9326ed307d3b107572fb124ee9c6f",
-                "reference": "5109d8d03fb9326ed307d3b107572fb124ee9c6f",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/89ae8004fc1a06a1c133de004ac20ed1362090a2",
+                "reference": "89ae8004fc1a06a1c133de004ac20ed1362090a2",
                 "shasum": ""
             },
             "require": {
@@ -446,7 +446,7 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2018-10-15T12:38:49+00:00"
+            "time": "2018-10-26T09:45:25+00:00"
         }
     ],
     "packages-dev": [

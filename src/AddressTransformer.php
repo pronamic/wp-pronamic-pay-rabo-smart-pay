@@ -43,6 +43,12 @@ class AddressTransformer {
 			return null;
 		}
 
+		// Remove whitespace from postal code for some countries.
+		if ( in_array( $country_code, array( 'BE', 'DE', 'NL' ), true ) ) {
+			$postal_code = str_replace( ' ', '', $postal_code );
+		}
+
+		// New address.
 		$address = new Address( $last_name, $street, $postal_code, $city, $country_code );
 
 		if ( null !== $name ) {

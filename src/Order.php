@@ -213,7 +213,7 @@ class Order extends Message {
 	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
 	 */
 	public function set_description( $description ) {
-		DataHelper::validate_an( $description, 35 );
+		DataHelper::validate_null_or_an( $description, 35 );
 
 		$this->description = $description;
 	}
@@ -221,7 +221,7 @@ class Order extends Message {
 	/**
 	 * Set language.
 	 *
-	 * @param string|null $language Language.
+	 * @param string|null $language Language (ISO 3166-1 alpha-2).
 	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..2`.
 	 */
 	public function set_language( $language ) {

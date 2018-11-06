@@ -10,7 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -90,7 +89,7 @@ class Gateway extends Core_Gateway {
 
 		$order = new Order(
 			$merchant_order_id,
-			MoneyTransformer::transform( $payment->get_amount() ),
+			MoneyTransformer::transform( $payment->get_total_amount() ),
 			$merchant_return_url
 		);
 
@@ -104,7 +103,7 @@ class Gateway extends Core_Gateway {
 		$customer = $payment->get_customer();
 
 		if ( null !== $customer ) {
-			$order->set_language( $customer->get_language() );
+			$order->set_language( strtoupper( $customer->get_language() ) );
 
 			$customer_information = new CustomerInformation();
 
@@ -314,6 +313,11 @@ class Gateway extends Core_Gateway {
 			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
 		}
 
+		/*
+		 * @codingStandardsIgnoreStart
+		 *
+		 * Ignore coding standards because of sniff WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+		 */
 		if ( isset( $data->validUntil ) ) {
 			$this->config->access_token_valid_until = $data->validUntil;
 
@@ -323,6 +327,7 @@ class Gateway extends Core_Gateway {
 				$data->validUntil
 			);
 		}
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
