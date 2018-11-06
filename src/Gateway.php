@@ -141,7 +141,21 @@ class Gateway extends Core_Gateway {
 				);
 
 				$item->set_id( $line->get_id() );
-				$item->set_description( $line->get_description() );
+
+				// Description.
+				$description = $line->get_description();
+
+				if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
+					/*
+					 * The `OrderItem.description` field is documentated as `0..1` (optional),
+					 * but for AfterPay payments it is required.
+					 *
+					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
+					 */
+					$description = $line->get_name();
+				}
+
+				$item->set_description( $description );
 
 				if ( null !== $line->get_tax_amount() ) {
 					$item->set_tax( MoneyTransformer::transform( $line->get_tax_amount() ) );

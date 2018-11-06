@@ -17,7 +17,11 @@ Answer by phone, but was somehting like:
 
 > De beschrijving mag maximaal `35` tekens zijn, de documentatie is onjuist.
 
-## Error `order could not be restricted to AFTERPAY, POI with id 5000 can only be restricted to payment brands: BANCONTACT, IDEAL, MAESTRO, MASTERCARD, PAYPAL, VISA, V_PAY`
+## Error `5024`
+
+```
+order could not be restricted to AFTERPAY, POI with id 5000 can only be restricted to payment brands: BANCONTACT, IDEAL, MAESTRO, MASTERCARD, PAYPAL, VISA, V_PAY
+```
 
 **Question Pronamic** on **maandag 15 oktober 2018 10:48**:
 
