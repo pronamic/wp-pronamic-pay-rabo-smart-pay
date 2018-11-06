@@ -22,6 +22,16 @@ add_filter( 'pronamic_pay_omnikassa_2_request_args', function( $args ) {
 } );
 ```
 
+### pronamic_pay_omnikassa_2_merchant_return_url
+
+```php
+add_filter( 'pronamic_pay_omnikassa_2_merchant_return_url', function( $url ) {
+	$url = 'https://example.com/';
+
+	return $url;
+} );
+```
+
 ## Links
 
 *	https://betalen-acpt3.rabobank.nl/omnikassa-api/

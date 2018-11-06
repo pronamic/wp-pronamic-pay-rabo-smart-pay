@@ -85,10 +85,13 @@ class Gateway extends Core_Gateway {
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
 		// New order.
+		$merchant_return_url = $payment->get_return_url();
+		$merchant_return_url = apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
+
 		$order = new Order(
 			$merchant_order_id,
 			MoneyTransformer::transform( $payment->get_amount() ),
-			$payment->get_return_url()
+			$merchant_return_url
 		);
 
 		// Shipping address.
