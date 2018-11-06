@@ -80,7 +80,7 @@ Answer by phone, but was somehting like:
 
 > Description zit er wel gewoon in, zie ook mijn request in voorgaande e-mail. De foutmelding die we terug krijgen zegt ook niet iets over een `description`.
 > 
-> order could not be restricted to AFTERPAY, POI with id 5000 can only be restricted to payment brands: BANCONTACT, IDEAL, MAESTRO, MASTERCARD, PAYPAL, VISA, V_PAY
+> `order could not be restricted to AFTERPAY, POI with id 5000 can only be restricted to payment brands: BANCONTACT, IDEAL, MAESTRO, MASTERCARD, PAYPAL, VISA, V_PAY`
 > 
 > Als het al in de `description` zit dan moet sowieso ook de foutmelding duidelijker lijkt mij. Passen jullie de documentatie ook nog over de lengte van de description? En krijgen we ook nog antwoord op welke tekens zijn toegestaan binnen AN?
 
@@ -93,3 +93,6 @@ Answer by phone, but was somehting like:
 Answer by phone, but was somehting like:
 
 > De `description` in de `orderItems` ontbreekt, deze is verplicht voor AfterPay.
+
+According the OmniKassa 2.0 documentation (`v1.5`) the `OrderItem.description` parameter is optional.
+After some testing it seems this is not the case for AfterPay payments where `OrderItem.description` is required.
