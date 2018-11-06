@@ -139,25 +139,23 @@ class Client {
 		// URL.
 		$url = $this->get_url() . $endpoint;
 
-		// Arguments.
-		$timeout = 5;
-
-		$brands_increased_timeout = array(
-			PaymentBrands::AFTERPAY,
-		);
-
-		// @codingStandardsIgnoreStart
-		if ( is_object( $object ) && isset( $object->paymentBrand ) && in_array( $object->paymentBrand, $brands_increased_timeout, true ) ) {
-			// @codingStandardsIgnoreEnd
-			$timeout = 30;
-		}
-
+		/*
+		 * Arguments.
+		 *
+		 * The `timeout` argument is intentionally increased from the WordPress 
+		 * default `5` seconds to `30`. This is mainly important for AfterPay 
+		 * order announcements requests, but it can't hurt for other requests.
+		 * It is probably better to wait a little longer for an answer than 
+		 * having timeout issues while starting a payment or requesting a
+		 * payment status. The value can also be adjusted via the 
+		 * `pronamic_pay_omnikassa_2_request_args` filter.
+		 */
 		$args = array(
 			'method'  => $method,
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $token,
 			),
-			'timeout' => $timeout,
+			'timeout' => 30,
 		);
 
 		if ( null !== $object ) {
