@@ -1,6 +1,6 @@
 <?php
 /**
- * Payment brand force
+ * Payment brand force.
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2018 Pronamic
@@ -11,7 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 /**
- * Payment brand force
+ * Payment brand force.
  *
  * @author  Remco Tolsma
  * @version 2.0.2

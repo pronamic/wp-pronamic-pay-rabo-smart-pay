@@ -132,17 +132,30 @@ class Client {
 	 * @param string      $endpoint URL endpoint to request.
 	 * @param string      $token    Authorization token.
 	 * @param object|null $object   Object.
+	 *
+	 * @return bool|object
 	 */
 	private function request( $method, $endpoint, $token, $object = null ) {
 		// URL.
 		$url = $this->get_url() . $endpoint;
 
-		// Arguments.
+		/*
+		 * Arguments.
+		 *
+		 * The `timeout` argument is intentionally increased from the WordPress 
+		 * default `5` seconds to `30`. This is mainly important for AfterPay 
+		 * order announcements requests, but it can't hurt for other requests.
+		 * It is probably better to wait a little longer for an answer than 
+		 * having timeout issues while starting a payment or requesting a
+		 * payment status. The value can also be adjusted via the 
+		 * `pronamic_pay_omnikassa_2_request_args` filter.
+		 */
 		$args = array(
 			'method'  => $method,
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $token,
 			),
+			'timeout' => 30,
 		);
 
 		if ( null !== $object ) {
@@ -150,6 +163,8 @@ class Client {
 
 			$args['body'] = wp_json_encode( $object );
 		}
+
+		$args = apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
 
 		// Request.
 		$response = wp_remote_request( $url, $args );
@@ -174,14 +189,18 @@ class Client {
 		}
 
 		// Error.
+		// @codingStandardsIgnoreStart
 		if ( isset( $data->errorCode ) ) {
+			// @codingStandardsIgnoreEnd
 			$message = 'Unknown error.';
 
+			// @codingStandardsIgnoreStart
 			if ( isset( $data->consumerMessage ) ) {
 				$message = $data->consumerMessage;
 			} elseif ( isset( $data->errorMessage ) ) {
 				$message = $data->errorMessage;
 			}
+			// @codingStandardsIgnoreEnd
 
 			$this->error = new WP_Error( 'omnikassa_2_error', $message, $data );
 
@@ -206,14 +225,20 @@ class Client {
 	 *
 	 * @param Config $config Config.
 	 * @param Order  $order  Order.
-	 * @return object|bool
+	 * @return OrderAnnounceResponse|false
 	 */
 	public function order_announce( $config, Order $order ) {
+		$order->sign( $config->signing_key );
+
 		$object = $order->get_json();
 
-		$object->signature = Security::get_signature( $order, $config->signing_key );
+		$result = $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
 
-		return $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
+		if ( ! is_object( $result ) ) {
+			return false;
+		}
+
+		return OrderAnnounceResponse::from_object( $result );
 	}
 
 	/**

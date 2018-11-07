@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use InvalidArgumentException;
 use stdClass;
 use JsonSchema\Constraints\Constraint;
-use JsonSchema\Exception\ValidationException;
 use JsonSchema\Validator;
 
 /**
@@ -39,10 +38,10 @@ class Money {
 	private $amount;
 
 	/**
-	 * Construct notification message.
+	 * Construct Money.
 	 *
-	 * @param string $currency Authentication.
-	 * @param int    $amount   Amount.
+	 * @param string $currency Currency.
+	 * @param int    $amount   Amount in cents.
 	 */
 	public function __construct( $currency, $amount ) {
 		$this->currency = $currency;
@@ -122,5 +121,18 @@ class Money {
 		);
 
 		return self::from_object( $data );
+	}
+
+	/**
+	 * Get signature fields.
+	 *
+	 * @param array $fields Fields.
+	 * @return array
+	 */
+	public function get_signature_fields( $fields = array() ) {
+		$fields[] = $this->get_currency();
+		$fields[] = strval( $this->get_amount() );
+
+		return $fields;
 	}
 }

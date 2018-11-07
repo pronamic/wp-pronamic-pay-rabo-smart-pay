@@ -10,6 +10,10 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use DateTime;
+use InvalidArgumentException;
+use Pronamic\WordPress\Pay\Payments\PaymentLines;
+
 /**
  * Order
  *
@@ -25,7 +29,7 @@ class Order extends Message {
 	 * This field is mandatory and provides protection against so-called
 	 * replay (playback) attacks
 	 *
-	 * @var string
+	 * @var DateTime
 	 */
 	private $timestamp;
 
@@ -39,14 +43,14 @@ class Order extends Message {
 	/**
 	 * Description of the order.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $description;
 
 	/**
-	 * The orderlines, see below for more details.
+	 * The order items.
 	 *
-	 * @var array
+	 * @var OrderItems|null
 	 */
 	private $order_items;
 
@@ -58,11 +62,32 @@ class Order extends Message {
 	private $amount;
 
 	/**
+	 * The shipping address.
+	 *
+	 * @var Address|null
+	 */
+	private $shipping_detail;
+
+	/**
+	 * The billing address.
+	 *
+	 * @var Address|null
+	 */
+	private $billing_detail;
+
+	/**
+	 * The customer information.
+	 *
+	 * @var CustomerInformation|null
+	 */
+	private $customer_information;
+
+	/**
 	 * Language.
 	 *
 	 * ISO 639-1 standard. Not Case sensitive.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $language;
 
@@ -131,27 +156,77 @@ class Order extends Message {
 	 * @param string $merchant_return_url  Merchant return URL.
 	 */
 	public function __construct( $merchant_order_id, $amount, $merchant_return_url ) {
-		$this->timestamp           = date( DATE_ATOM );
-		$this->merchant_order_id   = $merchant_order_id;
-		$this->amount              = $amount;
-		$this->merchant_return_url = $merchant_return_url;
+		$this->set_timestamp( new DateTime() );
+		$this->set_merchant_order_id( $merchant_order_id );
+		$this->set_amount( $amount );
+		$this->set_merchant_return_url( $merchant_return_url );
+	}
+
+	/**
+	 * Set timestamp.
+	 *
+	 * @param DateTime $timestamp Timestamp.
+	 */
+	public function set_timestamp( DateTime $timestamp ) {
+		$this->timestamp = $timestamp;
+	}
+
+	/**
+	 * Set merchant order ID.
+	 *
+	 * @param string $merchant_order_id Merchant order ID.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 10`.
+	 */
+	public function set_merchant_order_id( $merchant_order_id ) {
+		DataHelper::validate_an( $merchant_order_id, 10 );
+
+		$this->merchant_order_id = $merchant_order_id;
+	}
+
+	/**
+	 * Set amount.
+	 *
+	 * @param Money $amount Amount.
+	 */
+	public function set_amount( Money $amount ) {
+		$this->amount = $amount;
+	}
+
+	/**
+	 * Set merchant return URL.
+	 *
+	 * The URL to which the consumer's browser will be sent after the payment.
+	 *
+	 * @param string $url Merchant return URL.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 1024`.
+	 */
+	public function set_merchant_return_url( $url ) {
+		DataHelper::validate_an( $url, 1024 );
+
+		$this->merchant_return_url = $url;
 	}
 
 	/**
 	 * Set description.
 	 *
-	 * @param string $description Description.
+	 * @param string|null $description Description.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
 	 */
 	public function set_description( $description ) {
+		DataHelper::validate_null_or_an( $description, 35 );
+
 		$this->description = $description;
 	}
 
 	/**
 	 * Set language.
 	 *
-	 * @param string $language Language.
+	 * @param string|null $language Language (ISO 3166-1 alpha-2).
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..2`.
 	 */
 	public function set_language( $language ) {
+		DataHelper::validate_null_or_an( $language, 2 );
+
 		$this->language = $language;
 	}
 
@@ -159,18 +234,71 @@ class Order extends Message {
 	 * Set payment brand.
 	 *
 	 * @param string|null $payment_brand Payment brand.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand( $payment_brand ) {
+		DataHelper::validate_null_or_an( $payment_brand, 50 );
+
 		$this->payment_brand = $payment_brand;
 	}
 
 	/**
 	 * Set payment brand force.
 	 *
-	 * @param string $payment_brand_force Payment brand force.
+	 * @param string|null $payment_brand_force Payment brand force.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand_force( $payment_brand_force ) {
+		DataHelper::validate_null_or_an( $payment_brand_force, 50 );
+
 		$this->payment_brand_force = $payment_brand_force;
+	}
+
+	/**
+	 * Create and set new order items.
+	 *
+	 * @return OrderItems
+	 */
+	public function new_items() {
+		$this->order_items = new OrderItems();
+
+		return $this->order_items;
+	}
+
+	/**
+	 * Set order items.
+	 *
+	 * @param OrderItems|null $order_items Order items.
+	 */
+	public function set_order_items( OrderItems $order_items = null ) {
+		$this->order_items = $order_items;
+	}
+
+	/**
+	 * Set shipping detail.
+	 *
+	 * @param Address|null $shipping_detail Shipping address details.
+	 */
+	public function set_shipping_detail( Address $shipping_detail = null ) {
+		$this->shipping_detail = $shipping_detail;
+	}
+
+	/**
+	 * Set billing detail.
+	 *
+	 * @param Address|null $billing_detail Billing address details.
+	 */
+	public function set_billing_detail( Address $billing_detail = null ) {
+		$this->billing_detail = $billing_detail;
+	}
+
+	/**
+	 * Set customer information.
+	 *
+	 * @param CustomerInformation $customer_information Customer information.
+	 */
+	public function set_customer_information( CustomerInformation $customer_information ) {
+		$this->customer_information = $customer_information;
 	}
 
 	/**
@@ -179,45 +307,92 @@ class Order extends Message {
 	 * @return object
 	 */
 	public function get_json() {
-		return (object) array(
-			'timestamp'         => $this->timestamp,
-			'merchantOrderId'   => $this->merchant_order_id,
-			'description'       => $this->description,
-			'amount'            => $this->amount->get_json(),
-			'language'          => $this->language,
-			'merchantReturnURL' => $this->merchant_return_url,
-			'orderItems'        => $this->order_items,
-			'paymentBrand'      => $this->payment_brand,
-			'paymentBrandForce' => $this->payment_brand_force,
-		);
+		$object = (object) array();
+
+		$object->timestamp       = $this->timestamp->format( DATE_ATOM );
+		$object->merchantOrderId = $this->merchant_order_id;
+
+		if ( null !== $this->description ) {
+			$object->description = $this->description;
+		}
+
+		if ( null !== $this->order_items ) {
+			$object->orderItems = $this->order_items->get_json();
+		}
+
+		$object->amount = $this->amount->get_json();
+
+		if ( null !== $this->shipping_detail ) {
+			$object->shippingDetail = $this->shipping_detail->get_json();
+		}
+
+		if ( null !== $this->billing_detail ) {
+			$object->billingDetail = $this->billing_detail->get_json();
+		}
+
+		if ( null !== $this->customer_information ) {
+			$object->customerInformation = $this->customer_information->get_json();
+		}
+
+		if ( null !== $this->language ) {
+			$object->language = $this->language;
+		}
+
+		$object->merchantReturnURL = $this->merchant_return_url;
+
+		if ( null !== $this->payment_brand ) {
+			$object->paymentBrand = $this->payment_brand;
+		}
+
+		if ( null !== $this->payment_brand_force ) {
+			$object->paymentBrandForce = $this->payment_brand_force;
+		}
+
+		$object->signature = $this->get_signature();
+
+		return $object;
 	}
 
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
+	 * @param array $fields Fields.
 	 * @return array
 	 */
-	public function get_signature_data() {
-		// Required fields.
-		$fields = array(
-			$this->timestamp,
-			$this->merchant_order_id,
-			$this->amount->get_currency(),
-			$this->amount->get_amount(),
-			$this->language,
-			$this->description,
-			$this->merchant_return_url,
-		);
+	public function get_signature_fields( $fields = array() ) {
+		$fields[] = $this->timestamp->format( DATE_ATOM );
+		$fields[] = $this->merchant_order_id;
 
-		// Optional fields; do not change field order!
-		$optional = array(
-			$this->payment_brand,
-			$this->payment_brand_force,
-		);
+		$fields = $this->amount->get_signature_fields( $fields );
 
-		// Remove empty optional fields.
-		$optional = array_filter( $optional );
+		$fields[] = $this->language;
+		$fields[] = $this->description;
+		$fields[] = $this->merchant_return_url;
 
-		return array_merge( $fields, $optional );
+		if ( null !== $this->order_items ) {
+			$fields = $this->order_items->get_signature_fields( $fields );
+		}
+
+		if ( null !== $this->shipping_detail ) {
+			$fields = $this->shipping_detail->get_signature_fields( $fields );
+		}
+
+		if ( null !== $this->payment_brand ) {
+			$fields[] = $this->payment_brand;
+		}
+
+		if ( null !== $this->payment_brand_force ) {
+			$fields[] = $this->payment_brand_force;
+		}
+
+		if ( null !== $this->customer_information ) {
+			$fields = $this->customer_information->get_signature_fields( $fields );
+		}
+
+		if ( null !== $this->billing_detail ) {
+			$fields = $this->billing_detail->get_signature_fields( $fields );
+		}
+
+		return $fields;
 	}
 }

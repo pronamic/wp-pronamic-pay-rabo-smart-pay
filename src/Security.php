@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use InvalidArgumentException;
+
 /**
  * Security
  *
@@ -19,32 +21,51 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class Security {
 	/**
+	 * Get signature fields combined.
+	 *
+	 * @param array $fields Fields.
+	 * @return string
+	 */
+	public static function get_signature_fields_combined( $fields ) {
+		return implode( ',', $fields );
+	}
+
+	/**
 	 * Calculdate signature for specific data.
 	 *
 	 * @param Signable $signable    Signable object.
 	 * @param string   $signing_key Signing Key.
-	 * @return string|null
+	 * @return string
+	 * @throws InvalidArgumentException Signing key is invalid.
 	 */
 	public static function get_signature( Signable $signable, $signing_key ) {
-		$data = $signable->get_signature_data();
-
-		if ( empty( $data ) ) {
-			return null;
-		}
-
 		if ( empty( $signing_key ) ) {
-			return null;
+			throw new InvalidArgumentException(
+				sprintf(
+					'Signing key "%s" is empty.',
+					$signing_key
+				)
+			);
 		}
 
 		$decoded_signing_key = base64_decode( $signing_key );
 
 		if ( false === $decoded_signing_key ) {
-			return null;
+			throw new InvalidArgumentException(
+				sprintf(
+					'Signing key "%s" contains character from outside the base64 alphabet.',
+					$signing_key
+				)
+			);
 		}
+
+		$fields = $signable->get_signature_fields();
+
+		$combined = self::get_signature_fields_combined( $fields );
 
 		$signature = hash_hmac(
 			'sha512',
-			implode( ',', $data ),
+			$combined,
 			$decoded_signing_key
 		);
 

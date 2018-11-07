@@ -19,9 +19,9 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 interface Signable {
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
 	 * @return array
 	 */
-	public function get_signature_data();
+	public function get_signature_fields();
 }
