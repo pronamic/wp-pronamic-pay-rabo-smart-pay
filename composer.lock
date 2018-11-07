@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15a37270a5562c3cbd8e9b0f80ba57db",
+    "content-hash": "72daf836dfc15752e0d21ae6f76e517b",
     "packages": [
         {
             "name": "composer/installers",
@@ -236,16 +236,16 @@
         },
         {
             "name": "pronamic/wp-money",
-            "version": "1.1.0",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-money.git",
-                "reference": "92b9ebd3bbed47aaa59b73fdf13f1c23a1684479"
+                "reference": "10c56193be499292355c8827d6ce0f4559e0680e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/92b9ebd3bbed47aaa59b73fdf13f1c23a1684479",
-                "reference": "92b9ebd3bbed47aaa59b73fdf13f1c23a1684479",
+                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/10c56193be499292355c8827d6ce0f4559e0680e",
+                "reference": "10c56193be499292355c8827d6ce0f4559e0680e",
                 "shasum": ""
             },
             "require": {
@@ -274,7 +274,7 @@
             "license": [
                 "GPL-3.0-or-later"
             ],
-            "time": "2018-08-16T09:03:49+00:00"
+            "time": "2018-11-05T15:21:08+00:00"
         },
         {
             "name": "viison/address-splitter",
@@ -379,23 +379,23 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "2.0.8",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "86aa474a6a2d51371225f10c60c2efa3f7f17fb4"
+                "reference": "1f61b6878d859471b0ebf4d12d7f80845c4db2e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/86aa474a6a2d51371225f10c60c2efa3f7f17fb4",
-                "reference": "86aa474a6a2d51371225f10c60c2efa3f7f17fb4",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/1f61b6878d859471b0ebf4d12d7f80845c4db2e2",
+                "reference": "1f61b6878d859471b0ebf4d12d7f80845c4db2e2",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "^1.6",
                 "php": "^5.3",
                 "pronamic/wp-datetime": "^1.0",
-                "pronamic/wp-money": "^1.1",
+                "pronamic/wp-money": "dev-develop as 1.1",
                 "viison/address-splitter": "^0.3.2"
             },
             "require-dev": {
@@ -404,7 +404,7 @@
                 "phpmd/phpmd": "^2.4",
                 "phpunit/phpunit": "^4.5",
                 "squizlabs/php_codesniffer": "^2.7",
-                "wimg/php-compatibility": "^8.0",
+                "wimg/php-compatibility": "^9.0",
                 "wp-coding-standards/wpcs": "^1.1",
                 "wp-phpunit/wp-phpunit": "^4.9"
             },
@@ -446,10 +446,78 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2018-09-28T06:43:35+00:00"
+            "time": "2018-11-07T15:09:12+00:00"
         }
     ],
     "packages-dev": [
+        {
+            "name": "dealerdirect/phpcodesniffer-composer-installer",
+            "version": "v0.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
+                "reference": "2e41850d5f7797cbb1af7b030d245b3b24e63a08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/2e41850d5f7797cbb1af7b030d245b3b24e63a08",
+                "reference": "2e41850d5f7797cbb1af7b030d245b3b24e63a08",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "php": "^5.3|^7",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "require-dev": {
+                "composer/composer": "*",
+                "wimg/php-compatibility": "^8.0"
+            },
+            "suggest": {
+                "dealerdirect/qa-tools": "All the PHP QA tools you'll need"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck Nijhof",
+                    "email": "f.nijhof@dealerdirect.nl",
+                    "homepage": "http://workingatdealerdirect.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+            "homepage": "http://workingatdealerdirect.eu",
+            "keywords": [
+                "PHPCodeSniffer",
+                "PHP_CodeSniffer",
+                "code quality",
+                "codesniffer",
+                "composer",
+                "installer",
+                "phpcs",
+                "plugin",
+                "qa",
+                "quality",
+                "standard",
+                "standards",
+                "style guide",
+                "stylecheck",
+                "tests"
+            ],
+            "time": "2017-12-06T16:27:17+00:00"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "1.0.5",
@@ -2397,9 +2465,25 @@
             "time": "2018-07-06T07:56:42+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "1.1",
+            "alias_normalized": "1.1.0.0",
+            "version": "dev-develop",
+            "package": "pronamic/wp-money"
+        },
+        {
+            "alias": "2.0.20",
+            "alias_normalized": "2.0.20.0",
+            "version": "dev-develop",
+            "package": "wp-pay/core"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "pronamic/wp-money": 20,
+        "wp-pay/core": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
