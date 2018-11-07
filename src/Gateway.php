@@ -112,6 +112,10 @@ class Gateway extends Core_Gateway {
 			$customer_information->set_gender( $customer->get_gender() );
 			$customer_information->set_telephone_number( $customer->get_phone() );
 
+			if ( null !== $customer->get_name() ) {
+				$customer_information->set_initials( $customer->get_name()->get_initials() );
+			}
+
 			$order->set_customer_information( $customer_information );
 		}
 
