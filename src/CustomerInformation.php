@@ -82,7 +82,12 @@ class CustomerInformation {
 	 */
 	public function set_gender( $gender ) {
 		if ( ! in_array( $gender, array( null, 'F', 'M' ), true ) ) {
-			throw new InvalidArgumentException( 'Gender "%s" must be equal to `null`, "F" or "M".' );
+			throw new InvalidArgumentException(
+				sprintf(
+					'Gender "%s" must be equal to `null`, "F" or "M".',
+					$gender
+				)
+			);
 		}
 
 		$this->gender = $gender;

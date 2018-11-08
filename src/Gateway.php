@@ -109,7 +109,7 @@ class Gateway extends Core_Gateway {
 
 			$customer_information->set_email_address( $customer->get_email() );
 			$customer_information->set_date_of_birth( $customer->get_birth_date() );
-			$customer_information->set_gender( $customer->get_gender() );
+			$customer_information->set_gender( Gender::transform( $customer->get_gender() ) );
 			$customer_information->set_telephone_number( $customer->get_phone() );
 
 			if ( null !== $customer->get_name() ) {
