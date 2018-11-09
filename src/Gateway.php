@@ -161,7 +161,7 @@ class Gateway extends Core_Gateway {
 
 				$item->set_description( $description );
 
-				if ( $line->get_total_amount()->get_tax_amount() > 0 ) {
+				if ( $line->get_total_amount()->has_tax() ) {
 					$item->set_tax( MoneyTransformer::transform( $line->get_total_amount()->get_tax_amount() ) );
 				}
 			}
