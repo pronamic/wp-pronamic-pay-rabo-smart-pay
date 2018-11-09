@@ -273,7 +273,11 @@ class Gateway extends Core_Gateway {
 		do {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
-			if ( ! $order_results || $order_results->is_valid( $this->config->signing_key ) ) {
+			if ( false === $order_results ) {
+				return;
+			}
+
+			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
 				return;
 			}
 
