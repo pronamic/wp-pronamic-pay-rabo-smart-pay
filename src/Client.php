@@ -214,7 +214,7 @@ class Client {
 	/**
 	 * Get access token.
 	 *
-	 * @return object|false
+	 * @return bool|object
 	 */
 	public function get_access_token_data() {
 		return $this->request( 'GET', 'gatekeeper/refresh', $this->get_refresh_token() );

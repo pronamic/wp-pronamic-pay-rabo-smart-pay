@@ -103,8 +103,14 @@ class Gateway extends Core_Gateway {
 		$customer = $payment->get_customer();
 
 		if ( null !== $customer ) {
-			$order->set_language( strtoupper( $customer->get_language() ) );
+			// Language.
+			$language = $customer->get_language();
 
+			if ( null !== $language ) {
+				$order->set_language( strtoupper( $language ) );
+			}
+
+			// Customer information.
 			$customer_information = new CustomerInformation();
 
 			$customer_information->set_email_address( $customer->get_email() );
