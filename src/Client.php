@@ -142,12 +142,12 @@ class Client {
 		/*
 		 * Arguments.
 		 *
-		 * The `timeout` argument is intentionally increased from the WordPress 
-		 * default `5` seconds to `30`. This is mainly important for AfterPay 
+		 * The `timeout` argument is intentionally increased from the WordPress
+		 * default `5` seconds to `30`. This is mainly important for AfterPay
 		 * order announcements requests, but it can't hurt for other requests.
-		 * It is probably better to wait a little longer for an answer than 
+		 * It is probably better to wait a little longer for an answer than
 		 * having timeout issues while starting a payment or requesting a
-		 * payment status. The value can also be adjusted via the 
+		 * payment status. The value can also be adjusted via the
 		 * `pronamic_pay_omnikassa_2_request_args` filter.
 		 */
 		$args = array(
