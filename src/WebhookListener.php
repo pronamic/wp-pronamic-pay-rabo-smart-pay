@@ -31,7 +31,7 @@ class WebhookListener {
 
 		$json = file_get_contents( 'php://input' );
 
-		if ( false === $json ) {
+		if ( empty( $json ) ) {
 			return;
 		}
 
