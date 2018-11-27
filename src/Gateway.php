@@ -146,7 +146,8 @@ class Gateway extends Core_Gateway {
 				$item = $order_items->new_item(
 					$line->get_name(),
 					$line->get_quantity(),
-					MoneyTransformer::transform( $line->get_total_amount() ),
+					// The amount in cents, including VAT, of the item each, see below for more details.
+					MoneyTransformer::transform( $line->get_unit_price() ),
 					ProductCategories::transform( $line->get_type() )
 				);
 
@@ -167,8 +168,9 @@ class Gateway extends Core_Gateway {
 
 				$item->set_description( $description );
 
-				if ( $line->get_total_amount()->has_tax() ) {
-					$item->set_tax( MoneyTransformer::transform( $line->get_total_amount()->get_tax_amount() ) );
+				if ( $line->get_unit_price()->has_tax() ) {
+					// The VAT of the item each, see below for more details.
+					$item->set_tax( MoneyTransformer::transform( $line->get_unit_price()->get_tax_amount() ) );
 				}
 			}
 		}
