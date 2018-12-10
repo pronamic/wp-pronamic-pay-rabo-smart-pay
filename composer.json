@@ -35,7 +35,8 @@
 	},
 	"require": {
 		"php": "^5.3",
-		"wp-pay/core": "^2.0",
+		"pronamic/wp-money": "^1.1",
+		"wp-pay/core": "^2.1",
 		"wp-pay-gateways/common": "^2.0",
 		"justinrainbow/json-schema": "^5.2"
 	},
@@ -44,9 +45,19 @@
 		"phpmd/phpmd": "^2.2.3",
 		"phpunit/phpunit": "^4.5",
 		"squizlabs/php_codesniffer": "^2.7",
-		"wp-coding-standards/wpcs": "^1.0",
-		"wimg/php-compatibility": "^8.0",
-		"johnpbloch/wordpress": "^4.9",
-		"wp-phpunit/wp-phpunit": "^4.9"
+		"wp-coding-standards/wpcs": "^1.1",
+		"wimg/php-compatibility": "^9.0",
+		"johnpbloch/wordpress": "^5.0",
+		"wp-phpunit/wp-phpunit": "^5.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.0"
+	},
+	"scripts": {
+		"coveralls": "vendor/bin/coveralls -v",
+		"phpcbf":"vendor/bin/phpcbf", 
+		"phpcs": "vendor/bin/phpcs -s -v",
+		"phplint": "ls src/**/*.php tests/**/*.php | xargs -n 1 -P 4 php -l",
+		"phpmd": "vendor/bin/phpmd src,tests text phpmd.ruleset.xml --suffixes php",
+		"phpunit": "vendor/bin/phpunit"
 	}
 }

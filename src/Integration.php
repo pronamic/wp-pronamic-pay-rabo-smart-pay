@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
  * Integration
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.0
  * @since   1.0.0
  */
 class Integration extends AbstractIntegration {
@@ -30,7 +30,11 @@ class Integration extends AbstractIntegration {
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
 
-		// Actions.
+		/**
+		 * Webhook listener function.
+		 *
+		 * @var callable $webhook_listener_function
+		 */
 		$webhook_listener_function = array( __NAMESPACE__ . '\WebhookListener', 'listen' );
 
 		if ( ! has_action( 'wp_loaded', $webhook_listener_function ) ) {
@@ -59,7 +63,7 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Get required settings for this integration.
 	 *
-	 * @see https://github.com/wp-premium/gravityforms/blob/1.9.16/includes/fields/class-gf-field-multiselect.php#L21-L42
+	 * @link https://github.com/wp-premium/gravityforms/blob/1.9.16/includes/fields/class-gf-field-multiselect.php#L21-L42
 	 * @since 1.1.6
 	 * @return array
 	 */

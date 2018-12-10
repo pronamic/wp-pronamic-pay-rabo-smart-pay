@@ -10,7 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -19,7 +18,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Gateway
  *
  * @author  Remco Tolsma
- * @version 2.0.4
+ * @version 2.1.0
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
@@ -62,9 +61,11 @@ class Gateway extends Core_Gateway {
 	 */
 	public function get_supported_payment_methods() {
 		return array(
+			PaymentMethods::AFTERPAY,
 			PaymentMethods::BANCONTACT,
 			PaymentMethods::CREDIT_CARD,
 			PaymentMethods::IDEAL,
+			PaymentMethods::MAESTRO,
 			PaymentMethods::PAYPAL,
 		);
 	}
@@ -83,17 +84,46 @@ class Gateway extends Core_Gateway {
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
 		// New order.
+		$merchant_return_url = $payment->get_return_url();
+		$merchant_return_url = apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
+
 		$order = new Order(
 			$merchant_order_id,
-			new Money(
-				$payment->get_currency(),
-				Core_Util::amount_to_cents( $payment->get_amount()->get_amount() )
-			),
-			$payment->get_return_url()
+			MoneyTransformer::transform( $payment->get_total_amount() ),
+			$merchant_return_url
 		);
 
-		$order->set_description( $payment->get_description() );
-		$order->set_language( $payment->get_language() );
+		// Shipping address.
+		$order->set_shipping_detail( AddressTransformer::transform( $payment->get_shipping_address() ) );
+
+		// Billing address.
+		$order->set_billing_detail( AddressTransformer::transform( $payment->get_billing_address() ) );
+
+		// Customer information.
+		$customer = $payment->get_customer();
+
+		if ( null !== $customer ) {
+			// Language.
+			$language = $customer->get_language();
+
+			if ( null !== $language ) {
+				$order->set_language( strtoupper( $language ) );
+			}
+
+			// Customer information.
+			$customer_information = new CustomerInformation();
+
+			$customer_information->set_email_address( $customer->get_email() );
+			$customer_information->set_date_of_birth( $customer->get_birth_date() );
+			$customer_information->set_gender( Gender::transform( $customer->get_gender() ) );
+			$customer_information->set_telephone_number( $customer->get_phone() );
+
+			if ( null !== $customer->get_name() ) {
+				$customer_information->set_initials( $customer->get_name()->get_initials() );
+			}
+
+			$order->set_customer_information( $customer_information );
+		}
 
 		// Payment brand.
 		$payment_brand = PaymentBrands::transform( $payment->get_method() );
@@ -105,6 +135,46 @@ class Gateway extends Core_Gateway {
 			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
 		}
 
+		// Description.
+		$order->set_description( substr( $payment->get_description(), 0, 35 ) );
+
+		// Lines.
+		if ( null !== $payment->get_lines() ) {
+			$order_items = $order->new_items();
+
+			foreach ( $payment->get_lines() as $line ) {
+				$item = $order_items->new_item(
+					$line->get_name(),
+					$line->get_quantity(),
+					// The amount in cents, including VAT, of the item each, see below for more details.
+					MoneyTransformer::transform( $line->get_unit_price() ),
+					ProductCategories::transform( $line->get_type() )
+				);
+
+				$item->set_id( $line->get_id() );
+
+				// Description.
+				$description = $line->get_description();
+
+				if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
+					/*
+					 * The `OrderItem.description` field is documentated as `0..1` (optional),
+					 * but for AfterPay payments it is required.
+					 *
+					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
+					 */
+					$description = $line->get_name();
+				}
+
+				$item->set_description( $description );
+
+				if ( $line->get_unit_price()->has_tax() ) {
+					// The VAT of the item each, see below for more details.
+					$item->set_tax( MoneyTransformer::transform( $line->get_unit_price()->get_tax_amount() ) );
+				}
+			}
+		}
+
 		// Maybe update access token.
 		$this->maybe_update_access_token();
 
@@ -114,16 +184,22 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Announce order.
-		$result = $this->client->order_announce( $this->config, $order );
+		$response = $this->client->order_announce( $this->config, $order );
 
 		// Handle errors.
 		if ( $this->get_client_error() ) {
 			return;
 		}
 
-		if ( $result ) {
-			$payment->set_action_url( $result->redirectUrl );
+		if ( false === $response ) {
+			return;
 		}
+
+		if ( ! $response->is_valid( $this->config->signing_key ) ) {
+			return;
+		}
+
+		$payment->set_action_url( $response->get_redirect_url() );
 	}
 
 	/**
@@ -169,7 +245,11 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Status.
-		$payment->set_status( Statuses::transform( $parameters->get_status() ) );
+		$pronamic_status = Statuses::transform( $parameters->get_status() );
+
+		if ( null !== $pronamic_status ) {
+			$payment->set_status( $pronamic_status );
+		}
 	}
 
 	/**
@@ -201,7 +281,11 @@ class Gateway extends Core_Gateway {
 		do {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
-			if ( ! $order_results || $order_results->is_valid( $this->config->signing_key ) ) {
+			if ( false === $order_results ) {
+				return;
+			}
+
+			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
 				return;
 			}
 
@@ -213,7 +297,12 @@ class Gateway extends Core_Gateway {
 				}
 
 				$payment->set_transaction_id( $order_result->get_omnikassa_order_id() );
-				$payment->set_status( Statuses::transform( $order_result->get_order_status() ) );
+
+				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
+
+				if ( null !== $pronamic_status ) {
+					$payment->set_status( $pronamic_status );
+				}
 
 				// Note.
 				$note = '';
@@ -248,15 +337,27 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		$this->config->access_token             = $data->token;
-		$this->config->access_token_valid_until = $data->validUntil;
+		if ( isset( $data->token ) ) {
+			$this->config->access_token = $data->token;
 
-		update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
-		update_post_meta(
-			$this->config->post_id,
-			'_pronamic_gateway_omnikassa_2_access_token_valid_until',
-			$data->validUntil
-		);
+			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
+		}
+
+		/*
+		 * @codingStandardsIgnoreStart
+		 *
+		 * Ignore coding standards because of sniff WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+		 */
+		if ( isset( $data->validUntil ) ) {
+			$this->config->access_token_valid_until = $data->validUntil;
+
+			update_post_meta(
+				$this->config->post_id,
+				'_pronamic_gateway_omnikassa_2_access_token_valid_until',
+				$data->validUntil
+			);
+		}
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**

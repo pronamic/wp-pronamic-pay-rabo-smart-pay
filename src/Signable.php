@@ -14,14 +14,14 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Signable
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.0
  * @since   1.0.0
  */
 interface Signable {
 	/**
-	 * Get signature data.
+	 * Get signature fields.
 	 *
 	 * @return array
 	 */
-	public function get_signature_data();
+	public function get_signature_fields();
 }

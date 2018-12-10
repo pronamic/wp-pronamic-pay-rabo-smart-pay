@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Message
  *
  * @author  Remco Tolsma
- * @version 2.0.4
+ * @version 2.1.0
  * @since   2.0.2
  */
 abstract class Message implements Signable {
@@ -41,6 +41,17 @@ abstract class Message implements Signable {
 	 */
 	protected function set_signature( $signature ) {
 		$this->signature = $signature;
+	}
+
+	/**
+	 * Sign this message with specified signing key.
+	 *
+	 * @param string $signing_key Signing key.
+	 */
+	public function sign( $signing_key ) {
+		$signature = Security::get_signature( $this, $signing_key );
+
+		$this->set_signature( $signature );
 	}
 
 	/**

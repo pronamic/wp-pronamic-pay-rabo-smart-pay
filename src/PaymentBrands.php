@@ -1,6 +1,6 @@
 <?php
 /**
- * Payment brands
+ * Payment brands.
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2018 Pronamic
@@ -13,10 +13,10 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
- * Payment brands
+ * Payment brands.
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.0
  * @since   1.0.0
  */
 class PaymentBrands {
@@ -90,25 +90,38 @@ class PaymentBrands {
 	const CARDS = 'CARDS';
 
 	/**
-	 * Transform WordPress payment method to OmniKassa 2.0 method.
+	 * Map payment methods to payment brands.
+	 *
+	 * @var array
+	 */
+	private static $map = array(
+		PaymentMethods::AFTERPAY    => self::AFTERPAY,
+		PaymentMethods::BANCONTACT  => self::BANCONTACT,
+		PaymentMethods::CREDIT_CARD => self::CARDS,
+		PaymentMethods::IDEAL       => self::IDEAL,
+		PaymentMethods::MAESTRO     => self::MAESTRO,
+		PaymentMethods::PAYPAL      => self::PAYPAL,
+	);
+
+	/**
+	 * Transform WordPress payment method to OmniKassa method.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $payment_method Payment method.
+	 * @param string|null $payment_method Payment method.
+	 * @param mixed       $default        Default payment method.
+	 *
 	 * @return string|null
 	 */
-	public static function transform( $payment_method ) {
-		switch ( $payment_method ) {
-			case PaymentMethods::BANCONTACT:
-				return self::BANCONTACT;
-			case PaymentMethods::CREDIT_CARD:
-				return self::CARDS;
-			case PaymentMethods::IDEAL:
-				return self::IDEAL;
-			case PaymentMethods::PAYPAL:
-				return self::PAYPAL;
-			default:
-				return null;
+	public static function transform( $payment_method, $default = null ) {
+		if ( ! is_scalar( $payment_method ) ) {
+			return null;
 		}
+
+		if ( isset( self::$map[ $payment_method ] ) ) {
+			return self::$map[ $payment_method ];
+		}
+
+		return $default;
 	}
 }

@@ -1,0 +1,9 @@
+{
+"timestamp": "2017-02-06T08:32:51.759+01:00", "merchantOrderId": "order123",
+"amount": {
+    "amount": "4999",
+    "currency": "EUR"
+  },
+"merchantReturnURL": "http://www.example.org",
+"signature": "1795e71284f9e3e5805fe43964259f28810cd5047a726a5aaa48043eac69e87e28ce2 3e97032f4a08444b0509dbe9f247a2c99f06017fdb7b85b06710a1c666a"
+}

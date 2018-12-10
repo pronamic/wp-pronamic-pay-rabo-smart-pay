@@ -5,12 +5,11 @@
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2018 Pronamic
  * @license   GPL-3.0-or-later
- * @package   Pronamic\WordPress\Pay\Extensions\MemberPress
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
-/**
- * Autoload.
- */
+putenv( 'WP_PHPUNIT__TESTS_CONFIG=tests/wp-config.php' );
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 require_once getenv( 'WP_PHPUNIT__DIR' ) . '/includes/functions.php';

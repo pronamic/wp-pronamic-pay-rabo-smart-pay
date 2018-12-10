@@ -19,10 +19,10 @@ use JsonSchema\Exception\ValidationException;
 use JsonSchema\Validator;
 
 /**
- * Order results
+ * Order results.
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.0
  * @since   1.0.0
  */
 class OrderResults extends ResponseMessage implements IteratorAggregate {
@@ -68,25 +68,25 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	 *
 	 * @return array
 	 */
-	public function get_signature_data() {
-		$data = array();
+	public function get_signature_fields() {
+		$fields = array();
 
-		$data[] = $this->more_available() ? 'true' : 'false';
+		$fields[] = $this->more_available() ? 'true' : 'false';
 
 		foreach ( $this->order_results as $order_result ) {
-			$data[] = $order_result->get_merchant_order_id();
-			$data[] = $order_result->get_omnikassa_order_id();
-			$data[] = $order_result->get_poi_id();
-			$data[] = $order_result->get_order_status();
-			$data[] = $order_result->get_order_status_datetime();
-			$data[] = $order_result->get_error_code();
-			$data[] = $order_result->get_paid_amount()->get_currency();
-			$data[] = $order_result->get_paid_amount()->get_amount();
-			$data[] = $order_result->get_total_amount()->get_currency();
-			$data[] = $order_result->get_total_amount()->get_amount();
+			$fields[] = $order_result->get_merchant_order_id();
+			$fields[] = $order_result->get_omnikassa_order_id();
+			$fields[] = $order_result->get_poi_id();
+			$fields[] = $order_result->get_order_status();
+			$fields[] = $order_result->get_order_status_datetime();
+			$fields[] = $order_result->get_error_code();
+			$fields[] = $order_result->get_paid_amount()->get_currency();
+			$fields[] = $order_result->get_paid_amount()->get_amount();
+			$fields[] = $order_result->get_total_amount()->get_currency();
+			$fields[] = $order_result->get_total_amount()->get_amount();
 		}
 
-		return $data;
+		return $fields;
 	}
 
 	/**
@@ -101,11 +101,11 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	/**
 	 * Create order results from object.
 	 *
-	 * @param stdClass $object Object.
+	 * @param object $object Object.
 	 * @return OrderResults
 	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( stdClass $object ) {
+	public static function from_object( $object ) {
 		if ( ! isset( $object->signature ) ) {
 			throw new InvalidArgumentException( 'Object must contain `signature` property.' );
 		}
