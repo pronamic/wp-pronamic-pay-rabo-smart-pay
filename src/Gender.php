@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Gender as Core_Gender;
  * Gender.
  *
  * @author  Remco Tolsma
- * @since   2.0.4
+ * @since   2.1.0
  * @version 2.0.4
  */
 class Gender {

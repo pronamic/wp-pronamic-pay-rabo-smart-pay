@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
  * Config factory
  *
  * @author  Remco Tolsma
- * @version 2.0.4
+ * @version 2.1.0
  * @since   1.0.0
  */
 class ConfigFactory extends GatewayConfigFactory {

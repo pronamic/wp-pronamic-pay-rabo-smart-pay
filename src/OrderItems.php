@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Order items.
  *
  * @author  Reüel van der Steege
- * @version 2.0.3
+ * @version 2.1.0
  * @since   2.0.3
  */
 class OrderItems {

@@ -21,7 +21,7 @@ use JsonSchema\Validator;
  * Error
  *
  * @author  Remco Tolsma
- * @version 2.0.4
+ * @version 2.1.0
  * @since   2.0.2
  */
 class Error {

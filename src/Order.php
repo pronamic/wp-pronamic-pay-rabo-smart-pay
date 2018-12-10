@@ -18,7 +18,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentLines;
  * Order
  *
  * @author  Remco Tolsma
- * @version 2.0.4
+ * @version 2.1.0
  * @since   1.0.0
  */
 class Order extends Message {

@@ -17,7 +17,7 @@ use InvalidArgumentException;
  *
  * @link    https://github.com/wp-pay-gateways/ideal-basic/blob/2.0.0/src/DataHelper.php
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.0
  * @since   2.0.2
  */
 class DataHelper {

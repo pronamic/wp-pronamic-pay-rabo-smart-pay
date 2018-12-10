@@ -16,7 +16,7 @@ use InvalidArgumentException;
  * Security
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.0
  * @since   1.0.0
  */
 class Security {

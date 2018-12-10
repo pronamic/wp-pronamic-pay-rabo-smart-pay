@@ -19,7 +19,7 @@ use JsonSchema\Validator;
  * Order announce response
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.0
  * @since   2.0.2
  */
 class OrderAnnounceResponse extends ResponseMessage {

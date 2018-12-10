@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.0] - 2018-12-10
+- Added support for payment lines, shipping, billing and customer data.
+- Improved signature handling.
+
 ## [2.0.4] - 2018-09-28
 - Remove unused `use` statements.
 
@@ -28,7 +32,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.4...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.1...2.0.2
