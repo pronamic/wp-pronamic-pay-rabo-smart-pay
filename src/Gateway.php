@@ -142,9 +142,16 @@ class Gateway extends Core_Gateway {
 		if ( null !== $payment->get_lines() ) {
 			$order_items = $order->new_items();
 
-			foreach ( $payment->get_lines() as $line ) {
+			foreach ( $payment->get_lines() as $key => $line ) {
+				/* translators: %s: item index */
+				$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), ++$key );
+
+				if ( null !== $line->get_name() && '' !== $line->get_name() ) {
+					$name = $line->get_name();
+				}
+
 				$item = $order_items->new_item(
-					$line->get_name(),
+					$name,
 					$line->get_quantity(),
 					// The amount in cents, including VAT, of the item each, see below for more details.
 					MoneyTransformer::transform( $line->get_unit_price() ),
@@ -163,7 +170,7 @@ class Gateway extends Core_Gateway {
 					 *
 					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
 					 */
-					$description = $line->get_name();
+					$description = $name;
 				}
 
 				$item->set_description( $description );
