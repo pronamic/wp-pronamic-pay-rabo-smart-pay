@@ -175,9 +175,11 @@ class Gateway extends Core_Gateway {
 
 				$item->set_description( $description );
 
-				if ( $line->get_unit_price()->has_tax() ) {
+				$tax_amount = $line->get_unit_price()->get_tax_amount();
+
+				if ( null !== $tax_amount ) {
 					// The VAT of the item each, see below for more details.
-					$item->set_tax( MoneyTransformer::transform( $line->get_unit_price()->get_tax_amount() ) );
+					$item->set_tax( MoneyTransformer::transform( $tax_amount ) );
 				}
 			}
 		}
