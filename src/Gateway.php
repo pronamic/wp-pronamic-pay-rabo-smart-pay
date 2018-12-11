@@ -144,7 +144,7 @@ class Gateway extends Core_Gateway {
 
 			$i = 1;
 
-			foreach ( $payment->get_lines() as $key => $line ) {
+			foreach ( $payment->get_lines() as $line ) {
 				/* translators: %s: item index */
 				$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), $i++ );
 
