@@ -142,9 +142,11 @@ class Gateway extends Core_Gateway {
 		if ( null !== $payment->get_lines() ) {
 			$order_items = $order->new_items();
 
+			$i = 1;
+
 			foreach ( $payment->get_lines() as $key => $line ) {
 				/* translators: %s: item index */
-				$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), ++$key );
+				$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), $i++ );
 
 				if ( null !== $line->get_name() && '' !== $line->get_name() ) {
 					$name = $line->get_name();
