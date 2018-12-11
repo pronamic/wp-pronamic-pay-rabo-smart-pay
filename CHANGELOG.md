@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.1] - 2018-12-11
+- Make sure order item name and description are not empty.
+
 ## [2.1.0] - 2018-12-10
 - Added support for payment lines, shipping, billing and customer data.
 - Improved signature handling.
@@ -32,7 +35,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.0...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.1...HEAD
+[2.1.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.2...2.0.3
