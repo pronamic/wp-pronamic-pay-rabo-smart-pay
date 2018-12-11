@@ -18,7 +18,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Gateway
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.1
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
@@ -142,9 +142,18 @@ class Gateway extends Core_Gateway {
 		if ( null !== $payment->get_lines() ) {
 			$order_items = $order->new_items();
 
+			$i = 1;
+
 			foreach ( $payment->get_lines() as $line ) {
+				/* translators: %s: item index */
+				$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), $i++ );
+
+				if ( null !== $line->get_name() && '' !== $line->get_name() ) {
+					$name = $line->get_name();
+				}
+
 				$item = $order_items->new_item(
-					$line->get_name(),
+					$name,
 					$line->get_quantity(),
 					// The amount in cents, including VAT, of the item each, see below for more details.
 					MoneyTransformer::transform( $line->get_unit_price() ),
@@ -163,14 +172,16 @@ class Gateway extends Core_Gateway {
 					 *
 					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
 					 */
-					$description = $line->get_name();
+					$description = $name;
 				}
 
 				$item->set_description( $description );
 
-				if ( $line->get_unit_price()->has_tax() ) {
+				$tax_amount = $line->get_unit_price()->get_tax_amount();
+
+				if ( null !== $tax_amount ) {
 					// The VAT of the item each, see below for more details.
-					$item->set_tax( MoneyTransformer::transform( $line->get_unit_price()->get_tax_amount() ) );
+					$item->set_tax( MoneyTransformer::transform( $tax_amount ) );
 				}
 			}
 		}
