@@ -81,12 +81,13 @@ class OrderItem {
 	 * @param int    $quantity Quantity.
 	 * @param Money  $amount   Amount.
 	 * @param string $category Category.
+	 * @throws InvalidArgumentException Throws invalid argument exception when arguments are invalid.
 	 */
 	public function __construct( $name, $quantity, Money $amount, $category ) {
-		$this->name     = substr( $name, 0, 50 );
+		$this->set_name( $name );
 		$this->quantity = $quantity;
 		$this->amount   = $amount;
-		$this->category = $category;
+		$this->set_category( $category );
 	}
 
 	/**
@@ -117,6 +118,18 @@ class OrderItem {
 	}
 
 	/**
+	 * Set item name.
+	 *
+	 * @param string $name Name.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 50`.
+	 */
+	public function set_name( $name ) {
+		DataHelper::validate_an( $name, 50 );
+
+		$this->name = $name;
+	}
+
+	/**
 	 * Get item description.
 	 *
 	 * @return string|null
@@ -129,8 +142,11 @@ class OrderItem {
 	 * Set item description.
 	 *
 	 * @param string|null $description Description.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 100`.
 	 */
 	public function set_description( $description ) {
+		DataHelper::validate_an( $description, 100 );
+
 		$this->description = $description;
 	}
 
@@ -177,6 +193,18 @@ class OrderItem {
 	 */
 	public function get_category() {
 		return $this->category;
+	}
+
+	/**
+	 * Set category.
+	 *
+	 * @param string $category Product category: PHYSICAL or DIGITAL.
+	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 8`.
+	 */
+	public function set_category( $category ) {
+		DataHelper::validate_an( $category, 8 );
+
+		$this->category = $category;
 	}
 
 	/**

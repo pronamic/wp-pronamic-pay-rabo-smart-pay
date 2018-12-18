@@ -46,6 +46,7 @@ class OrderItems {
 	 * @param Money  $amount   Amount.
 	 * @param string $category Category.
 	 * @return OrderItem
+	 * @throws InvalidArgumentException Throws invalid argument exception when arguments are invalid.
 	 */
 	public function new_item( $name, $quantity, Money $amount, $category ) {
 		$item = new OrderItem( $name, $quantity, $amount, $category );

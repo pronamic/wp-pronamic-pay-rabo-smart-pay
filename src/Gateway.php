@@ -153,7 +153,7 @@ class Gateway extends Core_Gateway {
 				}
 
 				$item = $order_items->new_item(
-					$name,
+					substr( $name, 0, 50 ),
 					$line->get_quantity(),
 					// The amount in cents, including VAT, of the item each, see below for more details.
 					MoneyTransformer::transform( $line->get_unit_price() ),
@@ -175,7 +175,7 @@ class Gateway extends Core_Gateway {
 					$description = $name;
 				}
 
-				$item->set_description( $description );
+				$item->set_description( substr( $description, 0, 100 ) );
 
 				$tax_amount = $line->get_unit_price()->get_tax_amount();
 
