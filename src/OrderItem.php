@@ -83,7 +83,7 @@ class OrderItem {
 	 * @param string $category Category.
 	 */
 	public function __construct( $name, $quantity, Money $amount, $category ) {
-		$this->name     = $name;
+		$this->name     = substr( $name, 0, 50 );
 		$this->quantity = $quantity;
 		$this->amount   = $amount;
 		$this->category = $category;

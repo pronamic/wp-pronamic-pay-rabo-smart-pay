@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.2] - 2018-12-18
+- Limit order item name to 50 characters.
+
 ## [2.1.1] - 2018-12-11
 - Make sure order item name and description are not empty.
 
