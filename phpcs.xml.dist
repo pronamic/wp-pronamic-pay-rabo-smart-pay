@@ -25,6 +25,8 @@
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
 		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
+
+		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
 	</rule>
 
 	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_putenv">
