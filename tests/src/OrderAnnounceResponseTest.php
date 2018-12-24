@@ -24,7 +24,7 @@ class OrderAnnounceResponseTest extends \PHPUnit_Framework_TestCase {
 	 * Test order results.
 	 */
 	public function test_order_results() {
-		$json = file_get_contents( __DIR__ . '/../json/order-announce-response.json' );
+		$json = file_get_contents( __DIR__ . '/../json/order-announce-response.json', true );
 
 		$response = OrderAnnounceResponse::from_json( $json );
 
