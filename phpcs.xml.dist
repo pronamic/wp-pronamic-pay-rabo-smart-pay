@@ -9,7 +9,7 @@
 
 	<arg name="colors"/>
 	<arg name="extensions" value="php" />
-    <arg value="sp" />
+	<arg value="sp" />
 
 	<exclude-pattern>node_modules/*</exclude-pattern>
 	<exclude-pattern>tests/wp-config.php</exclude-pattern>
@@ -25,9 +25,6 @@
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
 		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
-
-        <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
-		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_file_get_contents" />
 	</rule>
 
 	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_putenv">
