@@ -175,7 +175,11 @@ class Gateway extends Core_Gateway {
 					$description = $name;
 				}
 
-				$item->set_description( substr( $description, 0, 100 ) );
+				if ( null !== $description ) {
+					$description = substr( $description, 0, 100 );
+				}
+
+				$item->set_description( $description );
 
 				$tax_amount = $line->get_unit_price()->get_tax_amount();
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fbe77ebc55ba9361433ed93a0fbc932",
+    "content-hash": "0a27e755c73cfc5975ec2169f14dc3a5",
     "packages": [
         {
             "name": "composer/installers",
@@ -320,16 +320,16 @@
         },
         {
             "name": "wp-pay-gateways/common",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay-gateways/common.git",
-                "reference": "4dcf31cae407d9da882ead619770bd299ba80eb5"
+                "reference": "8962ef28149d5c7b24a0f3e1b3f99515ec8aa0aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay-gateways/common/zipball/4dcf31cae407d9da882ead619770bd299ba80eb5",
-                "reference": "4dcf31cae407d9da882ead619770bd299ba80eb5",
+                "url": "https://api.github.com/repos/wp-pay-gateways/common/zipball/8962ef28149d5c7b24a0f3e1b3f99515ec8aa0aa",
+                "reference": "8962ef28149d5c7b24a0f3e1b3f99515ec8aa0aa",
                 "shasum": ""
             },
             "require": {
@@ -341,8 +341,8 @@
                 "phpmd/phpmd": "^2.2.3",
                 "phpunit/phpunit": "^4.5",
                 "squizlabs/php_codesniffer": "^2.7",
-                "wimg/php-compatibility": "^8.0",
-                "wp-coding-standards/wpcs": "^0.14.0"
+                "wimg/php-compatibility": "^9.0",
+                "wp-coding-standards/wpcs": "^1.2"
             },
             "type": "library",
             "autoload": {
@@ -378,20 +378,20 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2018-05-09T09:05:05+00:00"
+            "time": "2018-12-11T13:55:57+00:00"
         },
         {
             "name": "wp-pay/core",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "590b7a55c9e0817d3a28077bce345d6ba9738025"
+                "reference": "23234d25a573dc9cd24bad3e513155acf642aaa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/590b7a55c9e0817d3a28077bce345d6ba9738025",
-                "reference": "590b7a55c9e0817d3a28077bce345d6ba9738025",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/23234d25a573dc9cd24bad3e513155acf642aaa5",
+                "reference": "23234d25a573dc9cd24bad3e513155acf642aaa5",
                 "shasum": ""
             },
             "require": {
@@ -451,7 +451,7 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2018-12-10T19:14:21+00:00"
+            "time": "2018-12-19T14:09:32+00:00"
         }
     ],
     "packages-dev": [
@@ -672,134 +672,6 @@
             "time": "2015-03-18T18:23:50+00:00"
         },
         {
-            "name": "johnpbloch/wordpress",
-            "version": "5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "391c36c97f55384bbb3e38146752dc9ac6235d4c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/391c36c97f55384bbb3e38146752dc9ac6235d4c",
-                "reference": "391c36c97f55384bbb3e38146752dc9ac6235d4c",
-                "shasum": ""
-            },
-            "require": {
-                "johnpbloch/wordpress-core": "5.0.0",
-                "johnpbloch/wordpress-core-installer": "^1.0",
-                "php": ">=5.3.2"
-            },
-            "type": "package",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "WordPress Community",
-                    "homepage": "http://wordpress.org/about/"
-                }
-            ],
-            "description": "WordPress is web software you can use to create a beautiful website or blog.",
-            "homepage": "http://wordpress.org/",
-            "keywords": [
-                "blog",
-                "cms",
-                "wordpress"
-            ],
-            "time": "2018-12-09T20:56:03+00:00"
-        },
-        {
-            "name": "johnpbloch/wordpress-core",
-            "version": "5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "a11a6399a3681ffbbf7e27ac4e372d836529fdb7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/a11a6399a3681ffbbf7e27ac4e372d836529fdb7",
-                "reference": "a11a6399a3681ffbbf7e27ac4e372d836529fdb7",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "provide": {
-                "wordpress/core-implementation": "5.0.0"
-            },
-            "type": "wordpress-core",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "WordPress Community",
-                    "homepage": "http://wordpress.org/about/"
-                }
-            ],
-            "description": "WordPress is web software you can use to create a beautiful website or blog.",
-            "homepage": "http://wordpress.org/",
-            "keywords": [
-                "blog",
-                "cms",
-                "wordpress"
-            ],
-            "time": "2018-12-09T20:55:56+00:00"
-        },
-        {
-            "name": "johnpbloch/wordpress-core-installer",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johnpbloch/wordpress-core-installer.git",
-                "reference": "fd12f5cfe27223b92b0f4bbc097059eb23cc56c4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core-installer/zipball/fd12f5cfe27223b92b0f4bbc097059eb23cc56c4",
-                "reference": "fd12f5cfe27223b92b0f4bbc097059eb23cc56c4",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0"
-            },
-            "conflict": {
-                "composer/installers": "<1.0.6"
-            },
-            "require-dev": {
-                "composer/composer": "^1.0",
-                "phpunit/phpunit": ">=4.8.35"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "johnpbloch\\Composer\\WordPressCorePlugin"
-            },
-            "autoload": {
-                "psr-0": {
-                    "johnpbloch\\Composer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "John P. Bloch",
-                    "email": "me@johnpbloch.com"
-                }
-            ],
-            "description": "A custom installer to handle deploying WordPress with composer",
-            "keywords": [
-                "wordpress"
-            ],
-            "time": "2018-11-09T20:10:38+00:00"
-        },
-        {
             "name": "pdepend/pdepend",
             "version": "2.2.0",
             "source": {
@@ -901,16 +773,16 @@
         },
         {
             "name": "phpcompatibility/php-compatibility",
-            "version": "9.0.0",
+            "version": "9.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCompatibility/PHPCompatibility.git",
-                "reference": "e9f4047e5edf53c88f36f1dafc0d49454ce13e25"
+                "reference": "a898db5410e365eeb658c63a76bd08d211769321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibility/zipball/e9f4047e5edf53c88f36f1dafc0d49454ce13e25",
-                "reference": "e9f4047e5edf53c88f36f1dafc0d49454ce13e25",
+                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibility/zipball/a898db5410e365eeb658c63a76bd08d211769321",
+                "reference": "a898db5410e365eeb658c63a76bd08d211769321",
                 "shasum": ""
             },
             "require": {
@@ -955,20 +827,20 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-10-07T17:38:02+00:00"
+            "time": "2018-12-16T19:16:39+00:00"
         },
         {
             "name": "phpcompatibility/phpcompatibility-paragonie",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCompatibility/PHPCompatibilityParagonie.git",
-                "reference": "67d89dcef47f351144d24b247aa968f2269162f7"
+                "reference": "9160de79fcd683b5c99e9c4133728d91529753ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibilityParagonie/zipball/67d89dcef47f351144d24b247aa968f2269162f7",
-                "reference": "67d89dcef47f351144d24b247aa968f2269162f7",
+                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibilityParagonie/zipball/9160de79fcd683b5c99e9c4133728d91529753ea",
+                "reference": "9160de79fcd683b5c99e9c4133728d91529753ea",
                 "shasum": ""
             },
             "require": {
@@ -1005,7 +877,7 @@
                 "polyfill",
                 "standards"
             ],
-            "time": "2018-10-07T17:59:30+00:00"
+            "time": "2018-12-16T19:10:44+00:00"
         },
         {
             "name": "phpcompatibility/phpcompatibility-wp",
@@ -1656,6 +1528,100 @@
                 "psr-3"
             ],
             "time": "2018-11-20T15:27:04+00:00"
+        },
+        {
+            "name": "roots/wordpress",
+            "version": "5.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WordPress/WordPress.git",
+                "reference": "5.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.0.2",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "roots/wordpress-core-installer": ">=1.0.0"
+            },
+            "type": "wordpress-core",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "WordPress Community",
+                    "homepage": "http://wordpress.org/about/"
+                }
+            ],
+            "description": "WordPress is web software you can use to create a beautiful website or blog.",
+            "homepage": "http://wordpress.org/",
+            "keywords": [
+                "blog",
+                "cms",
+                "wordpress"
+            ],
+            "time": "2018-12-19T23:37:27+00:00"
+        },
+        {
+            "name": "roots/wordpress-core-installer",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/roots/wordpress-core-installer.git",
+                "reference": "83744b1ba5bbdb5bb225f47e24da61a6cf6c5b80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/roots/wordpress-core-installer/zipball/83744b1ba5bbdb5bb225f47e24da61a6cf6c5b80",
+                "reference": "83744b1ba5bbdb5bb225f47e24da61a6cf6c5b80",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "conflict": {
+                "composer/installers": "<1.0.6"
+            },
+            "replace": {
+                "johnpbloch/wordpress-core-installer": "*"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0",
+                "phpunit/phpunit": ">=4.8.35"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Roots\\Composer\\WordPressCorePlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Roots\\Composer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "John P. Bloch",
+                    "email": "me@johnpbloch.com"
+                },
+                {
+                    "name": "Roots",
+                    "email": "team@roots.io"
+                }
+            ],
+            "description": "A custom installer to handle deploying WordPress with composer",
+            "keywords": [
+                "wordpress"
+            ],
+            "time": "2018-12-10T00:22:15+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -2488,16 +2454,16 @@
         },
         {
             "name": "wimg/php-compatibility",
-            "version": "9.0.0",
+            "version": "9.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCompatibility/PHPCompatibility.git",
-                "reference": "e9f4047e5edf53c88f36f1dafc0d49454ce13e25"
+                "reference": "a898db5410e365eeb658c63a76bd08d211769321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibility/zipball/e9f4047e5edf53c88f36f1dafc0d49454ce13e25",
-                "reference": "e9f4047e5edf53c88f36f1dafc0d49454ce13e25",
+                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibility/zipball/a898db5410e365eeb658c63a76bd08d211769321",
+                "reference": "a898db5410e365eeb658c63a76bd08d211769321",
                 "shasum": ""
             },
             "require": {
@@ -2542,20 +2508,21 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-10-07T17:38:02+00:00"
+            "abandoned": "phpcompatibility/php-compatibility",
+            "time": "2018-12-16T19:16:39+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git",
-                "reference": "7aa217ab38156c5cb4eae0f04ae376027c407a9b"
+                "reference": "f328bcafd97377e8e5e5d7b244d5ddbf301a3a5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/7aa217ab38156c5cb4eae0f04ae376027c407a9b",
-                "reference": "7aa217ab38156c5cb4eae0f04ae376027c407a9b",
+                "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/f328bcafd97377e8e5e5d7b244d5ddbf301a3a5c",
+                "reference": "f328bcafd97377e8e5e5d7b244d5ddbf301a3a5c",
                 "shasum": ""
             },
             "require": {
@@ -2585,11 +2552,11 @@
                 "standards",
                 "wordpress"
             ],
-            "time": "2018-11-12T10:13:12+00:00"
+            "time": "2018-12-18T09:43:51+00:00"
         },
         {
             "name": "wp-phpunit/wp-phpunit",
-            "version": "5.0.0",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-phpunit/wp-phpunit.git",

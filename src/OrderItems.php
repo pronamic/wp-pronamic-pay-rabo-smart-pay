@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use InvalidArgumentException;
+
 /**
  * Order items.
  *

@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use InvalidArgumentException;
+
 /**
  * Order item.
  *
@@ -145,7 +147,9 @@ class OrderItem {
 	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 100`.
 	 */
 	public function set_description( $description ) {
-		DataHelper::validate_an( $description, 100 );
+		if ( null !== $description ) {
+			DataHelper::validate_an( $description, 100 );
+		}
 
 		$this->description = $description;
 	}
