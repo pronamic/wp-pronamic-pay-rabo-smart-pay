@@ -18,7 +18,7 @@ add_filter( 'pronamic_pay_omnikassa_2_merchant_return_url', function( $url ) {
 } );
 ```
 
-You can ofcourse also use a tool like https://ngrok.com/ (`brew cask install ngrok`), this is also included in [Local by Flywheel](https://local.getflywheel.com/) `brew cask install local-by-flywheel`).
+You can also use a tool like https://ngrok.com/ (`brew cask install ngrok`), this is also included in [Local by Flywheel](https://local.getflywheel.com/) (`brew cask install local-by-flywheel`).
 
 ## Order announce `description`
 
