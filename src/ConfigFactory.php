@@ -39,4 +39,17 @@ class ConfigFactory extends GatewayConfigFactory {
 
 		return $config;
 	}
+
+	/**
+	 * Delete access token meta for the specified post ID.
+	 *
+	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
+	 * @link https://codex.wordpress.org/Function_Reference/delete_post_meta
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	public function delete_access_token_meta( $post_id ) {
+		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token' );
+		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until' );
+	}
 }

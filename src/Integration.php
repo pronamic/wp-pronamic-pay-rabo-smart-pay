@@ -40,6 +40,19 @@ class Integration extends AbstractIntegration {
 		if ( ! has_action( 'wp_loaded', $webhook_listener_function ) ) {
 			add_action( 'wp_loaded', $webhook_listener_function );
 		}
+
+		/**
+		 * Save post.
+		 *
+		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
+		 *
+		 * @var callable $delete_access_token_meta_function
+		 */
+		$delete_access_token_meta_function = array( __NAMESPACE__ . '\ConfigFactory', 'delete_access_token_meta' );
+
+		if ( ! has_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function ) ) {
+			add_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function );
+		}
 	}
 
 	/**
