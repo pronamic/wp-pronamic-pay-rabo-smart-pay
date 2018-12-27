@@ -2,7 +2,7 @@
 
 ## merchantReturnURL is not a valid web address
 
-OmniKassa 2 requires for each order announcement a merchant return URL. OmniKassa 2 does not allow all merchant return URL's. An order announcement with a merchant return URL's with the TLD `.test` will result in the following error:
+OmniKassa 2 requires for each order announcement a merchant return URL. OmniKassa 2 does not allow all merchant return URL's. An order announcement with a merchant return URL's with the TLD `.test` will for example result in the following error:
 
 ```
 merchantReturnURL is not a valid web address
