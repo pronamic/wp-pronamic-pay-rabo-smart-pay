@@ -1,5 +1,25 @@
 # OmniKassa 2.0 Documentation
 
+## merchantReturnURL is not a valid web address
+
+OmniKassa 2 requires for each order announcement a merchant return URL. OmniKassa 2 does not allow all merchant return URL's. An order announcement with a merchant return URL's with the TLD `.test` will result in the following error:
+
+```
+merchantReturnURL is not a valid web address
+```
+
+This can be very inconvenient for testing OmniKassa 2, therefor we introduced the `pronamic_pay_omnikassa_2_merchant_return_url` filter:
+
+```php
+add_filter( 'pronamic_pay_omnikassa_2_merchant_return_url', function( $url ) {
+	$url = 'https://example.com/';
+
+	return $url;
+} );
+```
+
+You can ofcourse also use a tool like https://ngrok.com/ (`brew cask install ngrok`), this is also included in [Local by Flywheel](https://local.getflywheel.com/) `brew cask install local-by-flywheel`).
+
 ## Order announce `description`
 
 **Question Pronamic** on **maandag 15 oktober 2018 10:48**:
