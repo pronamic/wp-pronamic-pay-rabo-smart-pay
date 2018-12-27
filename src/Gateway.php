@@ -118,8 +118,10 @@ class Gateway extends Core_Gateway {
 			$customer_information->set_gender( Gender::transform( $customer->get_gender() ) );
 			$customer_information->set_telephone_number( $customer->get_phone() );
 
-			if ( null !== $customer->get_name() ) {
-				$customer_information->set_initials( $customer->get_name()->get_initials() );
+			$name = $customer->get_name();
+
+			if ( null !== $name ) {
+				$customer_information->set_initials( $name->get_initials() );
 			}
 
 			$order->set_customer_information( $customer_information );
@@ -139,12 +141,14 @@ class Gateway extends Core_Gateway {
 		$order->set_description( substr( $payment->get_description(), 0, 35 ) );
 
 		// Lines.
-		if ( null !== $payment->get_lines() ) {
+		$lines = $payment->get_lines();
+
+		if ( null !== $lines ) {
 			$order_items = $order->new_items();
 
 			$i = 1;
 
-			foreach ( $payment->get_lines() as $line ) {
+			foreach ( $lines as $line ) {
 				/* translators: %s: item index */
 				$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), $i++ );
 
