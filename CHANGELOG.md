@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.3] - 2019-01-03
+- Improved error handling.
+
 ## [2.1.2] - 2018-12-18
 - Limit order item name to 50 characters.
 
@@ -39,6 +42,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 - First release.
 
 [unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.1...HEAD
+[2.1.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.2...2.1.3
+[2.1.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.3...2.0.4
