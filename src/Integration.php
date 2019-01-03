@@ -76,6 +76,10 @@ class Integration extends AbstractIntegration {
 	 * @link https://developer.wordpress.org/reference/functions/get_current_screen/
 	 */
 	public function admin_notice_tld_test() {
+		if ( has_filter( 'pronamic_pay_omnikassa_2_merchant_return_url' ) ) {
+			return;
+		}
+
 		$screen = get_current_screen();
 
 		if ( null === $screen ) {
