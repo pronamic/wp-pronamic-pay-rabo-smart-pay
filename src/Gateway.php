@@ -183,7 +183,7 @@ class Gateway extends Core_Gateway {
 					}
 
 					if ( null !== $description ) {
-						$description = DataHelper::shorten( $description, 100 ) );
+						$description = DataHelper::shorten( $description, 100 );
 					}
 
 					$item->set_description( $description );
