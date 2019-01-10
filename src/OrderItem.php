@@ -126,7 +126,7 @@ class OrderItem {
 	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 50`.
 	 */
 	public function set_name( $name ) {
-		DataHelper::validate_an( $name, 50 );
+		DataHelper::validate_an_html_special_chars( $name, 50 );
 
 		$this->name = $name;
 	}
