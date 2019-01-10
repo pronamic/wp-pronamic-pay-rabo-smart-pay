@@ -3,16 +3,18 @@
  * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2018 Pronamic
+ * @copyright 2005-2019 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Exception;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use WP_Error;
 
 /**
  * Gateway
@@ -87,111 +89,117 @@ class Gateway extends Core_Gateway {
 		$merchant_return_url = $payment->get_return_url();
 		$merchant_return_url = apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
 
-		$order = new Order(
-			$merchant_order_id,
-			MoneyTransformer::transform( $payment->get_total_amount() ),
-			$merchant_return_url
-		);
+		try {
+			$order = new Order(
+				$merchant_order_id,
+				MoneyTransformer::transform( $payment->get_total_amount() ),
+				$merchant_return_url
+			);
 
-		// Shipping address.
-		$order->set_shipping_detail( AddressTransformer::transform( $payment->get_shipping_address() ) );
+			// Shipping address.
+			$order->set_shipping_detail( AddressTransformer::transform( $payment->get_shipping_address() ) );
 
-		// Billing address.
-		$order->set_billing_detail( AddressTransformer::transform( $payment->get_billing_address() ) );
-
-		// Customer information.
-		$customer = $payment->get_customer();
-
-		if ( null !== $customer ) {
-			// Language.
-			$language = $customer->get_language();
-
-			if ( null !== $language ) {
-				$order->set_language( strtoupper( $language ) );
-			}
+			// Billing address.
+			$order->set_billing_detail( AddressTransformer::transform( $payment->get_billing_address() ) );
 
 			// Customer information.
-			$customer_information = new CustomerInformation();
+			$customer = $payment->get_customer();
 
-			$customer_information->set_email_address( $customer->get_email() );
-			$customer_information->set_date_of_birth( $customer->get_birth_date() );
-			$customer_information->set_gender( Gender::transform( $customer->get_gender() ) );
-			$customer_information->set_telephone_number( $customer->get_phone() );
+			if ( null !== $customer ) {
+				// Language.
+				$language = $customer->get_language();
 
-			$name = $customer->get_name();
+				if ( null !== $language ) {
+					$order->set_language( strtoupper( $language ) );
+				}
 
-			if ( null !== $name ) {
-				$customer_information->set_initials( $name->get_initials() );
+				// Customer information.
+				$customer_information = new CustomerInformation();
+
+				$customer_information->set_email_address( $customer->get_email() );
+				$customer_information->set_date_of_birth( $customer->get_birth_date() );
+				$customer_information->set_gender( Gender::transform( $customer->get_gender() ) );
+				$customer_information->set_telephone_number( $customer->get_phone() );
+
+				$name = $customer->get_name();
+
+				if ( null !== $name ) {
+					$customer_information->set_initials( $name->get_initials() );
+				}
+
+				$order->set_customer_information( $customer_information );
 			}
 
-			$order->set_customer_information( $customer_information );
-		}
+			// Payment brand.
+			$payment_brand = PaymentBrands::transform( $payment->get_method() );
 
-		// Payment brand.
-		$payment_brand = PaymentBrands::transform( $payment->get_method() );
+			$order->set_payment_brand( $payment_brand );
 
-		$order->set_payment_brand( $payment_brand );
+			if ( null !== $payment_brand ) {
+				// Payment brand force should only be set if payment brand is not empty.
+				$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
+			}
 
-		if ( null !== $payment_brand ) {
-			// Payment brand force should only be set if payment brand is not empty.
-			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
-		}
+			// Description.
+			$order->set_description( DataHelper::shorten( $payment->get_description(), 35 ) );
 
-		// Description.
-		$order->set_description( DataHelper::shorten( $payment->get_description(), 35 ) );
+			// Lines.
+			$lines = $payment->get_lines();
 
-		// Lines.
-		$lines = $payment->get_lines();
+			if ( null !== $lines ) {
+				$order_items = $order->new_items();
 
-		if ( null !== $lines ) {
-			$order_items = $order->new_items();
+				$i = 1;
 
-			$i = 1;
+				foreach ( $lines as $line ) {
+					/* translators: %s: item index */
+					$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), $i ++ );
 
-			foreach ( $lines as $line ) {
-				/* translators: %s: item index */
-				$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), $i++ );
+					if ( null !== $line->get_name() && '' !== $line->get_name() ) {
+						$name = $line->get_name();
+					}
 
-				if ( null !== $line->get_name() && '' !== $line->get_name() ) {
-					$name = $line->get_name();
-				}
+					$item = $order_items->new_item(
+						DataHelper::shorten_html_special_chars( $name, 50 ),
+						$line->get_quantity(),
+						// The amount in cents, including VAT, of the item each, see below for more details.
+						MoneyTransformer::transform( $line->get_unit_price() ),
+						ProductCategories::transform( $line->get_type() )
+					);
 
-				$item = $order_items->new_item(
-					DataHelper::shorten_html_special_chars( $name, 50 ),
-					$line->get_quantity(),
-					// The amount in cents, including VAT, of the item each, see below for more details.
-					MoneyTransformer::transform( $line->get_unit_price() ),
-					ProductCategories::transform( $line->get_type() )
-				);
+					$item->set_id( $line->get_id() );
 
-				$item->set_id( $line->get_id() );
+					// Description.
+					$description = $line->get_description();
 
-				// Description.
-				$description = $line->get_description();
+					if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
+						/*
+						 * The `OrderItem.description` field is documentated as `0..1` (optional),
+						 * but for AfterPay payments it is required.
+						 *
+						 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
+						 */
+						$description = $name;
+					}
 
-				if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
-					/*
-					 * The `OrderItem.description` field is documentated as `0..1` (optional),
-					 * but for AfterPay payments it is required.
-					 *
-					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
-					 */
-					$description = $name;
-				}
+					if ( null !== $description ) {
+						$description = DataHelper::shorten( $description, 100 ) );
+					}
 
-				if ( null !== $description ) {
-					$description = DataHelper::shorten( $description, 100 );
-				}
+					$item->set_description( $description );
 
-				$item->set_description( $description );
+					$tax_amount = $line->get_unit_price()->get_tax_amount();
 
-				$tax_amount = $line->get_unit_price()->get_tax_amount();
-
-				if ( null !== $tax_amount ) {
-					// The VAT of the item each, see below for more details.
-					$item->set_tax( MoneyTransformer::transform( $tax_amount ) );
+					if ( null !== $tax_amount ) {
+						// The VAT of the item each, see below for more details.
+						$item->set_tax( MoneyTransformer::transform( $tax_amount ) );
+					}
 				}
 			}
+		} catch ( Exception $e ) {
+			$this->error = new WP_Error( 'omnikassa_2_error', $e->getMessage() );
+
+			return;
 		}
 
 		// Maybe update access token.

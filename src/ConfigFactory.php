@@ -3,7 +3,7 @@
  * Config factory
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2018 Pronamic
+ * @copyright 2005-2019 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -48,7 +48,7 @@ class ConfigFactory extends GatewayConfigFactory {
 	 *
 	 * @param int $post_id Post ID.
 	 */
-	public function delete_access_token_meta( $post_id ) {
+	public static function delete_access_token_meta( $post_id ) {
 		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token' );
 		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until' );
 	}
