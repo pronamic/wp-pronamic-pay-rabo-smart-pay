@@ -32,7 +32,7 @@ class DataHelper {
 	 * @throws InvalidArgumentException Throws invalid argument exception when string is longer then max length.
 	 */
 	public static function validate_an( $value, $max ) {
-		if ( strlen( $value ) > $max ) {
+		if ( mb_strlen( $value, 'UTF-8' ) > $max ) {
 			throw new InvalidArgumentException(
 				sprintf(
 					'Value "%s" can not be longer then `%d`.',
@@ -43,6 +43,20 @@ class DataHelper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Validate AN..$max and take HTML special charachters in account.
+	 *
+	 * @param string $value Value to validate.
+	 * @param int    $max   Max length of value.
+	 *
+	 * @return bool
+	 *
+	 * @throws InvalidArgumentException Throws invalid argument exception when string is longer then max length.
+	 */
+	public static function validate_an_html_special_chars( $value, $max ) {
+		return self::validate_an( $value, self::length_html_special_chars( $value, $max ) );
 	}
 
 	/**
@@ -61,5 +75,44 @@ class DataHelper {
 		}
 
 		return self::validate_an( $value, $max );
+	}
+
+	/**
+	 * Shorten string to the specified length.
+	 *
+	 * @param string $value  Value.
+	 * @param int    $length Length.
+	 *
+	 * @return string
+	 */
+	public static function shorten( $string, $length ) {
+		return mb_substr( $string, 0, $length, 'UTF-8' );
+	}
+
+	/**
+	 * Shorten string to the specified length and take HTML special charachters in account.
+	 *
+	 * @param string $value  Value.
+	 * @param int    $length Length.
+	 *
+	 * @return string
+	 */
+	public static function shorten_html_special_chars( $string, $length ) {
+		return self::shorten( $string, self::length_html_special_chars( $string, $length ) );
+	}
+
+	/**
+	 * Determine length of string and take HTML special charachters in account.
+	 *
+	 * @param string $value  Value.
+	 * @param int    $length Length.
+	 */
+	private static function length_html_special_chars( $string, $length ) {
+		$string_length = mb_strlen( $string, 'UTF-8' );
+		$html_length   = mb_strlen( htmlspecialchars( $string, ENT_NOQUOTES ), 'UTF-8' );
+
+		$length = $length - ( $html_length - $string_length );
+
+		return $length;
 	}
 }
