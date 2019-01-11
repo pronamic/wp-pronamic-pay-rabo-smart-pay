@@ -2,12 +2,12 @@
 
 **Question Pronamic** on **11 jan. 2019 10:40**:
 
-We hebben via een aantal van jullie OmniKassa 2 klanten een probleem ontdekt. Volgens de documentatie mag de `OrderItems.name` maximaal 50 tekens zijn (`AN..max 50`) Verder op in de documentatie staat hierover nog het volgende:
+We hebben via een aantal van jullie OmniKassa 2 klanten een probleem ontdekt. Volgens de documentatie mag de `OrderItems.name` maximaal `50` tekens zijn (`AN..max 50`) Verder op in de documentatie staat hierover nog het volgende:
 
 > **A.. Max nn**  
 > A field that consists of letters and other characters, such as ".", "@", etc. This field contains a maximum of nn characters.
 
-We kwamen bijvoorbeeld een klant tegen met volgende product naam met 48 tekens:
+We kwamen bijvoorbeeld een klant tegen met volgende product naam met `48` tekens:
 
 > W&N Artists Aquarel 692 Viridian (s3) - tube 5ml
 
@@ -17,7 +17,7 @@ OmniKassa 2 antwoord echter met de volgende foutmelding:
 the item name is too long, maximum length is [50]
 ```
 
-Na veel onderzoek zijn we tot de ontdekking gekomen dat het probleem hem in tekens zoals &, < en > zit. De volgende namen met 50 tekens werken namelijk niet:
+Na veel onderzoek zijn we tot de ontdekking gekomen dat het probleem hem in tekens zoals `&`, `<` en `>` zit. De volgende namen met `50` tekens werken namelijk niet:
 
 - `1234567890123456789012345678901234567890123456789&`
 - `1234567890123456789012345678901234567890123456789<`
