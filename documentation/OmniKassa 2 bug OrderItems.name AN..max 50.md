@@ -2,7 +2,7 @@
 
 **Question Pronamic** on **11 jan. 2019 10:40**:
 
-We hebben via een aantal van jullie OmniKassa 2 klanten een probleem ontdekt. Volgens de documentatie mag de OrderItems.name maximaal 50 tekens zijn (AN..max 50) Verder op in de documentatie staat hierover nog het volgende:
+We hebben via een aantal van jullie OmniKassa 2 klanten een probleem ontdekt. Volgens de documentatie mag de `OrderItems.name` maximaal 50 tekens zijn (`AN..max 50`) Verder op in de documentatie staat hierover nog het volgende:
 
 > **A.. Max nn**  
 > A field that consists of letters and other characters, such as ".", "@", etc. This field contains a maximum of nn characters.
