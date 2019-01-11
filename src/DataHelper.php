@@ -46,20 +46,6 @@ class DataHelper {
 	}
 
 	/**
-	 * Validate AN..$max and take HTML special charachters in account.
-	 *
-	 * @param string $value Value to validate.
-	 * @param int    $max   Max length of value.
-	 *
-	 * @return bool
-	 *
-	 * @throws InvalidArgumentException Throws invalid argument exception when string is longer then max length.
-	 */
-	public static function validate_an_html_special_chars( $value, $max ) {
-		return self::validate_an( $value, self::length_html_special_chars( $value, $max ) );
-	}
-
-	/**
 	 * Validate null or AN..$max.
 	 *
 	 * @param string|null $value Value to validate.
@@ -78,41 +64,75 @@ class DataHelper {
 	}
 
 	/**
+	 * Validate HTML special chars.
+	 *
+	 * @param string $value Value to validate.
+	 *
+	 * @return bool
+	 *
+	 * @throws InvalidArgumentException Throws invalid argument exception when value contains HTML special chars.
+	 */
+	public static function validate_html_special_chars( $value ) {
+		$html_special_chars = self::get_html_special_chars();
+
+		foreach ( $html_special_chars as $char ) {
+			if ( false !== mb_strpos( $value, $char ) ) {
+				throw new InvalidArgumentException(
+					sprintf(
+						'Value "%s" can not contain the special HTML character `%s`.',
+						$value,
+						$char
+					)
+				);
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Shorten string to the specified length.
 	 *
-	 * @param string $value  Value.
+	 * @param string $string String.
 	 * @param int    $length Length.
 	 *
 	 * @return string
 	 */
 	public static function shorten( $string, $length ) {
-		return mb_substr( $string, 0, $length, 'UTF-8' );
+		return mb_strimwidth( $string, 0, $length, '…', 'UTF-8' );
 	}
 
 	/**
-	 * Shorten string to the specified length and take HTML special charachters in account.
+	 * Get HTML special chars.
 	 *
-	 * @param string $value  Value.
-	 * @param int    $length Length.
+	 * @return array
+	 */
+	private static function get_html_special_chars() {
+		return array(
+			// Ampersand.
+			'&', // Ampersand (https://unicode-table.com/en/0026/).
+			'＆', // Fullwidth Ampersand (https://unicode-table.com/en/FF06/).
+			// Less-Than.
+			'<', // Less-Than Sign (https://unicode-table.com/en/003C/).
+			'﹤', // Small Less-Than Sign (https://unicode-table.com/en/FE64/).
+			'＜', // Fullwidth Less-Than Sign (https://unicode-table.com/en/FF1C/).
+			// Greater-Than.
+			'>', // Greater-Than Sign (https://unicode-table.com/en/003E/).
+			'﹥', // Small Greater-Than Sign (https://unicode-table.com/en/FE65/).
+			'＞', // Fullwidth Greater-Than Sign (https://unicode-table.com/en/FF1E/).
+		);
+	}
+
+	/**
+	 * Replace HTML special chars with fullwidth Unicode characters.
+	 *
+	 * @param string $string String.
 	 *
 	 * @return string
 	 */
-	public static function shorten_html_special_chars( $string, $length ) {
-		return self::shorten( $string, self::length_html_special_chars( $string, $length ) );
-	}
+	public static function replace_html_special_chars( $string ) {
+		$replacement = '�'; // Replacement Character » https://unicode-table.com/en/FFFD/.
 
-	/**
-	 * Determine length of string and take HTML special charachters in account.
-	 *
-	 * @param string $value  Value.
-	 * @param int    $length Length.
-	 */
-	private static function length_html_special_chars( $string, $length ) {
-		$string_length = mb_strlen( $string, 'UTF-8' );
-		$html_length   = mb_strlen( htmlspecialchars( $string, ENT_NOQUOTES ), 'UTF-8' );
-
-		$length = $length - ( $html_length - $string_length );
-
-		return $length;
+		return str_replace( self::get_html_special_chars(), $replacement, $string );
 	}
 }

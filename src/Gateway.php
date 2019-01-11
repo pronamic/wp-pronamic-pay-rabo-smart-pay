@@ -160,7 +160,7 @@ class Gateway extends Core_Gateway {
 					}
 
 					$item = $order_items->new_item(
-						DataHelper::shorten_html_special_chars( $name, 50 ),
+						DataHelper::shorten( DataHelper::replace_html_special_chars( $name ), 50 ),
 						$line->get_quantity(),
 						// The amount in cents, including VAT, of the item each, see below for more details.
 						MoneyTransformer::transform( $line->get_unit_price() ),
