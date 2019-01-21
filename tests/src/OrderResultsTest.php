@@ -3,7 +3,7 @@
  * Order results test
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2018 Pronamic
+ * @copyright 2005-2019 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -26,7 +26,7 @@ class OrderResultsTest extends \PHPUnit_Framework_TestCase {
 	public function test_order_results() {
 		$signing_key = 'QAhFrajUoLsKowfRo15vFXIpdbCgmI2S82idk6xPiCk=';
 
-		$json = file_get_contents( __DIR__ . '/../json/merchant.order.status.changed-1.json' );
+		$json = file_get_contents( __DIR__ . '/../json/merchant.order.status.changed-1.json', true );
 
 		$order_results = OrderResults::from_json( $json );
 

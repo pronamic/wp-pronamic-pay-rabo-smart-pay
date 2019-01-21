@@ -3,7 +3,7 @@
  * Order results test
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2018 Pronamic
+ * @copyright 2005-2019 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -24,7 +24,7 @@ class OrderAnnounceResponseTest extends \PHPUnit_Framework_TestCase {
 	 * Test order results.
 	 */
 	public function test_order_results() {
-		$json = file_get_contents( __DIR__ . '/../json/order-announce-response.json' );
+		$json = file_get_contents( __DIR__ . '/../json/order-announce-response.json', true );
 
 		$response = OrderAnnounceResponse::from_json( $json );
 

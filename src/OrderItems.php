@@ -3,12 +3,14 @@
  * Order items.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2018 Pronamic
+ * @copyright 2005-2019 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
+
+use InvalidArgumentException;
 
 /**
  * Order items.
@@ -46,6 +48,7 @@ class OrderItems {
 	 * @param Money  $amount   Amount.
 	 * @param string $category Category.
 	 * @return OrderItem
+	 * @throws InvalidArgumentException Throws invalid argument exception when arguments are invalid.
 	 */
 	public function new_item( $name, $quantity, Money $amount, $category ) {
 		$item = new OrderItem( $name, $quantity, $amount, $category );
