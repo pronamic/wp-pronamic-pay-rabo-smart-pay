@@ -44,7 +44,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.1...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.4...HEAD
+[2.1.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.3...2.1.4
 [2.1.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.2...2.1.3
 [2.1.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.0...2.1.1
