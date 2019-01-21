@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.4] - 2019-01-21
+- Workaround for OmniKassa 2.0 bug in order item names with special characters.
+
 ## [2.1.3] - 2019-01-03
 - Improved error handling.
 
