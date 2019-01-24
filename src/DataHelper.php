@@ -99,7 +99,7 @@ class DataHelper {
 	 * @return string
 	 */
 	public static function shorten( $string, $length ) {
-		return mb_strimwidth( $string, 0, $length, '…', 'UTF-8' );
+		return substr( $string, 0, $length );
 	}
 
 	/**
