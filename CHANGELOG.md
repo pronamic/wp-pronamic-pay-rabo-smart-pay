@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.6] - 2019-02-04
+- Removed workaround for order item name length, Rabobank has resolved the issue.
+
 ## [2.1.5] - 2019-01-24
 - Workaround for OmniKassa 2.0 bug in order item name length.
 
@@ -47,7 +50,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.5...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.6...HEAD
+[2.1.6]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.5...2.1.6
 [2.1.5]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.4...2.1.5
 [2.1.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.3...2.1.4
 [2.1.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.2...2.1.3
