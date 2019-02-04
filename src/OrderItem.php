@@ -128,8 +128,6 @@ class OrderItem {
 	public function set_name( $name ) {
 		DataHelper::validate_an( $name, 50 );
 
-		DataHelper::validate_html_special_chars( $name );
-
 		$this->name = $name;
 	}
 
