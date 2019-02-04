@@ -30,12 +30,5 @@ class OrderItemTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertEquals( 'Jackie O Round Sunglasses', $order_item->get_name() );
-
-		// Invalid name.
-		$this->setExpectedException( '\InvalidArgumentException' );
-
-		$invalid = 'Order item & HTML special character';
-
-		$order_item->set_name( $invalid );
 	}
 }

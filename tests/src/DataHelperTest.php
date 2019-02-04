@@ -30,34 +30,6 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test replace HTML special characters.
-	 *
-	 * @dataProvider replace_html_special_chars_provider
-	 *
-	 * @param string $string   String.
-	 * @param string $expected Expected.
-	 */
-	public function test_replace_html_special_chars( $string, $expected ) {
-		$result = DataHelper::replace_html_special_chars( $string );
-
-		$this->assertEquals( $expected, $result );
-	}
-
-	/**
-	 * Replace HTML special characters provider.
-	 *
-	 * @return array
-	 */
-	public function replace_html_special_chars_provider() {
-		return array(
-			array( '& Ampersand', '� Ampersand' ),
-			array( '< Less-Than Sign', '� Less-Than Sign' ),
-			array( '> Greater-Than Sign', '� Greater-Than Sign' ),
-			array( 'Test & < > Test', 'Test � � � Test' ),
-		);
-	}
-
-	/**
 	 * Test shorten.
 	 *
 	 * @dataProvider shorten_provider
