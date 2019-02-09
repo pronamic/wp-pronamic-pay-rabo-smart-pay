@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5488d7fa1f66c3b6b7e61bfdd908e939",
+    "content-hash": "d972dd57a6fb028d78d3ee6ccdcbb3c0",
     "packages": [
         {
             "name": "composer/installers",
@@ -320,16 +320,16 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "2.1.4",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "38ccd110e3ce42294d9e91a016638bac33370736"
+                "reference": "694b6728c0bbc87ecdb298d195a24e908f75d614"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/38ccd110e3ce42294d9e91a016638bac33370736",
-                "reference": "38ccd110e3ce42294d9e91a016638bac33370736",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/694b6728c0bbc87ecdb298d195a24e908f75d614",
+                "reference": "694b6728c0bbc87ecdb298d195a24e908f75d614",
                 "shasum": ""
             },
             "require": {
@@ -389,7 +389,7 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2019-01-24T12:54:55+00:00"
+            "time": "2019-02-04T09:58:27+00:00"
         }
     ],
     "packages-dev": [
