@@ -18,18 +18,6 @@
 	<exclude-pattern>wordpress/*</exclude-pattern>
 	<exclude-pattern type="relative">^wp-content/*</exclude-pattern>
 
-	<file>.</file>
-
-	<arg name="colors"/>
-	<arg name="extensions" value="php" />
-	<arg value="sp" />
-
-	<exclude-pattern>node_modules/*</exclude-pattern>
-	<exclude-pattern>tests/wp-config.php</exclude-pattern>
-	<exclude-pattern>vendor/*</exclude-pattern>
-	<exclude-pattern>wordpress/*</exclude-pattern>
-	<exclude-pattern>wp-content/*</exclude-pattern>
-
 	<rule ref="WordPress">
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_key" />
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query" />
