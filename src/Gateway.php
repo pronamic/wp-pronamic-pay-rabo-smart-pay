@@ -159,6 +159,13 @@ class Gateway extends Core_Gateway {
 						$name = $line->get_name();
 					}
 
+					// Don't add free line items as PayPal payments will fail.
+					$price_value = $line->get_unit_price()->get_value();
+
+					if ( PaymentBrands::PAYPAL === $payment_brand && empty( $price_value ) ) {
+						continue;
+					}
+
 					$item = $order_items->new_item(
 						DataHelper::shorten( $name, 50 ),
 						$line->get_quantity(),
