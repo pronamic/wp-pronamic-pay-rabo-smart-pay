@@ -2,14 +2,23 @@
 
 **OmniKassa 2.0 driver for the WordPress payment processing library.**
 
-[![Build Status](https://travis-ci.org/wp-pay-gateways/omnikassa-2.svg?branch=develop)](https://travis-ci.org/wp-pay-gateways/omnikassa-2)
+[![GitHub Stars](https://img.shields.io/github/tag/wp-pay-gateways/omnikassa-2.svg?style=social&label=Star)](https://github.com/wp-pay-gateways/omnikassa-2)
+[![Build Status](https://travis-ci.org/wp-pay-gateways/omnikassa-2.svg?branch=master)](https://travis-ci.org/wp-pay-gateways/omnikassa-2)
 [![Coverage Status](https://coveralls.io/repos/wp-pay-gateways/omnikassa-2/badge.svg?branch=master&service=github)](https://coveralls.io/github/wp-pay-gateways/omnikassa-2?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/v/stable.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
-[![Total Downloads](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/downloads.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
-[![Latest Unstable Version](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/v/unstable.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
-[![License](https://poser.pugx.org/wp-pay-gateways/omnikassa-2/license.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_shield)
+[![Latest Stable Version](https://img.shields.io/packagist/v/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![Total Downloads](https://img.shields.io/packagist/dt/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![Packagist Pre Release](https://img.shields.io/packagist/vpre/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![License](https://img.shields.io/packagist/l/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
+[![Built with Grunt](https://gruntjs.com/cdn/builtwith.svg)](http://gruntjs.com/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/build.png?b=master)](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d115fb4e5c1ae697a0cf/maintainability)](https://codeclimate.com/github/wp-pay-gateways/omnikassa-2/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d115fb4e5c1ae697a0cf/test_coverage)](https://codeclimate.com/github/wp-pay-gateways/omnikassa-2/test_coverage)
+[![CircleCI](https://circleci.com/gh/wp-pay-gateways/omnikassa-2/tree/master.svg)](https://circleci.com/gh/wp-pay-gateways/omnikassa-2/tree/master)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_shield)
 
 ## WordPress Filters
 
