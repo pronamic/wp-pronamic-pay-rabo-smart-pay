@@ -72,6 +72,14 @@ class DataHelper {
 	 * @return string
 	 */
 	public static function shorten( $string, $length ) {
-		return mb_strimwidth( $string, 0, $length, '…' );
+		/**
+		 * In version `2.1.6` of this library we used the `mb_strimwidth`
+		 * function, unfortunately this function is not alwys  available.
+		 * Therefor we now use the `mb_substr`, WordPress is shipped
+		 * with a compat function.
+		 *
+		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/compat.php#L44-L217
+		 */
+		return mb_substr( $string, 0, $length );
 	}
 }
