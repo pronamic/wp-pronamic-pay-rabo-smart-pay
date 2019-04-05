@@ -83,7 +83,7 @@ class OrderItems {
 	 */
 	public function get_json() {
 		$data = array_map(
-			function( $item ) {
+			function( OrderItem $item ) {
 				return $item->get_json();
 			},
 			$this->get_order_items()
