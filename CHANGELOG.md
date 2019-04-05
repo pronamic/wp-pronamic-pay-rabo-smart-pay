@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
--
+- Replaced `mb_strimwidth` function with `mb_substr` to shorten strings.
 
 ## [2.1.6] - 2019-02-04
 - Removed workaround for order item name length, Rabobank has resolved the issue.
