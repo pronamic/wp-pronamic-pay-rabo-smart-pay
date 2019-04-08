@@ -14,6 +14,7 @@ use Exception;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\WebhookManager;
 use WP_Error;
 
 /**
@@ -339,6 +340,9 @@ class Gateway extends Core_Gateway {
 
 			foreach ( $order_results as $order_result ) {
 				$payment = get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
+
+				// Log webhook request.
+				WebhookManager::log_payment( $payment );
 
 				if ( empty( $payment ) ) {
 					continue;
