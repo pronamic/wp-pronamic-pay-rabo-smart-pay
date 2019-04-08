@@ -11,6 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Pay\Core\GatewaySettings;
+use Pronamic\WordPress\Pay\WebhookManager;
 
 /**
  * Settings
@@ -89,13 +90,12 @@ class Settings extends GatewaySettings {
 
 		// Transaction feedback.
 		$fields[] = array(
-			'section' => 'omnikassa-2',
-			'title'   => __( 'Transaction feedback', 'pronamic_ideal' ),
-			'type'    => 'description',
-			'html'    => sprintf(
-				'<span class="dashicons dashicons-warning"></span> %s',
-				__( 'Receiving payment status updates needs additional configuration, if not yet completed.', 'pronamic_ideal' )
-			),
+			'section'  => 'omnikassa-2',
+			'methods'  => array( 'omnikassa-2' ),
+			'title'    => __( 'Transaction feedback', 'pronamic_ideal' ),
+			'type'     => 'description',
+			'html'     => __( 'Receiving payment status updates needs additional configuration.', 'pronamic_ideal' ),
+			'features' => Gateway::get_supported_features(),
 		);
 
 		// Purchase ID.
@@ -139,6 +139,26 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'The Webhook URL as sent with each transaction to receive automatic payment status updates on.', 'pronamic_ideal' ),
 		);
 
+		// Webhook status.
+		$fields[] = array(
+			'section'  => 'omnikassa-2_feedback',
+			'methods'  => array( 'omnikassa-2' ),
+			'title'    => __( 'Status', 'pronamic_ideal' ),
+			'type'     => 'description',
+			'callback' => array( $this, 'feedback_status' ),
+		);
+
 		return $fields;
+	}
+
+	/**
+	 * Transaction feedback status.
+	 *
+	 * @param array $field Settings field.
+	 */
+	public function feedback_status( $field ) {
+		$features = Gateway::get_supported_features();
+
+		WebhookManager::settings_status( $field, $features );
 	}
 }
