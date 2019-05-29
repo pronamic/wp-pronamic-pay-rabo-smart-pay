@@ -43,7 +43,9 @@ class Gateway extends Core_Gateway {
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Supported features.
-		$this->supports = self::get_supported_features();
+		$this->supports = array(
+			'webhook_log',
+		);
 
 		// Client.
 		$this->client = new Client();
@@ -57,17 +59,6 @@ class Gateway extends Core_Gateway {
 		$this->client->set_url( $url );
 		$this->client->set_refresh_token( $config->refresh_token );
 		$this->client->set_signing_key( $config->signing_key );
-	}
-
-	/**
-	 * Get supported features.
-	 *
-	 * @return array
-	 */
-	public static function get_supported_features() {
-		return array(
-			'webhook_manual_config',
-		);
 	}
 
 	/**

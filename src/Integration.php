@@ -150,26 +150,73 @@ class Integration extends AbstractIntegration {
 	}
 
 	/**
-	 * Get settings class.
+	 * Get settings fields.
 	 *
-	 * @return string
-	 */
-	public function get_settings_class() {
-		return __NAMESPACE__ . '\Settings';
-	}
-
-	/**
-	 * Get required settings for this integration.
-	 *
-	 * @link https://github.com/wp-premium/gravityforms/blob/1.9.16/includes/fields/class-gf-field-multiselect.php#L21-L42
-	 * @since 1.1.6
 	 * @return array
 	 */
-	public function get_settings() {
-		$settings = parent::get_settings();
+	public function get_settings_fields() {
+		$fields = array();
 
-		$settings[] = 'omnikassa-2';
+		// Refresh Token.
+		$fields[] = array(
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_omnikassa_2_refresh_token',
+			'title'    => _x( 'Refresh Token', 'omnikassa', 'pronamic_ideal' ),
+			'type'     => 'textarea',
+			'classes'  => array( 'code' ),
+		);
 
-		return $settings;
+		// Signing Key.
+		$fields[] = array(
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_omnikassa_2_signing_key',
+			'title'    => _x( 'Signing Key', 'omnikassa', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'large-text', 'code' ),
+		);
+
+		// Purchase ID.
+		$fields[] = array(
+			'section'     => 'advanced',
+			'filter'      => FILTER_SANITIZE_STRING,
+			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
+			'title'       => __( 'Order ID', 'pronamic_ideal' ),
+			'type'        => 'text',
+			'classes'     => array( 'regular-text', 'code' ),
+			'tooltip'     => sprintf(
+				/* translators: %s: Parameter */
+				__( 'The OmniKassa %s parameter.', 'pronamic_ideal' ),
+				sprintf( '<code>%s</code>', 'orderId' )
+			),
+			'description' => sprintf(
+				'%s %s<br />%s',
+				__( 'Available tags:', 'pronamic_ideal' ),
+				sprintf(
+					'<code>%s</code> <code>%s</code>',
+					'{order_id}',
+					'{payment_id}'
+				),
+				sprintf(
+					/* translators: %s: {payment_id} */
+					__( 'Default: <code>%s</code>', 'pronamic_ideal' ),
+					'{payment_id}'
+				)
+			),
+		);
+
+		// Webhook.
+		$fields[] = array(
+			'section'  => 'feedback',
+			'title'    => __( 'Webhook URL', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'large-text', 'code' ),
+			'value'    => add_query_arg( 'omnikassa2_webhook', '', home_url( '/' ) ),
+			'readonly' => true,
+			'tooltip'  => __( 'The Webhook URL as sent with each transaction to receive automatic payment status updates on.', 'pronamic_ideal' ),
+		);
+
+		return $fields;
 	}
 }
