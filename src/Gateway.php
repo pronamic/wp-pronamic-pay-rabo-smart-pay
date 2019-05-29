@@ -14,6 +14,7 @@ use Exception;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\WebhookManager;
 use WP_Error;
 
 /**
@@ -41,6 +42,9 @@ class Gateway extends Core_Gateway {
 
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
+		// Supported features.
+		$this->supports = self::get_supported_features();
+
 		// Client.
 		$this->client = new Client();
 
@@ -53,6 +57,17 @@ class Gateway extends Core_Gateway {
 		$this->client->set_url( $url );
 		$this->client->set_refresh_token( $config->refresh_token );
 		$this->client->set_signing_key( $config->signing_key );
+	}
+
+	/**
+	 * Get supported features.
+	 *
+	 * @return array
+	 */
+	public static function get_supported_features() {
+		return array(
+			'webhook_manual_config',
+		);
 	}
 
 	/**
@@ -318,6 +333,9 @@ class Gateway extends Core_Gateway {
 
 			foreach ( $order_results as $order_result ) {
 				$payment = get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
+
+				// Log webhook request.
+				WebhookManager::log_payment( $payment );
 
 				if ( empty( $payment ) ) {
 					continue;
