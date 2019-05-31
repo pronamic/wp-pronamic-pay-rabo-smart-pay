@@ -29,6 +29,9 @@ class Integration extends AbstractIntegration {
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
+		$this->supports      = array(
+			'webhook',
+		);
 
 		/**
 		 * Webhook listener function.
