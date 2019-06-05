@@ -246,4 +246,14 @@ class Integration extends AbstractIntegration {
 		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token' );
 		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until' );
 	}
+
+	/**
+	 * Get gateway.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Gateway
+	 */
+	public function get_gateway( $post_id ) {
+		return new Gateway( $this->get_config( $post_id ) );
+	}
 }
