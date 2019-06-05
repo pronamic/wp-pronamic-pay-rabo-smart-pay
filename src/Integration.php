@@ -51,7 +51,7 @@ class Integration extends AbstractIntegration {
 		 *
 		 * @var callable $delete_access_token_meta_function
 		 */
-		$delete_access_token_meta_function = array( __NAMESPACE__ . '\ConfigFactory', 'delete_access_token_meta' );
+		$delete_access_token_meta_function = array( $this, 'delete_access_token_meta' );
 
 		if ( ! has_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function ) ) {
 			add_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function );
@@ -144,15 +144,6 @@ class Integration extends AbstractIntegration {
 	}
 
 	/**
-	 * Get config factory class.
-	 *
-	 * @return string
-	 */
-	public function get_config_factory_class() {
-		return __NAMESPACE__ . '\ConfigFactory';
-	}
-
-	/**
 	 * Get settings fields.
 	 *
 	 * @return array
@@ -221,5 +212,38 @@ class Integration extends AbstractIntegration {
 		);
 
 		return $fields;
+	}
+
+	/**
+	 * Get configuration by post ID.
+	 *
+	 * @param string $post_id Post ID.
+	 * @return Config
+	 */
+	public function get_config( $post_id ) {
+		$config = new Config();
+
+		$config->post_id                  = intval( $post_id );
+		$config->mode                     = $this->get_meta( $post_id, 'mode' );
+		$config->refresh_token            = $this->get_meta( $post_id, 'omnikassa_2_refresh_token' );
+		$config->signing_key              = $this->get_meta( $post_id, 'omnikassa_2_signing_key' );
+		$config->access_token             = $this->get_meta( $post_id, 'omnikassa_2_access_token' );
+		$config->access_token_valid_until = $this->get_meta( $post_id, 'omnikassa_2_access_token_valid_until' );
+		$config->order_id                 = $this->get_meta( $post_id, 'omnikassa_2_order_id' );
+
+		return $config;
+	}
+
+	/**
+	 * Delete access token meta for the specified post ID.
+	 *
+	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
+	 * @link https://codex.wordpress.org/Function_Reference/delete_post_meta
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	public static function delete_access_token_meta( $post_id ) {
+		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token' );
+		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until' );
 	}
 }
