@@ -1,0 +1,71 @@
+{
+    "timestamp": "2019-07-02T07:33:35+00:00",
+    "merchantOrderId": "1075",
+    "description": "Bestelling 1071",
+    "orderItems": [
+        {
+            "id": 223,
+            "name": "Test <strong>vet</strong> test",
+            "quantity": 3,
+            "amount": {
+                "currency": "EUR",
+                "amount": 6050
+            },
+            "tax": {
+                "currency": "EUR",
+                "amount": 1050
+            },
+            "category": "PHYSICAL"
+        },
+        {
+            "id": 224,
+            "name": "Flat rate",
+            "quantity": 1,
+            "amount": {
+                "currency": "EUR",
+                "amount": 6050
+            },
+            "tax": {
+                "currency": "EUR",
+                "amount": 1050
+            },
+            "category": "DIGITAL"
+        }
+    ],
+    "amount": {
+        "currency": "EUR",
+        "amount": 24200
+    },
+    "shippingDetail": {
+        "firstName": "Remco",
+        "middleName": null,
+        "lastName": "Tolsma",
+        "street": "Burgemeester Wuiteweg",
+        "houseNumber": "39",
+        "houseNumberAddition": "b",
+        "postalCode": "9203 KA",
+        "city": "Drachten",
+        "countryCode": "NL"
+    },
+    "billingDetail": {
+        "firstName": "Remco",
+        "middleName": null,
+        "lastName": "Tolsma",
+        "street": "Burgemeester Wuiteweg",
+        "houseNumber": "39",
+        "houseNumberAddition": "b",
+        "postalCode": "9203 KA",
+        "city": "Drachten",
+        "countryCode": "NL"
+    },
+    "customerInformation": {
+        "emailAddress": "info@remcotolsma.nl",
+        "initials": "R.",
+        "telephoneNumber": "0854011580"
+    },
+    "language": "NL",
+    "merchantReturnURL": "https://www.remcotolsma.nl/?payment=1075&key=pay_5d1b08cd02d34",
+    "paymentBrand": "IDEAL",
+    "paymentBrandForce": "FORCE_ONCE",
+    "signature": "e746a2d63bc033eb4ae05038b963f905562245cbe3f9b1f961e70bf9b97d1bffb7ca2335675a95450edd17c09d072bf76de18741a603c617c559deb54582bbb4"
+}
