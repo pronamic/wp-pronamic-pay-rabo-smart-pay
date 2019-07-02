@@ -147,7 +147,7 @@ class Gateway extends Core_Gateway {
 			}
 
 			// Description.
-			$order->set_description( DataHelper::shorten( $payment->get_description(), 35 ) );
+			$order->set_description( DataHelper::sanitize_an( $payment->get_description(), 35 ) );
 
 			// Lines.
 			$lines = $payment->get_lines();
@@ -166,7 +166,7 @@ class Gateway extends Core_Gateway {
 					}
 
 					$item = $order_items->new_item(
-						DataHelper::shorten( $name, 50 ),
+						DataHelper::sanitize_an( $name, 50 ),
 						$line->get_quantity(),
 						// The amount in cents, including VAT, of the item each, see below for more details.
 						MoneyTransformer::transform( $line->get_unit_price() ),
@@ -189,7 +189,7 @@ class Gateway extends Core_Gateway {
 					}
 
 					if ( null !== $description ) {
-						$description = DataHelper::shorten( $description, 100 );
+						$description = DataHelper::sanitize_an( $description, 100 );
 					}
 
 					$item->set_description( $description );
