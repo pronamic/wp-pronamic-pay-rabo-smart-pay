@@ -47,7 +47,7 @@ class DataHelper {
 		 *
 		 * @link https://stackoverflow.com/questions/5732758/detect-html-tags-in-a-string
 		 */
-		if ( strip_tags( $value ) !== $value ) {
+		if ( wp_strip_all_tags( $value ) !== $value ) {
 			throw new InvalidArgumentException(
 				sprintf(
 					'HTML tags are not allowed: `%s`.',
@@ -91,7 +91,7 @@ class DataHelper {
 		 *
 		 * @link https://stackoverflow.com/questions/5732758/detect-html-tags-in-a-string
 		 */
-		$sanitized = strip_tags( $string );
+		$sanitized = wp_strip_all_tags( $string );
 
 		/**
 		 * In version `2.1.6` of this library we used the `mb_strimwidth`

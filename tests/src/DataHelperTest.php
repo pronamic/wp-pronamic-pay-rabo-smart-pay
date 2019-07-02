@@ -63,6 +63,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			// HTML tags.
 			array( 'test <strong>abcd</strong> 1234', 20, 'test abcd 1234' ),
 			array( '12345<strong>67890</strong>', 10, '1234567890' ),
+			array( "line 1\r\nline 2\r\nline 3", 100, "line 1\r\nline 2\r\nline 3" ),
 		);
 	}
 }
