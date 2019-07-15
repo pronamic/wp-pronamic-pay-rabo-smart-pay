@@ -31,6 +31,7 @@ class Integration extends AbstractIntegration {
 		$this->provider      = 'rabobank';
 		$this->supports      = array(
 			'webhook',
+			'webhook_log',
 		);
 
 		/**
