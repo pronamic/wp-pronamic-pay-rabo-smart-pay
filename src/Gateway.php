@@ -240,11 +240,13 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		if ( ! ReturnParameters::contains( $_GET ) ) { // WPCS: CSRF ok.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! ReturnParameters::contains( $_GET ) ) {
 			return;
 		}
 
-		$parameters = ReturnParameters::from_array( $_GET ); // WPCS: CSRF ok.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$parameters = ReturnParameters::from_array( $_GET );
 
 		// Note.
 		$note_values = array(
