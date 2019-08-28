@@ -21,6 +21,13 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  */
 class Config extends GatewayConfig {
 	/**
+	 * Post ID.
+	 *
+	 * @var int
+	 */
+	public $post_id;
+
+	/**
 	 * Refresh token.
 	 *
 	 * @var string

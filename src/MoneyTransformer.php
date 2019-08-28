@@ -21,7 +21,7 @@ use Pronamic\WordPress\Money\Money as PronamicMoney;
  */
 class MoneyTransformer {
 	/**
-	 * Transform Pronamic address to OmniKassa 2.0 address.
+	 * Transform Pronamic money to OmniKassa 2.0 money.
 	 *
 	 * @param PronamicMoney $pronamic_money Pronamic money to convert.
 	 * @return Money

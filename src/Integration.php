@@ -29,6 +29,10 @@ class Integration extends AbstractIntegration {
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
+		$this->supports      = array(
+			'webhook',
+			'webhook_log',
+		);
 
 		/**
 		 * Webhook listener function.
@@ -48,7 +52,7 @@ class Integration extends AbstractIntegration {
 		 *
 		 * @var callable $delete_access_token_meta_function
 		 */
-		$delete_access_token_meta_function = array( __NAMESPACE__ . '\ConfigFactory', 'delete_access_token_meta' );
+		$delete_access_token_meta_function = array( $this, 'delete_access_token_meta' );
 
 		if ( ! has_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function ) ) {
 			add_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function );
@@ -141,35 +145,116 @@ class Integration extends AbstractIntegration {
 	}
 
 	/**
-	 * Get config factory class.
+	 * Get settings fields.
 	 *
-	 * @return string
-	 */
-	public function get_config_factory_class() {
-		return __NAMESPACE__ . '\ConfigFactory';
-	}
-
-	/**
-	 * Get settings class.
-	 *
-	 * @return string
-	 */
-	public function get_settings_class() {
-		return __NAMESPACE__ . '\Settings';
-	}
-
-	/**
-	 * Get required settings for this integration.
-	 *
-	 * @link https://github.com/wp-premium/gravityforms/blob/1.9.16/includes/fields/class-gf-field-multiselect.php#L21-L42
-	 * @since 1.1.6
 	 * @return array
 	 */
-	public function get_settings() {
-		$settings = parent::get_settings();
+	public function get_settings_fields() {
+		$fields = array();
 
-		$settings[] = 'omnikassa-2';
+		// Refresh Token.
+		$fields[] = array(
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_omnikassa_2_refresh_token',
+			'title'    => _x( 'Refresh Token', 'omnikassa', 'pronamic_ideal' ),
+			'type'     => 'textarea',
+			'classes'  => array( 'code' ),
+		);
 
-		return $settings;
+		// Signing Key.
+		$fields[] = array(
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_omnikassa_2_signing_key',
+			'title'    => _x( 'Signing Key', 'omnikassa', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'large-text', 'code' ),
+		);
+
+		// Purchase ID.
+		$fields[] = array(
+			'section'     => 'advanced',
+			'filter'      => FILTER_SANITIZE_STRING,
+			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
+			'title'       => __( 'Order ID', 'pronamic_ideal' ),
+			'type'        => 'text',
+			'classes'     => array( 'regular-text', 'code' ),
+			'tooltip'     => sprintf(
+				/* translators: %s: Parameter */
+				__( 'The OmniKassa %s parameter.', 'pronamic_ideal' ),
+				sprintf( '<code>%s</code>', 'orderId' )
+			),
+			'description' => sprintf(
+				'%s %s<br />%s',
+				__( 'Available tags:', 'pronamic_ideal' ),
+				sprintf(
+					'<code>%s</code> <code>%s</code>',
+					'{order_id}',
+					'{payment_id}'
+				),
+				sprintf(
+					/* translators: %s: {payment_id} */
+					__( 'Default: <code>%s</code>', 'pronamic_ideal' ),
+					'{payment_id}'
+				)
+			),
+		);
+
+		// Webhook.
+		$fields[] = array(
+			'section'  => 'feedback',
+			'title'    => __( 'Webhook URL', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'large-text', 'code' ),
+			'value'    => add_query_arg( 'omnikassa2_webhook', '', home_url( '/' ) ),
+			'readonly' => true,
+			'tooltip'  => __( 'The Webhook URL as sent with each transaction to receive automatic payment status updates on.', 'pronamic_ideal' ),
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Get configuration by post ID.
+	 *
+	 * @param string $post_id Post ID.
+	 * @return Config
+	 */
+	public function get_config( $post_id ) {
+		$config = new Config();
+
+		$config->post_id                  = intval( $post_id );
+		$config->mode                     = $this->get_meta( $post_id, 'mode' );
+		$config->refresh_token            = $this->get_meta( $post_id, 'omnikassa_2_refresh_token' );
+		$config->signing_key              = $this->get_meta( $post_id, 'omnikassa_2_signing_key' );
+		$config->access_token             = $this->get_meta( $post_id, 'omnikassa_2_access_token' );
+		$config->access_token_valid_until = $this->get_meta( $post_id, 'omnikassa_2_access_token_valid_until' );
+		$config->order_id                 = $this->get_meta( $post_id, 'omnikassa_2_order_id' );
+
+		return $config;
+	}
+
+	/**
+	 * Delete access token meta for the specified post ID.
+	 *
+	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
+	 * @link https://codex.wordpress.org/Function_Reference/delete_post_meta
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	public static function delete_access_token_meta( $post_id ) {
+		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token' );
+		delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until' );
+	}
+
+	/**
+	 * Get gateway.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Gateway
+	 */
+	public function get_gateway( $post_id ) {
+		return new Gateway( $this->get_config( $post_id ) );
 	}
 }

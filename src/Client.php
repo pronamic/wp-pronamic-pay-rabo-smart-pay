@@ -183,7 +183,15 @@ class Client {
 		$data = json_decode( $body );
 
 		if ( ! is_object( $data ) ) {
-			$this->error = new WP_Error( 'omnikassa_2_error', 'Could not parse response.', $data );
+			$message = implode(
+				"\r\n",
+				array(
+					'Could not parse response.',
+					sprintf( 'HTTP response status code: %s %s', wp_remote_retrieve_response_code( $response ), wp_remote_retrieve_response_message( $response ) ),
+				)
+			);
+
+			$this->error = new WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}

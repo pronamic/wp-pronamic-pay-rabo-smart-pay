@@ -48,6 +48,7 @@ class Security {
 			);
 		}
 
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$decoded_signing_key = base64_decode( $signing_key );
 
 		if ( false === $decoded_signing_key ) {

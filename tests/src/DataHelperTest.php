@@ -30,26 +30,26 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test shorten.
+	 * Test sanitize AN.
 	 *
-	 * @dataProvider shorten_provider
+	 * @dataProvider sanitize_an_provider
 	 *
 	 * @param string $string   String.
 	 * @param int    $length   Length.
 	 * @param string $expected Expected.
 	 */
-	public function test_shorten( $string, $length, $expected ) {
-		$result = DataHelper::shorten( $string, $length );
+	public function test_sanitize_an( $string, $length, $expected ) {
+		$result = DataHelper::sanitize_an( $string, $length );
 
 		$this->assertEquals( $expected, $result );
 	}
 
 	/**
-	 * Shorten provider.
+	 * Sanitize AN provider.
 	 *
 	 * @return array
 	 */
-	public function shorten_provider() {
+	public function sanitize_an_provider() {
 		return array(
 			// Nothing to-do.
 			array( '1234567890', 10, '1234567890' ),
@@ -60,6 +60,10 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			array( 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ', 5, 'ÀÁÂÃÄ' ),
 			// UTF-8 test Arabic (https://en.wikipedia.org/wiki/Arabic).
 			array( 'كنت أريد أن أقرأ كتابا عن تاريخ المرأة في فرنسا', 10, 'كنت أريد أ' ),
+			// HTML tags.
+			array( 'test <strong>abcd</strong> 1234', 20, 'test abcd 1234' ),
+			array( '12345<strong>67890</strong>', 10, '1234567890' ),
+			array( "line 1\r\nline 2\r\nline 3", 100, "line 1\r\nline 2\r\nline 3" ),
 		);
 	}
 }

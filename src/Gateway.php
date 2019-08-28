@@ -41,6 +41,11 @@ class Gateway extends Core_Gateway {
 
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
+		// Supported features.
+		$this->supports = array(
+			'webhook_log',
+		);
+
 		// Client.
 		$this->client = new Client();
 
@@ -141,7 +146,7 @@ class Gateway extends Core_Gateway {
 			}
 
 			// Description.
-			$order->set_description( DataHelper::shorten( $payment->get_description(), 35 ) );
+			$order->set_description( DataHelper::sanitize_an( $payment->get_description(), 35 ) );
 
 			// Lines.
 			$lines = $payment->get_lines();
@@ -160,7 +165,7 @@ class Gateway extends Core_Gateway {
 					}
 
 					$item = $order_items->new_item(
-						DataHelper::shorten( $name, 50 ),
+						DataHelper::sanitize_an( $name, 50 ),
 						$line->get_quantity(),
 						// The amount in cents, including VAT, of the item each, see below for more details.
 						MoneyTransformer::transform( $line->get_unit_price() ),
@@ -183,7 +188,7 @@ class Gateway extends Core_Gateway {
 					}
 
 					if ( null !== $description ) {
-						$description = DataHelper::shorten( $description, 100 );
+						$description = DataHelper::sanitize_an( $description, 100 );
 					}
 
 					$item->set_description( $description );
@@ -235,11 +240,13 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		if ( ! ReturnParameters::contains( $_GET ) ) { // WPCS: CSRF ok.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! ReturnParameters::contains( $_GET ) ) {
 			return;
 		}
 
-		$parameters = ReturnParameters::from_array( $_GET ); // WPCS: CSRF ok.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$parameters = ReturnParameters::from_array( $_GET );
 
 		// Note.
 		$note_values = array(
@@ -318,6 +325,9 @@ class Gateway extends Core_Gateway {
 
 			foreach ( $order_results as $order_result ) {
 				$payment = get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
+
+				// Log webhook request.
+				do_action( 'pronamic_pay_webhook_log_payment', $payment );
 
 				if ( empty( $payment ) ) {
 					continue;

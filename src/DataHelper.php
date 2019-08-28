@@ -42,6 +42,20 @@ class DataHelper {
 			);
 		}
 
+		/**
+		 * HTML tags are not allowed.
+		 *
+		 * @link https://stackoverflow.com/questions/5732758/detect-html-tags-in-a-string
+		 */
+		if ( wp_strip_all_tags( $value ) !== $value ) {
+			throw new InvalidArgumentException(
+				sprintf(
+					'HTML tags are not allowed: `%s`.',
+					$value
+				)
+			);
+		}
+
 		return true;
 	}
 
@@ -64,14 +78,21 @@ class DataHelper {
 	}
 
 	/**
-	 * Shorten string to the specified length.
+	 * Sanitize string to the specified length.
 	 *
 	 * @param string $string String.
 	 * @param int    $length Length.
 	 *
 	 * @return string
 	 */
-	public static function shorten( $string, $length ) {
+	public static function sanitize_an( $string, $length ) {
+		/**
+		 * HTML tags are not allowed.
+		 *
+		 * @link https://stackoverflow.com/questions/5732758/detect-html-tags-in-a-string
+		 */
+		$sanitized = wp_strip_all_tags( $string );
+
 		/**
 		 * In version `2.1.6` of this library we used the `mb_strimwidth`
 		 * function, unfortunately this function is not alwys  available.
@@ -80,6 +101,8 @@ class DataHelper {
 		 *
 		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/compat.php#L44-L217
 		 */
-		return mb_substr( $string, 0, $length );
+		$sanitized = mb_substr( $sanitized, 0, $length );
+
+		return $sanitized;
 	}
 }

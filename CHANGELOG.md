@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
+-
+
+## [2.1.7] - 2019-08-28
+- Updated packages.
+- Renamed `DataHelper::shorten` to `DataHelper::sanitize_an` which also strip tags.
 - Replaced `mb_strimwidth` function with `mb_substr` to shorten strings.
 
 ## [2.1.6] - 2019-02-04
@@ -50,7 +55,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.6...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.7...HEAD
+[2.1.7]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.6...2.1.7
 [2.1.6]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.5...2.1.6
 [2.1.5]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.4...2.1.5
 [2.1.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.3...2.1.4
