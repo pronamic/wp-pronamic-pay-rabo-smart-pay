@@ -11,6 +11,16 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use WP_Error;
+use function apply_filters;
+use function implode;
+use function is_object;
+use function json_decode;
+use function sprintf;
+use function wp_json_encode;
+use function wp_remote_request;
+use function wp_remote_retrieve_body;
+use function wp_remote_retrieve_response_code;
+use function wp_remote_retrieve_response_message;
 
 /**
  * Client.
@@ -25,14 +35,14 @@ class Client {
 	 *
 	 * @var string
 	 */
-	const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
+	public const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
 
 	/**
 	 * URL OmniKassa sandbox API.
 	 *
 	 * @var string
 	 */
-	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
+	public const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	/**
 	 * Error
@@ -132,7 +142,6 @@ class Client {
 	 * @param string      $endpoint URL endpoint to request.
 	 * @param string      $token    Authorization token.
 	 * @param object|null $object   Object.
-	 *
 	 * @return bool|object
 	 */
 	private function request( $method, $endpoint, $token, $object = null ) {
@@ -253,7 +262,6 @@ class Client {
 	 * Get order results by the notification token.
 	 *
 	 * @param string $notification_token Notification token.
-	 *
 	 * @return OrderResults|false
 	 */
 	public function get_order_results( $notification_token ) {
