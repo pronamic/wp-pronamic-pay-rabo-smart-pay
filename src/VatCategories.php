@@ -23,26 +23,26 @@ class VatCategories {
 	 *
 	 * @var string
 	 */
-	public const HIGH = 1;
+	public const HIGH = '1';
 
 	/**
 	 * Category 'Laag'.
 	 *
 	 * @var string
 	 */
-	public const LOW = 2;
+	public const LOW = '2';
 
 	/**
 	 * Category 'Nul (0%)'.
 	 *
 	 * @var string
 	 */
-	public const ZERO = 3;
+	public const ZERO = '3';
 
 	/**
 	 * Category 'Geen (vrijgesteld van btw)'.
 	 *
 	 * @var int
 	 */
-	public const EXEMPTED = 4;
+	public const EXEMPTED = '4';
 }

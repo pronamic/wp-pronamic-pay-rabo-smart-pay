@@ -70,7 +70,7 @@ class OrderItem {
 	/**
 	 * VAT category.
 	 *
-	 * @var int|null
+	 * @var string|null
 	 */
 	private $vat_category;
 
@@ -212,7 +212,7 @@ class OrderItem {
 	/**
 	 * Get VAT category.
 	 *
-	 * @return int|null
+	 * @return string|null
 	 */
 	public function get_vat_category() {
 		return $this->vat_category;
@@ -221,7 +221,7 @@ class OrderItem {
 	/**
 	 * Set VAT category.
 	 *
-	 * @param int|null $vat_category VAT category.
+	 * @param string|null $vat_category VAT category.
 	 */
 	public function set_vat_category( $vat_category ) {
 		$this->vat_category = $vat_category;
@@ -279,7 +279,7 @@ class OrderItem {
 		$fields = $this->amount->get_signature_fields( $fields );
 
 		if ( null === $this->tax ) {
-			$fields[] = null;
+			$fields[] = '';
 		} else {
 			$fields = $this->tax->get_signature_fields( $fields );
 		}
