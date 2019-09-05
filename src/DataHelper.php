@@ -92,7 +92,7 @@ class DataHelper {
 
 		/**
 		 * In version `2.1.6` of this library we used the `mb_strimwidth`
-		 * function, unfortunately this function is not alwys  available.
+		 * function, unfortunately this function is not alwys available.
 		 * Therefor we now use the `mb_substr`, WordPress is shipped
 		 * with a compat function.
 		 *
