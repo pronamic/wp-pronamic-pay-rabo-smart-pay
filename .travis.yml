@@ -71,14 +71,12 @@ before_install:
   - if [ "$SYMFONY_SECURITY_CHECK" == "1" ]; then export PATH="$HOME/.symfony/bin:$PATH"; fi
 
 install:
-  # Install Grunt command line interface (https://github.com/gruntjs/grunt-cli).
-  - npm install -g grunt-cli
   # Install Node.js packages.
   - npm install
   # Update Composer itself to the latest version (https://getcomposer.org/doc/03-cli.md#self-update-selfupdate-).
   - composer self-update
   # Install Composer packages.
-  - composer install
+  - composer install --no-scripts --ignore-platform-reqs
   # Test on specific WordPress version.
   - composer require --dev --update-with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
   # List available packages.
