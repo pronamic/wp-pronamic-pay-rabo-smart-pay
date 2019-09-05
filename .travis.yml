@@ -78,7 +78,7 @@ install:
   # Install Composer packages.
   - composer install --no-scripts --ignore-platform-reqs
   # Test on specific WordPress version.
-  - composer require --dev --update-with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
+  - composer require --dev --update-with-dependencies roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION} --no-scripts --ignore-platform-reqs
   # List available packages.
   - composer show
 
