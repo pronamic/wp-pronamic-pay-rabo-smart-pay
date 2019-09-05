@@ -10,8 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-
 /**
  * Order item.
  *
@@ -83,7 +81,7 @@ class OrderItem {
 	 * @param int    $quantity Quantity.
 	 * @param Money  $amount   Amount.
 	 * @param string $category Category.
-	 * @throws InvalidArgumentException Throws invalid argument exception when arguments are invalid.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when arguments are invalid.
 	 */
 	public function __construct( $name, $quantity, Money $amount, $category ) {
 		$this->set_name( $name );
@@ -123,7 +121,7 @@ class OrderItem {
 	 * Set item name.
 	 *
 	 * @param string $name Name.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 50`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 50`.
 	 */
 	public function set_name( $name ) {
 		DataHelper::validate_an( $name, 50 );
@@ -144,7 +142,7 @@ class OrderItem {
 	 * Set item description.
 	 *
 	 * @param string|null $description Description.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 100`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 100`.
 	 */
 	public function set_description( $description ) {
 		if ( null !== $description ) {
@@ -203,7 +201,7 @@ class OrderItem {
 	 * Set category.
 	 *
 	 * @param string $category Product category: PHYSICAL or DIGITAL.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 8`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 8`.
 	 */
 	public function set_category( $category ) {
 		DataHelper::validate_an( $category, 8 );
@@ -266,8 +264,8 @@ class OrderItem {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		if ( null !== $this->id ) {
@@ -276,7 +274,7 @@ class OrderItem {
 
 		$fields[] = $this->name;
 		$fields[] = $this->description;
-		$fields[] = strval( $this->quantity );
+		$fields[] = \strval( $this->quantity );
 
 		$fields = $this->amount->get_signature_fields( $fields );
 

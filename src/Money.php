@@ -10,10 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use stdClass;
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Validator;
-
 /**
  * Money
  *
@@ -80,11 +76,11 @@ class Money {
 	/**
 	 * Create money from object.
 	 *
-	 * @param stdClass $object Object.
+	 * @param \stdClass $object Object.
 	 * @return Money
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( stdClass $object ) {
+	public static function from_object( \stdClass $object ) {
 		if ( ! isset( $object->currency ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `currency` property.' );
 		}
@@ -109,14 +105,14 @@ class Money {
 	public static function from_json( $json ) {
 		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-money.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );
@@ -125,8 +121,8 @@ class Money {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		$fields[] = $this->get_currency();

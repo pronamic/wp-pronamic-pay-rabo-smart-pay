@@ -10,11 +10,9 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Exception;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use WP_Error;
 
 /**
  * Gateway
@@ -64,7 +62,7 @@ class Gateway extends Core_Gateway {
 	 * Get supported payment methods.
 	 *
 	 * @see \Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -81,7 +79,6 @@ class Gateway extends Core_Gateway {
 	 * Start.
 	 *
 	 * @see Core_Gateway::start()
-	 *
 	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
@@ -92,7 +89,7 @@ class Gateway extends Core_Gateway {
 
 		// New order.
 		$merchant_return_url = $payment->get_return_url();
-		$merchant_return_url = apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
+		$merchant_return_url = \apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
 
 		try {
 			$order = new Order(
@@ -115,7 +112,7 @@ class Gateway extends Core_Gateway {
 				$language = $customer->get_language();
 
 				if ( null !== $language ) {
-					$order->set_language( strtoupper( $language ) );
+					$order->set_language( \strtoupper( $language ) );
 				}
 
 				// Customer information.
@@ -157,8 +154,11 @@ class Gateway extends Core_Gateway {
 				$i = 1;
 
 				foreach ( $lines as $line ) {
-					/* translators: %s: item index */
-					$name = sprintf( __( 'Item %s', 'pronamic_ideal' ), $i ++ );
+					$name = \sprintf(
+						/* translators: %s: item index */
+						\__( 'Item %s', 'pronamic_ideal' ),
+						$i++
+					);
 
 					if ( null !== $line->get_name() && '' !== $line->get_name() ) {
 						$name = $line->get_name();
@@ -201,8 +201,8 @@ class Gateway extends Core_Gateway {
 					}
 				}
 			}
-		} catch ( Exception $e ) {
-			$this->error = new WP_Error( 'omnikassa_2_error', $e->getMessage() );
+		} catch ( \Exception $e ) {
+			$this->error = new \WP_Error( 'omnikassa_2_error', $e->getMessage() );
 
 			return;
 		}
@@ -259,14 +259,14 @@ class Gateway extends Core_Gateway {
 		$note = '';
 
 		$note .= '<p>';
-		$note .= __( 'OmniKassa 2.0 return URL requested:', 'pronamic_ideal' );
+		$note .= \__( 'OmniKassa 2.0 return URL requested:', 'pronamic_ideal' );
 		$note .= '</p>';
 
 		$note .= '<dl>';
 
 		foreach ( $note_values as $key => $value ) {
-			$note .= sprintf( '<dt>%s</dt>', esc_html( $key ) );
-			$note .= sprintf( '<dd>%s</dd>', esc_html( $value ) );
+			$note .= \sprintf( '<dt>%s</dt>', \esc_html( $key ) );
+			$note .= \sprintf( '<dd>%s</dd>', \esc_html( $value ) );
 		}
 
 		$note .= '</dl>';
@@ -290,7 +290,6 @@ class Gateway extends Core_Gateway {
 	 * Handle notification.
 	 *
 	 * @param Notification $notification Notification.
-	 *
 	 * @return void
 	 */
 	public function handle_notification( Notification $notification ) {
@@ -308,7 +307,6 @@ class Gateway extends Core_Gateway {
 	 * Handle `merchant.order.status.changed` event.
 	 *
 	 * @param Notification $notification Notification.
-	 *
 	 * @return void
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
@@ -324,10 +322,10 @@ class Gateway extends Core_Gateway {
 			}
 
 			foreach ( $order_results as $order_result ) {
-				$payment = get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
+				$payment = \get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
 
 				// Log webhook request.
-				do_action( 'pronamic_pay_webhook_log_payment', $payment );
+				\do_action( 'pronamic_pay_webhook_log_payment', $payment );
 
 				if ( empty( $payment ) ) {
 					continue;
@@ -345,10 +343,10 @@ class Gateway extends Core_Gateway {
 				$note = '';
 
 				$note .= '<p>';
-				$note .= __( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' );
+				$note .= \__( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' );
 				$note .= '</p>';
 				$note .= '<pre>';
-				$note .= wp_json_encode( $order_result->get_json(), JSON_PRETTY_PRINT );
+				$note .= \wp_json_encode( $order_result->get_json(), \JSON_PRETTY_PRINT );
 				$note .= '</pre>';
 
 				$payment->add_note( $note );
@@ -370,14 +368,14 @@ class Gateway extends Core_Gateway {
 
 		$data = $this->client->get_access_token_data();
 
-		if ( ! is_object( $data ) ) {
+		if ( ! \is_object( $data ) ) {
 			return;
 		}
 
 		if ( isset( $data->token ) ) {
 			$this->config->access_token = $data->token;
 
-			update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
+			\update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
 		}
 
 		/*
@@ -388,7 +386,7 @@ class Gateway extends Core_Gateway {
 		if ( isset( $data->validUntil ) ) {
 			$this->config->access_token_valid_until = $data->validUntil;
 
-			update_post_meta(
+			\update_post_meta(
 				$this->config->post_id,
 				'_pronamic_gateway_omnikassa_2_access_token_valid_until',
 				$data->validUntil
@@ -405,7 +403,7 @@ class Gateway extends Core_Gateway {
 	private function get_client_error() {
 		$error = $this->client->get_error();
 
-		if ( is_wp_error( $error ) ) {
+		if ( \is_wp_error( $error ) ) {
 			$this->error = $error;
 
 			return $error;

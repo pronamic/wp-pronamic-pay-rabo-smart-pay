@@ -10,11 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use stdClass;
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Exception\ValidationException;
-use JsonSchema\Validator;
-
 /**
  * Notification
  *
@@ -123,7 +118,7 @@ class Notification extends ResponseMessage {
 	/**
 	 * Get signature fields.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_signature_fields() {
 		return array(
@@ -137,11 +132,11 @@ class Notification extends ResponseMessage {
 	/**
 	 * Create notification from object.
 	 *
-	 * @param stdClass $object Object.
+	 * @param \stdClass $object Object.
 	 * @return Notification
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( stdClass $object ) {
+	public static function from_object( \stdClass $object ) {
 		if ( ! isset( $object->signature ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `signature` property.' );
 		}
@@ -181,14 +176,14 @@ class Notification extends ResponseMessage {
 	public static function from_json( $json ) {
 		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/notification.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );

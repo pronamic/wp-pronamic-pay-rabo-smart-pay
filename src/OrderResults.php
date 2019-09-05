@@ -10,9 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Validator;
-
 /**
  * Order results.
  *
@@ -31,16 +28,16 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * Order results.
 	 *
-	 * @var array
+	 * @var array<OrderResult>
 	 */
 	private $order_results;
 
 	/**
 	 * Construct order results message.
 	 *
-	 * @param bool   $more_available True if more order results available, false oterwise.
-	 * @param array  $order_results  Order results.
-	 * @param string $signature      Signature.
+	 * @param bool               $more_available True if more order results available, false oterwise.
+	 * @param array<OrderResult> $order_results  Order results.
+	 * @param string             $signature      Signature.
 	 */
 	public function __construct( $more_available, array $order_results, $signature ) {
 		parent::__construct( $signature );
@@ -61,7 +58,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * Get signature data.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_signature_fields() {
 		$fields = array();
@@ -113,7 +110,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 			throw new \InvalidArgumentException( 'Object must contain `orderResults` property.' );
 		}
 
-		if ( ! is_array( $object->orderResults ) ) {
+		if ( ! \is_array( $object->orderResults ) ) {
 			throw new \InvalidArgumentException( 'The `orderResults` property must be an array.' );
 		}
 
@@ -140,14 +137,14 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	public static function from_json( $json ) {
 		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/order-results.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );

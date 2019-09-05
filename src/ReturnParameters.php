@@ -10,8 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-
 /**
  * Return parameters
  *
@@ -71,7 +69,7 @@ class ReturnParameters extends ResponseMessage {
 	 *
 	 * The signature is calculated in the same way as other signatures. In this case, the two fields (in order: order_id, status) are used as input.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_signature_fields() {
 		return array(
@@ -83,37 +81,39 @@ class ReturnParameters extends ResponseMessage {
 	/**
 	 * Check if data array contains return parameters.
 	 *
-	 * @param array $data Data array.
+	 * @param array<string> $data Data array.
 	 * @return bool True if array contains return parameters, false otherwise.
 	 */
 	public static function contains( array $data ) {
-		return (
-			array_key_exists( 'order_id', $data )
+		$result = (
+			\array_key_exists( 'order_id', $data )
 				&&
-			array_key_exists( 'status', $data )
+			\array_key_exists( 'status', $data )
 				&&
-			array_key_exists( 'signature', $data )
+			\array_key_exists( 'signature', $data )
 		);
+
+		return $result;
 	}
 
 	/**
 	 * Get return parameters from the specifieid data array.
 	 *
-	 * @param array $data Data array.
+	 * @param array<string> $data Data array.
 	 * @return ReturnParameters
-	 * @throws InvalidArgumentException Throws invalid argument exception when array does not contains the required keys.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when array does not contains the required keys.
 	 */
 	public static function from_array( array $data ) {
-		if ( ! array_key_exists( 'order_id', $data ) ) {
-			throw new InvalidArgumentException( 'Data array must contain `order_id` field.' );
+		if ( ! \array_key_exists( 'order_id', $data ) ) {
+			throw new \InvalidArgumentException( 'Data array must contain `order_id` field.' );
 		}
 
-		if ( ! array_key_exists( 'status', $data ) ) {
-			throw new InvalidArgumentException( 'Data array must contain `status` field.' );
+		if ( ! \array_key_exists( 'status', $data ) ) {
+			throw new \InvalidArgumentException( 'Data array must contain `status` field.' );
 		}
 
-		if ( ! array_key_exists( 'signature', $data ) ) {
-			throw new InvalidArgumentException( 'Data array must contain `signature` field.' );
+		if ( ! \array_key_exists( 'signature', $data ) ) {
+			throw new \InvalidArgumentException( 'Data array must contain `signature` field.' );
 		}
 
 		return new self(

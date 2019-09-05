@@ -10,8 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
-
 /**
  * Notification test
  *
@@ -26,7 +24,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase {
 	public function test_notification() {
 		$signing_key = 'QAhFrajUoLsKowfRo15vFXIpdbCgmI2S82idk6xPiCk=';
 
-		$json = file_get_contents( __DIR__ . '/../json/notification.json', true );
+		$json = \file_get_contents( __DIR__ . '/../json/notification.json', true );
 
 		$notification = Notification::from_json( $json );
 

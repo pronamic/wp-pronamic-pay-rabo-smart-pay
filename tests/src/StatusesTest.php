@@ -21,10 +21,9 @@ class StatusesTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Test transform.
 	 *
+	 * @dataProvider status_matrix_provider
 	 * @param string $omnikassa_2_status OmniKassa 2.0 status string.
 	 * @param string $expected           Expected Pronamic Pay status string.
-	 *
-	 * @dataProvider status_matrix_provider
 	 */
 	public function test_transform( $omnikassa_2_status, $expected ) {
 		$pronamic_pay_status = Statuses::transform( $omnikassa_2_status );
@@ -35,7 +34,7 @@ class StatusesTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Status matrix provider.
 	 *
-	 * @return array
+	 * @return array<array<string|null>>
 	 */
 	public function status_matrix_provider() {
 		return array(

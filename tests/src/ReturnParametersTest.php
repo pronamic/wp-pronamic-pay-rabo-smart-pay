@@ -10,8 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
-
 /**
  * Return parameters test
  *

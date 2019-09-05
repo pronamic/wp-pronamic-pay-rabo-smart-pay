@@ -22,10 +22,9 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	 * Test validate AN.
 	 *
 	 * @dataProvider validate_an_provider
-	 *
-	 * @param string $string   String.
-	 * @param int    $length   Length.
-	 * @param bool   $expected Expected.
+	 * @param string      $string   String.
+	 * @param int         $length   Length.
+	 * @param string|null $exception Expected.
 	 */
 	public function test_validate_an( $string, $length, $exception = null ) {
 		if ( null !== $exception ) {
@@ -42,7 +41,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Validate AN provider.
 	 *
-	 * @return array
+	 * @return array<array<string|int>>
 	 */
 	public function validate_an_provider() {
 		return array(
@@ -67,7 +66,6 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	 * Test sanitize AN.
 	 *
 	 * @dataProvider sanitize_an_provider
-	 *
 	 * @param string $string   String.
 	 * @param int    $length   Length.
 	 * @param string $expected Expected.
@@ -81,7 +79,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Sanitize AN provider.
 	 *
-	 * @return array
+	 * @return array<array<string|int>>
 	 */
 	public function sanitize_an_provider() {
 		return array(

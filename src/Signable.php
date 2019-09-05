@@ -21,7 +21,7 @@ interface Signable {
 	/**
 	 * Get signature fields.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_signature_fields();
 }

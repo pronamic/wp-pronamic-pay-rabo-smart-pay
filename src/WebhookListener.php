@@ -25,11 +25,11 @@ class WebhookListener {
 	 * Listen to OmniKassa 2.0 webhook requests.
 	 */
 	public static function listen() {
-		if ( ! filter_has_var( INPUT_GET, 'omnikassa2_webhook' ) ) {
+		if ( ! \filter_has_var( \INPUT_GET, 'omnikassa2_webhook' ) ) {
 			return;
 		}
 
-		$json = file_get_contents( 'php://input' );
+		$json = \file_get_contents( 'php://input' );
 
 		if ( empty( $json ) ) {
 			return;

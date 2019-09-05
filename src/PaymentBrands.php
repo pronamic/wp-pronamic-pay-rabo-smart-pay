@@ -25,56 +25,56 @@ class PaymentBrands {
 	 *
 	 * @var string
 	 */
-	const IDEAL = 'IDEAL';
+	public const IDEAL = 'IDEAL';
 
 	/**
 	 * Payment brand 'AFTERPAY'.
 	 *
 	 * @var string
 	 */
-	const AFTERPAY = 'AFTERPAY';
+	public const AFTERPAY = 'AFTERPAY';
 
 	/**
 	 * Payment brand 'PAYPAL'.
 	 *
 	 * @var string
 	 */
-	const PAYPAL = 'PAYPAL';
+	public const PAYPAL = 'PAYPAL';
 
 	/**
 	 * Payment brand 'MASTERCARD'.
 	 *
 	 * @var string
 	 */
-	const MASTERCARD = 'MASTERCARD';
+	public const MASTERCARD = 'MASTERCARD';
 
 	/**
 	 * Payment brand 'VISA'.
 	 *
 	 * @var string
 	 */
-	const VISA = 'VISA';
+	public const VISA = 'VISA';
 
 	/**
 	 * Payment brand 'BANCONTACT'.
 	 *
 	 * @var string
 	 */
-	const BANCONTACT = 'BANCONTACT';
+	public const BANCONTACT = 'BANCONTACT';
 
 	/**
 	 * Payment brand 'MAESTRO'.
 	 *
 	 * @var string
 	 */
-	const MAESTRO = 'MAESTRO';
+	public const MAESTRO = 'MAESTRO';
 
 	/**
 	 * Payment brand 'V_PAY'.
 	 *
 	 * @var string
 	 */
-	const V_PAY = 'V_PAY';
+	public const V_PAY = 'V_PAY';
 
 	/**
 	 * Payment brand 'CARDS'.
@@ -87,12 +87,12 @@ class PaymentBrands {
 	 *
 	 * @var string
 	 */
-	const CARDS = 'CARDS';
+	public const CARDS = 'CARDS';
 
 	/**
 	 * Map payment methods to payment brands.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private static $map = array(
 		PaymentMethods::AFTERPAY    => self::AFTERPAY,
@@ -107,14 +107,12 @@ class PaymentBrands {
 	 * Transform WordPress payment method to OmniKassa method.
 	 *
 	 * @since 1.0.0
-	 *
 	 * @param string|null $payment_method Payment method.
-	 * @param mixed       $default        Default payment method.
-	 *
+	 * @param string      $default        Default payment method.
 	 * @return string|null
 	 */
 	public static function transform( $payment_method, $default = null ) {
-		if ( ! is_scalar( $payment_method ) ) {
+		if ( ! \is_scalar( $payment_method ) ) {
 			return null;
 		}
 

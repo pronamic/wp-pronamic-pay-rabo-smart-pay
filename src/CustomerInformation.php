@@ -80,7 +80,7 @@ class CustomerInformation {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when gender is not null, 'F' or 'M'.
 	 */
 	public function set_gender( $gender ) {
-		if ( ! in_array( $gender, array( null, 'F', 'M' ), true ) ) {
+		if ( ! \in_array( $gender, array( null, 'F', 'M' ), true ) ) {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Gender "%s" must be equal to `null`, "F" or "M".',
@@ -144,8 +144,8 @@ class CustomerInformation {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		$fields[] = $this->email_address;

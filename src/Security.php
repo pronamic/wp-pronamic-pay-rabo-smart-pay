@@ -21,7 +21,7 @@ class Security {
 	/**
 	 * Get signature fields combined.
 	 *
-	 * @param array $fields Fields.
+	 * @param array<string> $fields Fields.
 	 * @return string
 	 */
 	public static function get_signature_fields_combined( $fields ) {
@@ -84,6 +84,8 @@ class Security {
 			return false;
 		}
 
-		return ( 0 === \strcasecmp( $signature_a, $signature_b ) );
+		$result = ( 0 === \strcasecmp( $signature_a, $signature_b ) );
+
+		return $result;
 	}
 }

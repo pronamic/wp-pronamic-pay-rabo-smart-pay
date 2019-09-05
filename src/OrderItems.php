@@ -21,14 +21,14 @@ class OrderItems {
 	/**
 	 * Order items.
 	 *
-	 * @var array
+	 * @var array<OrderItem>
 	 */
 	private $order_items;
 
 	/**
 	 * Construct order results message.
 	 *
-	 * @param array $items Order items.
+	 * @param array<OrderItem> $items Order items.
 	 */
 	public function __construct( $items = null ) {
 		if ( \is_array( $items ) ) {
@@ -68,7 +68,7 @@ class OrderItems {
 	/**
 	 * Get order items.
 	 *
-	 * @return OrderItem[]
+	 * @return array<OrderItem>
 	 */
 	public function get_order_items() {
 		return $this->order_items;
@@ -77,11 +77,11 @@ class OrderItems {
 	/**
 	 * Get JSON.
 	 *
-	 * @return array|null
+	 * @return array<object>|null
 	 */
 	public function get_json() {
 		$data = \array_map(
-			function( OrderItem $item ) {
+			static function( OrderItem $item ) {
 				return $item->get_json();
 			},
 			$this->get_order_items()
@@ -93,8 +93,8 @@ class OrderItems {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		foreach ( $this->get_order_items() as $item ) {
