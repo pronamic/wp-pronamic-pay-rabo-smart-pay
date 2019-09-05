@@ -68,8 +68,8 @@ before_install:
   # PHP_CodeSniffer
   - |
     if [ "$PHPCS" != "1" ]; then
-      # Slevomat Coding Standard requires PHP ^7.2.
-      composer remove slevomat/coding-standard
+      # Slevomat Coding Standard requires PHP ^7.1.
+      composer remove slevomat/coding-standard --dev
     fi
   # PHPStan
   - if [ "$PHPSTAN" == "1" ]; then composer global require phpstan/phpstan; fi
