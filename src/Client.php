@@ -23,14 +23,14 @@ class Client {
 	 *
 	 * @var string
 	 */
-	public const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
+	const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
 
 	/**
 	 * URL OmniKassa sandbox API.
 	 *
 	 * @var string
 	 */
-	public const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
+	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	/**
 	 * Error

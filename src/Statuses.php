@@ -25,28 +25,28 @@ class Statuses {
 	 *
 	 * @var string
 	 */
-	public const CANCELLED = 'CANCELLED';
+	const CANCELLED = 'CANCELLED';
 
 	/**
 	 * Completed.
 	 *
 	 * @var string
 	 */
-	public const COMPLETED = 'COMPLETED';
+	const COMPLETED = 'COMPLETED';
 
 	/**
 	 * Expired.
 	 *
 	 * @var string
 	 */
-	public const EXPIRED = 'EXPIRED';
+	const EXPIRED = 'EXPIRED';
 
 	/**
 	 * In progress.
 	 *
 	 * @var string
 	 */
-	public const IN_PROGRESS = 'IN_PROGRESS';
+	const IN_PROGRESS = 'IN_PROGRESS';
 
 	/**
 	 * Transform an OmniKassa 2.0 status to Pronamic Pay status.

@@ -25,56 +25,56 @@ class PaymentBrands {
 	 *
 	 * @var string
 	 */
-	public const IDEAL = 'IDEAL';
+	const IDEAL = 'IDEAL';
 
 	/**
 	 * Payment brand 'AFTERPAY'.
 	 *
 	 * @var string
 	 */
-	public const AFTERPAY = 'AFTERPAY';
+	const AFTERPAY = 'AFTERPAY';
 
 	/**
 	 * Payment brand 'PAYPAL'.
 	 *
 	 * @var string
 	 */
-	public const PAYPAL = 'PAYPAL';
+	const PAYPAL = 'PAYPAL';
 
 	/**
 	 * Payment brand 'MASTERCARD'.
 	 *
 	 * @var string
 	 */
-	public const MASTERCARD = 'MASTERCARD';
+	const MASTERCARD = 'MASTERCARD';
 
 	/**
 	 * Payment brand 'VISA'.
 	 *
 	 * @var string
 	 */
-	public const VISA = 'VISA';
+	const VISA = 'VISA';
 
 	/**
 	 * Payment brand 'BANCONTACT'.
 	 *
 	 * @var string
 	 */
-	public const BANCONTACT = 'BANCONTACT';
+	const BANCONTACT = 'BANCONTACT';
 
 	/**
 	 * Payment brand 'MAESTRO'.
 	 *
 	 * @var string
 	 */
-	public const MAESTRO = 'MAESTRO';
+	const MAESTRO = 'MAESTRO';
 
 	/**
 	 * Payment brand 'V_PAY'.
 	 *
 	 * @var string
 	 */
-	public const V_PAY = 'V_PAY';
+	const V_PAY = 'V_PAY';
 
 	/**
 	 * Payment brand 'CARDS'.
@@ -87,7 +87,7 @@ class PaymentBrands {
 	 *
 	 * @var string
 	 */
-	public const CARDS = 'CARDS';
+	const CARDS = 'CARDS';
 
 	/**
 	 * Map payment methods to payment brands.
