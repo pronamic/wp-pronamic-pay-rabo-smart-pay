@@ -69,7 +69,7 @@ before_install:
   - |
     if [ "$PHPCS" != "1" ]; then
       # Slevomat Coding Standard requires PHP ^7.1.
-      composer remove slevomat/coding-standard --dev
+      composer remove slevomat/coding-standard --dev --update-with-dependencies 
     fi
   # PHPStan
   - if [ "$PHPSTAN" == "1" ]; then composer global require phpstan/phpstan; fi
