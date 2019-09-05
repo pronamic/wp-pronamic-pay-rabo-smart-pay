@@ -47,7 +47,9 @@ class DataHelper {
 		 *
 		 * @link https://stackoverflow.com/questions/5732758/detect-html-tags-in-a-string
 		 */
-		if ( wp_strip_all_tags( $value ) !== $value ) {
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags -- We don't want the `trim` in `wp_strip_all_tags`.
+		if ( strip_tags( $value ) !== $value ) {
 			throw new InvalidArgumentException(
 				sprintf(
 					'HTML tags are not allowed: `%s`.',

@@ -49,7 +49,8 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			// Valid.
 			array( '1234567890', 50 ),
 			/**
-			 * In `DataHelper::validate_an` we use `wp_strip_all_tags` which also uses `trim`:
+			 * In `DataHelper::validate_an` we have used `wp_strip_all_tags` which also uses `trim`.
+			 * Therefor we test on white space left and right in string, this shold be allowed.
 			 *
 			 * @link https://github.com/WordPress/WordPress/blob/5.2/wp-includes/formatting.php#L5070-L5092
 			 */
