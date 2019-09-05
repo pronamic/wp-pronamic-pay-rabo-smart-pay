@@ -24,12 +24,12 @@ class PaymentBrandForce {
 	 *
 	 * @var string
 	 */
-	const FORCE_ONCE = 'FORCE_ONCE';
+	public const FORCE_ONCE = 'FORCE_ONCE';
 
 	/**
 	 * When FORCE_ALWAYS is chosen, the consumer can not choose another payment method.
 	 *
 	 * @var string
 	 */
-	const FORCE_ALWAYS = 'FORCE_ALWAYS';
+	public const FORCE_ALWAYS = 'FORCE_ALWAYS';
 }

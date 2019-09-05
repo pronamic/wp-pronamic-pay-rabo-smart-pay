@@ -72,6 +72,6 @@ class Config extends GatewayConfig {
 			return false;
 		}
 
-		return strtotime( $this->access_token_valid_until ) > time();
+		return \strtotime( $this->access_token_valid_until ) > \time();
 	}
 }

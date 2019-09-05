@@ -10,7 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
 use stdClass;
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Exception\ValidationException;
@@ -94,13 +93,13 @@ class Notification extends ResponseMessage {
 	 * @return bool True if notice authentication token is epxired, false otherwise.
 	 */
 	public function is_expired() {
-		$timestamp = strtotime( $this->get_expiry() );
+		$timestamp = \strtotime( $this->get_expiry() );
 
 		if ( false === $timestamp ) {
 			return true;
 		}
 
-		return $timestamp > time();
+		return $timestamp > \time();
 	}
 
 	/**
@@ -140,27 +139,27 @@ class Notification extends ResponseMessage {
 	 *
 	 * @param stdClass $object Object.
 	 * @return Notification
-	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( stdClass $object ) {
 		if ( ! isset( $object->signature ) ) {
-			throw new InvalidArgumentException( 'Object must contain `signature` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `signature` property.' );
 		}
 
 		if ( ! isset( $object->authentication ) ) {
-			throw new InvalidArgumentException( 'Object must contain `authentication` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `authentication` property.' );
 		}
 
 		if ( ! isset( $object->expiry ) ) {
-			throw new InvalidArgumentException( 'Object must contain `expiry` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `expiry` property.' );
 		}
 
 		if ( ! isset( $object->eventName ) ) {
-			throw new InvalidArgumentException( 'Object must contain `eventName` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `eventName` property.' );
 		}
 
 		if ( ! isset( $object->poiId ) ) {
-			throw new InvalidArgumentException( 'Object must contain `poiId` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `poiId` property.' );
 		}
 
 		return new self(
@@ -180,14 +179,14 @@ class Notification extends ResponseMessage {
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
 		$validator = new Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/notification.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/notification.json' ),
 			),
 			Constraint::CHECK_MODE_EXCEPTIONS
 		);

@@ -10,18 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use WP_Error;
-use function apply_filters;
-use function implode;
-use function is_object;
-use function json_decode;
-use function sprintf;
-use function wp_json_encode;
-use function wp_remote_request;
-use function wp_remote_retrieve_body;
-use function wp_remote_retrieve_response_code;
-use function wp_remote_retrieve_response_message;
-
 /**
  * Client.
  *
@@ -47,7 +35,7 @@ class Client {
 	/**
 	 * Error
 	 *
-	 * @var WP_Error
+	 * @var \WP_Error
 	 */
 	private $error;
 
@@ -75,7 +63,7 @@ class Client {
 	/**
 	 * Error.
 	 *
-	 * @return WP_Error
+	 * @return \WP_Error
 	 */
 	public function get_error() {
 		return $this->error;
@@ -170,15 +158,15 @@ class Client {
 		if ( null !== $object ) {
 			$args['headers']['Content-Type'] = 'application/json';
 
-			$args['body'] = wp_json_encode( $object );
+			$args['body'] = \wp_json_encode( $object );
 		}
 
-		$args = apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
+		$args = \apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
 
 		// Request.
-		$response = wp_remote_request( $url, $args );
+		$response = \wp_remote_request( $url, $args );
 
-		if ( $response instanceof WP_Error ) {
+		if ( $response instanceof \WP_Error ) {
 			$this->error = $response;
 
 			$this->error->add( 'omnikassa_2_error', 'HTTP Request Failed' );
@@ -187,20 +175,24 @@ class Client {
 		}
 
 		// Body.
-		$body = wp_remote_retrieve_body( $response );
+		$body = \wp_remote_retrieve_body( $response );
 
-		$data = json_decode( $body );
+		$data = \json_decode( $body );
 
-		if ( ! is_object( $data ) ) {
-			$message = implode(
+		if ( ! \is_object( $data ) ) {
+			$message = \implode(
 				"\r\n",
 				array(
 					'Could not parse response.',
-					sprintf( 'HTTP response status code: %s %s', wp_remote_retrieve_response_code( $response ), wp_remote_retrieve_response_message( $response ) ),
+					\sprintf(
+						'HTTP response status code: %s %s',
+						\wp_remote_retrieve_response_code( $response ),
+						\wp_remote_retrieve_response_message( $response )
+					),
 				)
 			);
 
-			$this->error = new WP_Error( 'omnikassa_2_error', $message, $data );
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}
@@ -219,7 +211,7 @@ class Client {
 			}
 			// @codingStandardsIgnoreEnd
 
-			$this->error = new WP_Error( 'omnikassa_2_error', $message, $data );
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
 
 			return false;
 		}
@@ -251,7 +243,7 @@ class Client {
 
 		$result = $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
 
-		if ( ! is_object( $result ) ) {
+		if ( ! \is_object( $result ) ) {
 			return false;
 		}
 
@@ -267,7 +259,7 @@ class Client {
 	public function get_order_results( $notification_token ) {
 		$result = $this->request( 'GET', 'order/server/api/events/results/merchant.order.status.changed', $notification_token );
 
-		if ( ! is_object( $result ) ) {
+		if ( ! \is_object( $result ) ) {
 			return false;
 		}
 

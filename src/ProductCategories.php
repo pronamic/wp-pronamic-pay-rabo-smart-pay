@@ -25,27 +25,25 @@ class ProductCategories {
 	 *
 	 * @var string
 	 */
-	const PHYSICAL = 'PHYSICAL';
+	public const PHYSICAL = 'PHYSICAL';
 
 	/**
 	 * Product category 'DIGITAL'.
 	 *
 	 * @var string
 	 */
-	const DIGITAL = 'DIGITAL';
+	public const DIGITAL = 'DIGITAL';
 
 	/**
 	 * Transform Pronamic payment line type to OmniKassa 2.0 product category.
 	 *
 	 * @param string $type Pronamic payment line type.
-	 *
 	 * @return string
 	 */
 	public static function transform( $type ) {
 		switch ( $type ) {
 			case PaymentLineType::PHYSICAL:
 				return self::PHYSICAL;
-
 			case PaymentLineType::DIGITAL:
 			case PaymentLineType::DISCOUNT:
 			case PaymentLineType::SHIPPING:

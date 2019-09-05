@@ -10,8 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-
 /**
  * Order items.
  *
@@ -33,7 +31,7 @@ class OrderItems {
 	 * @param array $items Order items.
 	 */
 	public function __construct( $items = null ) {
-		if ( is_array( $items ) ) {
+		if ( \is_array( $items ) ) {
 			foreach ( $items as $item ) {
 				$this->add_item( $item );
 			}
@@ -48,7 +46,7 @@ class OrderItems {
 	 * @param Money  $amount   Amount.
 	 * @param string $category Category.
 	 * @return OrderItem
-	 * @throws InvalidArgumentException Throws invalid argument exception when arguments are invalid.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when arguments are invalid.
 	 */
 	public function new_item( $name, $quantity, Money $amount, $category ) {
 		$item = new OrderItem( $name, $quantity, $amount, $category );
@@ -82,7 +80,7 @@ class OrderItems {
 	 * @return array|null
 	 */
 	public function get_json() {
-		$data = array_map(
+		$data = \array_map(
 			function( OrderItem $item ) {
 				return $item->get_json();
 			},

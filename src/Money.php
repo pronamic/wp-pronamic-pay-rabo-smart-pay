@@ -10,7 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
 use stdClass;
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;
@@ -83,15 +82,15 @@ class Money {
 	 *
 	 * @param stdClass $object Object.
 	 * @return Money
-	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( stdClass $object ) {
 		if ( ! isset( $object->currency ) ) {
-			throw new InvalidArgumentException( 'Object must contain `currency` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `currency` property.' );
 		}
 
 		if ( ! isset( $object->amount ) ) {
-			throw new InvalidArgumentException( 'Object must contain `amount` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `amount` property.' );
 		}
 
 		return new self(
@@ -108,14 +107,14 @@ class Money {
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
 		$validator = new Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-money.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-money.json' ),
 			),
 			Constraint::CHECK_MODE_EXCEPTIONS
 		);
@@ -131,7 +130,7 @@ class Money {
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		$fields[] = $this->get_currency();
-		$fields[] = strval( $this->get_amount() );
+		$fields[] = \strval( $this->get_amount() );
 
 		return $fields;
 	}
