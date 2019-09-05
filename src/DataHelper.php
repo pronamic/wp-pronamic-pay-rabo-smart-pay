@@ -86,7 +86,9 @@ class DataHelper {
 		 *
 		 * @link https://stackoverflow.com/questions/5732758/detect-html-tags-in-a-string
 		 */
-		$sanitized = \wp_strip_all_tags( $string );
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags -- We don't want the `trim` in `wp_strip_all_tags`.
+		$sanitized = \strip_tags( $string );
 
 		/**
 		 * In version `2.1.6` of this library we used the `mb_strimwidth`
