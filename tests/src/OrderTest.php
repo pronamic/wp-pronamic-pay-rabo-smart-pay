@@ -11,15 +11,16 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use DateTime;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Order test
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.8
  * @since   2.0.2
  */
-class OrderTest extends \PHPUnit_Framework_TestCase {
+class OrderTest extends TestCase {
 	/**
 	 * Test minimal order from documentation.
 	 */

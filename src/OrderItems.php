@@ -10,30 +10,28 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-
 /**
  * Order items.
  *
  * @author  Reüel van der Steege
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.3
  */
 class OrderItems {
 	/**
 	 * Order items.
 	 *
-	 * @var array
+	 * @var array<OrderItem>
 	 */
 	private $order_items;
 
 	/**
 	 * Construct order results message.
 	 *
-	 * @param array $items Order items.
+	 * @param array<OrderItem> $items Order items.
 	 */
 	public function __construct( $items = null ) {
-		if ( is_array( $items ) ) {
+		if ( \is_array( $items ) ) {
 			foreach ( $items as $item ) {
 				$this->add_item( $item );
 			}
@@ -48,7 +46,7 @@ class OrderItems {
 	 * @param Money  $amount   Amount.
 	 * @param string $category Category.
 	 * @return OrderItem
-	 * @throws InvalidArgumentException Throws invalid argument exception when arguments are invalid.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when arguments are invalid.
 	 */
 	public function new_item( $name, $quantity, Money $amount, $category ) {
 		$item = new OrderItem( $name, $quantity, $amount, $category );
@@ -70,7 +68,7 @@ class OrderItems {
 	/**
 	 * Get order items.
 	 *
-	 * @return OrderItem[]
+	 * @return array<OrderItem>
 	 */
 	public function get_order_items() {
 		return $this->order_items;
@@ -79,11 +77,11 @@ class OrderItems {
 	/**
 	 * Get JSON.
 	 *
-	 * @return array|null
+	 * @return array<object>|null
 	 */
 	public function get_json() {
-		$data = array_map(
-			function( OrderItem $item ) {
+		$data = \array_map(
+			static function( OrderItem $item ) {
 				return $item->get_json();
 			},
 			$this->get_order_items()
@@ -95,8 +93,8 @@ class OrderItems {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		foreach ( $this->get_order_items() as $item ) {

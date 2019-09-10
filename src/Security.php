@@ -10,24 +10,22 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-
 /**
  * Security
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   1.0.0
  */
 class Security {
 	/**
 	 * Get signature fields combined.
 	 *
-	 * @param array $fields Fields.
+	 * @param array<string> $fields Fields.
 	 * @return string
 	 */
 	public static function get_signature_fields_combined( $fields ) {
-		return implode( ',', $fields );
+		return \implode( ',', $fields );
 	}
 
 	/**
@@ -36,12 +34,12 @@ class Security {
 	 * @param Signable $signable    Signable object.
 	 * @param string   $signing_key Signing Key.
 	 * @return string
-	 * @throws InvalidArgumentException Signing key is invalid.
+	 * @throws \InvalidArgumentException Signing key is invalid.
 	 */
 	public static function get_signature( Signable $signable, $signing_key ) {
 		if ( empty( $signing_key ) ) {
-			throw new InvalidArgumentException(
-				sprintf(
+			throw new \InvalidArgumentException(
+				\sprintf(
 					'Signing key "%s" is empty.',
 					$signing_key
 				)
@@ -49,11 +47,11 @@ class Security {
 		}
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
-		$decoded_signing_key = base64_decode( $signing_key );
+		$decoded_signing_key = \base64_decode( $signing_key );
 
 		if ( false === $decoded_signing_key ) {
-			throw new InvalidArgumentException(
-				sprintf(
+			throw new \InvalidArgumentException(
+				\sprintf(
 					'Signing key "%s" contains character from outside the base64 alphabet.',
 					$signing_key
 				)
@@ -64,7 +62,7 @@ class Security {
 
 		$combined = self::get_signature_fields_combined( $fields );
 
-		$signature = hash_hmac(
+		$signature = \hash_hmac(
 			'sha512',
 			$combined,
 			$decoded_signing_key
@@ -86,6 +84,8 @@ class Security {
 			return false;
 		}
 
-		return ( 0 === strcasecmp( $signature_a, $signature_b ) );
+		$result = ( 0 === \strcasecmp( $signature_a, $signature_b ) );
+
+		return $result;
 	}
 }

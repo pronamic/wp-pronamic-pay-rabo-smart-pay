@@ -16,7 +16,7 @@ use Pronamic\WordPress\Money\Money as PronamicMoney;
  * Money transformer
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.2
  */
 class MoneyTransformer {
@@ -28,8 +28,8 @@ class MoneyTransformer {
 	 */
 	public static function transform( PronamicMoney $pronamic_money ) {
 		$money = new Money(
-			strval( $pronamic_money->get_currency()->get_alphabetic_code() ),
-			intval( $pronamic_money->get_cents() )
+			\strval( $pronamic_money->get_currency()->get_alphabetic_code() ),
+			\intval( $pronamic_money->get_cents() )
 		);
 
 		return $money;

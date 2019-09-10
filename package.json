@@ -1,6 +1,6 @@
 {
   "name": "omnikassa-2",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "OmniKassa 2.0 driver for the WordPress payment processing library.",
   "repository": {
     "type": "git",
@@ -32,12 +32,10 @@
   },
   "homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
   "devDependencies": {
-    "grunt": "~1.0.4",
-    "grunt-contrib-jshint": "^2.1.0",
-    "grunt-phpcs": "^0.4.0",
-    "grunt-phplint": "0.1.0",
-    "grunt-phpmd": "^0.1.1",
-    "grunt-phpunit": "^0.3.6",
-    "load-grunt-tasks": "^5.1.0"
+    "eslint": "^6.3.0",
+    "eslint-plugin-json": "^1.4.0"
+  },
+  "scripts": {
+    "eslint": "eslint . --ext .json --ext .js"
   }
 }

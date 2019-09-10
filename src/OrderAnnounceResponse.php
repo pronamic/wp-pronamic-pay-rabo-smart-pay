@@ -10,16 +10,11 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Exception\ValidationException;
-use JsonSchema\Validator;
-
 /**
  * Order announce response
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.2
  */
 class OrderAnnounceResponse extends ResponseMessage {
@@ -54,7 +49,7 @@ class OrderAnnounceResponse extends ResponseMessage {
 	/**
 	 * Get signature fields.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_signature_fields() {
 		return array(
@@ -67,15 +62,15 @@ class OrderAnnounceResponse extends ResponseMessage {
 	 *
 	 * @param object $object Object.
 	 * @return OrderAnnounceResponse
-	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( $object ) {
 		if ( ! isset( $object->signature ) ) {
-			throw new InvalidArgumentException( 'Object must contain `signature` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `signature` property.' );
 		}
 
 		if ( ! isset( $object->redirectUrl ) ) {
-			throw new InvalidArgumentException( 'Object must contain `redirectUrl` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `redirectUrl` property.' );
 		}
 
 		return new self(
@@ -92,16 +87,16 @@ class OrderAnnounceResponse extends ResponseMessage {
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/order-announce-response.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/order-announce-response.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );

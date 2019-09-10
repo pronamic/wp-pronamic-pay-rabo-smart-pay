@@ -10,22 +10,14 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use ArrayIterator;
-use InvalidArgumentException;
-use IteratorAggregate;
-use stdClass;
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Exception\ValidationException;
-use JsonSchema\Validator;
-
 /**
  * Order results.
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   1.0.0
  */
-class OrderResults extends ResponseMessage implements IteratorAggregate {
+class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * More order results available flag.
 	 *
@@ -36,16 +28,16 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	/**
 	 * Order results.
 	 *
-	 * @var array
+	 * @var array<OrderResult>
 	 */
 	private $order_results;
 
 	/**
 	 * Construct order results message.
 	 *
-	 * @param bool   $more_available True if more order results available, false oterwise.
-	 * @param array  $order_results  Order results.
-	 * @param string $signature      Signature.
+	 * @param bool               $more_available True if more order results available, false oterwise.
+	 * @param array<OrderResult> $order_results  Order results.
+	 * @param string             $signature      Signature.
 	 */
 	public function __construct( $more_available, array $order_results, $signature ) {
 		parent::__construct( $signature );
@@ -66,7 +58,7 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	/**
 	 * Get signature data.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public function get_signature_fields() {
 		$fields = array();
@@ -92,10 +84,10 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	/**
 	 * Get iterator.
 	 *
-	 * @return ArrayIterator
+	 * @return \ArrayIterator
 	 */
 	public function getIterator() {
-		return new ArrayIterator( $this->order_results );
+		return new \ArrayIterator( $this->order_results );
 	}
 
 	/**
@@ -103,23 +95,23 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	 *
 	 * @param object $object Object.
 	 * @return OrderResults
-	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( $object ) {
 		if ( ! isset( $object->signature ) ) {
-			throw new InvalidArgumentException( 'Object must contain `signature` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `signature` property.' );
 		}
 
 		if ( ! isset( $object->moreOrderResultsAvailable ) ) {
-			throw new InvalidArgumentException( 'Object must contain `moreOrderResultsAvailable` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `moreOrderResultsAvailable` property.' );
 		}
 
 		if ( ! isset( $object->orderResults ) ) {
-			throw new InvalidArgumentException( 'Object must contain `orderResults` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `orderResults` property.' );
 		}
 
-		if ( ! is_array( $object->orderResults ) ) {
-			throw new InvalidArgumentException( 'The `orderResults` property must be an array.' );
+		if ( ! \is_array( $object->orderResults ) ) {
+			throw new \InvalidArgumentException( 'The `orderResults` property must be an array.' );
 		}
 
 		$order_results = array();
@@ -143,16 +135,16 @@ class OrderResults extends ResponseMessage implements IteratorAggregate {
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/order-results.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/order-results.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );

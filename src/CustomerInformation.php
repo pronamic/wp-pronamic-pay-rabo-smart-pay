@@ -11,13 +11,12 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use DateTime;
-use InvalidArgumentException;
 
 /**
  * Customer information.
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.2
  */
 class CustomerInformation {
@@ -78,12 +77,12 @@ class CustomerInformation {
 	 * Set gender.
 	 *
 	 * @param string|null $gender Gender.
-	 * @throws InvalidArgumentException Throws invalid argument exception when gender is not null, 'F' or 'M'.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when gender is not null, 'F' or 'M'.
 	 */
 	public function set_gender( $gender ) {
-		if ( ! in_array( $gender, array( null, 'F', 'M' ), true ) ) {
-			throw new InvalidArgumentException(
-				sprintf(
+		if ( ! \in_array( $gender, array( null, 'F', 'M' ), true ) ) {
+			throw new \InvalidArgumentException(
+				\sprintf(
 					'Gender "%s" must be equal to `null`, "F" or "M".',
 					$gender
 				)
@@ -145,8 +144,8 @@ class CustomerInformation {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		$fields[] = $this->email_address;

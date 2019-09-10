@@ -10,21 +10,21 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Order results test
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.8
  * @since   2.0.2
  */
-class OrderAnnounceResponseTest extends \PHPUnit_Framework_TestCase {
+class OrderAnnounceResponseTest extends TestCase {
 	/**
 	 * Test order results.
 	 */
 	public function test_order_results() {
-		$json = file_get_contents( __DIR__ . '/../json/order-announce-response.json', true );
+		$json = \file_get_contents( __DIR__ . '/../json/order-announce-response.json', true );
 
 		$response = OrderAnnounceResponse::from_json( $json );
 

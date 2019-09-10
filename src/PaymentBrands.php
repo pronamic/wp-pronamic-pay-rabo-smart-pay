@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
  * Payment brands.
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   1.0.0
  */
 class PaymentBrands {
@@ -92,7 +92,7 @@ class PaymentBrands {
 	/**
 	 * Map payment methods to payment brands.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private static $map = array(
 		PaymentMethods::AFTERPAY    => self::AFTERPAY,
@@ -107,14 +107,12 @@ class PaymentBrands {
 	 * Transform WordPress payment method to OmniKassa method.
 	 *
 	 * @since 1.0.0
-	 *
 	 * @param string|null $payment_method Payment method.
-	 * @param mixed       $default        Default payment method.
-	 *
+	 * @param string      $default        Default payment method.
 	 * @return string|null
 	 */
 	public static function transform( $payment_method, $default = null ) {
-		if ( ! is_scalar( $payment_method ) ) {
+		if ( ! \is_scalar( $payment_method ) ) {
 			return null;
 		}
 

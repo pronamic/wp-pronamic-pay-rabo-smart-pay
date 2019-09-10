@@ -10,19 +10,11 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use ArrayIterator;
-use InvalidArgumentException;
-use IteratorAggregate;
-use stdClass;
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Exception\ValidationException;
-use JsonSchema\Validator;
-
 /**
  * Order result
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.2
  */
 class OrderResult {
@@ -199,41 +191,41 @@ class OrderResult {
 	/**
 	 * Create order result from object.
 	 *
-	 * @param stdClass $object Object.
+	 * @param \stdClass $object Object.
 	 * @return OrderResult
-	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( stdClass $object ) {
+	public static function from_object( \stdClass $object ) {
 		if ( ! isset( $object->merchantOrderId ) ) {
-			throw new InvalidArgumentException( 'Object must contain `merchantOrderId` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `merchantOrderId` property.' );
 		}
 
 		if ( ! isset( $object->omnikassaOrderId ) ) {
-			throw new InvalidArgumentException( 'Object must contain `omnikassaOrderId` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `omnikassaOrderId` property.' );
 		}
 
 		if ( ! isset( $object->poiId ) ) {
-			throw new InvalidArgumentException( 'Object must contain `poiId` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `poiId` property.' );
 		}
 
 		if ( ! isset( $object->orderStatus ) ) {
-			throw new InvalidArgumentException( 'Object must contain `orderStatus` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `orderStatus` property.' );
 		}
 
 		if ( ! isset( $object->orderStatusDateTime ) ) {
-			throw new InvalidArgumentException( 'Object must contain `orderStatusDateTime` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `orderStatusDateTime` property.' );
 		}
 
 		if ( ! isset( $object->errorCode ) ) {
-			throw new InvalidArgumentException( 'Object must contain `errorCode` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `errorCode` property.' );
 		}
 
 		if ( ! isset( $object->paidAmount ) ) {
-			throw new InvalidArgumentException( 'Object must contain `paidAmount` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `paidAmount` property.' );
 		}
 
 		if ( ! isset( $object->totalAmount ) ) {
-			throw new InvalidArgumentException( 'Object must contain `totalAmount` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `totalAmount` property.' );
 		}
 
 		return new self(
@@ -256,16 +248,16 @@ class OrderResult {
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-order-result.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-order-result.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );

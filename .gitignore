@@ -14,5 +14,8 @@
 /package-lock.json
 /node_modules/
 
+# PHP Coding Standards Fixer
+/.php_cs.cache
+
 # WordPress
 /wordpress/

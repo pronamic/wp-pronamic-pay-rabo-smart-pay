@@ -11,14 +11,12 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use DateTime;
-use InvalidArgumentException;
-use Pronamic\WordPress\Pay\Payments\PaymentLines;
 
 /**
  * Order
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   1.0.0
  */
 class Order extends Message {
@@ -175,7 +173,7 @@ class Order extends Message {
 	 * Set merchant order ID.
 	 *
 	 * @param string $merchant_order_id Merchant order ID.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 10`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 10`.
 	 */
 	public function set_merchant_order_id( $merchant_order_id ) {
 		DataHelper::validate_an( $merchant_order_id, 10 );
@@ -198,7 +196,7 @@ class Order extends Message {
 	 * The URL to which the consumer's browser will be sent after the payment.
 	 *
 	 * @param string $url Merchant return URL.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 1024`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 1024`.
 	 */
 	public function set_merchant_return_url( $url ) {
 		DataHelper::validate_an( $url, 1024 );
@@ -210,7 +208,7 @@ class Order extends Message {
 	 * Set description.
 	 *
 	 * @param string|null $description Description.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
 	 */
 	public function set_description( $description ) {
 		DataHelper::validate_null_or_an( $description, 35 );
@@ -222,7 +220,7 @@ class Order extends Message {
 	 * Set language.
 	 *
 	 * @param string|null $language Language (ISO 3166-1 alpha-2).
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..2`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..2`.
 	 */
 	public function set_language( $language ) {
 		DataHelper::validate_null_or_an( $language, 2 );
@@ -234,7 +232,7 @@ class Order extends Message {
 	 * Set payment brand.
 	 *
 	 * @param string|null $payment_brand Payment brand.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand( $payment_brand ) {
 		DataHelper::validate_null_or_an( $payment_brand, 50 );
@@ -246,7 +244,7 @@ class Order extends Message {
 	 * Set payment brand force.
 	 *
 	 * @param string|null $payment_brand_force Payment brand force.
-	 * @throws InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand_force( $payment_brand_force ) {
 		DataHelper::validate_null_or_an( $payment_brand_force, 50 );
@@ -309,7 +307,7 @@ class Order extends Message {
 	public function get_json() {
 		$object = (object) array();
 
-		$object->timestamp       = $this->timestamp->format( DATE_ATOM );
+		$object->timestamp       = $this->timestamp->format( \DATE_ATOM );
 		$object->merchantOrderId = $this->merchant_order_id;
 
 		if ( null !== $this->description ) {
@@ -356,11 +354,11 @@ class Order extends Message {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
-		$fields[] = $this->timestamp->format( DATE_ATOM );
+		$fields[] = $this->timestamp->format( \DATE_ATOM );
 		$fields[] = $this->merchant_order_id;
 
 		$fields = $this->amount->get_signature_fields( $fields );

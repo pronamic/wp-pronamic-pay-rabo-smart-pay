@@ -10,16 +10,11 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use InvalidArgumentException;
-use stdClass;
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Validator;
-
 /**
  * Money
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.2
  */
 class Money {
@@ -81,17 +76,17 @@ class Money {
 	/**
 	 * Create money from object.
 	 *
-	 * @param stdClass $object Object.
+	 * @param \stdClass $object Object.
 	 * @return Money
-	 * @throws InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( stdClass $object ) {
+	public static function from_object( \stdClass $object ) {
 		if ( ! isset( $object->currency ) ) {
-			throw new InvalidArgumentException( 'Object must contain `currency` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `currency` property.' );
 		}
 
 		if ( ! isset( $object->amount ) ) {
-			throw new InvalidArgumentException( 'Object must contain `amount` property.' );
+			throw new \InvalidArgumentException( 'Object must contain `amount` property.' );
 		}
 
 		return new self(
@@ -108,16 +103,16 @@ class Money {
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/json-schema-money.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-money.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );
@@ -126,12 +121,12 @@ class Money {
 	/**
 	 * Get signature fields.
 	 *
-	 * @param array $fields Fields.
-	 * @return array
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
 		$fields[] = $this->get_currency();
-		$fields[] = strval( $this->get_amount() );
+		$fields[] = \strval( $this->get_amount() );
 
 		return $fields;
 	}

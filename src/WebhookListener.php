@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Webhook listener
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.2
  */
 class WebhookListener {
@@ -25,11 +25,11 @@ class WebhookListener {
 	 * Listen to OmniKassa 2.0 webhook requests.
 	 */
 	public static function listen() {
-		if ( ! filter_has_var( INPUT_GET, 'omnikassa2_webhook' ) ) {
+		if ( ! \filter_has_var( \INPUT_GET, 'omnikassa2_webhook' ) ) {
 			return;
 		}
 
-		$json = file_get_contents( 'php://input' );
+		$json = \file_get_contents( 'php://input' );
 
 		if ( empty( $json ) ) {
 			return;

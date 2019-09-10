@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentLineType;
  * Product categories.
  *
  * @author  Reüel van der Steege
- * @version 2.1.0
+ * @version 2.1.8
  * @since   2.0.4
  */
 class ProductCategories {
@@ -38,14 +38,12 @@ class ProductCategories {
 	 * Transform Pronamic payment line type to OmniKassa 2.0 product category.
 	 *
 	 * @param string $type Pronamic payment line type.
-	 *
 	 * @return string
 	 */
 	public static function transform( $type ) {
 		switch ( $type ) {
 			case PaymentLineType::PHYSICAL:
 				return self::PHYSICAL;
-
 			case PaymentLineType::DIGITAL:
 			case PaymentLineType::DISCOUNT:
 			case PaymentLineType::SHIPPING:
