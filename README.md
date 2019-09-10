@@ -115,6 +115,5 @@ curl --request GET https://betalen.rabobank.nl/omnikassa-api/order/server/api/ev
 	--verbose
 ```
 
-
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_large)
