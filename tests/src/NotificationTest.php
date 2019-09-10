@@ -10,14 +10,16 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Notification test
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.8
  * @since   2.0.2
  */
-class NotificationTest extends \PHPUnit_Framework_TestCase {
+class NotificationTest extends TestCase {
 	/**
 	 * Test notification.
 	 */

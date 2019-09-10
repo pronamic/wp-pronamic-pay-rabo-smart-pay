@@ -10,16 +10,17 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use PHPUnit\Framework\TestCase;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
  * Payment brands test
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.1.8
  * @since   2.0.2
  */
-class PaymentBrandsTest extends \PHPUnit_Framework_TestCase {
+class PaymentBrandsTest extends TestCase {
 	/**
 	 * Test transform.
 	 *
