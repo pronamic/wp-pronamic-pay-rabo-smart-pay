@@ -39,6 +39,12 @@ class AddressTransformer {
 		$city         = $pronamic_address->get_city();
 		$country_code = $pronamic_address->get_country_code();
 
+		// Use line 1 as street if address splitting failed,
+		// for example when no house number is given.
+		if ( null === $street ) {
+			$street = $pronamic_address->get_line_1();
+		}
+
 		if ( ! isset( $last_name, $street, $postal_code, $city, $country_code ) ) {
 			return null;
 		}
