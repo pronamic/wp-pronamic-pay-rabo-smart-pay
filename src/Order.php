@@ -188,7 +188,7 @@ class Order extends Message {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 10`.
 	 */
 	public function set_merchant_order_id( $merchant_order_id ) {
-		DataHelper::validate_ans( $merchant_order_id, 24 );
+		DataHelper::validate_ans( $merchant_order_id, 24, 'Order.merchantOrderId' );
 
 		$this->merchant_order_id = $merchant_order_id;
 	}
@@ -211,7 +211,7 @@ class Order extends Message {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 1024`.
 	 */
 	public function set_merchant_return_url( $url ) {
-		DataHelper::validate_an( $url, 1024 );
+		DataHelper::validate_an( $url, 1024, 'Order.merchantReturnURL' );
 
 		$this->merchant_return_url = $url;
 	}
@@ -223,7 +223,7 @@ class Order extends Message {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
 	 */
 	public function set_description( $description ) {
-		DataHelper::validate_null_or_an( $description, 35 );
+		DataHelper::validate_null_or_an( $description, 35, 'Order.description' );
 
 		$this->description = $description;
 	}
@@ -235,7 +235,7 @@ class Order extends Message {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..2`.
 	 */
 	public function set_language( $language ) {
-		DataHelper::validate_null_or_an( $language, 2 );
+		DataHelper::validate_null_or_an( $language, 2, 'Order.language' );
 
 		$this->language = $language;
 	}
@@ -247,7 +247,7 @@ class Order extends Message {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand( $payment_brand ) {
-		DataHelper::validate_null_or_an( $payment_brand, 50 );
+		DataHelper::validate_null_or_an( $payment_brand, 50, 'Order.paymentBrand' );
 
 		$this->payment_brand = $payment_brand;
 	}
@@ -259,7 +259,7 @@ class Order extends Message {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
 	public function set_payment_brand_force( $payment_brand_force ) {
-		DataHelper::validate_null_or_an( $payment_brand_force, 50 );
+		DataHelper::validate_null_or_an( $payment_brand_force, 50, 'Order.paymentBrandForce' );
 
 		$this->payment_brand_force = $payment_brand_force;
 	}

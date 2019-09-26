@@ -181,15 +181,15 @@ class Integration extends AbstractIntegration {
 			'type'        => 'text',
 			'classes'     => array( 'regular-text', 'code' ),
 			'tooltip'     => \sprintf(
-				/* translators: %s: Parameter */
+				/* translators: %s: <code>merchantOrderId</code> */
 				\__( 'This setting defines the OmniKassa 2.0 %s field.', 'pronamic_ideal' ),
 				$code_field
 			),
 			'description' => \sprintf(
 				'%s<br />%s %s<br />%s',
 				\sprintf(
-					__( 'The OmniKassa 2.0 %s field must consist strictly of 24 alphanumeric characters, other
-characters, such as ".", "@", " " (space), etc. are not allowed.', 'pronamic_ideal' ),
+					/* translators: %s: <code>merchantOrderId</code> */
+					\__( 'The OmniKassa 2.0 %s field must consist strictly of 24 alphanumeric characters, other characters, such as ".", "@", " " (space), etc. are not allowed.', 'pronamic_ideal' ),
 					$code_field
 				),
 				\__( 'Available tags:', 'pronamic_ideal' ),

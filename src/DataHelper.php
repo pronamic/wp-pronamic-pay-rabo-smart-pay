@@ -26,7 +26,7 @@ class DataHelper {
 	 * If a space is used in a AN (Strictly) field this will result in for examploe the following error:
 	 * `merchantOrderId should only contain alphanumeric characters`.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	private static $characters_ans = array( 'A-Z', 'a-z', '0-9' );
 
@@ -35,14 +35,16 @@ class DataHelper {
 	 *
 	 * @param string $value Value to validate.
 	 * @param int    $max   Max length of value.
+	 * @param string $field Field name.
 	 * @return true
 	 * @throws \InvalidArgumentException Throws invalid argument exception when string is longer then max length.
 	 */
-	public static function validate_an( $value, $max ) {
+	public static function validate_an( $value, $max, $field ) {
 		if ( \mb_strlen( $value, 'UTF-8' ) > $max ) {
 			throw new \InvalidArgumentException(
 				\sprintf(
-					'Value "%s" can not be longer then `%d`.',
+					'Field `%s` value "%s" can not be longer then `%d`.',
+					$field,
 					$value,
 					$max
 				)
@@ -59,7 +61,8 @@ class DataHelper {
 		if ( \strip_tags( $value ) !== $value ) {
 			throw new \InvalidArgumentException(
 				\sprintf(
-					'HTML tags are not allowed: `%s`.',
+					'Field `%s` cannot contain HTML tags: `%s`.',
+					$field,
 					$value
 				)
 			);
@@ -73,10 +76,12 @@ class DataHelper {
 	 *
 	 * @param string $value Value to validate.
 	 * @param int    $max   Max length of value.
+	 * @param string $field Field name.
 	 * @return true
 	 * @throws \InvalidArgumentException Throws invalid argument exception when string is not alphanumeric characters.
+	 * @throws \Exception Throws exception when PCRE regex execution results in error.
 	 */
-	public static function validate_ans( $value, $max ) {
+	public static function validate_ans( $value, $max, $field ) {
 		$pattern = '#[^' . \implode( self::$characters_ans ) . ']#';
 
 		$result = \preg_match( $pattern, $value );
@@ -91,13 +96,14 @@ class DataHelper {
 		if ( 1 === $result ) {
 			throw new \InvalidArgumentException(
 				\sprintf(
-					'Only value that consists strictly of alphanumeric characters are allowed: `%s`.',
+					'Field `%s` must consists strictly of alphanumeric characters: `%s`.',
+					$field,
 					$value
 				)
 			);
 		}
 
-		return self::validate_an( $value, $max );
+		return self::validate_an( $value, $max, $field );
 	}
 
 	/**
@@ -105,15 +111,16 @@ class DataHelper {
 	 *
 	 * @param string|null $value Value to validate.
 	 * @param int         $max   Max length of value.
+	 * @param string      $field Field name.
 	 * @return true
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value is not null and longer then max length.
 	 */
-	public static function validate_null_or_an( $value, $max ) {
+	public static function validate_null_or_an( $value, $max, $field ) {
 		if ( null === $value ) {
 			return true;
 		}
 
-		return self::validate_an( $value, $max );
+		return self::validate_an( $value, $max, $field );
 	}
 
 	/**

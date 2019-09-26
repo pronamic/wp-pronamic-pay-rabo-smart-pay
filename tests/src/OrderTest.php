@@ -149,7 +149,7 @@ class OrderTest extends TestCase {
 	public function test_merchant_order_id_too_long() {
 		$this->expectException( \InvalidArgumentException::class );
 
-		$order = new Order( '123456789012345678901234567890', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+		new Order( '123456789012345678901234567890', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
 	}
 
 	/**
@@ -158,6 +158,6 @@ class OrderTest extends TestCase {
 	public function test_merchant_order_id_strictly() {
 		$this->expectException( \InvalidArgumentException::class );
 
-		$order = new Order( '12345 @ 67890 .', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+		new Order( '12345 @ 67890 .', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
 	}
 }
