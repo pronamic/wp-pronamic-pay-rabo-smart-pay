@@ -123,4 +123,32 @@ class OrderTest extends TestCase {
 
 		$this->assertEquals( $expected, Security::get_signature_fields_combined( $fields ) );
 	}
+
+	/**
+	 * Test merchant order ID.
+	 */
+	public function test_merchant_order_id() {
+		// Normal.
+		$merchant_order_id = 'order123';
+
+		$order = new Order( $merchant_order_id, new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+
+		$this->assertEquals( $merchant_order_id, $order->get_merchant_order_id() );
+
+		// Max length.
+		$merchant_order_id = '123456789012345678901234';
+
+		$order->set_merchant_order_id( $merchant_order_id );
+
+		$this->assertEquals( $merchant_order_id, $order->get_merchant_order_id() );
+	}
+
+	/**
+	 * Test merchant order ID strictly.
+	 */
+	public function test_merchant_order_id_too_long() {
+		$this->expectException( \InvalidArgumentException::class );
+
+		$order = new Order( '123456789012345678901234567890', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+	}
 }
