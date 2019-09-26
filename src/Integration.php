@@ -171,6 +171,8 @@ class Integration extends AbstractIntegration {
 		);
 
 		// Purchase ID.
+		$code_field = \sprintf( '<code>%s</code>', 'merchantOrderId' );
+
 		$fields[] = array(
 			'section'     => 'advanced',
 			'filter'      => \FILTER_SANITIZE_STRING,
@@ -180,11 +182,16 @@ class Integration extends AbstractIntegration {
 			'classes'     => array( 'regular-text', 'code' ),
 			'tooltip'     => \sprintf(
 				/* translators: %s: Parameter */
-				\__( 'The OmniKassa %s parameter.', 'pronamic_ideal' ),
-				\sprintf( '<code>%s</code>', 'orderId' )
+				\__( 'This setting defines the OmniKassa 2.0 %s field.', 'pronamic_ideal' ),
+				$code_field
 			),
 			'description' => \sprintf(
-				'%s %s<br />%s',
+				'%s<br />%s %s<br />%s',
+				\sprintf(
+					__( 'The OmniKassa 2.0 %s field must consist strictly of 24 alphanumeric characters, other
+characters, such as ".", "@", etc. are not allowed.', 'pronamic_ideal' ),
+					$code_field
+				),
 				\__( 'Available tags:', 'pronamic_ideal' ),
 				\sprintf(
 					'<code>%s</code> <code>%s</code>',
