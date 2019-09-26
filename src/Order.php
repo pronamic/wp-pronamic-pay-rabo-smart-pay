@@ -188,7 +188,7 @@ class Order extends Message {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 10`.
 	 */
 	public function set_merchant_order_id( $merchant_order_id ) {
-		DataHelper::validate_an( $merchant_order_id, 24 );
+		DataHelper::validate_ans( $merchant_order_id, 24 );
 
 		$this->merchant_order_id = $merchant_order_id;
 	}

@@ -189,7 +189,7 @@ class Integration extends AbstractIntegration {
 				'%s<br />%s %s<br />%s',
 				\sprintf(
 					__( 'The OmniKassa 2.0 %s field must consist strictly of 24 alphanumeric characters, other
-characters, such as ".", "@", etc. are not allowed.', 'pronamic_ideal' ),
+characters, such as ".", "@", " " (space), etc. are not allowed.', 'pronamic_ideal' ),
 					$code_field
 				),
 				\__( 'Available tags:', 'pronamic_ideal' ),

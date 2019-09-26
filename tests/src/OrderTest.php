@@ -144,11 +144,20 @@ class OrderTest extends TestCase {
 	}
 
 	/**
-	 * Test merchant order ID strictly.
+	 * Test merchant order ID too long.
 	 */
 	public function test_merchant_order_id_too_long() {
 		$this->expectException( \InvalidArgumentException::class );
 
 		$order = new Order( '123456789012345678901234567890', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+	}
+
+	/**
+	 * Test merchant order ID strictly.
+	 */
+	public function test_merchant_order_id_strictly() {
+		$this->expectException( \InvalidArgumentException::class );
+
+		$order = new Order( '12345 @ 67890 .', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
 	}
 }

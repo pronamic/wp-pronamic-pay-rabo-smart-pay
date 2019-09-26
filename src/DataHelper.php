@@ -20,11 +20,22 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class DataHelper {
 	/**
+	 * Strictly alphanumerical (letters and numbers only).
+	 *
+	 * The OmniKassa 2.0 document is not very clear about spaces, these are not allowd in AN (Strictly).
+	 * If a space is used in a AN (Strictly) field this will result in for examploe the following error:
+	 * `merchantOrderId should only contain alphanumeric characters`.
+	 *
+	 * @var array
+	 */
+	private static $characters_ans = array( 'A-Z', 'a-z', '0-9' );
+
+	/**
 	 * Validate AN..$max.
 	 *
 	 * @param string $value Value to validate.
 	 * @param int    $max   Max length of value.
-	 * @return bool
+	 * @return true
 	 * @throws \InvalidArgumentException Throws invalid argument exception when string is longer then max length.
 	 */
 	public static function validate_an( $value, $max ) {
@@ -58,11 +69,43 @@ class DataHelper {
 	}
 
 	/**
+	 * Validate AN(Strictly)..Max nn.
+	 *
+	 * @param string $value Value to validate.
+	 * @param int    $max   Max length of value.
+	 * @return true
+	 * @throws \InvalidArgumentException Throws invalid argument exception when string is not alphanumeric characters.
+	 */
+	public static function validate_ans( $value, $max ) {
+		$pattern = '#[^' . \implode( self::$characters_ans ) . ']#';
+
+		$result = \preg_match( $pattern, $value );
+
+		if ( false === $result ) {
+			throw new \Exception(
+				'PCRE regex execution error.',
+				\preg_last_error()
+			);
+		}
+
+		if ( 1 === $result ) {
+			throw new \InvalidArgumentException(
+				\sprintf(
+					'Only value that consists strictly of alphanumeric characters are allowed: `%s`.',
+					$value
+				)
+			);
+		}
+
+		return self::validate_an( $value, $max );
+	}
+
+	/**
 	 * Validate null or AN..$max.
 	 *
 	 * @param string|null $value Value to validate.
 	 * @param int         $max   Max length of value.
-	 * @return bool
+	 * @return true
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value is not null and longer then max length.
 	 */
 	public static function validate_null_or_an( $value, $max ) {
