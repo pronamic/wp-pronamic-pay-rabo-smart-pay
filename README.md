@@ -62,7 +62,7 @@ add_filter( 'pronamic_pay_omnikassa_2_merchant_return_url', function( $url ) {
 
 ## Errors
 
-| Request                  | Response Status Code              | Code   | Propery           | Message                                                                                    |
+| Request                  | Response Status Code              | Code   | Property          | Message                                                                                    |
 | ------------------------ | --------------------------------- | ------ | ----------------- | ------------------------------------------------------------------------------------------ |
 | `gatekeeper/refresh`     | HTTP/1.1 401 Unauthorized         | `5001` | `errorMessage`    | Full authentication is required to access this resource                                    |
 | `order/server/api/order` | HTTP/1.1 403 Forbidden            | `5001` | `consumerMessage` | The timestamp of the order announcement is invalid                                         |
