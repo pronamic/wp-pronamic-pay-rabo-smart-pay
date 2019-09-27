@@ -202,26 +202,14 @@ class Gateway extends Core_Gateway {
 				}
 			}
 		} catch ( \Exception $e ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', $e->getMessage() );
-
-			return;
+			throw new \Pronamic\WordPress\Pay\GatewayException( 'omnikassa_2', $e->getMessage() );
 		}
 
 		// Maybe update access token.
 		$this->maybe_update_access_token();
 
-		// Handle errors.
-		if ( $this->get_client_error() ) {
-			return;
-		}
-
 		// Announce order.
 		$response = $this->client->order_announce( $this->config, $order );
-
-		// Handle errors.
-		if ( $this->get_client_error() ) {
-			return;
-		}
 
 		if ( false === $response ) {
 			return;
@@ -393,22 +381,5 @@ class Gateway extends Core_Gateway {
 			);
 		}
 		// @codingStandardsIgnoreEnd
-	}
-
-	/**
-	 * Get client error.
-	 *
-	 * @return \WP_Error|bool
-	 */
-	private function get_client_error() {
-		$error = $this->client->get_error();
-
-		if ( \is_wp_error( $error ) ) {
-			$this->error = $error;
-
-			return $error;
-		}
-
-		return false;
 	}
 }
