@@ -40,10 +40,10 @@ class StatusesTest extends TestCase {
 	 */
 	public function status_matrix_provider() {
 		return array(
-			array( Statuses::CANCELLED, \Pronamic\WordPress\Pay\Core\Statuses::CANCELLED ),
-			array( Statuses::COMPLETED, \Pronamic\WordPress\Pay\Core\Statuses::SUCCESS ),
-			array( Statuses::EXPIRED, \Pronamic\WordPress\Pay\Core\Statuses::EXPIRED ),
-			array( Statuses::IN_PROGRESS, \Pronamic\WordPress\Pay\Core\Statuses::OPEN ),
+			array( Statuses::CANCELLED, \Pronamic\WordPress\Pay\Payments\PaymentStatus::CANCELLED ),
+			array( Statuses::COMPLETED, \Pronamic\WordPress\Pay\Payments\PaymentStatus::SUCCESS ),
+			array( Statuses::EXPIRED, \Pronamic\WordPress\Pay\Payments\PaymentStatus::EXPIRED ),
+			array( Statuses::IN_PROGRESS, \Pronamic\WordPress\Pay\Payments\PaymentStatus::OPEN ),
 			array( 'not existing status', null ),
 		);
 	}
