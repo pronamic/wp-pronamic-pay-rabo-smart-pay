@@ -1,6 +1,24 @@
-# WordPress Pay Gateway: OmniKassa 2.0
+<p align="center">
+	<a href="https://www.wp-pay.org/">
+		<img src="https://www.wp-pay.org/assets/pronamic-pay.svgo-min.svg" alt="WordPress Pay » Gateway » OmniKassa 2.0" width="72" height="72">
+	</a>
+</p>
 
-**OmniKassa 2.0 driver for the WordPress payment processing library.**
+<h1 align="center">WordPress Pay » Gateway » OmniKassa 2.0</h3>
+
+<p align="center">
+	OmniKassa 2.0 driver for the WordPress payment processing library.
+</p>
+
+## Table of contents
+
+- [Status](#status)
+- [WordPress Filters](#wordpress-filters)
+- [Errors](#errors)
+- [Simulate Requests](#simulate-requests)
+- [License](#license)
+
+## Status
 
 [![GitHub Stars](https://img.shields.io/github/tag/wp-pay-gateways/omnikassa-2.svg?style=social&label=Star)](https://github.com/wp-pay-gateways/omnikassa-2)
 [![Build Status](https://travis-ci.org/wp-pay-gateways/omnikassa-2.svg?branch=master)](https://travis-ci.org/wp-pay-gateways/omnikassa-2)
@@ -42,18 +60,9 @@ add_filter( 'pronamic_pay_omnikassa_2_merchant_return_url', function( $url ) {
 } );
 ```
 
-## Links
-
-*	https://betalen-acpt3.rabobank.nl/omnikassa-api/
-*	https://betalen.rabobank.nl/omnikassa-api/
-
-## Documentation
-
-*	https://www.ideal-checkout.nl/payment-providers/rabobank/TB6jSGOVPr$HhqTg*rS$c9ThjxpTSPXbCifkWG0yrT-URES==v7e:A:mdmpjXdDFPayFkIfsvMgBFKKYRPyF1ScJVP
-
 ## Errors
 
-| Request                  | Response Status Code              | Code   | Propery           | Message                                                                                    |
+| Request                  | Response Status Code              | Code   | Property          | Message                                                                                    |
 | ------------------------ | --------------------------------- | ------ | ----------------- | ------------------------------------------------------------------------------------------ |
 | `gatekeeper/refresh`     | HTTP/1.1 401 Unauthorized         | `5001` | `errorMessage`    | Full authentication is required to access this resource                                    |
 | `order/server/api/order` | HTTP/1.1 403 Forbidden            | `5001` | `consumerMessage` | The timestamp of the order announcement is invalid                                         |
@@ -114,7 +123,6 @@ curl --request GET https://betalen.rabobank.nl/omnikassa-api/order/server/api/ev
 	--user-agent "WordPress/4.9.8; https://example.com/" \
 	--verbose
 ```
-
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_large)

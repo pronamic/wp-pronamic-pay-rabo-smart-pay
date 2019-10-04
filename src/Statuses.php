@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Statuses
@@ -57,13 +57,13 @@ class Statuses {
 	public static function transform( $status ) {
 		switch ( $status ) {
 			case self::CANCELLED:
-				return Core_Statuses::CANCELLED;
+				return PaymentStatus::CANCELLED;
 			case self::COMPLETED:
-				return Core_Statuses::SUCCESS;
+				return PaymentStatus::SUCCESS;
 			case self::EXPIRED:
-				return Core_Statuses::EXPIRED;
+				return PaymentStatus::EXPIRED;
 			case self::IN_PROGRESS:
-				return Core_Statuses::OPEN;
+				return PaymentStatus::OPEN;
 			default:
 				return null;
 		}

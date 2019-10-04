@@ -124,7 +124,7 @@ class OrderItem {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 50`.
 	 */
 	public function set_name( $name ) {
-		DataHelper::validate_an( $name, 50 );
+		DataHelper::validate_an( $name, 50, 'OrderItems.name' );
 
 		$this->name = $name;
 	}
@@ -145,9 +145,7 @@ class OrderItem {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 100`.
 	 */
 	public function set_description( $description ) {
-		if ( null !== $description ) {
-			DataHelper::validate_an( $description, 100 );
-		}
+		DataHelper::validate_null_or_an( $description, 100, 'OrderItems.description' );
 
 		$this->description = $description;
 	}
@@ -204,7 +202,7 @@ class OrderItem {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 8`.
 	 */
 	public function set_category( $category ) {
-		DataHelper::validate_an( $category, 8 );
+		DataHelper::validate_an( $category, 8, 'OrderItems.category' );
 
 		$this->category = $category;
 	}

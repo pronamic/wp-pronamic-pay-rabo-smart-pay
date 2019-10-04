@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Address as PronamicAddress;
  * Address transformer
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.9
  * @since   2.0.2
  */
 class AddressTransformer {
@@ -38,6 +38,12 @@ class AddressTransformer {
 		$postal_code  = $pronamic_address->get_postal_code();
 		$city         = $pronamic_address->get_city();
 		$country_code = $pronamic_address->get_country_code();
+
+		// Use line 1 as street if address splitting failed,
+		// for example when no house number is given.
+		if ( null === $street ) {
+			$street = $pronamic_address->get_line_1();
+		}
 
 		if ( ! isset( $last_name, $street, $postal_code, $city, $country_code ) ) {
 			return null;

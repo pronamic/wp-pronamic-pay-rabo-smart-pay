@@ -33,7 +33,7 @@ class DataHelperTest extends TestCase {
 			$this->expectException( $exception );
 		}
 
-		$result = DataHelper::validate_an( $string, $length );
+		$result = DataHelper::validate_an( $string, $length, 'PHPUnit test' );
 
 		if ( null === $exception ) {
 			$this->assertTrue( $result );
@@ -73,7 +73,7 @@ class DataHelperTest extends TestCase {
 	 * @param string $expected Expected.
 	 */
 	public function test_sanitize_an( $string, $length, $expected ) {
-		$result = DataHelper::sanitize_an( $string, $length );
+		$result = DataHelper::sanitize_an( $string, $length, 'PHPUnit test' );
 
 		$this->assertEquals( $expected, $result );
 	}
