@@ -33,6 +33,13 @@ class Client {
 	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	/**
+	 * Error
+	 *
+	 * @var \WP_Error
+	 */
+	private $error;
+
+	/**
 	 * The URL.
 	 *
 	 * @var string
@@ -52,6 +59,15 @@ class Client {
 	 * @var string
 	 */
 	private $signing_key;
+
+	/**
+	 * Error.
+	 *
+	 * @return \WP_Error
+	 */
+	public function get_error() {
+		return $this->error;
+	}
 
 	/**
 	 * Get the URL.
@@ -151,7 +167,11 @@ class Client {
 		$response = \wp_remote_request( $url, $args );
 
 		if ( $response instanceof \WP_Error ) {
-			throw new \Pronamic\WordPress\Pay\GatewayException( 'omnikassa_2', 'HTTP Request Failed' );
+			$this->error = $response;
+
+			$this->error->add( 'omnikassa_2_error', 'HTTP Request Failed' );
+
+			return false;
 		}
 
 		// Body.
@@ -172,7 +192,9 @@ class Client {
 				)
 			);
 
-			throw new \Pronamic\WordPress\Pay\GatewayException( 'omnikassa_2', $message, $data );
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
+
+			return false;
 		}
 
 		// Error.
@@ -189,7 +211,9 @@ class Client {
 			}
 			// @codingStandardsIgnoreEnd
 
-			throw new \Pronamic\WordPress\Pay\GatewayException( 'omnikassa_2', $message, $data );
+			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
+
+			return false;
 		}
 
 		// Ok.
