@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Address as PronamicAddress;
  * Address transformer
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.9
  * @since   2.0.2
  */
 class AddressTransformer {

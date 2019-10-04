@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.9] - 2019-10-04
+- Use line 1 as street if address splitting failed (i.e. no house number given).
+- Improved support for merchantOrderId = AN (Strictly)..Max 24 field.
+
 ## [2.1.8] - 2019-09-10
 - Use 'fully qualified name' for all function calls.
 - Fixed `validate_an`, `wp_strip_all_tags` and `trim` issue.
@@ -59,7 +63,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.8...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.9...HEAD
+[2.1.9]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.8...2.1.9
 [2.1.8]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.7...2.1.8
 [2.1.7]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.6...2.1.7
 [2.1.6]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.5...2.1.6

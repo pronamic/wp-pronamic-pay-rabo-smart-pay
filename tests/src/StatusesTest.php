@@ -11,12 +11,13 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use PHPUnit\Framework\TestCase;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Statuses test
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.9
  * @since   2.0.2
  */
 class StatusesTest extends TestCase {
@@ -40,10 +41,10 @@ class StatusesTest extends TestCase {
 	 */
 	public function status_matrix_provider() {
 		return array(
-			array( Statuses::CANCELLED, \Pronamic\WordPress\Pay\Payments\PaymentStatus::CANCELLED ),
-			array( Statuses::COMPLETED, \Pronamic\WordPress\Pay\Payments\PaymentStatus::SUCCESS ),
-			array( Statuses::EXPIRED, \Pronamic\WordPress\Pay\Payments\PaymentStatus::EXPIRED ),
-			array( Statuses::IN_PROGRESS, \Pronamic\WordPress\Pay\Payments\PaymentStatus::OPEN ),
+			array( Statuses::CANCELLED, PaymentStatus::CANCELLED ),
+			array( Statuses::COMPLETED, PaymentStatus::SUCCESS ),
+			array( Statuses::EXPIRED, PaymentStatus::EXPIRED ),
+			array( Statuses::IN_PROGRESS, PaymentStatus::OPEN ),
 			array( 'not existing status', null ),
 		);
 	}

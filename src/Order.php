@@ -16,7 +16,7 @@ use DateTime;
  * Order
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.9
  * @since   1.0.0
  */
 class Order extends Message {
