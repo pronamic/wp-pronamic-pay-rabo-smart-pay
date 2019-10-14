@@ -87,6 +87,18 @@ class AddressTest extends TestCase {
 	}
 
 	/**
+	 * Test empty street.
+	 *
+	 * @todo Don't allow empty string since OmniKassa 2.0 will return 'the street is required'.
+	 * @link https://basecamp.com/1810084/projects/10966871/todos/401356641
+	 */
+	public function test_empty_street() {
+		$address->set_street( '' );
+
+		$this->assertEquals( '', $address->get_street() );
+	}
+
+	/**
 	 * Test invalid postal code.
 	 */
 	public function test_invalid_postal_code() {
