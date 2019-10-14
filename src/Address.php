@@ -21,14 +21,14 @@ class Address {
 	/**
 	 * First name.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $first_name;
 
 	/**
 	 * Insert or second name.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $middle_name;
 
@@ -100,17 +100,17 @@ class Address {
 	 * @param string $country_code Country code.
 	 */
 	public function __construct( $last_name, $street, $postal_code, $city, $country_code ) {
-		$this->last_name    = $last_name;
-		$this->street       = $street;
-		$this->postal_code  = $postal_code;
-		$this->city         = $city;
-		$this->country_code = $country_code;
+		$this->set_last_name( $last_name );
+		$this->set_street( $street );
+		$this->set_postal_code( $postal_code );
+		$this->set_city( $city );
+		$this->set_country_code( $country_code );
 	}
 
 	/**
 	 * Get first name.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_first_name() {
 		return $this->first_name;
@@ -119,16 +119,18 @@ class Address {
 	/**
 	 * Set first name.
 	 *
-	 * @param string $first_name First name.
+	 * @param string|null $first_name First name.
 	 */
 	public function set_first_name( $first_name ) {
+		DataHelper::validate_null_or_an( $first_name, 50, 'Address.firstName' );
+
 		$this->first_name = $first_name;
 	}
 
 	/**
 	 * Get middle name.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_middle_name() {
 		return $this->middle_name;
@@ -137,9 +139,11 @@ class Address {
 	/**
 	 * Set middle name.
 	 *
-	 * @param string $middle_name Middle name.
+	 * @param string|null $middle_name Middle name.
 	 */
 	public function set_middle_name( $middle_name ) {
+		DataHelper::validate_null_or_an( $middle_name, 20, 'Address.middleName' );
+
 		$this->middle_name = $middle_name;
 	}
 
@@ -158,6 +162,8 @@ class Address {
 	 * @param string $last_name Last name.
 	 */
 	public function set_last_name( $last_name ) {
+		DataHelper::validate_an( $last_name, 50, 'Address.lastName' );
+
 		$this->last_name = $last_name;
 	}
 
@@ -176,6 +182,8 @@ class Address {
 	 * @param string $street Street.
 	 */
 	public function set_street( $street ) {
+		DataHelper::validate_an( $street, 100, 'Address.street' );
+
 		$this->street = $street;
 	}
 
@@ -194,6 +202,8 @@ class Address {
 	 * @param string|null $house_number House number.
 	 */
 	public function set_house_number( $house_number ) {
+		DataHelper::validate_null_or_an( $house_number, 100, 'Address.houseNumber' );
+
 		$this->house_number = $house_number;
 	}
 
@@ -212,6 +222,8 @@ class Address {
 	 * @param string|null $house_number_addition House number addition.
 	 */
 	public function set_house_number_addition( $house_number_addition ) {
+		DataHelper::validate_null_or_an( $house_number_addition, 6, 'Address.houseNumberAddition' );
+
 		$this->house_number_addition = $house_number_addition;
 	}
 
@@ -230,6 +242,8 @@ class Address {
 	 * @param string $postal_code Postal code.
 	 */
 	public function set_postal_code( $postal_code ) {
+		DataHelper::validate_an( $postal_code, 10, 'Address.postalCode' );
+
 		$this->postal_code = $postal_code;
 	}
 
@@ -248,6 +262,8 @@ class Address {
 	 * @param string $city City.
 	 */
 	public function set_city( $city ) {
+		DataHelper::validate_an( $city, 40, 'Address.city' );
+
 		$this->city = $city;
 	}
 
@@ -266,6 +282,8 @@ class Address {
 	 * @param string $country_code Country code.
 	 */
 	public function set_country_code( $country_code ) {
+		DataHelper::validate_an( $country_code, 2, 'Address.countryCode' );
+
 		$this->country_code = $country_code;
 	}
 
