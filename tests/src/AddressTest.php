@@ -93,6 +93,8 @@ class AddressTest extends TestCase {
 	 * @link https://basecamp.com/1810084/projects/10966871/todos/401356641
 	 */
 	public function test_empty_street() {
+		$address = $this->get_test_address();
+
 		$address->set_street( '' );
 
 		$this->assertEquals( '', $address->get_street() );
