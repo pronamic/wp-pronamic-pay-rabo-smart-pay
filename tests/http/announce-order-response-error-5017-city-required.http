@@ -1,0 +1,22 @@
+HTTP/1.1 422 Unprocessable Entity
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Vary: Accept-Encoding,User-Agent
+X-Cnection: close
+Content-Type: application/json
+Content-Language: en-US
+P3P: policyref="/rabo/w3c/p3p.xml", CP="OTI CURa ADMa OUR NOR BUS UNI COM NAV"
+Strict-Transport-Security: max-age=31622400
+Content-Length: 55
+Date: Thu, 24 Oct 2019 09:37:31 GMT
+Connection: close
+Set-Cookie: JSESSIONID=0000ZMHRXa5voUOsD59mYfFtt0V:-1; Path=/; HttpOnly
+Set-Cookie: TS01fd03d7=01129cd2d361e7aae60b45a39018553769d222faaafaf66f6ff2e82d254a93e1390a596ac59cbc56e5825f0a6bc7be325e8c48860af847c4b5689311704508590f9f8acd58; Path=/
+Set-Cookie: BIGipServerpl_betalen-int.rabobank.nl-80=!9vAZl3BqmiSdWgESGsunPHNuWU8wOnbbPqmzivwj5gIqkoqzlCQelU0vbLRYCk2uKKDiDcoP67enRBE=; path=/; Httponly
+
+{"errorCode":5017,"consumerMessage":"city is required"}
