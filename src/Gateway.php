@@ -80,6 +80,7 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @see Core_Gateway::start()
 	 * @param Payment $payment Payment.
+	 * @throws \Exception Throws exception when payment could not start at Rabobank OmniKassa 2.0.
 	 */
 	public function start( Payment $payment ) {
 		// Merchant order ID.
@@ -91,144 +92,129 @@ class Gateway extends Core_Gateway {
 		$merchant_return_url = $payment->get_return_url();
 		$merchant_return_url = \apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
 
-		try {
-			$order = new Order(
-				$merchant_order_id,
-				MoneyTransformer::transform( $payment->get_total_amount() ),
-				$merchant_return_url
-			);
+		$order = new Order(
+			$merchant_order_id,
+			MoneyTransformer::transform( $payment->get_total_amount() ),
+			$merchant_return_url
+		);
 
-			// Shipping address.
-			$order->set_shipping_detail( AddressTransformer::transform( $payment->get_shipping_address() ) );
+		// Shipping address.
+		$order->set_shipping_detail( AddressTransformer::transform( $payment->get_shipping_address() ) );
 
-			// Billing address.
-			$order->set_billing_detail( AddressTransformer::transform( $payment->get_billing_address() ) );
+		// Billing address.
+		$order->set_billing_detail( AddressTransformer::transform( $payment->get_billing_address() ) );
+
+		// Customer information.
+		$customer = $payment->get_customer();
+
+		if ( null !== $customer ) {
+			// Language.
+			$language = $customer->get_language();
+
+			if ( null !== $language ) {
+				$order->set_language( \strtoupper( $language ) );
+			}
 
 			// Customer information.
-			$customer = $payment->get_customer();
+			$customer_information = new CustomerInformation();
 
-			if ( null !== $customer ) {
-				// Language.
-				$language = $customer->get_language();
+			$customer_information->set_email_address( $customer->get_email() );
+			$customer_information->set_date_of_birth( $customer->get_birth_date() );
+			$customer_information->set_gender( Gender::transform( $customer->get_gender() ) );
+			$customer_information->set_telephone_number( $customer->get_phone() );
 
-				if ( null !== $language ) {
-					$order->set_language( \strtoupper( $language ) );
-				}
+			$name = $customer->get_name();
 
-				// Customer information.
-				$customer_information = new CustomerInformation();
-
-				$customer_information->set_email_address( $customer->get_email() );
-				$customer_information->set_date_of_birth( $customer->get_birth_date() );
-				$customer_information->set_gender( Gender::transform( $customer->get_gender() ) );
-				$customer_information->set_telephone_number( $customer->get_phone() );
-
-				$name = $customer->get_name();
-
-				if ( null !== $name ) {
-					$customer_information->set_initials( $name->get_initials() );
-				}
-
-				$order->set_customer_information( $customer_information );
+			if ( null !== $name ) {
+				$customer_information->set_initials( $name->get_initials() );
 			}
 
-			// Payment brand.
-			$payment_brand = PaymentBrands::transform( $payment->get_method() );
+			$order->set_customer_information( $customer_information );
+		}
 
-			$order->set_payment_brand( $payment_brand );
+		// Payment brand.
+		$payment_brand = PaymentBrands::transform( $payment->get_method() );
 
-			if ( null !== $payment_brand ) {
-				// Payment brand force should only be set if payment brand is not empty.
-				$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
-			}
+		$order->set_payment_brand( $payment_brand );
 
-			// Description.
-			$order->set_description( DataHelper::sanitize_an( $payment->get_description(), 35 ) );
+		if ( null !== $payment_brand ) {
+			// Payment brand force should only be set if payment brand is not empty.
+			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
+		}
 
-			// Lines.
-			$lines = $payment->get_lines();
+		// Description.
+		$description = $payment->get_description();
 
-			if ( null !== $lines ) {
-				$order_items = $order->new_items();
+		if ( null !== $description ) {
+			$order->set_description( DataHelper::sanitize_an( $description, 35 ) );
+		}
 
-				$i = 1;
+		// Lines.
+		$lines = $payment->get_lines();
 
-				foreach ( $lines as $line ) {
-					$name = \sprintf(
-						/* translators: %s: item index */
-						\__( 'Item %s', 'pronamic_ideal' ),
-						$i++
-					);
+		if ( null !== $lines ) {
+			$order_items = $order->new_items();
 
-					if ( null !== $line->get_name() && '' !== $line->get_name() ) {
-						$name = $line->get_name();
-					}
+			$i = 1;
 
-					$item = $order_items->new_item(
-						DataHelper::sanitize_an( $name, 50 ),
-						$line->get_quantity(),
-						// The amount in cents, including VAT, of the item each, see below for more details.
-						MoneyTransformer::transform( $line->get_unit_price() ),
-						ProductCategories::transform( $line->get_type() )
-					);
+			foreach ( $lines as $line ) {
+				$name = \sprintf(
+					/* translators: %s: item index */
+					\__( 'Item %s', 'pronamic_ideal' ),
+					$i++
+				);
 
-					$item->set_id( $line->get_id() );
+				if ( null !== $line->get_name() && '' !== $line->get_name() ) {
+					$name = $line->get_name();
+				}
 
-					// Description.
-					$description = $line->get_description();
+				$item = $order_items->new_item(
+					DataHelper::sanitize_an( $name, 50 ),
+					$line->get_quantity(),
+					// The amount in cents, including VAT, of the item each, see below for more details.
+					MoneyTransformer::transform( $line->get_unit_price() ),
+					ProductCategories::transform( $line->get_type() )
+				);
 
-					if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
-						/*
-						 * The `OrderItem.description` field is documentated as `0..1` (optional),
-						 * but for AfterPay payments it is required.
-						 *
-						 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
-						 */
-						$description = $name;
-					}
+				$item->set_id( $line->get_id() );
 
-					if ( null !== $description ) {
-						$description = DataHelper::sanitize_an( $description, 100 );
-					}
+				// Description.
+				$description = $line->get_description();
 
-					$item->set_description( $description );
+				if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
+					/*
+					 * The `OrderItem.description` field is documentated as `0..1` (optional),
+					 * but for AfterPay payments it is required.
+					 *
+					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
+					 */
+					$description = $name;
+				}
 
-					$tax_amount = $line->get_unit_price()->get_tax_amount();
+				if ( null !== $description ) {
+					$description = DataHelper::sanitize_an( $description, 100 );
+				}
 
-					if ( null !== $tax_amount ) {
-						// The VAT of the item each, see below for more details.
-						$item->set_tax( MoneyTransformer::transform( $tax_amount ) );
-					}
+				$item->set_description( $description );
+
+				$tax_amount = $line->get_unit_price()->get_tax_amount();
+
+				if ( null !== $tax_amount ) {
+					// The VAT of the item each, see below for more details.
+					$item->set_tax( MoneyTransformer::transform( $tax_amount ) );
 				}
 			}
-		} catch ( \Exception $e ) {
-			$this->error = new \WP_Error( 'omnikassa_2_error', $e->getMessage() );
-
-			return;
 		}
 
 		// Maybe update access token.
 		$this->maybe_update_access_token();
 
-		// Handle errors.
-		if ( $this->get_client_error() ) {
-			return;
-		}
-
 		// Announce order.
 		$response = $this->client->order_announce( $this->config, $order );
 
-		// Handle errors.
-		if ( $this->get_client_error() ) {
-			return;
-		}
-
-		if ( false === $response ) {
-			return;
-		}
-
+		// Validate.
 		if ( ! $response->is_valid( $this->config->signing_key ) ) {
-			return;
+			throw new \Exception( 'Could not validate OmniKassa 2.0 response signature with signing key.' );
 		}
 
 		$payment->set_action_url( $response->get_redirect_url() );
@@ -313,10 +299,6 @@ class Gateway extends Core_Gateway {
 		do {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
-			if ( false === $order_results ) {
-				return;
-			}
-
 			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
 				return;
 			}
@@ -368,10 +350,6 @@ class Gateway extends Core_Gateway {
 
 		$data = $this->client->get_access_token_data();
 
-		if ( ! \is_object( $data ) ) {
-			return;
-		}
-
 		if ( isset( $data->token ) ) {
 			$this->config->access_token = $data->token;
 
@@ -393,22 +371,5 @@ class Gateway extends Core_Gateway {
 			);
 		}
 		// @codingStandardsIgnoreEnd
-	}
-
-	/**
-	 * Get client error.
-	 *
-	 * @return \WP_Error|bool
-	 */
-	private function get_client_error() {
-		$error = $this->client->get_error();
-
-		if ( \is_wp_error( $error ) ) {
-			$this->error = $error;
-
-			return $error;
-		}
-
-		return false;
 	}
 }

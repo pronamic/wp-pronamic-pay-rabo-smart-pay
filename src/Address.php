@@ -322,8 +322,8 @@ class Address {
 	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
-		$fields[] = $this->first_name;
-		$fields[] = $this->middle_name;
+		$fields[] = \strval( $this->first_name );
+		$fields[] = \strval( $this->middle_name );
 		$fields[] = $this->last_name;
 		$fields[] = $this->street;
 

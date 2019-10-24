@@ -15,7 +15,7 @@ env:
 jobs:
   include:
     - php: 7.3
-      env: WP_VERSION=^5.1 COVERAGE=1 PHPCS=1 SYMFONY_SECURITY_CHECK=1 ESLINT=1
+      env: WP_VERSION=^5.1 COVERAGE=1 PHPCS=1 SYMFONY_SECURITY_CHECK=1 ESLINT=1 PHPSTAN=1
     - php: 7.3
       env: WP_VERSION=^5.0
     - php: 7.2
@@ -42,7 +42,6 @@ jobs:
     - php: hhvm
     - php: nightly
     - env: PHPMD=1
-    - env: PHPSTAN=1
     - env: PSALM=1
 
 cache:

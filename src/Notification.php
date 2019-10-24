@@ -125,7 +125,7 @@ class Notification extends ResponseMessage {
 			$this->get_authentication(),
 			$this->get_expiry(),
 			$this->get_event_name(),
-			$this->get_poi_id(),
+			\strval( $this->get_poi_id() ),
 		);
 	}
 

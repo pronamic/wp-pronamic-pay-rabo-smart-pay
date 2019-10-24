@@ -27,7 +27,7 @@ class Integration extends AbstractIntegration {
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
-		$this->manual_url    = __( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' );
+		$this->manual_url    = \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' );
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
 		$this->supports      = array(
@@ -146,7 +146,7 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Get settings fields.
 	 *
-	 * @return array<array<string|int|array<string>>
+	 * @return array<int, array<string, array<int, string>|int|string|true>>
 	 */
 	public function get_settings_fields() {
 		$fields = array();
@@ -224,7 +224,7 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Get configuration by post ID.
 	 *
-	 * @param string $post_id Post ID.
+	 * @param int $post_id Post ID.
 	 * @return Config
 	 */
 	public function get_config( $post_id ) {
