@@ -163,6 +163,23 @@ class Client {
 
 		$args = \apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
 
+		/**
+		 * Build cURL command for debug purposes.
+		 *
+		 * @link https://curl.haxx.se/
+		 */
+		$curl = '';
+
+		$tab = "\t";
+		$eol = '\\' . PHP_EOL;
+
+		$curl .= sprintf( 'curl --request %s %s', $method, escapeshellarg( $url ) ) . $eol;
+		$curl .= $tab . sprintf( '--header %s', escapeshellarg( 'Authorization: Bearer ' . $token ) ) . $eol;
+		$curl .= $tab . sprintf( '--header %s', escapeshellarg( 'Content-Type: application/json' ) ) . $eol;
+		$curl .= $tab . sprintf( '--data %s', escapeshellarg( \wp_json_encode( $object ) ) ) . $eol;
+		$curl .= $tab . sprintf( '--user-agent %s', escapeshellarg( 'WordPress/' . get_bloginfo( 'version' ) . '; ' . get_bloginfo( 'url' ) ) ) . $eol;
+		$curl .= $tab . '--verbose';
+
 		// Request.
 		$response = \wp_remote_request( $url, $args );
 
