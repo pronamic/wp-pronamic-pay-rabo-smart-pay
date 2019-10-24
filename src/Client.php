@@ -173,11 +173,11 @@ class Client {
 		$tab = "\t";
 		$eol = '\\' . PHP_EOL;
 
-		$curl .= sprintf( 'curl --request %s %s', $method, escapeshellarg( $url ) ) . $eol;
-		$curl .= $tab . sprintf( '--header %s', escapeshellarg( 'Authorization: Bearer ' . $token ) ) . $eol;
-		$curl .= $tab . sprintf( '--header %s', escapeshellarg( 'Content-Type: application/json' ) ) . $eol;
-		$curl .= $tab . sprintf( '--data %s', escapeshellarg( \wp_json_encode( $object ) ) ) . $eol;
-		$curl .= $tab . sprintf( '--user-agent %s', escapeshellarg( 'WordPress/' . get_bloginfo( 'version' ) . '; ' . get_bloginfo( 'url' ) ) ) . $eol;
+		$curl .= \sprintf( 'curl --request %s %s', $method, \escapeshellarg( $url ) ) . $eol;
+		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Authorization: Bearer ' . $token ) ) . $eol;
+		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Content-Type: application/json' ) ) . $eol;
+		$curl .= $tab . \sprintf( '--data %s', \escapeshellarg( \wp_json_encode( $object ) ) ) . $eol;
+		$curl .= $tab . \sprintf( '--user-agent %s', \escapeshellarg( 'WordPress/' . \get_bloginfo( 'version' ) . '; ' . \get_bloginfo( 'url' ) ) ) . $eol;
 		$curl .= $tab . '--verbose';
 
 		// Request.
