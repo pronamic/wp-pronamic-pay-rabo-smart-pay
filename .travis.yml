@@ -27,8 +27,6 @@ jobs:
     - php: 7.3
       env: WP_MULTISITE=1
     - php: 7.3
-      env: PHPSTAN=1
-    - php: 7.3
       env: PHPMD=1
     - php: 7.3
       env: PSALM=1
