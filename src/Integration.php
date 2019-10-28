@@ -27,13 +27,14 @@ class Integration extends AbstractIntegration {
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
-		$this->manual_url    = \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' );
 		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
 		$this->provider      = 'rabobank';
 		$this->supports      = array(
 			'webhook',
 			'webhook_log',
 		);
+
+		$this->set_manual_url( \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ) );
 
 		/**
 		 * Webhook listener function.
