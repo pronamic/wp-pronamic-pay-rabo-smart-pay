@@ -79,4 +79,6 @@
 	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_putenv">
 		<exclude-pattern>tests/bootstrap.php</exclude-pattern>
 	</rule>
+
+	<rule ref="VariableAnalysis" />
 </ruleset>
