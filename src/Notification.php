@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Notification
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   2.0.2
  */
 class Notification extends ResponseMessage {
@@ -125,7 +125,7 @@ class Notification extends ResponseMessage {
 			$this->get_authentication(),
 			$this->get_expiry(),
 			$this->get_event_name(),
-			$this->get_poi_id(),
+			\strval( $this->get_poi_id() ),
 		);
 	}
 

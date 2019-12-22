@@ -16,7 +16,7 @@ use DateTime;
  * Customer information.
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   2.0.2
  */
 class CustomerInformation {
@@ -148,11 +148,11 @@ class CustomerInformation {
 	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
-		$fields[] = $this->email_address;
-		$fields[] = ( null === $this->date_of_birth ) ? null : $this->date_of_birth->format( 'd-m-Y' );
-		$fields[] = $this->gender;
-		$fields[] = $this->initials;
-		$fields[] = $this->telephone_number;
+		$fields[] = \strval( $this->email_address );
+		$fields[] = ( null === $this->date_of_birth ) ? '' : $this->date_of_birth->format( 'd-m-Y' );
+		$fields[] = \strval( $this->gender );
+		$fields[] = \strval( $this->initials );
+		$fields[] = \strval( $this->telephone_number );
 
 		return $fields;
 	}

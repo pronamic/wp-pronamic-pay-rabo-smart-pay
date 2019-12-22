@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
  * Integration
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   1.0.0
  */
 class Integration extends AbstractIntegration {
@@ -33,6 +33,8 @@ class Integration extends AbstractIntegration {
 			'webhook',
 			'webhook_log',
 		);
+
+		$this->set_manual_url( \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ) );
 
 		/**
 		 * Webhook listener function.
@@ -145,7 +147,7 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Get settings fields.
 	 *
-	 * @return array<array<string|int|array<string>>
+	 * @return array<int, array<string, array<int, string>|int|string|true>>
 	 */
 	public function get_settings_fields() {
 		$fields = array();
@@ -223,7 +225,7 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Get configuration by post ID.
 	 *
-	 * @param string $post_id Post ID.
+	 * @param int $post_id Post ID.
 	 * @return Config
 	 */
 	public function get_config( $post_id ) {

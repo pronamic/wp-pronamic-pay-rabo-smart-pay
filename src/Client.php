@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Client.
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   1.0.0
  */
 class Client {
@@ -130,7 +130,8 @@ class Client {
 	 * @param string      $endpoint URL endpoint to request.
 	 * @param string      $token    Authorization token.
 	 * @param object|null $object   Object.
-	 * @return bool|object
+	 * @return object
+	 * @throws \Exception Throws exception when Rabobank OmniKassa 2.0 response is not what we expect.
 	 */
 	private function request( $method, $endpoint, $token, $object = null ) {
 		// URL.
@@ -163,57 +164,84 @@ class Client {
 
 		$args = \apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
 
+		/**
+		 * Build cURL command for debug purposes.
+		 *
+		 * @link https://curl.haxx.se/
+		 */
+
+		// phpcs:disable SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+
+		$curl = '';
+
+		$tab = "\t";
+		$eol = ' \\' . \PHP_EOL;
+
+		$curl .= \sprintf( 'curl --request %s %s', $method, \escapeshellarg( $url ) ) . $eol;
+		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Authorization: Bearer ' . $token ) ) . $eol;
+		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Content-Type: application/json' ) ) . $eol;
+		$curl .= $tab . \sprintf( '--data %s', \escapeshellarg( \strval( \wp_json_encode( $object ) ) ) ) . $eol;
+		$curl .= $tab . \sprintf( '--user-agent %s', \escapeshellarg( 'WordPress/' . \get_bloginfo( 'version' ) . '; ' . \get_bloginfo( 'url' ) ) ) . $eol;
+		$curl .= $tab . '--verbose';
+
+		// phpcs:enable
+
 		// Request.
 		$response = \wp_remote_request( $url, $args );
 
 		if ( $response instanceof \WP_Error ) {
-			$this->error = $response;
-
-			$this->error->add( 'omnikassa_2_error', 'HTTP Request Failed' );
-
-			return false;
+			throw new \Exception(
+				\sprintf(
+					'OmniKassa 2.0 HTTP request failed: %s.',
+					$response->get_error_message()
+				)
+			);
 		}
 
 		// Body.
 		$body = \wp_remote_retrieve_body( $response );
 
+		// Response.
+		$response_code    = \wp_remote_retrieve_response_code( $response );
+		$response_message = \wp_remote_retrieve_response_message( $response );
+
+		// Data.
 		$data = \json_decode( $body );
 
-		if ( ! \is_object( $data ) ) {
-			$message = \implode(
-				"\r\n",
-				array(
-					'Could not parse response.',
-					\sprintf(
-						'HTTP response status code: %s %s',
-						\wp_remote_retrieve_response_code( $response ),
-						\wp_remote_retrieve_response_message( $response )
-					),
-				)
+		// JSON error.
+		$json_error = \json_last_error();
+
+		if ( \JSON_ERROR_NONE !== $json_error ) {
+			throw new \Exception(
+				\sprintf(
+					'Could not JSON decode OmniKassa 2.0 response, HTTP response: "%s %s", HTTP body length: "%d", JSON error: "%s".',
+					$response_code,
+					$response_message,
+					\strlen( $body ),
+					\json_last_error_msg()
+				),
+				$json_error
 			);
+		}
 
-			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
-
-			return false;
+		// Object.
+		if ( ! \is_object( $data ) ) {
+			throw new \Exception(
+				\sprintf(
+					'Could not JSON decode OmniKassa 2.0 response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
+					$response_code,
+					$response_message,
+					\strlen( $body )
+				),
+				\intval( $response_code )
+			);
 		}
 
 		// Error.
-		// @codingStandardsIgnoreStart
 		if ( isset( $data->errorCode ) ) {
-			// @codingStandardsIgnoreEnd
-			$message = 'Unknown error.';
+			$error = Error::from_object( $data );
 
-			// @codingStandardsIgnoreStart
-			if ( isset( $data->consumerMessage ) ) {
-				$message = $data->consumerMessage;
-			} elseif ( isset( $data->errorMessage ) ) {
-				$message = $data->errorMessage;
-			}
-			// @codingStandardsIgnoreEnd
-
-			$this->error = new \WP_Error( 'omnikassa_2_error', $message, $data );
-
-			return false;
+			throw $error;
 		}
 
 		// Ok.
@@ -223,7 +251,7 @@ class Client {
 	/**
 	 * Get access token.
 	 *
-	 * @return bool|object
+	 * @return object
 	 */
 	public function get_access_token_data() {
 		return $this->request( 'GET', 'gatekeeper/refresh', $this->get_refresh_token() );
@@ -234,7 +262,7 @@ class Client {
 	 *
 	 * @param Config $config Config.
 	 * @param Order  $order  Order.
-	 * @return OrderAnnounceResponse|false
+	 * @return OrderAnnounceResponse
 	 */
 	public function order_announce( $config, Order $order ) {
 		$order->sign( $config->signing_key );
@@ -243,10 +271,6 @@ class Client {
 
 		$result = $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
 
-		if ( ! \is_object( $result ) ) {
-			return false;
-		}
-
 		return OrderAnnounceResponse::from_object( $result );
 	}
 
@@ -254,14 +278,10 @@ class Client {
 	 * Get order results by the notification token.
 	 *
 	 * @param string $notification_token Notification token.
-	 * @return OrderResults|false
+	 * @return OrderResults
 	 */
 	public function get_order_results( $notification_token ) {
 		$result = $this->request( 'GET', 'order/server/api/events/results/merchant.order.status.changed', $notification_token );
-
-		if ( ! \is_object( $result ) ) {
-			return false;
-		}
 
 		return OrderResults::from_object( $result );
 	}

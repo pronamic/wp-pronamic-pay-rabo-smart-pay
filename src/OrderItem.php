@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Order item.
  *
  * @author  Reüel van der Steege
- * @version 2.1.8
+ * @version 2.1.10
  * @since   2.0.3
  */
 class OrderItem {
@@ -271,7 +271,7 @@ class OrderItem {
 		}
 
 		$fields[] = $this->name;
-		$fields[] = $this->description;
+		$fields[] = \strval( $this->description );
 		$fields[] = \strval( $this->quantity );
 
 		$fields = $this->amount->get_signature_fields( $fields );

@@ -16,7 +16,7 @@ use DateTime;
  * Order
  *
  * @author  Remco Tolsma
- * @version 2.1.9
+ * @version 2.1.10
  * @since   1.0.0
  */
 class Order extends Message {
@@ -375,8 +375,8 @@ class Order extends Message {
 
 		$fields = $this->amount->get_signature_fields( $fields );
 
-		$fields[] = $this->language;
-		$fields[] = $this->description;
+		$fields[] = \strval( $this->language );
+		$fields[] = \strval( $this->description );
 		$fields[] = $this->merchant_return_url;
 
 		if ( null !== $this->order_items ) {

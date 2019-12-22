@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Order results.
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   1.0.0
  */
 class OrderResults extends ResponseMessage implements \IteratorAggregate {
@@ -68,14 +68,13 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 		foreach ( $this->order_results as $order_result ) {
 			$fields[] = $order_result->get_merchant_order_id();
 			$fields[] = $order_result->get_omnikassa_order_id();
-			$fields[] = $order_result->get_poi_id();
+			$fields[] = \strval( $order_result->get_poi_id() );
 			$fields[] = $order_result->get_order_status();
 			$fields[] = $order_result->get_order_status_datetime();
 			$fields[] = $order_result->get_error_code();
-			$fields[] = $order_result->get_paid_amount()->get_currency();
-			$fields[] = $order_result->get_paid_amount()->get_amount();
-			$fields[] = $order_result->get_total_amount()->get_currency();
-			$fields[] = $order_result->get_total_amount()->get_amount();
+
+			$fields = $order_result->get_paid_amount()->get_signature_fields( $fields );
+			$fields = $order_result->get_total_amount()->get_signature_fields( $fields );
 		}
 
 		return $fields;

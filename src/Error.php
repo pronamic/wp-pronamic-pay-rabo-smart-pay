@@ -10,58 +10,90 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use JsonSchema\Constraints\Constraint;
-use JsonSchema\Validator;
-
 /**
  * Error
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   2.0.2
  */
-class Error {
+class Error extends \Exception {
 	/**
-	 * Code.
+	 * Error code.
 	 *
-	 * @var string
+	 * @var int
 	 */
-	private $code;
+	private $error_code;
 
 	/**
-	 * Message.
+	 * Error message.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	private $message;
+	private $error_message;
+
+	/**
+	 * Consumer message.
+	 *
+	 * @var string|null
+	 */
+	private $consumer_message;
 
 	/**
 	 * Construct error.
 	 *
-	 * @param string $code    Code.
-	 * @param string $message Message.
+	 * @param int    $error_code Error code.
+	 * @param string $message    Consumer or error message.
 	 */
-	public function __construct( $code, $message ) {
-		$this->code    = $code;
-		$this->message = $message;
+	public function __construct( $error_code, $message ) {
+		parent::__construct( $message, $error_code );
+
+		$this->error_code = $error_code;
 	}
 
 	/**
 	 * Get error code.
 	 *
-	 * @return string
+	 * @return int
 	 */
-	public function get_code() {
-		return $this->code;
+	public function get_error_code() {
+		return $this->error_code;
 	}
 
 	/**
 	 * Get error message.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function get_message() {
-		return $this->message;
+	public function get_error_message() {
+		return $this->error_message;
+	}
+
+	/**
+	 * Set error message.
+	 *
+	 * @param string|null $error_message Error message.
+	 */
+	public function set_error_message( $error_message ) {
+		$this->error_message = $error_message;
+	}
+
+	/**
+	 * Get consumer message.
+	 *
+	 * @return string|null
+	 */
+	public function get_consumer_message() {
+		return $this->consumer_message;
+	}
+
+	/**
+	 * Set consumer message.
+	 *
+	 * @param string|null $consumer_message Consumer message.
+	 */
+	public function set_consumer_message( $consumer_message ) {
+		$this->consumer_message = $consumer_message;
 	}
 
 	/**
@@ -76,20 +108,30 @@ class Error {
 			throw new \InvalidArgumentException( 'Object must contain `errorCode` property.' );
 		}
 
-		$message = null;
+		$error_code       = $object->errorCode;
+		$error_message    = null;
+		$consumer_message = null;
+
+		$message = \strval( $error_code );
 
 		if ( isset( $object->errorMessage ) ) {
-			$message = $object->errorMessage;
+			$error_message = $object->errorMessage;
+
+			$message = $error_message;
 		}
 
 		if ( isset( $object->consumerMessage ) ) {
-			$message = $object->consumerMessage;
+			$consumer_message = $object->consumerMessage;
+
+			$message = $consumer_message;
 		}
 
-		return new self(
-			$object->errorCode,
-			$message
-		);
+		$error = new self( $error_code, $message );
+
+		$error->set_error_message( $error_message );
+		$error->set_consumer_message( $consumer_message );
+
+		return $error;
 	}
 
 	/**
@@ -102,14 +144,14 @@ class Error {
 	public static function from_json( $json ) {
 		$data = \json_decode( $json );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 
 		$validator->validate(
 			$data,
 			(object) array(
-				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-error.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/error.json' ),
 			),
-			Constraint::CHECK_MODE_EXCEPTIONS
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		return self::from_object( $data );
