@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Order results.
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   1.0.0
  */
 class OrderResults extends ResponseMessage implements \IteratorAggregate {

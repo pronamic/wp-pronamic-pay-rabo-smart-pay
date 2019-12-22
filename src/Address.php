@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Address
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   2.0.2
  */
 class Address {
