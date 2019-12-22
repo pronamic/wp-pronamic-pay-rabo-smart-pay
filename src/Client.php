@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Client.
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.1.10
  * @since   1.0.0
  */
 class Client {
