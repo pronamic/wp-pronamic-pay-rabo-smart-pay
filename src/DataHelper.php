@@ -113,7 +113,8 @@ class DataHelper {
 	 * @param int         $max   Max length of value.
 	 * @param string      $field Field name.
 	 * @return true
-	 * @throws \InvalidArgumentException Throws invalid argument exception when value is not null and longer then max length.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value is not null and longer then max
+	 * length.
 	 */
 	public static function validate_null_or_an( $value, $max, $field ) {
 		if ( null === $value ) {

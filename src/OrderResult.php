@@ -87,7 +87,16 @@ class OrderResult {
 	 * @param Money      $paid_amount           Paid amount.
 	 * @param Money      $total_amount          Total amount.
 	 */
-	public function __construct( $merchant_order_id, $omnikassa_order_id, $poi_id, $order_status, $order_status_datetime, $error_code, Money $paid_amount, Money $total_amount ) {
+	public function __construct(
+		$merchant_order_id,
+		$omnikassa_order_id,
+		$poi_id,
+		$order_status,
+		$order_status_datetime,
+		$error_code,
+		Money $paid_amount,
+		Money $total_amount
+	) {
 		$this->merchant_order_id     = $merchant_order_id;
 		$this->omnikassa_order_id    = $omnikassa_order_id;
 		$this->poi_id                = $poi_id;
