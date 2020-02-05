@@ -98,6 +98,8 @@ class Address {
 	 * @param string $postal_code  Postal code.
 	 * @param string $city         City.
 	 * @param string $country_code Country code.
+	 *
+	 * @return void
 	 */
 	public function __construct( $last_name, $street, $postal_code, $city, $country_code ) {
 		$this->set_last_name( $last_name );
@@ -120,6 +122,8 @@ class Address {
 	 * Set first name.
 	 *
 	 * @param string|null $first_name First name.
+	 *
+	 * @return void
 	 */
 	public function set_first_name( $first_name ) {
 		DataHelper::validate_null_or_an( $first_name, 50, 'Address.firstName' );
@@ -140,6 +144,8 @@ class Address {
 	 * Set middle name.
 	 *
 	 * @param string|null $middle_name Middle name.
+	 *
+	 * @return void
 	 */
 	public function set_middle_name( $middle_name ) {
 		DataHelper::validate_null_or_an( $middle_name, 20, 'Address.middleName' );
@@ -160,6 +166,8 @@ class Address {
 	 * Set last name.
 	 *
 	 * @param string $last_name Last name.
+	 *
+	 * @return void
 	 */
 	public function set_last_name( $last_name ) {
 		DataHelper::validate_an( $last_name, 50, 'Address.lastName' );
@@ -180,6 +188,8 @@ class Address {
 	 * Set street.
 	 *
 	 * @param string $street Street.
+	 *
+	 * @return void
 	 */
 	public function set_street( $street ) {
 		DataHelper::validate_an( $street, 100, 'Address.street' );
@@ -200,6 +210,8 @@ class Address {
 	 * Set house number.
 	 *
 	 * @param string|null $house_number House number.
+	 *
+	 * @return void
 	 */
 	public function set_house_number( $house_number ) {
 		DataHelper::validate_null_or_an( $house_number, 100, 'Address.houseNumber' );
@@ -220,6 +232,8 @@ class Address {
 	 * Set house number addition.
 	 *
 	 * @param string|null $house_number_addition House number addition.
+	 *
+	 * @return void
 	 */
 	public function set_house_number_addition( $house_number_addition ) {
 		DataHelper::validate_null_or_an( $house_number_addition, 6, 'Address.houseNumberAddition' );
@@ -240,6 +254,8 @@ class Address {
 	 * Set postal code.
 	 *
 	 * @param string $postal_code Postal code.
+	 *
+	 * @return void
 	 */
 	public function set_postal_code( $postal_code ) {
 		DataHelper::validate_an( $postal_code, 10, 'Address.postalCode' );
@@ -260,6 +276,8 @@ class Address {
 	 * Set city.
 	 *
 	 * @param string $city City.
+	 *
+	 * @return void
 	 */
 	public function set_city( $city ) {
 		DataHelper::validate_an( $city, 40, 'Address.city' );
@@ -280,6 +298,8 @@ class Address {
 	 * Set country code.
 	 *
 	 * @param string $country_code Country code.
+	 *
+	 * @return void
 	 */
 	public function set_country_code( $country_code ) {
 		DataHelper::validate_an( $country_code, 2, 'Address.countryCode' );

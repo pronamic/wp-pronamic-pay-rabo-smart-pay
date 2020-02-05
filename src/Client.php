@@ -82,6 +82,8 @@ class Client {
 	 * Set the action URL
 	 *
 	 * @param string $url URL.
+	 *
+	 * @return void
 	 */
 	public function set_url( $url ) {
 		$this->url = $url;
@@ -100,6 +102,8 @@ class Client {
 	 * Set refresh token.
 	 *
 	 * @param string $refresh_token Refresh token.
+	 *
+	 * @return void
 	 */
 	public function set_refresh_token( $refresh_token ) {
 		$this->refresh_token = $refresh_token;
@@ -118,6 +122,8 @@ class Client {
 	 * Set signing key.
 	 *
 	 * @param string $signing_key Signing key.
+	 *
+	 * @return void
 	 */
 	public function set_signing_key( $signing_key ) {
 		$this->signing_key = $signing_key;
@@ -278,7 +284,7 @@ class Client {
 	 * Get order results by the notification token.
 	 *
 	 * @param string $notification_token Notification token.
-	 * @return OrderResults
+	 * @return OrderResults<int, OrderResult>
 	 */
 	public function get_order_results( $notification_token ) {
 		$result = $this->request(
