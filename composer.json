@@ -61,7 +61,7 @@
 		"phpstan": "vendor/bin/phpstan analyse",
 		"phpunit": "vendor/bin/phpunit",
 		"psalm": "vendor/bin/psalm",
-		"post-install-cmd": "echo 'Optionally run: composer bin all install",
-		"post-update-cmd": "echo 'Optionally run: composer bin all update"
+		"post-install-cmd": "echo 'Optionally run: composer bin all install'",
+		"post-update-cmd": "echo 'Optionally run: composer bin all update'"
 	}
 }
