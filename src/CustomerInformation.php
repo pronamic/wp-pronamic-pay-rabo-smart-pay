@@ -59,6 +59,7 @@ class CustomerInformation {
 	 * Set the e-mailadress of the consumer.
 	 *
 	 * @param string|null $email_address E-mailadress of the consumer.
+	 * @return void
 	 */
 	public function set_email_address( $email_address ) {
 		$this->email_address = $email_address;
@@ -68,6 +69,7 @@ class CustomerInformation {
 	 * Set date of birth.
 	 *
 	 * @param DateTime|null $date_of_birth Date of birth.
+	 * @return void
 	 */
 	public function set_date_of_birth( DateTime $date_of_birth = null ) {
 		$this->date_of_birth = $date_of_birth;
@@ -77,6 +79,7 @@ class CustomerInformation {
 	 * Set gender.
 	 *
 	 * @param string|null $gender Gender.
+	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when gender is not null, 'F' or 'M'.
 	 */
 	public function set_gender( $gender ) {
@@ -96,6 +99,7 @@ class CustomerInformation {
 	 * Set initials.
 	 *
 	 * @param string|null $initials Initials.
+	 * @return void
 	 */
 	public function set_initials( $initials ) {
 		$this->initials = $initials;
@@ -105,6 +109,7 @@ class CustomerInformation {
 	 * Set telephone number.
 	 *
 	 * @param string|null $telephone_number Telephone number.
+	 * @return void
 	 */
 	public function set_telephone_number( $telephone_number ) {
 		$this->telephone_number = $telephone_number;

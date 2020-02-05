@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -78,9 +79,10 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Start.
 	 *
-	 * @see Core_Gateway::start()
 	 * @param Payment $payment Payment.
+	 * @return void
 	 * @throws \Exception Throws exception when payment could not start at Rabobank OmniKassa 2.0.
+	 * @see Core_Gateway::start()
 	 */
 	public function start( Payment $payment ) {
 		// Merchant order ID.
@@ -168,11 +170,17 @@ class Gateway extends Core_Gateway {
 					$name = $line->get_name();
 				}
 
+				$unit_price = $line->get_unit_price();
+
+				if ( null === $unit_price ) {
+					$unit_price = new TaxedMoney();
+				}
+
 				$item = $order_items->new_item(
 					DataHelper::sanitize_an( $name, 50 ),
-					$line->get_quantity(),
+					(int) $line->get_quantity(),
 					// The amount in cents, including VAT, of the item each, see below for more details.
-					MoneyTransformer::transform( $line->get_unit_price() ),
+					MoneyTransformer::transform( $unit_price ),
 					ProductCategories::transform( $line->get_type() )
 				);
 
@@ -197,7 +205,7 @@ class Gateway extends Core_Gateway {
 
 				$item->set_description( $description );
 
-				$tax_amount = $line->get_unit_price()->get_tax_amount();
+				$tax_amount = $unit_price->get_tax_amount();
 
 				if ( null !== $tax_amount ) {
 					// The VAT of the item each, see below for more details.
@@ -224,6 +232,7 @@ class Gateway extends Core_Gateway {
 	 * Update status of the specified payment.
 	 *
 	 * @param Payment $payment Payment.
+	 * @return void
 	 */
 	public function update_status( Payment $payment ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended

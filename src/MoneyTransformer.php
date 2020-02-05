@@ -29,7 +29,7 @@ class MoneyTransformer {
 	public static function transform( PronamicMoney $pronamic_money ) {
 		$money = new Money(
 			\strval( $pronamic_money->get_currency()->get_alphabetic_code() ),
-			\intval( $pronamic_money->get_cents() )
+			\intval( $pronamic_money->get_minor_units() )
 		);
 
 		return $money;
