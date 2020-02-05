@@ -65,9 +65,9 @@ before_install:
   # PHP_CodeSniffer - Slevomat Coding Standard requires PHP ^7.1.
   - if [ "$PHPCS" != "1" ]; then composer remove slevomat/coding-standard --dev --no-update; fi
   # PHPStan
-  - if [ "$PHPSTAN" == "1" ]; then composer global require phpstan/phpstan; fi
+  - if [ "$PHPSTAN" == "1" ]; then composer bin phpstan install; fi
   # Psalm
-  - if [ "$PSALM" == "1" ]; then composer global require vimeo/psalm; fi
+  - if [ "$PSALM" == "1" ]; then composer bin psalm install; fi
   # Symfony Security Check
   - if [ "$SYMFONY_SECURITY_CHECK" == "1" ]; then curl -sS https://get.symfony.com/cli/installer | bash; fi
   - if [ "$SYMFONY_SECURITY_CHECK" == "1" ]; then export PATH="$HOME/.symfony/bin:$PATH"; fi
@@ -96,9 +96,9 @@ script:
   # PHP Mess Detector
   - if [ "$PHPMD" == "1" ]; then composer run-script phpmd; fi
   # PHPStan
-  - if [ "$PHPSTAN" == "1" ]; then phpstan analyze; fi
+  - if [ "$PHPSTAN" == "1" ]; then composer run-script phpstan; fi
   # Psalm
-  - if [ "$PSALM" == "1" ]; then psalm; fi
+  - if [ "$PSALM" == "1" ]; then composer run-script psalm; fi
   # Symfony Security Check
   - if [ "$SYMFONY_SECURITY_CHECK" == "1" ]; then symfony security:check; fi
 
