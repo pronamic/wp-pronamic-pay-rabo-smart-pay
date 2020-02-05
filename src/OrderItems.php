@@ -60,7 +60,6 @@ class OrderItems {
 	 * Add order item.
 	 *
 	 * @param OrderItem $item Order item.
-	 *
 	 * @return void
 	 */
 	public function add_item( OrderItem $item ) {

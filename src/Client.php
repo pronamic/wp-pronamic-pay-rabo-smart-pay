@@ -82,7 +82,6 @@ class Client {
 	 * Set the action URL
 	 *
 	 * @param string $url URL.
-	 *
 	 * @return void
 	 */
 	public function set_url( $url ) {
@@ -102,7 +101,6 @@ class Client {
 	 * Set refresh token.
 	 *
 	 * @param string $refresh_token Refresh token.
-	 *
 	 * @return void
 	 */
 	public function set_refresh_token( $refresh_token ) {
@@ -122,7 +120,6 @@ class Client {
 	 * Set signing key.
 	 *
 	 * @param string $signing_key Signing key.
-	 *
 	 * @return void
 	 */
 	public function set_signing_key( $signing_key ) {

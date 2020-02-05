@@ -73,7 +73,6 @@ class Error extends \Exception {
 	 * Set error message.
 	 *
 	 * @param string|null $error_message Error message.
-	 *
 	 * @return void
 	 */
 	public function set_error_message( $error_message ) {
@@ -93,7 +92,6 @@ class Error extends \Exception {
 	 * Set consumer message.
 	 *
 	 * @param string|null $consumer_message Consumer message.
-	 *
 	 * @return void
 	 */
 	public function set_consumer_message( $consumer_message ) {

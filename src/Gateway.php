@@ -80,7 +80,6 @@ class Gateway extends Core_Gateway {
 	 * Start.
 	 *
 	 * @param Payment $payment Payment.
-	 *
 	 * @return void
 	 * @throws \Exception Throws exception when payment could not start at Rabobank OmniKassa 2.0.
 	 * @see Core_Gateway::start()
@@ -233,7 +232,6 @@ class Gateway extends Core_Gateway {
 	 * Update status of the specified payment.
 	 *
 	 * @param Payment $payment Payment.
-	 *
 	 * @return void
 	 */
 	public function update_status( Payment $payment ) {

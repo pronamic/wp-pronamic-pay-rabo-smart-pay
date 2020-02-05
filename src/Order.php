@@ -152,7 +152,6 @@ class Order extends Message {
 	 * @param string $merchant_order_id    Merchant order ID.
 	 * @param Money  $amount               Amount.
 	 * @param string $merchant_return_url  Merchant return URL.
-	 *
 	 * @return void
 	 */
 	public function __construct( $merchant_order_id, $amount, $merchant_return_url ) {
@@ -166,7 +165,6 @@ class Order extends Message {
 	 * Set timestamp.
 	 *
 	 * @param DateTime $timestamp Timestamp.
-	 *
 	 * @return void
 	 */
 	public function set_timestamp( DateTime $timestamp ) {
@@ -189,7 +187,6 @@ class Order extends Message {
 	 * If the ID contains more than 24 characters, the extra characters are removed after the 24th character.
 	 *
 	 * @param string $merchant_order_id Merchant order ID.
-	 *
 	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 10`.
 	 */
@@ -203,7 +200,6 @@ class Order extends Message {
 	 * Set amount.
 	 *
 	 * @param Money $amount Amount.
-	 *
 	 * @return void
 	 */
 	public function set_amount( Money $amount ) {
@@ -216,7 +212,6 @@ class Order extends Message {
 	 * The URL to which the consumer's browser will be sent after the payment.
 	 *
 	 * @param string $url Merchant return URL.
-	 *
 	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 1024`.
 	 */
@@ -230,7 +225,6 @@ class Order extends Message {
 	 * Set description.
 	 *
 	 * @param string|null $description Description.
-	 *
 	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 35`.
 	 */
@@ -244,7 +238,6 @@ class Order extends Message {
 	 * Set language.
 	 *
 	 * @param string|null $language Language (ISO 3166-1 alpha-2).
-	 *
 	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..2`.
 	 */
@@ -258,7 +251,6 @@ class Order extends Message {
 	 * Set payment brand.
 	 *
 	 * @param string|null $payment_brand Payment brand.
-	 *
 	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
@@ -272,7 +264,6 @@ class Order extends Message {
 	 * Set payment brand force.
 	 *
 	 * @param string|null $payment_brand_force Payment brand force.
-	 *
 	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..50`.
 	 */
@@ -297,7 +288,6 @@ class Order extends Message {
 	 * Set order items.
 	 *
 	 * @param OrderItems|null $order_items Order items.
-	 *
 	 * @return void
 	 */
 	public function set_order_items( OrderItems $order_items = null ) {
@@ -308,7 +298,6 @@ class Order extends Message {
 	 * Set shipping detail.
 	 *
 	 * @param Address|null $shipping_detail Shipping address details.
-	 *
 	 * @return void
 	 */
 	public function set_shipping_detail( Address $shipping_detail = null ) {
@@ -319,7 +308,6 @@ class Order extends Message {
 	 * Set billing detail.
 	 *
 	 * @param Address|null $billing_detail Billing address details.
-	 *
 	 * @return void
 	 */
 	public function set_billing_detail( Address $billing_detail = null ) {
@@ -330,7 +318,6 @@ class Order extends Message {
 	 * Set customer information.
 	 *
 	 * @param CustomerInformation $customer_information Customer information.
-	 *
 	 * @return void
 	 */
 	public function set_customer_information( CustomerInformation $customer_information ) {

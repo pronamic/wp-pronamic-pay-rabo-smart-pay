@@ -78,7 +78,6 @@ class Integration extends AbstractIntegration {
 	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-admin/admin-header.php#L259-L264
 	 * @link https://developer.wordpress.org/reference/hooks/admin_notices/
 	 * @link https://developer.wordpress.org/reference/functions/get_current_screen/
-	 *
 	 * @return void
 	 */
 	public function admin_notice_tld_test() {
@@ -249,9 +248,7 @@ class Integration extends AbstractIntegration {
 	 *
 	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
 	 * @link https://codex.wordpress.org/Function_Reference/delete_post_meta
-	 *
 	 * @param int $post_id Post ID.
-	 *
 	 * @return void
 	 */
 	public static function delete_access_token_meta( $post_id ) {

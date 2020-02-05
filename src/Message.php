@@ -38,7 +38,6 @@ abstract class Message implements Signable {
 	 * Set signature.
 	 *
 	 * @param string $signature Signature.
-	 *
 	 * @return void
 	 */
 	protected function set_signature( $signature ) {
@@ -49,7 +48,6 @@ abstract class Message implements Signable {
 	 * Sign this message with specified signing key.
 	 *
 	 * @param string $signing_key Signing key.
-	 *
 	 * @return void
 	 */
 	public function sign( $signing_key ) {
