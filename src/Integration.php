@@ -24,6 +24,8 @@ class Integration extends AbstractIntegration {
 	 * Construct and initialize integration.
 	 */
 	public function __construct() {
+		parent::__construct();
+
 		$this->id            = 'rabobank-omnikassa-2';
 		$this->name          = 'Rabobank - OmniKassa 2.0';
 		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
