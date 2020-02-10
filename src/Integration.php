@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
+use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
  * Integration
@@ -19,24 +19,30 @@ use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
  * @version 2.1.10
  * @since   1.0.0
  */
-class Integration extends AbstractIntegration {
+class Integration extends AbstractGatewayIntegration {
 	/**
-	 * Construct and initialize integration.
+	 * Construct OmniKassa 2.0 integration.
+	 *
+	 * @param array $args Arguments.
 	 */
-	public function __construct() {
-		parent::__construct();
-
-		$this->id            = 'rabobank-omnikassa-2';
-		$this->name          = 'Rabobank - OmniKassa 2.0';
-		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
-		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
-		$this->provider      = 'rabobank';
-		$this->supports      = array(
-			'webhook',
-			'webhook_log',
+	public function __construct( $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'id'            => 'rabobank-omnikassa-2',
+				'name'          => 'Rabobank - OmniKassa 2.0',
+				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/',
+				'dashboard_url' => 'https://bankieren.rabobank.nl/omnikassa-dashboard/',
+				'provider'      => 'rabobank',
+				'supports'      => array(
+					'webhook',
+					'webhook_log',
+				),
+				'manual_url'    => \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ),
+			)
 		);
 
-		$this->set_manual_url( \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ) );
+		parent::__construct( $args );
 
 		/**
 		 * Webhook listener function.
