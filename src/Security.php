@@ -3,7 +3,7 @@
  * Security
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -47,7 +47,7 @@ class Security {
 		}
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
-		$decoded_signing_key = \base64_decode( $signing_key );
+		$decoded_signing_key = \base64_decode( $signing_key, true );
 
 		if ( false === $decoded_signing_key ) {
 			throw new \InvalidArgumentException(

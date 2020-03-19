@@ -3,14 +3,14 @@
  * Integration
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
+use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
  * Integration
@@ -19,22 +19,30 @@ use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
  * @version 2.1.10
  * @since   1.0.0
  */
-class Integration extends AbstractIntegration {
+class Integration extends AbstractGatewayIntegration {
 	/**
-	 * Construct and initialize integration.
+	 * Construct OmniKassa 2.0 integration.
+	 *
+	 * @param array $args Arguments.
 	 */
-	public function __construct() {
-		$this->id            = 'rabobank-omnikassa-2';
-		$this->name          = 'Rabobank - OmniKassa 2.0';
-		$this->product_url   = 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/';
-		$this->dashboard_url = 'https://bankieren.rabobank.nl/omnikassa-dashboard/';
-		$this->provider      = 'rabobank';
-		$this->supports      = array(
-			'webhook',
-			'webhook_log',
+	public function __construct( $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'id'            => 'rabobank-omnikassa-2',
+				'name'          => 'Rabobank - OmniKassa 2.0',
+				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/',
+				'dashboard_url' => 'https://bankieren.rabobank.nl/omnikassa-dashboard/',
+				'provider'      => 'rabobank',
+				'supports'      => array(
+					'webhook',
+					'webhook_log',
+				),
+				'manual_url'    => \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ),
+			)
 		);
 
-		$this->set_manual_url( \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ) );
+		parent::__construct( $args );
 
 		/**
 		 * Webhook listener function.
@@ -78,6 +86,7 @@ class Integration extends AbstractIntegration {
 	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-admin/admin-header.php#L259-L264
 	 * @link https://developer.wordpress.org/reference/hooks/admin_notices/
 	 * @link https://developer.wordpress.org/reference/functions/get_current_screen/
+	 * @return void
 	 */
 	public function admin_notice_tld_test() {
 		if ( \has_filter( 'pronamic_pay_omnikassa_2_merchant_return_url' ) ) {
@@ -248,6 +257,7 @@ class Integration extends AbstractIntegration {
 	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
 	 * @link https://codex.wordpress.org/Function_Reference/delete_post_meta
 	 * @param int $post_id Post ID.
+	 * @return void
 	 */
 	public static function delete_access_token_meta( $post_id ) {
 		\delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token' );

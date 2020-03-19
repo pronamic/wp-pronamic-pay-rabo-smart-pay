@@ -3,7 +3,7 @@
  * Order results
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -16,6 +16,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @author  Remco Tolsma
  * @version 2.1.10
  * @since   1.0.0
+ * @implements \IteratorAggregate<int, OrderResult>
  */
 class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
@@ -83,7 +84,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * Get iterator.
 	 *
-	 * @return \ArrayIterator
+	 * @return \ArrayIterator<int, OrderResult>
 	 */
 	public function getIterator() {
 		return new \ArrayIterator( $this->order_results );
@@ -93,7 +94,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	 * Create order results from object.
 	 *
 	 * @param object $object Object.
-	 * @return OrderResults
+	 * @return OrderResults<int, OrderResult>
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( $object ) {
@@ -130,7 +131,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	 * Create notification from JSON string.
 	 *
 	 * @param string $json JSON string.
-	 * @return OrderResults
+	 * @return OrderResults<int, OrderResult>
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {

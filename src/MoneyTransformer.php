@@ -3,7 +3,7 @@
  * Money transformer
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -29,7 +29,7 @@ class MoneyTransformer {
 	public static function transform( PronamicMoney $pronamic_money ) {
 		$money = new Money(
 			\strval( $pronamic_money->get_currency()->get_alphabetic_code() ),
-			\intval( $pronamic_money->get_cents() )
+			\intval( $pronamic_money->get_minor_units() )
 		);
 
 		return $money;

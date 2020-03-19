@@ -3,7 +3,7 @@
  * Notification
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -40,7 +40,8 @@ class Notification extends ResponseMessage {
 	private $event_name;
 
 	/**
-	 * Identification of the webshop (point of interaction), seen from ROK. This is relevant if several webshops use the same webhook URL.
+	 * Identification of the webshop (point of interaction), seen from ROK. This is relevant if several webshops
+	 * use the same webhook URL.
 	 *
 	 * @var int|string
 	 */
@@ -134,7 +135,8 @@ class Notification extends ResponseMessage {
 	 *
 	 * @param \stdClass $object Object.
 	 * @return Notification
-	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required
+	 * properties.
 	 */
 	public static function from_object( \stdClass $object ) {
 		if ( ! isset( $object->signature ) ) {

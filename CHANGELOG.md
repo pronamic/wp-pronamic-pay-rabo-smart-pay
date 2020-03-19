@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.2.0] - 2020-03-19
+- Extend from AbstractGatewayIntegration class.
+
 ## [2.1.10] - 2019-12-22
 - Added URL to manual in gateway settings.
 - Added address fields validation.
@@ -68,7 +71,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.10...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.0...HEAD
+[2.2.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.10...2.2.0
 [2.1.10]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.9...2.1.10
 [2.1.9]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.8...2.1.9
 [2.1.8]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.7...2.1.8

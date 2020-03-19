@@ -3,7 +3,7 @@
  * Order item.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -103,6 +103,7 @@ class OrderItem {
 	 * Set item ID.
 	 *
 	 * @param string|null $id ID.
+	 * @return void
 	 */
 	public function set_id( $id = null ) {
 		$this->id = $id;
@@ -121,6 +122,7 @@ class OrderItem {
 	 * Set item name.
 	 *
 	 * @param string $name Name.
+	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 50`.
 	 */
 	public function set_name( $name ) {
@@ -142,6 +144,7 @@ class OrderItem {
 	 * Set item description.
 	 *
 	 * @param string|null $description Description.
+	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 100`.
 	 */
 	public function set_description( $description ) {
@@ -181,6 +184,7 @@ class OrderItem {
 	 * Set tax.
 	 *
 	 * @param Money|null $tax Tax.
+	 * @return void
 	 */
 	public function set_tax( Money $tax = null ) {
 		$this->tax = $tax;
@@ -199,6 +203,7 @@ class OrderItem {
 	 * Set category.
 	 *
 	 * @param string $category Product category: PHYSICAL or DIGITAL.
+	 * @return void
 	 * @throws \InvalidArgumentException Throws invalid argument exception when value does not apply to format `AN..max 8`.
 	 */
 	public function set_category( $category ) {
@@ -220,6 +225,7 @@ class OrderItem {
 	 * Set VAT category.
 	 *
 	 * @param string|null $vat_category VAT category.
+	 * @return void
 	 */
 	public function set_vat_category( $vat_category ) {
 		$this->vat_category = $vat_category;

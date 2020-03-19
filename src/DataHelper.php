@@ -3,7 +3,7 @@
  * Data helper
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -113,7 +113,8 @@ class DataHelper {
 	 * @param int         $max   Max length of value.
 	 * @param string      $field Field name.
 	 * @return true
-	 * @throws \InvalidArgumentException Throws invalid argument exception when value is not null and longer then max length.
+	 * @throws \InvalidArgumentException Throws invalid argument exception when value is not null and longer then max
+	 * length.
 	 */
 	public static function validate_null_or_an( $value, $max, $field ) {
 		if ( null === $value ) {
