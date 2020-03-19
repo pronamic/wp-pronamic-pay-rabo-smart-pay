@@ -173,7 +173,7 @@ class Client {
 		 * @link https://curl.haxx.se/
 		 */
 
-		// phpcs:disable SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+		// phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 
 		$curl = '';
 
