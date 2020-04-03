@@ -14,6 +14,7 @@ use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Gateway
@@ -313,7 +314,26 @@ class Gateway extends Core_Gateway {
 			}
 
 			foreach ( $order_results as $order_result ) {
-				$payment = \get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id() );
+				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
+
+				$payment = \get_pronamic_payment_by_transaction_id( $order_result->get_omnikassa_order_id() );
+
+				if ( empty( $payment ) ) {
+					// Get last payment, unless payment has expired, then get payments in chronological order.
+					$order = ( PaymentStatus::EXPIRED === $pronamic_status ? 'DESC' : 'ASC' );
+
+					$args = array(
+						'order'      => $order,
+						'meta_query' => array(
+							array(
+								'key'     => '_pronamic_payment_transaction_id',
+								'compare' => 'NOT EXISTS',
+							),
+						),
+					);
+
+					$payment = \get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id(), $args );
+				}
 
 				// Log webhook request.
 				\do_action( 'pronamic_pay_webhook_log_payment', $payment );
@@ -323,8 +343,6 @@ class Gateway extends Core_Gateway {
 				}
 
 				$payment->set_transaction_id( $order_result->get_omnikassa_order_id() );
-
-				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
 
 				if ( null !== $pronamic_status ) {
 					$payment->set_status( $pronamic_status );

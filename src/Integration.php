@@ -23,10 +23,10 @@ class Integration extends AbstractGatewayIntegration {
 	/**
 	 * Construct OmniKassa 2.0 integration.
 	 *
-	 * @param array $args Arguments.
+	 * @param array<string, string|array> $args Arguments.
 	 */
 	public function __construct( $args = array() ) {
-		$args = wp_parse_args(
+		$args = \wp_parse_args(
 			$args,
 			array(
 				'id'            => 'rabobank-omnikassa-2',
