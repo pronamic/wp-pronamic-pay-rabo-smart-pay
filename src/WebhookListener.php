@@ -57,7 +57,11 @@ class WebhookListener {
 			$gateway = Plugin::get_gateway( $post->ID );
 
 			if ( $gateway instanceof Gateway ) {
-				$gateway->handle_notification( $notification );
+				try {
+					$gateway->handle_notification( $notification );
+				} catch ( \Exception $e ) {
+					continue;
+				}
 			}
 		}
 	}

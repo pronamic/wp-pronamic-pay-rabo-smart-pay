@@ -307,7 +307,12 @@ class Gateway extends Core_Gateway {
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
 		do {
-			$order_results = $this->client->get_order_results( $notification->get_authentication() );
+			// Catch (authorization) errors.
+			try {
+				$order_results = $this->client->get_order_results( $notification->get_authentication() );
+			} catch ( \Exception $e ) {
+				return;
+			}
 
 			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
 				return;
