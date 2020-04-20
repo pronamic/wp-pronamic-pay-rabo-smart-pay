@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.2.2] - 2020-04-20
+- Improved webhook handling if multiple gateway configurations exist.
+
 ## [2.2.1] - 2020-04-03
 - Improved webhook handling if multiple payments exist with same merchant order ID.
 
@@ -74,7 +77,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.1...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.2...HEAD
+[2.2.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.1...2.2.2
 [2.2.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.10...2.2.0
 [2.1.10]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.9...2.1.10
