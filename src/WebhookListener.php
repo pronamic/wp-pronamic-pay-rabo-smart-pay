@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Webhook listener
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.2.2
  * @since   2.0.2
  */
 class WebhookListener {
@@ -57,7 +57,11 @@ class WebhookListener {
 			$gateway = Plugin::get_gateway( $post->ID );
 
 			if ( $gateway instanceof Gateway ) {
-				$gateway->handle_notification( $notification );
+				try {
+					$gateway->handle_notification( $notification );
+				} catch ( \Exception $e ) {
+					continue;
+				}
 			}
 		}
 	}

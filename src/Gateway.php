@@ -20,7 +20,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Gateway
  *
  * @author  Remco Tolsma
- * @version 2.1.10
+ * @version 2.2.2
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
@@ -236,12 +236,12 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 */
 	public function update_status( Payment $payment ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
 		if ( ! ReturnParameters::contains( $_GET ) ) {
 			return;
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
 		$parameters = ReturnParameters::from_array( $_GET );
 
 		// Note.
@@ -307,7 +307,12 @@ class Gateway extends Core_Gateway {
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
 		do {
-			$order_results = $this->client->get_order_results( $notification->get_authentication() );
+			// Catch (authorization) errors.
+			try {
+				$order_results = $this->client->get_order_results( $notification->get_authentication() );
+			} catch ( \Exception $e ) {
+				return;
+			}
 
 			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
 				return;
