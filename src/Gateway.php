@@ -325,7 +325,7 @@ class Gateway extends Core_Gateway {
 
 				if ( empty( $payment ) ) {
 					// Get last payment, unless payment has expired, then get payments in chronological order.
-					$order = ( PaymentStatus::EXPIRED === $pronamic_status ? 'DESC' : 'ASC' );
+					$order = ( PaymentStatus::EXPIRED === $pronamic_status ? 'ASC' : 'DESC' );
 
 					$args = array(
 						'order'      => $order,
