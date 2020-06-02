@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.2.3] - 2020-06-02
+- Fix incorrect payments order when handling order status notifications.
+
 ## [2.2.2] - 2020-04-20
 - Improved webhook handling if multiple gateway configurations exist.
 
@@ -77,7 +80,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.2...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.3...HEAD
+[2.2.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.2...2.2.3
 [2.2.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.1...2.2.2
 [2.2.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.10...2.2.0
