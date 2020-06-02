@@ -20,7 +20,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Gateway
  *
  * @author  Remco Tolsma
- * @version 2.2.2
+ * @version 2.2.3
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
