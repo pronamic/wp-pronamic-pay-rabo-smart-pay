@@ -221,11 +221,7 @@ class Gateway extends Core_Gateway {
 		// Announce order.
 		$response = $this->client->order_announce( $this->config, $order );
 
-		// Validate.
-		if ( ! $response->is_valid( $this->config->signing_key ) ) {
-			throw new \Exception( 'Could not validate OmniKassa 2.0 response signature with signing key.' );
-		}
-
+		$payment->set_transaction_id( $response->get_omnikassa_order_id() );
 		$payment->set_action_url( $response->get_redirect_url() );
 	}
 
@@ -248,7 +244,7 @@ class Gateway extends Core_Gateway {
 		$note_values = array(
 			'order_id'  => $parameters->get_order_id(),
 			'status'    => $parameters->get_status(),
-			'signature' => $parameters->get_signature(),
+			'signature' => \strval( $parameters->get_signature() ),
 			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
 		);
 
@@ -322,23 +318,6 @@ class Gateway extends Core_Gateway {
 				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
 
 				$payment = \get_pronamic_payment_by_transaction_id( $order_result->get_omnikassa_order_id() );
-
-				if ( empty( $payment ) ) {
-					// Get last payment, unless payment has expired, then get payments in chronological order.
-					$order = ( PaymentStatus::EXPIRED === $pronamic_status ? 'ASC' : 'DESC' );
-
-					$args = array(
-						'order'      => $order,
-						'meta_query' => array(
-							array(
-								'key'     => '_pronamic_payment_transaction_id',
-								'compare' => 'NOT EXISTS',
-							),
-						),
-					);
-
-					$payment = \get_pronamic_payment_by_meta( '_pronamic_payment_omnikassa_2_merchant_order_id', $order_result->get_merchant_order_id(), $args );
-				}
 
 				// Log webhook request.
 				\do_action( 'pronamic_pay_webhook_log_payment', $payment );

@@ -87,7 +87,7 @@ class CustomerInformation {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Gender "%s" must be equal to `null`, "F" or "M".',
-					$gender
+					\strval( $gender )
 				)
 			);
 		}

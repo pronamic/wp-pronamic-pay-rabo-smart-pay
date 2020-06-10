@@ -19,6 +19,13 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  */
 class OrderAnnounceResponse extends ResponseMessage {
 	/**
+	 * OmniKassa order ID.
+	 *
+	 * @var string
+	 */
+	private $omnikassa_order_id;
+
+	/**
 	 * Redirect URL.
 	 *
 	 * @var string
@@ -28,13 +35,23 @@ class OrderAnnounceResponse extends ResponseMessage {
 	/**
 	 * Construct notification message.
 	 *
-	 * @param string $redirect_url Redirect URL.
-	 * @param string $signature    Signature.
+	 * @param string $omnikassa_order_id OmniKassa order ID.
+	 * @param string $redirect_url       Redirect URL.
 	 */
-	public function __construct( $redirect_url, $signature ) {
-		parent::__construct( $signature );
+	public function __construct( $omnikassa_order_id, $redirect_url ) {
+		parent::__construct();
 
-		$this->redirect_url = $redirect_url;
+		$this->omnikassa_order_id = $omnikassa_order_id;
+		$this->redirect_url       = $redirect_url;
+	}
+
+	/**
+	 * Get OmniKassa order ID.
+	 *
+	 * @return string
+	 */
+	public function get_omnikassa_order_id() {
+		return $this->omnikassa_order_id;
 	}
 
 	/**
@@ -52,9 +69,7 @@ class OrderAnnounceResponse extends ResponseMessage {
 	 * @return array<string>
 	 */
 	public function get_signature_fields() {
-		return array(
-			$this->get_redirect_url(),
-		);
+		return array();
 	}
 
 	/**
@@ -65,8 +80,8 @@ class OrderAnnounceResponse extends ResponseMessage {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( $object ) {
-		if ( ! isset( $object->signature ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `signature` property.' );
+		if ( ! isset( $object->omnikassaOrderId ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `omnikassaOrderId` property.' );
 		}
 
 		if ( ! isset( $object->redirectUrl ) ) {
@@ -74,8 +89,8 @@ class OrderAnnounceResponse extends ResponseMessage {
 		}
 
 		return new self(
-			$object->redirectUrl,
-			$object->signature
+			$object->omnikassaOrderId,
+			$object->redirectUrl
 		);
 	}
 

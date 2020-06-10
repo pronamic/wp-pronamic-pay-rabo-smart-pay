@@ -21,14 +21,14 @@ abstract class Message implements Signable {
 	/**
 	 * Signature.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $signature;
 
 	/**
 	 * Get signature.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_signature() {
 		return $this->signature;
@@ -37,7 +37,7 @@ abstract class Message implements Signable {
 	/**
 	 * Set signature.
 	 *
-	 * @param string $signature Signature.
+	 * @param string|null $signature Signature.
 	 * @return void
 	 */
 	protected function set_signature( $signature ) {
@@ -63,12 +63,18 @@ abstract class Message implements Signable {
 	 * @return bool True if valid, false otherwise.
 	 */
 	public function is_valid( $signing_key ) {
-		$signature = Security::get_signature( $this, $signing_key );
+		$signature_a = Security::get_signature( $this, $signing_key );
 
-		if ( empty( $signature ) ) {
+		if ( empty( $signature_a ) ) {
 			return false;
 		}
 
-		return Security::validate_signature( $signature, $this->get_signature() );
+		$signature_b = $this->get_signature();
+
+		if ( empty( $signature_b ) ) {
+			return false;
+		}
+
+		return Security::validate_signature( $signature_a, $signature_b );
 	}
 }

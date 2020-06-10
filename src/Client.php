@@ -268,11 +268,9 @@ class Client {
 	 * @return OrderAnnounceResponse
 	 */
 	public function order_announce( $config, Order $order ) {
-		$order->sign( $config->signing_key );
-
 		$object = $order->get_json();
 
-		$result = $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
+		$result = $this->request( 'POST', 'order/server/api/v2/order', $config->access_token, $object );
 
 		return OrderAnnounceResponse::from_object( $result );
 	}

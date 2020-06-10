@@ -21,9 +21,9 @@ abstract class ResponseMessage extends Message {
 	/**
 	 * Construct message.
 	 *
-	 * @param string $signature Signature.
+	 * @param string|null $signature Signature.
 	 */
-	public function __construct( $signature ) {
+	public function __construct( $signature = null ) {
 		$this->set_signature( $signature );
 	}
 }

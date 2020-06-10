@@ -4,16 +4,17 @@
 	"title": "OmniKassa 2.0 order announce response.",
 	"type": "object",
 	"required": [
-		"redirectUrl",
-		"signature"
+		"omnikassaOrderId",
+		"redirectUrl"
 	],
 	"properties": {
-		"redirectUrl": {
-			"type": "string"
-		},
-		"signature": {
+		"omnikassaOrderId": {
 			"type": "string",
-			"description": "The signature of the message, see heading signature for details."
+			"description": "The unique ID that Rabo Omnikassa assigned to this order. This ID can be later used to look up the order status that is communicated using the webhook notification mechanism."
+		},
+		"redirectUrl": {
+			"type": "string",
+			"description": "The URL to which the browser of the consumer must be redirected to. This URL points to the payment pages of Rabo Omnikassa."
 		}
 	}
 }
