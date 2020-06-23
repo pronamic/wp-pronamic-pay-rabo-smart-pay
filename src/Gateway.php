@@ -325,8 +325,6 @@ class Gateway extends Core_Gateway {
 					continue;
 				}
 
-				$payment->set_transaction_id( $order_result->get_omnikassa_order_id() );
-
 				if ( null !== $pronamic_status ) {
 					$payment->set_status( $pronamic_status );
 				}
