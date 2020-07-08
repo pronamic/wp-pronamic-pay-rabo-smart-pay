@@ -16,7 +16,7 @@ use DateTime;
  * Order
  *
  * @author  Remco Tolsma
- * @version 2.1.10
+ * @version 2.2.4
  * @since   1.0.0
  */
 class Order extends Message {
@@ -370,8 +370,6 @@ class Order extends Message {
 		if ( null !== $this->payment_brand_force ) {
 			$object->paymentBrandForce = $this->payment_brand_force;
 		}
-
-		$object->signature = $this->get_signature();
 
 		return $object;
 	}

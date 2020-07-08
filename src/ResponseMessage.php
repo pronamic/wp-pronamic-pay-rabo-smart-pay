@@ -14,16 +14,16 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Response message
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.2.4
  * @since   2.0.2
  */
 abstract class ResponseMessage extends Message {
 	/**
 	 * Construct message.
 	 *
-	 * @param string $signature Signature.
+	 * @param string|null $signature Signature.
 	 */
-	public function __construct( $signature ) {
+	public function __construct( $signature = null ) {
 		$this->set_signature( $signature );
 	}
 }

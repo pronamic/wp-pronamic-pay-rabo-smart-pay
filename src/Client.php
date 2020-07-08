@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Client.
  *
  * @author  Remco Tolsma
- * @version 2.1.10
+ * @version 2.2.4
  * @since   1.0.0
  */
 class Client {
@@ -268,11 +268,9 @@ class Client {
 	 * @return OrderAnnounceResponse
 	 */
 	public function order_announce( $config, Order $order ) {
-		$order->sign( $config->signing_key );
-
 		$object = $order->get_json();
 
-		$result = $this->request( 'POST', 'order/server/api/order', $config->access_token, $object );
+		$result = $this->request( 'POST', 'order/server/api/v2/order', $config->access_token, $object );
 
 		return OrderAnnounceResponse::from_object( $result );
 	}
