@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * Order announce response
  *
  * @author  Remco Tolsma
- * @version 2.1.8
+ * @version 2.2.4
  * @since   2.0.2
  */
 class OrderAnnounceResponse extends ResponseMessage {
