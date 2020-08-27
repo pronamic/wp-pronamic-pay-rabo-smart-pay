@@ -94,7 +94,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	 * Create order results from object.
 	 *
 	 * @param object $object Object.
-	 * @return OrderResults<int, OrderResult>
+	 * @return OrderResults
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( $object ) {
@@ -131,7 +131,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	 * Create notification from JSON string.
 	 *
 	 * @param string $json JSON string.
-	 * @return OrderResults<int, OrderResult>
+	 * @return OrderResults
 	 * @throws \JsonSchema\Exception\ValidationException Throws JSON schema validation exception when JSON is invalid.
 	 */
 	public static function from_json( $json ) {

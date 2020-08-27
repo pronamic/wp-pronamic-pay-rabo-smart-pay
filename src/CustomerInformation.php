@@ -87,7 +87,7 @@ class CustomerInformation {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Gender "%s" must be equal to `null`, "F" or "M".',
-					\strval( $gender )
+					(string) $gender
 				)
 			);
 		}
@@ -153,11 +153,11 @@ class CustomerInformation {
 	 * @return array<string>
 	 */
 	public function get_signature_fields( $fields = array() ) {
-		$fields[] = \strval( $this->email_address );
+		$fields[] = (string) $this->email_address;
 		$fields[] = ( null === $this->date_of_birth ) ? '' : $this->date_of_birth->format( 'd-m-Y' );
-		$fields[] = \strval( $this->gender );
-		$fields[] = \strval( $this->initials );
-		$fields[] = \strval( $this->telephone_number );
+		$fields[] = (string) $this->gender;
+		$fields[] = (string) $this->initials;
+		$fields[] = (string) $this->telephone_number;
 
 		return $fields;
 	}

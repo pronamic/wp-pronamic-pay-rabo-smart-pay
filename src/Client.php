@@ -279,7 +279,7 @@ class Client {
 	 * Get order results by the notification token.
 	 *
 	 * @param string $notification_token Notification token.
-	 * @return OrderResults<int, OrderResult>
+	 * @return OrderResults
 	 */
 	public function get_order_results( $notification_token ) {
 		$result = $this->request(
