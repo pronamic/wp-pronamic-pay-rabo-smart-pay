@@ -37,7 +37,13 @@ class WebhookListener {
 			return;
 		}
 
-		$notification = Notification::from_json( $json );
+		// Get notification from input data.
+		try {
+			$notification = Notification::from_json( $json );
+		} catch ( \JsonSchema\Exception\ValidationException $e ) {
+			// Invalid input data.
+			return;
+		}
 
 		$query = new \WP_Query(
 			array(
