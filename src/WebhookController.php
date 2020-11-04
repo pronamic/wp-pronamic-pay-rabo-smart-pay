@@ -129,12 +129,6 @@ class WebhookController {
 			return;
 		}
 
-		$json = \file_get_contents( 'php://input' );
-
-		if ( empty( $json ) ) {
-			return;
-		}
-
 		\rest_get_server()->serve_request( '/pronamic-pay/omnikassa-2/v1/webhook' );
 
 		exit;
