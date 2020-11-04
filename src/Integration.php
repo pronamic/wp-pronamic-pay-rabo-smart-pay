@@ -21,6 +21,13 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
  */
 class Integration extends AbstractGatewayIntegration {
 	/**
+	 * REST route namespace.
+	 *
+	 * @var string
+	 */
+	const REST_ROUTE_NAMESPACE = 'pronamic-pay/omnikassa-2/v1';
+
+	/**
 	 * Construct OmniKassa 2.0 integration.
 	 *
 	 * @param array<string, string|array> $args Arguments.
@@ -45,17 +52,6 @@ class Integration extends AbstractGatewayIntegration {
 		parent::__construct( $args );
 
 		/**
-		 * Webhook listener function.
-		 *
-		 * @var callable $webhook_listener_function
-		 */
-		$webhook_listener_function = array( __NAMESPACE__ . '\WebhookListener', 'listen' );
-
-		if ( ! \has_action( 'wp_loaded', $webhook_listener_function ) ) {
-			\add_action( 'wp_loaded', $webhook_listener_function );
-		}
-
-		/**
 		 * Save post.
 		 *
 		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
@@ -78,6 +74,23 @@ class Integration extends AbstractGatewayIntegration {
 		if ( ! \has_action( 'admin_notices', $admin_notices_function ) ) {
 			\add_action( 'admin_notices', $admin_notices_function );
 		}
+	}
+
+	/**
+	 * Setup gateway integration.
+	 *
+	 * @return void
+	 */
+	public function setup() {
+		// Check if dependencies are met and integration is active.
+		if ( ! $this->is_active() ) {
+			return;
+		}
+
+		// Webhook controller.
+		$webhook_controller = new WebhookController();
+
+		$webhook_controller->setup();
 	}
 
 	/**
@@ -223,7 +236,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => \__( 'Webhook URL', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'large-text', 'code' ),
-			'value'    => \add_query_arg( 'omnikassa2_webhook', '', \home_url( '/' ) ),
+			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook' ),
 			'readonly' => true,
 			'tooltip'  => \__( 'The Webhook URL as sent with each transaction to receive automatic payment status updates on.', 'pronamic_ideal' ),
 		);
