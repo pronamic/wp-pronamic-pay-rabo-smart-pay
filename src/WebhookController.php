@@ -5,7 +5,7 @@
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
- * @package   Pronamic\WordPress\Pay\Gateways\Mollie
+ * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
@@ -16,10 +16,9 @@ use Pronamic\WordPress\Pay\Plugin;
 /**
  * Webhook controller
  *
- * @link https://docs.mollie.com/guides/webhooks
  * @author  Remco Tolsma
- * @version 2.1.0
- * @since   2.1.0
+ * @version 2.2.5
+ * @since   2.2.5
  */
 class WebhookController {
 	/**
