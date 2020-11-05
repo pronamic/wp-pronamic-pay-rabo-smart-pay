@@ -45,7 +45,10 @@ class Integration extends AbstractGatewayIntegration {
 					'webhook',
 					'webhook_log',
 				),
-				'manual_url'    => \__( 'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ),
+				'manual_url'    => \__(
+					'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/',
+					'pronamic_ideal'
+				),
 			)
 		);
 
@@ -141,7 +144,10 @@ class Integration extends AbstractGatewayIntegration {
 		$class   = 'notice notice-error';
 		$message = \sprintf(
 			/* translators: 1: Pronamic Pay, 2: Documentation link, 3: <code>.test</code> */
-			\__( '%1$s — <a href="%2$s">OmniKassa 2 does not accept payments from %3$s environments</a>.', 'pronamic_ideal' ),
+			\__(
+				'%1$s — <a href="%2$s">OmniKassa 2 does not accept payments from %3$s environments</a>.',
+				'pronamic_ideal'
+			),
 			\sprintf(
 				'<strong>%s</strong>',
 				\__( 'Pronamic Pay', 'pronamic_ideal' )
@@ -213,7 +219,10 @@ class Integration extends AbstractGatewayIntegration {
 				'%s<br />%s %s<br />%s',
 				\sprintf(
 					/* translators: %s: <code>merchantOrderId</code> */
-					\__( 'The OmniKassa 2.0 %s field must consist strictly of 24 alphanumeric characters, other characters, such as ".", "@", " " (space), etc. are not allowed.', 'pronamic_ideal' ),
+					\__(
+						'The OmniKassa 2.0 %s field must consist strictly of 24 alphanumeric characters, other characters, such as ".", "@", " " (space), etc. are not allowed.',
+						'pronamic_ideal'
+					),
 					$code_field
 				),
 				\__( 'Available tags:', 'pronamic_ideal' ),
@@ -238,7 +247,10 @@ class Integration extends AbstractGatewayIntegration {
 			'classes'  => array( 'large-text', 'code' ),
 			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook' ),
 			'readonly' => true,
-			'tooltip'  => \__( 'The Webhook URL as sent with each transaction to receive automatic payment status updates on.', 'pronamic_ideal' ),
+			'tooltip'  => \__(
+				'The Webhook URL as sent with each transaction to receive automatic payment status updates on.',
+				'pronamic_ideal'
+			),
 		);
 
 		return $fields;

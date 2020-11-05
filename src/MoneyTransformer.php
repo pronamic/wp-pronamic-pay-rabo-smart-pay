@@ -31,7 +31,9 @@ class MoneyTransformer {
 		$alphabetic_code = $pronamic_money->get_currency()->get_alphabetic_code();
 
 		if ( null === $alphabetic_code ) {
-			throw new \InvalidArgumentException( 'Alphabetic currency code is required to transform Pronamic money to OmniKassa 2.0 amount object.' );
+			throw new \InvalidArgumentException(
+				'Alphabetic currency code is required to transform Pronamic money to OmniKassa 2.0 amount object.'
+			);
 		}
 
 		$money = new Money(

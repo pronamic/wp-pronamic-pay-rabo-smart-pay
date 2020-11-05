@@ -63,11 +63,7 @@ class WebhookController {
 		 *
 		 * @link https://developer.wordpress.org/reference/functions/wp_send_json_success/
 		 */
-		$response = \rest_ensure_response(
-			array(
-				'success' => true,
-			)
-		);
+		$response = \rest_ensure_response( array( 'success' => true ) );
 
 		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 

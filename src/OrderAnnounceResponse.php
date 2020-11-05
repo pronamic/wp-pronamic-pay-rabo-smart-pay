@@ -88,10 +88,7 @@ class OrderAnnounceResponse extends ResponseMessage {
 			throw new \InvalidArgumentException( 'Object must contain `redirectUrl` property.' );
 		}
 
-		return new self(
-			$object->omnikassaOrderId,
-			$object->redirectUrl
-		);
+		return new self( $object->omnikassaOrderId, $object->redirectUrl );
 	}
 
 	/**

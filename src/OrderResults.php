@@ -120,11 +120,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 			$order_results[] = OrderResult::from_object( $o );
 		}
 
-		return new self(
-			$object->moreOrderResultsAvailable,
-			$order_results,
-			$object->signature
-		);
+		return new self( $object->moreOrderResultsAvailable, $order_results, $object->signature );
 	}
 
 	/**
