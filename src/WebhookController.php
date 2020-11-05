@@ -58,19 +58,9 @@ class WebhookController {
 	 * @return object
 	 */
 	public function rest_api_omnikassa_2_webhook( \WP_REST_Request $request ) {
-		/**
-		 * Result.
-		 *
-		 * @link https://developer.wordpress.org/reference/functions/wp_send_json_success/
-		 */
-		$response = \rest_ensure_response( array( 'success' => true ) );
-
-		$response->add_link( 'self', \rest_url( $request->get_route() ) );
-
-		// JSON.
+		// Input.
 		$json = $request->get_body();
 
-		// Get notification from input data.
 		try {
 			$notification = Notification::from_json( $json );
 		} catch ( \JsonSchema\Exception\ValidationException $e ) {
@@ -85,6 +75,7 @@ class WebhookController {
 			);
 		}
 
+		// Query.
 		$query = new \WP_Query(
 			array(
 				'post_type'   => GatewayPostType::POST_TYPE,
@@ -110,6 +101,11 @@ class WebhookController {
 				}
 			}
 		}
+
+		// Response.
+		$response = new \WP_REST_Response( array( 'success' => true ) );
+
+		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 
 		return $response;
 	}
