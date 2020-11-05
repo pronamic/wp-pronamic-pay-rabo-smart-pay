@@ -79,6 +79,12 @@ install:
   # List available packages.
   - composer show
 
+before_script:
+  - mysql --version
+  - php --version
+  - node --version
+  - npm --version
+
 script:
   # ESLint
   - if [ "$ESLINT" == "1" ]; then npm run-script eslint; fi
