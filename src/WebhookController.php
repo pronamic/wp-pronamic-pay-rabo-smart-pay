@@ -17,8 +17,8 @@ use Pronamic\WordPress\Pay\Plugin;
  * Webhook controller
  *
  * @author  Remco Tolsma
- * @version 2.2.5
- * @since   2.2.5
+ * @version 2.3.0
+ * @since   2.3.0
  */
 class WebhookController {
 	/**

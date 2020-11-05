@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.3.0] - Unreleased
+- Switched to REST API for webhook.
+- Catch input JSON validation exception in webhook listener.
+
 ## [2.2.4] - 2020-07-08
 - Switched to new endpoint at `/order/server/api/v2/order`.
 - Removed obsolete update of payment transaction ID.
@@ -84,7 +88,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.4...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.0...HEAD
+[2.3.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.4...2.3.0
 [2.2.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.3...2.2.4
 [2.2.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.2...2.2.3
 [2.2.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.1...2.2.2
