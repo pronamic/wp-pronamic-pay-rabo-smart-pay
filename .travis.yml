@@ -36,6 +36,7 @@ jobs:
     - language: node_js
       node_js: 12
       script:
+      - npm install
       # ESLint
       - npm run-script eslint
   allow_failures:
@@ -67,9 +68,6 @@ before_install:
   # Symfony Security Check
   - if [ "$SYMFONY_SECURITY_CHECK" == "1" ]; then curl -sS https://get.symfony.com/cli/installer | bash; fi
   - if [ "$SYMFONY_SECURITY_CHECK" == "1" ]; then export PATH="$HOME/.symfony/bin:$PATH"; fi
-  # Node - https://stackoverflow.com/questions/27644586/how-to-set-up-travis-ci-with-multiple-languages
-  - nvm install 14.15.0
-  - nvm use 14.15.0
 
 install:
   # Update Composer itself to the latest version (https://getcomposer.org/doc/03-cli.md#self-update-selfupdate-).
