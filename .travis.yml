@@ -59,6 +59,8 @@ before_install:
     fi
   # Raise PHP memory limit to 2048MB
   - echo 'memory_limit = 2048M' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  # Update Composer itself to the latest version (https://getcomposer.org/doc/03-cli.md#self-update-selfupdate-).
+  - composer self-update
   # Validate composer.json file.
   - composer validate --strict
   # Add Composer global vendor/bin to path.
@@ -70,8 +72,6 @@ before_install:
   - if [ "$SYMFONY_SECURITY_CHECK" == "1" ]; then export PATH="$HOME/.symfony/bin:$PATH"; fi
 
 install:
-  # Update Composer itself to the latest version (https://getcomposer.org/doc/03-cli.md#self-update-selfupdate-).
-  - composer self-update
   # Install Composer packages.
   - composer install
   # PHPStan
