@@ -7,7 +7,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
-## [2.3.0] - Unreleased
+## [2.3.0] - 2020-11-09
 - Switched to REST API for webhook.
 - Catch input JSON validation exception in webhook listener.
 
