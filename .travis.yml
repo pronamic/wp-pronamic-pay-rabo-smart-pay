@@ -1,7 +1,5 @@
 dist: xenial
 
-sudo: false
-
 language: php
 
 services:
@@ -115,10 +113,3 @@ cache:
     - node_modules
     - vendor
     - $HOME/.composer/cache
-
-before_script:
-  - mysql --version
-  - php --version
-  - node --version
-  - npm --version
-  - nvm --version
