@@ -62,11 +62,7 @@ class Security {
 
 		$combined = self::get_signature_fields_combined( $fields );
 
-		$signature = \hash_hmac(
-			'sha512',
-			$combined,
-			$decoded_signing_key
-		);
+		$signature = \hash_hmac( 'sha512', $combined, $decoded_signing_key );
 
 		return $signature;
 	}

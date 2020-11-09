@@ -166,8 +166,10 @@ class Gateway extends Core_Gateway {
 					$i++
 				);
 
-				if ( null !== $line->get_name() && '' !== $line->get_name() ) {
-					$name = $line->get_name();
+				$line_name = $line->get_name();
+
+				if ( null !== $line_name && '' !== $line_name ) {
+					$name = $line_name;
 				}
 
 				$unit_price = $line->get_unit_price();
@@ -243,7 +245,7 @@ class Gateway extends Core_Gateway {
 		$note_values = array(
 			'order_id'  => $parameters->get_order_id(),
 			'status'    => $parameters->get_status(),
-			'signature' => \strval( $parameters->get_signature() ),
+			'signature' => (string) $parameters->get_signature(),
 			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
 		);
 
@@ -330,14 +332,11 @@ class Gateway extends Core_Gateway {
 				}
 
 				// Note.
-				$note = '';
-
-				$note .= '<p>';
-				$note .= \__( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' );
-				$note .= '</p>';
-				$note .= '<pre>';
-				$note .= \wp_json_encode( $order_result->get_json(), \JSON_PRETTY_PRINT );
-				$note .= '</pre>';
+				$note = \sprintf(
+					'<p>%s</p><pre>%s</pre>',
+					\__( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' ),
+					(string) \wp_json_encode( $order_result->get_json(), \JSON_PRETTY_PRINT )
+				);
 
 				$payment->add_note( $note );
 

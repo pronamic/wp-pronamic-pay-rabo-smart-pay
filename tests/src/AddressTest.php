@@ -26,13 +26,7 @@ class AddressTest extends TestCase {
 	 * @return Address
 	 */
 	private function get_test_address() {
-		$address = new Address(
-			'Jansen',
-			'Beukenlaan',
-			'1234AA',
-			'Amsterdam',
-			'NL'
-		);
+		$address = new Address( 'Jansen', 'Beukenlaan', '1234AA', 'Amsterdam', 'NL' );
 
 		// Optional.
 		$address->set_first_name( 'Jan' );
@@ -69,7 +63,9 @@ class AddressTest extends TestCase {
 		$address = $this->get_test_address();
 
 		$this->expectException( \InvalidArgumentException::class );
-		$this->expectExceptionMessage( 'Field `Address.lastName` value "123456789012345678901234567890123456789012345678901" can not be longer then `50`.' );
+		$this->expectExceptionMessage(
+			'Field `Address.lastName` value "123456789012345678901234567890123456789012345678901" can not be longer then `50`.'
+		);
 
 		$address->set_last_name( '123456789012345678901234567890123456789012345678901' );
 	}
@@ -81,9 +77,13 @@ class AddressTest extends TestCase {
 		$address = $this->get_test_address();
 
 		$this->expectException( \InvalidArgumentException::class );
-		$this->expectExceptionMessage( 'Field `Address.street` value "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901" can not be longer then `100`.' );
+		$this->expectExceptionMessage(
+			'Field `Address.street` value "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901" can not be longer then `100`.'
+		);
 
-		$address->set_street( '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901' );
+		$address->set_street(
+			'12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'
+		);
 	}
 
 	/**
@@ -119,7 +119,9 @@ class AddressTest extends TestCase {
 		$address = $this->get_test_address();
 
 		$this->expectException( \InvalidArgumentException::class );
-		$this->expectExceptionMessage( 'Field `Address.city` value "12345678901234567890123456789012345678901" can not be longer then `40`.' );
+		$this->expectExceptionMessage(
+			'Field `Address.city` value "12345678901234567890123456789012345678901" can not be longer then `40`.'
+		);
 
 		$address->set_city( '12345678901234567890123456789012345678901' );
 	}
@@ -143,7 +145,9 @@ class AddressTest extends TestCase {
 		$address = $this->get_test_address();
 
 		$this->expectException( \InvalidArgumentException::class );
-		$this->expectExceptionMessage( 'Field `Address.firstName` value "123456789012345678901234567890123456789012345678901" can not be longer then `50`.' );
+		$this->expectExceptionMessage(
+			'Field `Address.firstName` value "123456789012345678901234567890123456789012345678901" can not be longer then `50`.'
+		);
 
 		$address->set_first_name( '123456789012345678901234567890123456789012345678901' );
 	}
@@ -155,7 +159,9 @@ class AddressTest extends TestCase {
 		$address = $this->get_test_address();
 
 		$this->expectException( \InvalidArgumentException::class );
-		$this->expectExceptionMessage( 'Field `Address.middleName` value "123456789012345678901" can not be longer then `20`.' );
+		$this->expectExceptionMessage(
+			'Field `Address.middleName` value "123456789012345678901" can not be longer then `20`.'
+		);
 
 		$address->set_middle_name( '123456789012345678901' );
 	}
@@ -167,9 +173,13 @@ class AddressTest extends TestCase {
 		$address = $this->get_test_address();
 
 		$this->expectException( \InvalidArgumentException::class );
-		$this->expectExceptionMessage( 'Field `Address.houseNumber` value "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901" can not be longer then `100`.' );
+		$this->expectExceptionMessage(
+			'Field `Address.houseNumber` value "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901" can not be longer then `100`.'
+		);
 
-		$address->set_house_number( '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901' );
+		$address->set_house_number(
+			'12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'
+		);
 	}
 
 	/**
@@ -179,7 +189,9 @@ class AddressTest extends TestCase {
 		$address = $this->get_test_address();
 
 		$this->expectException( \InvalidArgumentException::class );
-		$this->expectExceptionMessage( 'Field `Address.houseNumberAddition` value "1234567" can not be longer then `6`.' );
+		$this->expectExceptionMessage(
+			'Field `Address.houseNumberAddition` value "1234567" can not be longer then `6`.'
+		);
 
 		$address->set_house_number_addition( '1234567' );
 	}

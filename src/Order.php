@@ -386,8 +386,8 @@ class Order extends Message {
 
 		$fields = $this->amount->get_signature_fields( $fields );
 
-		$fields[] = \strval( $this->language );
-		$fields[] = \strval( $this->description );
+		$fields[] = \strval( (string) $this->language );
+		$fields[] = \strval( (string) $this->description );
 		$fields[] = $this->merchant_return_url;
 
 		if ( null !== $this->order_items ) {

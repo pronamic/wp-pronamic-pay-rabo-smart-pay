@@ -62,18 +62,14 @@ class OrderTest extends TestCase {
 		);
 
 		$order_item->set_id( 'A1000' );
-		$order_item->set_description( 'These distinct, feminine frames balance a classic Jackie-O styling with a modern look.' );
+		$order_item->set_description(
+			'These distinct, feminine frames balance a classic Jackie-O styling with a modern look.'
+		);
 		$order_item->set_tax( new Money( 'EUR', 4725 ) );
 		$order_item->set_vat_category( VatCategories::HIGH );
 
 		// Shipping detail.
-		$shipping_detail = new Address(
-			'Jansen',
-			'Beukenlaan',
-			'1234AA',
-			'Amsterdam',
-			'NL'
-		);
+		$shipping_detail = new Address( 'Jansen', 'Beukenlaan', '1234AA', 'Amsterdam', 'NL' );
 
 		$shipping_detail->set_first_name( 'Jan' );
 		$shipping_detail->set_middle_name( 'van' );
@@ -83,13 +79,7 @@ class OrderTest extends TestCase {
 		$order->set_shipping_detail( $shipping_detail );
 
 		// Billing detail.
-		$billing_detail = new Address(
-			'Jansen',
-			'Kersenstraat',
-			'1234BB',
-			'Haarlem',
-			'NL'
-		);
+		$billing_detail = new Address( 'Jansen', 'Kersenstraat', '1234BB', 'Haarlem', 'NL' );
 
 		$billing_detail->set_first_name( 'Jan' );
 		$billing_detail->set_middle_name( 'van' );
@@ -149,7 +139,11 @@ class OrderTest extends TestCase {
 	public function test_merchant_order_id_too_long() {
 		$this->expectException( \InvalidArgumentException::class );
 
-		new Order( '123456789012345678901234567890', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+		new Order(
+			'123456789012345678901234567890',
+			new Money( 'EUR', 22500 ),
+			'https://mijn.webwinkel.nl/betalingsresultaat'
+		);
 	}
 
 	/**

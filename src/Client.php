@@ -184,7 +184,10 @@ class Client {
 		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Authorization: Bearer ' . $token ) ) . $eol;
 		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Content-Type: application/json' ) ) . $eol;
 		$curl .= $tab . \sprintf( '--data %s', \escapeshellarg( \strval( \wp_json_encode( $object ) ) ) ) . $eol;
-		$curl .= $tab . \sprintf( '--user-agent %s', \escapeshellarg( 'WordPress/' . \get_bloginfo( 'version' ) . '; ' . \get_bloginfo( 'url' ) ) ) . $eol;
+		$curl .= $tab . \sprintf(
+			'--user-agent %s',
+			\escapeshellarg( 'WordPress/' . \get_bloginfo( 'version' ) . '; ' . \get_bloginfo( 'url' ) )
+		) . $eol;
 		$curl .= $tab . '--verbose';
 
 		// phpcs:enable
@@ -279,7 +282,7 @@ class Client {
 	 * Get order results by the notification token.
 	 *
 	 * @param string $notification_token Notification token.
-	 * @return OrderResults<int, OrderResult>
+	 * @return OrderResults
 	 */
 	public function get_order_results( $notification_token ) {
 		$result = $this->request(

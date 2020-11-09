@@ -116,10 +116,6 @@ class ReturnParameters extends ResponseMessage {
 			throw new \InvalidArgumentException( 'Data array must contain `signature` field.' );
 		}
 
-		return new self(
-			$data['order_id'],
-			$data['status'],
-			$data['signature']
-		);
+		return new self( $data['order_id'], $data['status'], $data['signature'] );
 	}
 }

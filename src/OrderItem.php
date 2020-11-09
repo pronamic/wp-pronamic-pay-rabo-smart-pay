@@ -277,7 +277,7 @@ class OrderItem {
 		}
 
 		$fields[] = $this->name;
-		$fields[] = \strval( $this->description );
+		$fields[] = \strval( (string) $this->description );
 		$fields[] = \strval( $this->quantity );
 
 		$fields = $this->amount->get_signature_fields( $fields );

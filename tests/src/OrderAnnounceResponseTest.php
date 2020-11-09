@@ -32,6 +32,9 @@ class OrderAnnounceResponseTest extends TestCase {
 
 		$this->assertEquals( '1d0a95f4-2589-439b-9562-c50aa19f9caf', $response->get_omnikassa_order_id() );
 
-		$this->assertEquals( 'https://betalen.rabobank.nl/omnikassa-api/payment-brand?token=eyJraWQiOiJFTU8iLCJhbGciOiJFUzI1NiJ9.eyJlbW8iOiJhYWZhMDAxM', $response->get_redirect_url() );
+		$this->assertEquals(
+			'https://betalen.rabobank.nl/omnikassa-api/payment-brand?token=eyJraWQiOiJFTU8iLCJhbGciOiJFUzI1NiJ9.eyJlbW8iOiJhYWZhMDAxM',
+			$response->get_redirect_url()
+		);
 	}
 }

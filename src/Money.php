@@ -89,10 +89,7 @@ class Money {
 			throw new \InvalidArgumentException( 'Object must contain `amount` property.' );
 		}
 
-		return new self(
-			$object->currency,
-			$object->amount
-		);
+		return new self( $object->currency, $object->amount );
 	}
 
 	/**

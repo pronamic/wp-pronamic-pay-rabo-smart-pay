@@ -32,7 +32,10 @@ class OrderResultsTest extends TestCase {
 
 		$items = \iterator_to_array( $order_results );
 
-		$this->assertEquals( '9384f4387cd03b7d7e49a34a6037fe97ea901a830f466d2bc5e852388d1a95302278b229639de51e2f841dc35a4c282685fb2de9ad6d579a8d8efd950231e12f', $order_results->get_signature() );
+		$this->assertEquals(
+			'9384f4387cd03b7d7e49a34a6037fe97ea901a830f466d2bc5e852388d1a95302278b229639de51e2f841dc35a4c282685fb2de9ad6d579a8d8efd950231e12f',
+			$order_results->get_signature()
+		);
 		$this->assertFalse( $order_results->more_available() );
 		$this->assertCount( 1, $order_results );
 
