@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.8
  * @since   2.0.3
  */
-class OrderItems {
+class OrderItems implements \JsonSerializable {
 	/**
 	 * Order items.
 	 *
@@ -80,10 +80,10 @@ class OrderItems {
 	 *
 	 * @return array<object>|null
 	 */
-	public function get_json() {
+	public function jsonSerialize() {
 		$data = \array_map(
 			static function( OrderItem $item ) {
-				return $item->get_json();
+				return $item->jsonSerialize();
 			},
 			$this->get_order_items()
 		);

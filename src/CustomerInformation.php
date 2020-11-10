@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use DateTime;
+use DateTimeInterface;
 
 /**
  * Customer information.
@@ -19,7 +19,7 @@ use DateTime;
  * @version 2.2.4
  * @since   2.0.2
  */
-class CustomerInformation {
+class CustomerInformation implements \JsonSerializable {
 	/**
 	 * The e-mailadress of the consumer.
 	 *
@@ -30,7 +30,7 @@ class CustomerInformation {
 	/**
 	 * The date of birth of the consumer.
 	 *
-	 * @var DateTime|null
+	 * @var DateTimeInterface|null
 	 */
 	private $date_of_birth;
 
@@ -68,10 +68,10 @@ class CustomerInformation {
 	/**
 	 * Set date of birth.
 	 *
-	 * @param DateTime|null $date_of_birth Date of birth.
+	 * @param DateTimeInterface|null $date_of_birth Date of birth.
 	 * @return void
 	 */
-	public function set_date_of_birth( DateTime $date_of_birth = null ) {
+	public function set_date_of_birth( DateTimeInterface $date_of_birth = null ) {
 		$this->date_of_birth = $date_of_birth;
 	}
 
@@ -120,7 +120,7 @@ class CustomerInformation {
 	 *
 	 * @return object
 	 */
-	public function get_json() {
+	public function jsonSerialize() {
 		$object = (object) array();
 
 		if ( null !== $this->email_address ) {
