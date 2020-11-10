@@ -192,8 +192,8 @@ class OrderResult implements \JsonSerializable {
 			'orderStatus'         => $this->get_order_status(),
 			'orderStatusDateTime' => $this->get_order_status_datetime(),
 			'errorCode'           => $this->get_error_code(),
-			'paidAmount'          => $this->get_paid_amount()->jsonSerialize(),
-			'totalAmount'         => $this->get_total_amount()->jsonSerialize(),
+			'paidAmount'          => $this->get_paid_amount(),
+			'totalAmount'         => $this->get_total_amount(),
 		);
 	}
 

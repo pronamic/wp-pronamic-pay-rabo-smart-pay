@@ -250,10 +250,10 @@ class OrderItem implements \JsonSerializable {
 		}
 
 		$object->quantity = $this->quantity;
-		$object->amount   = $this->amount->jsonSerialize();
+		$object->amount   = $this->amount;
 
 		if ( null !== $this->tax ) {
-			$object->tax = $this->tax->jsonSerialize();
+			$object->tax = $this->tax;
 		}
 
 		$object->category = $this->category;

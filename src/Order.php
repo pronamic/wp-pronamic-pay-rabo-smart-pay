@@ -340,21 +340,21 @@ class Order extends Message implements \JsonSerializable {
 		}
 
 		if ( null !== $this->order_items ) {
-			$object->orderItems = $this->order_items->jsonSerialize();
+			$object->orderItems = $this->order_items;
 		}
 
-		$object->amount = $this->amount->jsonSerialize();
+		$object->amount = $this->amount;
 
 		if ( null !== $this->shipping_detail ) {
-			$object->shippingDetail = $this->shipping_detail->jsonSerialize();
+			$object->shippingDetail = $this->shipping_detail;
 		}
 
 		if ( null !== $this->billing_detail ) {
-			$object->billingDetail = $this->billing_detail->jsonSerialize();
+			$object->billingDetail = $this->billing_detail;
 		}
 
 		if ( null !== $this->customer_information ) {
-			$object->customerInformation = $this->customer_information->jsonSerialize();
+			$object->customerInformation = $this->customer_information;
 		}
 
 		if ( null !== $this->language ) {
