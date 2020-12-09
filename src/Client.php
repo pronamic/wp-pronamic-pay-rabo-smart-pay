@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Pronamic\WordPress\Pay\Facades\Http;
+
 /**
  * Client.
  *
@@ -193,42 +195,9 @@ class Client {
 		// phpcs:enable
 
 		// Request.
-		$response = \wp_remote_request( $url, $args );
+		$response = Http::request( $url, $args );
 
-		if ( $response instanceof \WP_Error ) {
-			throw new \Exception(
-				\sprintf(
-					'OmniKassa 2.0 HTTP request failed: %s.',
-					$response->get_error_message()
-				)
-			);
-		}
-
-		// Body.
-		$body = \wp_remote_retrieve_body( $response );
-
-		// Response.
-		$response_code    = \wp_remote_retrieve_response_code( $response );
-		$response_message = \wp_remote_retrieve_response_message( $response );
-
-		// Data.
-		$data = \json_decode( $body );
-
-		// JSON error.
-		$json_error = \json_last_error();
-
-		if ( \JSON_ERROR_NONE !== $json_error ) {
-			throw new \Exception(
-				\sprintf(
-					'Could not JSON decode OmniKassa 2.0 response, HTTP response: "%s %s", HTTP body length: "%d", JSON error: "%s".',
-					$response_code,
-					$response_message,
-					\strlen( $body ),
-					\json_last_error_msg()
-				),
-				$json_error
-			);
-		}
+		$data = $response->json();
 
 		// Object.
 		if ( ! \is_object( $data ) ) {
