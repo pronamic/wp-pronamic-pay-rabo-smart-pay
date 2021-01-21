@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.3.1] - 2021-01-21
+- Updated check for response object in client request.
+
 ## [2.3.0] - 2020-11-09
 - Switched to REST API for webhook.
 - Catch input JSON validation exception in webhook listener.
@@ -88,7 +91,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.0...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.1...HEAD
+[2.3.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.4...2.3.0
 [2.2.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.3...2.2.4
 [2.2.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.2...2.2.3
