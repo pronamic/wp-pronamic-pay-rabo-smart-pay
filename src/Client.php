@@ -199,6 +199,19 @@ class Client {
 
 		$data = $response->json();
 
+		// Object.
+		if ( ! \is_object( $data ) ) {
+			throw new \Exception(
+				\sprintf(
+					'Could not JSON decode OmniKassa 2.0 response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
+					$response->status(),
+					$response->message(),
+					\strlen( $response->body() )
+				),
+				\intval( $response->status() )
+			);
+		}
+
 		// Error.
 		if ( isset( $data->errorCode ) ) {
 			$error = Error::from_object( $data );
