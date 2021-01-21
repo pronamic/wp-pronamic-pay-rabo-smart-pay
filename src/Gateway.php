@@ -3,7 +3,7 @@
  * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -335,7 +335,7 @@ class Gateway extends Core_Gateway {
 				$note = \sprintf(
 					'<p>%s</p><pre>%s</pre>',
 					\__( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' ),
-					(string) \wp_json_encode( $order_result->get_json(), \JSON_PRETTY_PRINT )
+					(string) \wp_json_encode( $order_result, \JSON_PRETTY_PRINT )
 				);
 
 				$payment->add_note( $note );

@@ -3,7 +3,7 @@
  * Order result
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.8
  * @since   2.0.2
  */
-class OrderResult {
+class OrderResult implements \JsonSerializable {
 	/**
 	 * OrderId as delivered during the Order Announce.
 	 *
@@ -184,7 +184,7 @@ class OrderResult {
 	 *
 	 * @return object
 	 */
-	public function get_json() {
+	public function jsonSerialize() {
 		return (object) array(
 			'merchantOrderId'     => $this->get_merchant_order_id(),
 			'omnikassaOrderId'    => $this->get_omnikassa_order_id(),
@@ -192,8 +192,8 @@ class OrderResult {
 			'orderStatus'         => $this->get_order_status(),
 			'orderStatusDateTime' => $this->get_order_status_datetime(),
 			'errorCode'           => $this->get_error_code(),
-			'paidAmount'          => $this->get_paid_amount()->get_json(),
-			'totalAmount'         => $this->get_total_amount()->get_json(),
+			'paidAmount'          => $this->get_paid_amount(),
+			'totalAmount'         => $this->get_total_amount(),
 		);
 	}
 

@@ -3,7 +3,7 @@
  * Address
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.10
  * @since   2.0.2
  */
-class Address {
+class Address implements \JsonSerializable {
 	/**
 	 * First name.
 	 *
@@ -300,9 +300,9 @@ class Address {
 	/**
 	 * Get JSON.
 	 *
-	 * @return object|null
+	 * @return object
 	 */
-	public function get_json() {
+	public function jsonSerialize() {
 		$object = (object) array();
 
 		$object->firstName  = $this->first_name;

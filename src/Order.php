@@ -3,7 +3,7 @@
  * Order
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -19,7 +19,7 @@ use DateTime;
  * @version 2.2.4
  * @since   1.0.0
  */
-class Order extends Message {
+class Order extends Message implements \JsonSerializable {
 	/**
 	 * ISO 8601 standard Date / time on which the order is announced at ROK.
 	 * As a rule, this is the current date / time.
@@ -329,7 +329,7 @@ class Order extends Message {
 	 *
 	 * @return object
 	 */
-	public function get_json() {
+	public function jsonSerialize() {
 		$object = (object) array();
 
 		$object->timestamp       = $this->timestamp->format( \DATE_ATOM );
@@ -340,21 +340,21 @@ class Order extends Message {
 		}
 
 		if ( null !== $this->order_items ) {
-			$object->orderItems = $this->order_items->get_json();
+			$object->orderItems = $this->order_items;
 		}
 
-		$object->amount = $this->amount->get_json();
+		$object->amount = $this->amount;
 
 		if ( null !== $this->shipping_detail ) {
-			$object->shippingDetail = $this->shipping_detail->get_json();
+			$object->shippingDetail = $this->shipping_detail;
 		}
 
 		if ( null !== $this->billing_detail ) {
-			$object->billingDetail = $this->billing_detail->get_json();
+			$object->billingDetail = $this->billing_detail;
 		}
 
 		if ( null !== $this->customer_information ) {
-			$object->customerInformation = $this->customer_information->get_json();
+			$object->customerInformation = $this->customer_information;
 		}
 
 		if ( null !== $this->language ) {

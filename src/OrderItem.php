@@ -3,7 +3,7 @@
  * Order item.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.10
  * @since   2.0.3
  */
-class OrderItem {
+class OrderItem implements \JsonSerializable {
 	/**
 	 * Item id.
 	 *
@@ -236,7 +236,7 @@ class OrderItem {
 	 *
 	 * @return object
 	 */
-	public function get_json() {
+	public function jsonSerialize() {
 		$object = (object) array();
 
 		if ( null !== $this->id ) {
@@ -250,10 +250,10 @@ class OrderItem {
 		}
 
 		$object->quantity = $this->quantity;
-		$object->amount   = $this->amount->get_json();
+		$object->amount   = $this->amount;
 
 		if ( null !== $this->tax ) {
-			$object->tax = $this->tax->get_json();
+			$object->tax = $this->tax;
 		}
 
 		$object->category = $this->category;

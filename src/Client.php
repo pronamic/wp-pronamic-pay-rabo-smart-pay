@@ -3,12 +3,14 @@
  * Client.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
+
+use Pronamic\WordPress\Pay\Facades\Http;
 
 /**
  * Client.
@@ -193,53 +195,20 @@ class Client {
 		// phpcs:enable
 
 		// Request.
-		$response = \wp_remote_request( $url, $args );
+		$response = Http::request( $url, $args );
 
-		if ( $response instanceof \WP_Error ) {
-			throw new \Exception(
-				\sprintf(
-					'OmniKassa 2.0 HTTP request failed: %s.',
-					$response->get_error_message()
-				)
-			);
-		}
-
-		// Body.
-		$body = \wp_remote_retrieve_body( $response );
-
-		// Response.
-		$response_code    = \wp_remote_retrieve_response_code( $response );
-		$response_message = \wp_remote_retrieve_response_message( $response );
-
-		// Data.
-		$data = \json_decode( $body );
-
-		// JSON error.
-		$json_error = \json_last_error();
-
-		if ( \JSON_ERROR_NONE !== $json_error ) {
-			throw new \Exception(
-				\sprintf(
-					'Could not JSON decode OmniKassa 2.0 response, HTTP response: "%s %s", HTTP body length: "%d", JSON error: "%s".',
-					$response_code,
-					$response_message,
-					\strlen( $body ),
-					\json_last_error_msg()
-				),
-				$json_error
-			);
-		}
+		$data = $response->json();
 
 		// Object.
 		if ( ! \is_object( $data ) ) {
 			throw new \Exception(
 				\sprintf(
 					'Could not JSON decode OmniKassa 2.0 response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
-					$response_code,
-					$response_message,
-					\strlen( $body )
+					$response->status(),
+					$response->message(),
+					\strlen( $response->body() )
 				),
-				\intval( $response_code )
+				\intval( $response->status() )
 			);
 		}
 
@@ -271,9 +240,7 @@ class Client {
 	 * @return OrderAnnounceResponse
 	 */
 	public function order_announce( $config, Order $order ) {
-		$object = $order->get_json();
-
-		$result = $this->request( 'POST', 'order/server/api/v2/order', $config->access_token, $object );
+		$result = $this->request( 'POST', 'order/server/api/v2/order', $config->access_token, $order );
 
 		return OrderAnnounceResponse::from_object( $result );
 	}
