@@ -86,7 +86,7 @@ class Notification extends ResponseMessage {
 	/**
 	 * Check if this notice (authentication token) is expired.
 	 *
-	 * @return bool True if notice authentication token is epxired, false otherwise.
+	 * @return bool True if notice authentication token is expired, false otherwise.
 	 */
 	public function is_expired() {
 		$timestamp = \strtotime( $this->get_expiry() );

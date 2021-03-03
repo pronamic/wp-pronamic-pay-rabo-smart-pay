@@ -22,8 +22,8 @@ class DataHelper {
 	/**
 	 * Strictly alphanumerical (letters and numbers only).
 	 *
-	 * The OmniKassa 2.0 document is not very clear about spaces, these are not allowd in AN (Strictly).
-	 * If a space is used in a AN (Strictly) field this will result in for examploe the following error:
+	 * The OmniKassa 2.0 document is not very clear about spaces, these are not allowed in AN (Strictly).
+	 * If a space is used in a AN (Strictly) field this will result in for example the following error:
 	 * `merchantOrderId should only contain alphanumeric characters`.
 	 *
 	 * @var array<string>

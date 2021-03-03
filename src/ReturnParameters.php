@@ -97,7 +97,7 @@ class ReturnParameters extends ResponseMessage {
 	}
 
 	/**
-	 * Get return parameters from the specifieid data array.
+	 * Get return parameters from the specified data array.
 	 *
 	 * @param array<string> $data Data array.
 	 * @return ReturnParameters

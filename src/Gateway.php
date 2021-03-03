@@ -193,7 +193,7 @@ class Gateway extends Core_Gateway {
 
 				if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
 					/*
-					 * The `OrderItem.description` field is documentated as `0..1` (optional),
+					 * The `OrderItem.description` field is documented as `0..1` (optional),
 					 * but for AfterPay payments it is required.
 					 *
 					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
