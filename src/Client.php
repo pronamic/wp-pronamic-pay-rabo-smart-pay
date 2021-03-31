@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Facades\Http;
+use Pronamic\WordPress\Http\Facades\Http;
 
 /**
  * Client.
