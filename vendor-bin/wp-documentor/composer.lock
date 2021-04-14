@@ -282,12 +282,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-documentor.git",
-                "reference": "71290caf9875fb47e64a6baa9aa6c16d2f95d48e"
+                "reference": "f49cf4674c561b98d4aba10cffaa54ba3f50a30d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-documentor/zipball/71290caf9875fb47e64a6baa9aa6c16d2f95d48e",
-                "reference": "71290caf9875fb47e64a6baa9aa6c16d2f95d48e",
+                "url": "https://api.github.com/repos/pronamic/wp-documentor/zipball/f49cf4674c561b98d4aba10cffaa54ba3f50a30d",
+                "reference": "f49cf4674c561b98d4aba10cffaa54ba3f50a30d",
                 "shasum": ""
             },
             "require": {
@@ -296,6 +296,10 @@
                 "symfony/console": "^5.2",
                 "symfony/filesystem": "^5.2",
                 "symfony/finder": "^5.2"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4",
+                "roots/wordpress": "^5.7"
             },
             "default-branch": true,
             "bin": [
@@ -321,7 +325,7 @@
                 "issues": "https://github.com/pronamic/wp-documentor/issues",
                 "source": "https://github.com/pronamic/wp-documentor/tree/main"
             },
-            "time": "2021-04-12T18:40:39+00:00"
+            "time": "2021-04-14T08:42:07+00:00"
         },
         {
             "name": "psr/container",
