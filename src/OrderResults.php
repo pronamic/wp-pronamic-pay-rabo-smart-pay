@@ -36,7 +36,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * Construct order results message.
 	 *
-	 * @param bool               $more_available True if more order results available, false oterwise.
+	 * @param bool               $more_available True if more order results available, false otherwise.
 	 * @param array<OrderResult> $order_results  Order results.
 	 * @param string             $signature      Signature.
 	 */
@@ -50,7 +50,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * More available.
 	 *
-	 * @return bool True if more order results available, false oterwise.
+	 * @return bool True if more order results available, false otherwise.
 	 */
 	public function more_available() {
 		return $this->more_available;

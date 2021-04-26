@@ -22,8 +22,8 @@ class DataHelper {
 	/**
 	 * Strictly alphanumerical (letters and numbers only).
 	 *
-	 * The OmniKassa 2.0 document is not very clear about spaces, these are not allowd in AN (Strictly).
-	 * If a space is used in a AN (Strictly) field this will result in for examploe the following error:
+	 * The OmniKassa 2.0 document is not very clear about spaces, these are not allowed in AN (Strictly).
+	 * If a space is used in a AN (Strictly) field this will result in for example the following error:
 	 * `merchantOrderId should only contain alphanumeric characters`.
 	 *
 	 * @var array<string>
@@ -143,8 +143,8 @@ class DataHelper {
 
 		/**
 		 * In version `2.1.6` of this library we used the `mb_strimwidth`
-		 * function, unfortunately this function is not alwys available.
-		 * Therefor we now use the `mb_substr`, WordPress is shipped
+		 * function, unfortunately this function is not always available.
+		 * Therefore we now use the `mb_substr`, WordPress is shipped
 		 * with a compat function.
 		 *
 		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/compat.php#L44-L217

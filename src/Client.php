@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Pay\Facades\Http;
+use Pronamic\WordPress\Http\Facades\Http;
 
 /**
  * Client.
@@ -167,6 +167,11 @@ class Client {
 			$args['body'] = \wp_json_encode( $object );
 		}
 
+		/**
+		 * Filters the OmniKassa 2.0 remote request arguments.
+		 *
+		 * @param array $args WordPress remote request arguments.
+		 */
 		$args = \apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
 
 		/**

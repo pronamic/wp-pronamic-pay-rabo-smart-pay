@@ -29,7 +29,7 @@ class Security {
 	}
 
 	/**
-	 * Calculdate signature for specific data.
+	 * Calculate signature for specific data.
 	 *
 	 * @param Signable $signable    Signable object.
 	 * @param string   $signing_key Signing Key.

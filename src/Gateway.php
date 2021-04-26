@@ -92,6 +92,12 @@ class Gateway extends Core_Gateway {
 
 		// New order.
 		$merchant_return_url = $payment->get_return_url();
+
+		/**
+		 * Filters the OmniKassa 2.0 merchant return URL.
+		 *
+		 * @param string $merchant_return_url Merchant return URL.
+		 */
 		$merchant_return_url = \apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
 
 		$order = new Order(
@@ -193,7 +199,7 @@ class Gateway extends Core_Gateway {
 
 				if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
 					/*
-					 * The `OrderItem.description` field is documentated as `0..1` (optional),
+					 * The `OrderItem.description` field is documented as `0..1` (optional),
 					 * but for AfterPay payments it is required.
 					 *
 					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
@@ -320,7 +326,11 @@ class Gateway extends Core_Gateway {
 
 				$payment = \get_pronamic_payment_by_transaction_id( $order_result->get_omnikassa_order_id() );
 
-				// Log webhook request.
+				/**
+				 * Webhook log payment.
+				 *
+				 * @param Payment $payment Payment to log.
+				 */
 				\do_action( 'pronamic_pay_webhook_log_payment', $payment );
 
 				if ( empty( $payment ) ) {
