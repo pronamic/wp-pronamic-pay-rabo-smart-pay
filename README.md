@@ -98,10 +98,14 @@ curl --request POST https://betalen.rabobank.nl/omnikassa-api-sandbox/order/serv
 ### Notification
 
 ```
-curl --request POST "https://example.com/?omnikassa2_webhook" \
+curl --request POST "https://example.com/wp-json/pronamic-pay/omnikassa-2/v1/webhook" \
 	--data-binary "@tests/json/notification.json" \
 	--user-agent "Java/1.8.0" \
 	--verbose
+```
+
+```
+http POST https://example.com/wp-json/pronamic-pay/omnikassa-2/v1/webhook @tests/json/notification.json User-Agent:Java/1.8.0
 ```
 
 ### Event
