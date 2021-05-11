@@ -309,19 +309,39 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
+		$exception = null;
+
 		do {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
 			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
-				throw new InvalidSignatureException(
+				throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
 					'Signature on order results message does not match gateway configuration signature.'
-				);				
+				);
 			}
 
 			foreach ( $order_results as $order_result ) {
-				$payment = \get_pronamic_payment_by_transaction_id( $order_result->get_omnikassa_order_id() );
+				$omnikassa_order_id = $order_result->get_omnikassa_order_id();
+
+				$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
 
 				if ( empty( $payment ) ) {
+					/**
+					 * If there is no payment found with the OmniKassa order ID
+					 * we will continue to check the other order results. It is
+					 * possible that the payment has been deleted and can
+					 * therefore no longer be updated. We keep track of this
+					 * exception and throw it at the end of this function.
+					 */
+					$exception = new \Exception(
+						\sprintf(
+							'Could not find payment with OmniKassa order ID: %s.',
+							$omnikassa_order_id
+						),
+						0,
+						$exception
+					);
+
 					continue;
 				}
 
@@ -350,6 +370,10 @@ class Gateway extends Core_Gateway {
 				$payment->save();
 			}
 		} while ( $order_results->more_available() );
+
+		if ( null !== $exception ) {
+			throw $exception;
+		}
 	}
 
 	/**
