@@ -321,16 +321,16 @@ class Gateway extends Core_Gateway {
 			foreach ( $order_results as $order_result ) {
 				$payment = \get_pronamic_payment_by_transaction_id( $order_result->get_omnikassa_order_id() );
 
+				if ( empty( $payment ) ) {
+					continue;
+				}
+
 				/**
 				 * Webhook log payment.
 				 *
 				 * @param Payment $payment Payment to log.
 				 */
 				\do_action( 'pronamic_pay_webhook_log_payment', $payment );
-
-				if ( empty( $payment ) ) {
-					continue;
-				}
 
 				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
 
