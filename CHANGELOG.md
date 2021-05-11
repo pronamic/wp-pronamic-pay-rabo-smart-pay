@@ -7,6 +7,11 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.3.3] - 2021-05-11
+- Improved error and exception handling in webhook controller.
+- Introduced the `InvalidSignatureException` class.
+- Improved documentation of the filters.
+
 ## [2.3.2] - 2021-04-26
 - Started using `pronamic/wp-http`.
 
@@ -94,7 +99,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.2...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.3...HEAD
+[2.3.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.2...2.3.3
 [2.3.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.1...2.3.2
 [2.3.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.4...2.3.0

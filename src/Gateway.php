@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Gateway
  *
  * @author  Remco Tolsma
- * @version 2.2.4
+ * @version 2.3.3
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
@@ -96,6 +96,18 @@ class Gateway extends Core_Gateway {
 		/**
 		 * Filters the OmniKassa 2.0 merchant return URL.
 		 *
+		 * OmniKassa 2 requires for each order announcement a merchant return URL.
+		 * OmniKassa 2 does not allow all merchant return URL's. An order 
+		 * announcement with a merchant return URL's with the TLD `.test` will
+		 * for example result in the following error:
+		 *
+		 * > merchantReturnURL is not a valid web address
+		 *
+		 * This can be very inconvenient for testing OmniKassa 2, therefor we 
+		 * introduced this filter.
+		 *
+		 * @link https://github.com/wp-pay-gateways/omnikassa-2#pronamic_pay_omnikassa_2_merchant_return_url
+		 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/master/documentation#merchantreturnurl-is-not-a-valid-web-address
 		 * @param string $merchant_return_url Merchant return URL.
 		 */
 		$merchant_return_url = \apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
@@ -290,10 +302,13 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @param Notification $notification Notification.
 	 * @return void
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signautre exception when notification message does not match gateway configuration signature.
 	 */
 	public function handle_notification( Notification $notification ) {
 		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
-			return;
+			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
+				'Signature on notification message does not match gateway configuration signature.'
+			);
 		}
 
 		switch ( $notification->get_event_name() ) {
@@ -307,35 +322,57 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @param Notification $notification Notification.
 	 * @return void
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signautre exception when order results message does not match gateway configuration signature.
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
+		$exception = null;
+
 		do {
-			// Catch (authorization) errors.
-			try {
-				$order_results = $this->client->get_order_results( $notification->get_authentication() );
-			} catch ( \Exception $e ) {
-				return;
-			}
+			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
 			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
-				return;
+				throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
+					'Signature on order results message does not match gateway configuration signature.'
+				);
 			}
 
 			foreach ( $order_results as $order_result ) {
-				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
+				$omnikassa_order_id = $order_result->get_omnikassa_order_id();
 
-				$payment = \get_pronamic_payment_by_transaction_id( $order_result->get_omnikassa_order_id() );
+				$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
+
+				if ( empty( $payment ) ) {
+					/**
+					 * If there is no payment found with the OmniKassa order ID
+					 * we will continue to check the other order results. It is
+					 * possible that the payment has been deleted and can
+					 * therefore no longer be updated. We keep track of this
+					 * exception and throw it at the end of this function.
+					 */
+					$exception = new \Exception(
+						\sprintf(
+							'Could not find payment with OmniKassa order ID: %s.',
+							$omnikassa_order_id
+						),
+						0,
+						$exception
+					);
+
+					continue;
+				}
 
 				/**
 				 * Webhook log payment.
+				 *
+				 * The `pronamic_pay_webhook_log_payment` action is triggered so the
+				 * `wp-pay/core` library can hook into this and register the webhook
+				 * call.
 				 *
 				 * @param Payment $payment Payment to log.
 				 */
 				\do_action( 'pronamic_pay_webhook_log_payment', $payment );
 
-				if ( empty( $payment ) ) {
-					continue;
-				}
+				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
 
 				if ( null !== $pronamic_status ) {
 					$payment->set_status( $pronamic_status );
@@ -353,6 +390,10 @@ class Gateway extends Core_Gateway {
 				$payment->save();
 			}
 		} while ( $order_results->more_available() );
+
+		if ( null !== $exception ) {
+			throw $exception;
+		}
 	}
 
 	/**
