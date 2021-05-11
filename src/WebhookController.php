@@ -56,6 +56,7 @@ class WebhookController {
 	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return object
+	 * @throws \Exception Throws exception when something unexpected happens ;-).
 	 */
 	public function rest_api_omnikassa_2_webhook( \WP_REST_Request $request ) {
 		// Input.
@@ -90,16 +91,28 @@ class WebhookController {
 			)
 		);
 
+		$exceptions = array();
+
 		foreach ( $query->posts as $post ) {
 			$gateway = Plugin::get_gateway( $post->ID );
 
-			if ( $gateway instanceof Gateway ) {
-				try {
-					$gateway->handle_notification( $notification );
-				} catch ( \Exception $e ) {
-					continue;
-				}
+			if ( ! $gateway instanceof Gateway ) {
+				continue;
 			}
+
+			/**
+			 * Try to handle notification, if an exception occurs we
+			 * will keep trying the other gateways.
+			 */
+			try {
+				$gateway->handle_notification( $notification );
+			} catch ( \Exception $e ) {
+				$exceptions[] = $e;
+			}
+		}
+
+		foreach ( $exceptions as $e ) {
+			throw $e;
 		}
 
 		// Response.
