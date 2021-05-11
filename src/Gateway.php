@@ -313,7 +313,9 @@ class Gateway extends Core_Gateway {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );
 
 			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
-				return;
+				throw new InvalidSignatureException(
+					'Signature on order results message does not match gateway configuration signature.'
+				);				
 			}
 
 			foreach ( $order_results as $order_result ) {
