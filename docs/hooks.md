@@ -9,13 +9,17 @@
 
 *Webhook log payment.*
 
+The `pronamic_pay_webhook_log_payment` action is triggered so the
+`wp-pay/core` library can hook into this and register the webhook
+call.
+
 **Arguments**
 
 Argument | Type | Description
 -------- | ---- | -----------
 `$payment` | `\Pronamic\WordPress\Pay\Payments\Payment` | Payment to log.
 
-Source: [src/Gateway.php](../src/Gateway.php), [line 364](../src/Gateway.php#L364-L369)
+Source: [src/Gateway.php](../src/Gateway.php), [line 364](../src/Gateway.php#L364-L373)
 
 ## Filters
 
