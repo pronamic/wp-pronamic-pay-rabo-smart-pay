@@ -94,7 +94,7 @@ class WebhookController {
 		$exceptions = array();
 
 		foreach ( $query->posts as $post ) {
-			$gateway = Plugin::get_gateway( $post->ID );
+			$gateway = Plugin::get_gateway( \get_post_field( 'ID', $post ) );
 
 			if ( ! $gateway instanceof Gateway ) {
 				continue;
