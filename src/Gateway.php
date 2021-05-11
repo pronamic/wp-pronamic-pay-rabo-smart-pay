@@ -307,6 +307,7 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @param Notification $notification Notification.
 	 * @return void
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signautre exception when order results message does not match gateway configuration signature.
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
 		$exception = null;
