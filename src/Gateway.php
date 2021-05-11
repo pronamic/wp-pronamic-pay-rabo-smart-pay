@@ -96,6 +96,18 @@ class Gateway extends Core_Gateway {
 		/**
 		 * Filters the OmniKassa 2.0 merchant return URL.
 		 *
+		 * OmniKassa 2 requires for each order announcement a merchant return URL.
+		 * OmniKassa 2 does not allow all merchant return URL's. An order 
+		 * announcement with a merchant return URL's with the TLD `.test` will
+		 * for example result in the following error:
+		 *
+		 * > merchantReturnURL is not a valid web address
+		 *
+		 * This can be very inconvenient for testing OmniKassa 2, therefor we 
+		 * introduced this filter.
+		 *
+		 * @link https://github.com/wp-pay-gateways/omnikassa-2#pronamic_pay_omnikassa_2_merchant_return_url
+		 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/master/documentation#merchantreturnurl-is-not-a-valid-web-address
 		 * @param string $merchant_return_url Merchant return URL.
 		 */
 		$merchant_return_url = \apply_filters( 'pronamic_pay_omnikassa_2_merchant_return_url', $merchant_return_url );
