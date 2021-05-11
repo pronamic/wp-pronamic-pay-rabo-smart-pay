@@ -290,10 +290,13 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @param Notification $notification Notification.
 	 * @return void
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signautre exception when notification message does not match gateway configuration signature.
 	 */
 	public function handle_notification( Notification $notification ) {
 		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
-			return;
+			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
+				'Signature on notification message does not match gateway configuration signature.'
+			);
 		}
 
 		switch ( $notification->get_event_name() ) {
