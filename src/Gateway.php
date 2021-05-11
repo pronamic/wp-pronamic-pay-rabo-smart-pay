@@ -319,8 +319,6 @@ class Gateway extends Core_Gateway {
 			}
 
 			foreach ( $order_results as $order_result ) {
-				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
-
 				$payment = \get_pronamic_payment_by_transaction_id( $order_result->get_omnikassa_order_id() );
 
 				/**
@@ -333,6 +331,8 @@ class Gateway extends Core_Gateway {
 				if ( empty( $payment ) ) {
 					continue;
 				}
+
+				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
 
 				if ( null !== $pronamic_status ) {
 					$payment->set_status( $pronamic_status );
