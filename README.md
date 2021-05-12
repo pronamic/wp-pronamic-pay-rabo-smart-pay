@@ -16,6 +16,7 @@
 - [WordPress Filters](#wordpress-filters)
 - [Errors](#errors)
 - [Simulate Requests](#simulate-requests)
+- [Webhook](#webhook)
 - [License](#license)
 
 ## Status
@@ -127,6 +128,21 @@ curl --request GET https://betalen.rabobank.nl/omnikassa-api/order/server/api/ev
 	--user-agent "WordPress/4.9.8; https://example.com/" \
 	--verbose
 ```
+
+## Webhook
+
+The Pronamic Pay OmniKassa 2.0 gateway can handle OmniKassa 2.0 notifications via the WordPress REST API.
+
+**Route:** `/wp-json/pronamic-pay/omnikassa-2/v1/webhook`
+
+The WordPress REST API OmniKassa 2.0 webhook can be tested with for example cURL, see for an example the [Simulate Requests](#simulate-requests) section.
+
+In principle it is not possible to view this REST API endpoint via your web browser because it is a HTTP `POST` method only endpoint.
+However, the WordPress REST API has the option to override the HTTP method via the `_method` parameter.
+
+`/wp-json/pronamic-pay/omnikassa-2/v1/webhook?_method=POST`
+
+https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_large)
