@@ -63,21 +63,11 @@
 		<exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint" />
 		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint" />
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint" />
-		<exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint" />
-		<exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint" />
 		<exclude name="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint.UselessVarAnnotation" />
 
 		<exclude name="SlevomatCodingStandard.Variables.UselessVariable.UselessVariable" />
 
 		<exclude name="SlevomatCodingStandard.Whitespaces.DuplicateSpaces.DuplicateSpaces" />
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions">
-		<properties>
-			<property name="ignoredNames" type="array">
-				<element value="WP_Error" />
-			</property>
-		</properties>
 	</rule>
 
 	<rule ref="WordPress">
