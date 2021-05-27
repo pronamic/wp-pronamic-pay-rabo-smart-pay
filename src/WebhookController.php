@@ -54,9 +54,9 @@ class WebhookController {
 			Integration::REST_ROUTE_NAMESPACE,
 			'/webhook/(?P<id>[\d]+)',
 			array(
-				'args'   => array(
+				'args'                => array(
 					'id' => array(
-						'description' => __( 'Unique identifier for the gateway configuration post.', 'pronamic_ideal' ),
+						'description' => \__( 'Unique identifier for the gateway configuration post.', 'pronamic_ideal' ),
 						'type'        => 'integer',
 					),
 				),
@@ -101,10 +101,12 @@ class WebhookController {
 		}
 
 		// Response.
-		$response = new \WP_REST_Response( array(
-			'success' => true,
-			'results' => $results,
-		) );
+		$response = new \WP_REST_Response(
+			array(
+				'success' => true,
+				'results' => $results,
+			)
+		);
 
 		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 
@@ -142,7 +144,7 @@ class WebhookController {
 		if ( null === $id ) {
 			return new \WP_Error(
 				'rest_omnikassa_2_gateway_no_id',
-				__( 'No gateway ID given in `id` parameter.', 'pronamic_ideal' )
+				\__( 'No gateway ID given in `id` parameter.', 'pronamic_ideal' )
 			);
 		}
 
@@ -162,6 +164,7 @@ class WebhookController {
 
 		try {
 			$gateway->handle_notification( $notification );
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
 		} catch ( \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException $e ) {
 			/**
 			 * We don't return an error for unknown order IDs, since OmniKassa
@@ -170,7 +173,7 @@ class WebhookController {
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'rest_omnikassa_2_exception',
-				 $e->getMessage(),
+				$e->getMessage(),
 				array(
 					'status'       => 400,
 					'notification' => $json,
@@ -178,9 +181,9 @@ class WebhookController {
 				)
 			);
 		}
-		
+
 		// Response.
-		$response = new \WP_REST_Response( $data );
+		$response = new \WP_REST_Response( array( 'success' => true ) );
 
 		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 
