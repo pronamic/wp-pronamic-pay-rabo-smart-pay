@@ -111,12 +111,23 @@ class WebhookController {
 			}
 		}
 
-		foreach ( $exceptions as $e ) {
-			throw $e;
+		/**
+		 * Data.
+		 */
+		$data = array(
+			'success' => true,
+		);
+
+		if ( count( $exceptions ) > 0 ) {
+			$data['exceptions'] = array();
+
+			foreach ( $exceptions as $e ) {
+				$data['exceptions'][] = $e->getMessage();
+			}
 		}
 
 		// Response.
-		$response = new \WP_REST_Response( array( 'success' => true ) );
+		$response = new \WP_REST_Response( $data );
 
 		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 
