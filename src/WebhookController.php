@@ -165,7 +165,7 @@ class WebhookController {
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'rest_omnikassa_2_exception',
-				\__( 'Unable to handle OmniKassa 2.0 notification.', 'pronamic_ideal ' ),
+				 $e->getMessage(),
 				array(
 					'status'       => 400,
 					'notification' => $json,
