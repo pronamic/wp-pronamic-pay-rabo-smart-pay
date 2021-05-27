@@ -307,7 +307,10 @@ class Gateway extends Core_Gateway {
 	public function handle_notification( Notification $notification ) {
 		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
 			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
-				'Signature on notification message does not match gateway configuration signature.'
+				\sprintf(
+					'Signature on order results message does not match gateway configuration signature (%s).',
+					\substr( $this->config->signing_key, 0, 7 )
+				)
 			);
 		}
 
@@ -332,7 +335,10 @@ class Gateway extends Core_Gateway {
 
 			if ( ! $order_results->is_valid( $this->config->signing_key ) ) {
 				throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
-					'Signature on order results message does not match gateway configuration signature.'
+					\sprintf(
+						'Signature on order results message does not match gateway configuration signature (%s).',
+						\substr( $this->config->signing_key, 0, 7 )
+					)
 				);
 			}
 
