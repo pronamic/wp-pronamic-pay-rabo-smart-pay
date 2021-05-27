@@ -18,5 +18,5 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @since   2.3.4
  */
 class UnknownOrderIdsException extends \Exception {
-    
+
 }
