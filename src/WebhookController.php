@@ -90,23 +90,21 @@ class WebhookController {
 			)
 		);
 
-		$results = array();
+		$data = array(
+			'success' => true,
+			'results' => array(),
+		);
 
 		foreach ( $query->posts as $post ) {
 			$id = \get_post_field( 'ID', $post );
 
 			$request->set_param( 'id', $id );
 
-			$results[] = $this->rest_api_omnikassa_2_webhook_item( $request );
+			$data['results'][] = $this->rest_api_omnikassa_2_webhook_item( $request );
 		}
 
 		// Response.
-		$response = new \WP_REST_Response(
-			array(
-				'success' => true,
-				'results' => $results,
-			)
-		);
+		$response = new \WP_REST_Response( $data );
 
 		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 
@@ -162,6 +160,13 @@ class WebhookController {
 			);
 		}
 
+		/**
+		 * Data.
+		 */
+		$data = array(
+			'success' => true,
+		);
+
 		try {
 			$gateway->handle_notification( $notification );
 		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
@@ -170,6 +175,7 @@ class WebhookController {
 			 * We don't return an error for unknown order IDs, since OmniKassa
 			 * otherwise assumes that the notification could not be processed.
 			 */
+			$data['uknown_order_ids'] = true;
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'rest_omnikassa_2_exception',
@@ -183,7 +189,7 @@ class WebhookController {
 		}
 
 		// Response.
-		$response = new \WP_REST_Response( array( 'success' => true ) );
+		$response = new \WP_REST_Response( $data );
 
 		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 
