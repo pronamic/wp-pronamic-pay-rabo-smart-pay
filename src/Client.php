@@ -16,7 +16,7 @@ use Pronamic\WordPress\Http\Facades\Http;
  * Client.
  *
  * @author  Remco Tolsma
- * @version 2.3.3
+ * @version 2.3.4
  * @since   1.0.0
  */
 class Client {
@@ -171,7 +171,7 @@ class Client {
 		 * Filters the OmniKassa 2.0 remote request arguments.
 		 *
 		 * Developers who want to adjust the WordPress remote request arguments
-		 * towards the OmniKassa servers can use this filter. For example, it 
+		 * towards the OmniKassa servers can use this filter. For example, it
 		 * can be used to increase the HTTP timeout to, for example, 3600. This
 		 * is sometimes useful for testing AfterPay payments for example.
 		 * Mainly because the OmniKassa servers sometimes respond slowly when

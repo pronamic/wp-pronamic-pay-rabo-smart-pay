@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Webhook controller
  *
  * @author  Remco Tolsma
- * @version 2.3.3
+ * @version 2.3.4
  * @since   2.3.0
  */
 class WebhookController {
@@ -49,6 +49,22 @@ class WebhookController {
 				'permission_callback' => '__return_true',
 			)
 		);
+
+		\register_rest_route(
+			Integration::REST_ROUTE_NAMESPACE,
+			'/webhook/(?P<id>[\d]+)',
+			array(
+				'args'                => array(
+					'id' => array(
+						'description' => \__( 'Unique identifier for the gateway configuration post.', 'pronamic_ideal' ),
+						'type'        => 'integer',
+					),
+				),
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'rest_api_omnikassa_2_webhook_item' ),
+				'permission_callback' => '__return_true',
+			)
+		);
 	}
 
 	/**
@@ -59,6 +75,50 @@ class WebhookController {
 	 * @throws \Exception Throws exception when something unexpected happens ;-).
 	 */
 	public function rest_api_omnikassa_2_webhook( \WP_REST_Request $request ) {
+		// Query.
+		$query = new \WP_Query(
+			array(
+				'post_type'   => GatewayPostType::POST_TYPE,
+				'post_status' => 'publish',
+				'nopaging'    => true,
+				'meta_query'  => array(
+					array(
+						'key'   => '_pronamic_gateway_id',
+						'value' => 'rabobank-omnikassa-2',
+					),
+				),
+			)
+		);
+
+		$data = array(
+			'success' => true,
+			'results' => array(),
+		);
+
+		foreach ( $query->posts as $post ) {
+			$id = \get_post_field( 'ID', $post );
+
+			$request->set_param( 'id', $id );
+
+			$data['results'][] = $this->rest_api_omnikassa_2_webhook_item( $request );
+		}
+
+		// Response.
+		$response = new \WP_REST_Response( $data );
+
+		$response->add_link( 'self', \rest_url( $request->get_route() ) );
+
+		return $response;
+	}
+
+	/**
+	 * REST API OmniKassa 2.0 webhook handler.
+	 *
+	 * @param \WP_REST_Request $request Request.
+	 * @return object
+	 * @throws \Exception Throws exception when something unexpected happens ;-).
+	 */
+	public function rest_api_omnikassa_2_webhook_item( \WP_REST_Request $request ) {
 		// Input.
 		$json = $request->get_body();
 
@@ -76,47 +136,60 @@ class WebhookController {
 			);
 		}
 
-		// Query.
-		$query = new \WP_Query(
-			array(
-				'post_type'   => GatewayPostType::POST_TYPE,
-				'post_status' => 'publish',
-				'nopaging'    => true,
-				'meta_query'  => array(
-					array(
-						'key'   => '_pronamic_gateway_id',
-						'value' => 'rabobank-omnikassa-2',
-					),
-				),
-			)
-		);
+		// Gateway configuration.
+		$id = $request->get_param( 'id' );
 
-		$exceptions = array();
-
-		foreach ( $query->posts as $post ) {
-			$gateway = Plugin::get_gateway( \get_post_field( 'ID', $post ) );
-
-			if ( ! $gateway instanceof Gateway ) {
-				continue;
-			}
-
-			/**
-			 * Try to handle notification, if an exception occurs we
-			 * will keep trying the other gateways.
-			 */
-			try {
-				$gateway->handle_notification( $notification );
-			} catch ( \Exception $e ) {
-				$exceptions[] = $e;
-			}
+		if ( null === $id ) {
+			return new \WP_Error(
+				'rest_omnikassa_2_gateway_no_id',
+				\__( 'No gateway ID given in `id` parameter.', 'pronamic_ideal' )
+			);
 		}
 
-		foreach ( $exceptions as $e ) {
-			throw $e;
+		$gateway = Plugin::get_gateway( $id );
+
+		if ( ! $gateway instanceof Gateway ) {
+			// Invalid gateway.
+			return new \WP_Error(
+				'rest_omnikassa_2_gateway_invalid',
+				\__( 'Invalid OmniKassa 2.0 gateway.', 'pronamic_ideal ' ),
+				array(
+					'status' => 400,
+					'id'     => $id,
+				)
+			);
+		}
+
+		/**
+		 * Data.
+		 */
+		$data = array(
+			'success' => true,
+		);
+
+		try {
+			$gateway->handle_notification( $notification );
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+		} catch ( \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException $e ) {
+			/**
+			 * We don't return an error for unknown order IDs, since OmniKassa
+			 * otherwise assumes that the notification could not be processed.
+			 */
+			$data['uknown_order_ids'] = true;
+		} catch ( \Exception $e ) {
+			return new \WP_Error(
+				'rest_omnikassa_2_exception',
+				$e->getMessage(),
+				array(
+					'status'       => 400,
+					'notification' => $json,
+					'id'           => $id,
+				)
+			);
 		}
 
 		// Response.
-		$response = new \WP_REST_Response( array( 'success' => true ) );
+		$response = new \WP_REST_Response( $data );
 
 		$response->add_link( 'self', \rest_url( $request->get_route() ) );
 

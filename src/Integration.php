@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
  * Integration
  *
  * @author  Remco Tolsma
- * @version 2.3.0
+ * @version 2.3.4
  * @since   1.0.0
  */
 class Integration extends AbstractGatewayIntegration {
@@ -245,7 +245,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => \__( 'Webhook URL', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'large-text', 'code' ),
-			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook' ),
+			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook/' . \get_the_ID() ),
 			'readonly' => true,
 			'tooltip'  => \__(
 				'The Webhook URL as sent with each transaction to receive automatic payment status updates on.',
