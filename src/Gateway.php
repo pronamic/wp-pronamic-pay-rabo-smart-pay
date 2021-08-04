@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use Pronamic\WordPress\Money\TaxedMoney;
+use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -193,7 +193,7 @@ class Gateway extends Core_Gateway {
 				$unit_price = $line->get_unit_price();
 
 				if ( null === $unit_price ) {
-					$unit_price = new TaxedMoney();
+					$unit_price = new Money();
 				}
 
 				$item = $order_items->new_item(
