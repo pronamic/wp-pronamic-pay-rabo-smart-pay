@@ -7,6 +7,11 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [3.0.0] - 2021-08-05
+- Updated to `pronamic/wp-pay-core` version `3.0.0`.
+- Updated to `pronamic/wp-money` version `2.0.0`.
+- Switched to `pronamic/wp-coding-standards`.
+
 ## [2.3.4] - 2021-05-28
 - Added support for gateway configuration specific webhook URLs.
 - Improved webhook error handling.
