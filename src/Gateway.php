@@ -73,7 +73,10 @@ class Gateway extends Core_Gateway {
 			PaymentMethods::CREDIT_CARD,
 			PaymentMethods::IDEAL,
 			PaymentMethods::MAESTRO,
+			PaymentMethods::MASTERCARD,
 			PaymentMethods::PAYPAL,
+			PaymentMethods::V_PAY,
+			PaymentMethods::VISA,
 		);
 	}
 
