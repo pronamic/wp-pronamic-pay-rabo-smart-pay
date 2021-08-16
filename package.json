@@ -1,6 +1,6 @@
 {
   "name": "omnikassa-2",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "OmniKassa 2.0 driver for the WordPress payment processing library.",
   "repository": {
     "type": "git",
