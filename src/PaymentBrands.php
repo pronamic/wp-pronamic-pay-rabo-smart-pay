@@ -100,7 +100,10 @@ class PaymentBrands {
 		PaymentMethods::CREDIT_CARD => self::CARDS,
 		PaymentMethods::IDEAL       => self::IDEAL,
 		PaymentMethods::MAESTRO     => self::MAESTRO,
+		PaymentMethods::MASTERCARD  => self::MASTERCARD,
 		PaymentMethods::PAYPAL      => self::PAYPAL,
+		PaymentMethods::V_PAY       => self::V_PAY,
+		PaymentMethods::VISA        => self::VISA,
 	);
 
 	/**
