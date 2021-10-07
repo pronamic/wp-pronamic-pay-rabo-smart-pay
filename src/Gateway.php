@@ -157,7 +157,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Payment brand.
-		$payment_brand = PaymentBrands::transform( $payment->get_method() );
+		$payment_brand = PaymentBrands::transform( $payment->get_payment_method() );
 
 		$order->set_payment_brand( $payment_brand );
 
