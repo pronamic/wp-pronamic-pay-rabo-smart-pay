@@ -47,7 +47,8 @@
 		"roots/wordpress": "^5.8",
 		"sirbrillig/phpcs-variable-analysis": "^2.9",
 		"slevomat/coding-standard": "^6.4",
-		"wp-phpunit/wp-phpunit": "^5.8"
+		"wp-phpunit/wp-phpunit": "^5.8",
+		"yoast/phpunit-polyfills": "^1.0"
 	},
 	"scripts": {
 		"coveralls": "vendor/bin/php-coveralls -v",
