@@ -30,6 +30,8 @@ class PaymentBrands {
 	/**
 	 * Payment brand 'AFTERPAY'.
 	 *
+	 * Note: this is for AfterPay (afterpay.nl) and not for Afterpay (afterpay.com).
+	 *
 	 * @var string
 	 */
 	const AFTERPAY = 'AFTERPAY';
@@ -95,7 +97,7 @@ class PaymentBrands {
 	 * @var array<string, string>
 	 */
 	private static $map = array(
-		PaymentMethods::AFTERPAY    => self::AFTERPAY,
+		PaymentMethods::AFTERPAY_NL => self::AFTERPAY,
 		PaymentMethods::BANCONTACT  => self::BANCONTACT,
 		PaymentMethods::CREDIT_CARD => self::CARDS,
 		PaymentMethods::IDEAL       => self::IDEAL,
