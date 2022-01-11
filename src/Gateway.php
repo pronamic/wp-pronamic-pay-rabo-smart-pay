@@ -3,7 +3,7 @@
  * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -68,7 +68,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			PaymentMethods::AFTERPAY,
+			PaymentMethods::AFTERPAY_NL,
 			PaymentMethods::BANCONTACT,
 			PaymentMethods::CREDIT_CARD,
 			PaymentMethods::IDEAL,
@@ -157,7 +157,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Payment brand.
-		$payment_brand = PaymentBrands::transform( $payment->get_method() );
+		$payment_brand = PaymentBrands::transform( $payment->get_payment_method() );
 
 		$order->set_payment_brand( $payment_brand );
 

@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.0.0] - 2022-01-11
+### Changed
+- Updated to https://github.com/pronamic/wp-pay-core/releases/tag/4.0.0.
+
 ## [3.0.1] - 2021-08-16
 - Added support for Mastercard, V PAY and Visa.
 
@@ -111,7 +115,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/3.0.1...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/3.0.1...4.0.0
 [3.0.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.4...3.0.0
 [2.3.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.3...2.3.4

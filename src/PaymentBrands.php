@@ -3,7 +3,7 @@
  * Payment brands.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -29,6 +29,8 @@ class PaymentBrands {
 
 	/**
 	 * Payment brand 'AFTERPAY'.
+	 *
+	 * Note: this is for AfterPay (afterpay.nl) and not for Afterpay (afterpay.com).
 	 *
 	 * @var string
 	 */
@@ -95,7 +97,7 @@ class PaymentBrands {
 	 * @var array<string, string>
 	 */
 	private static $map = array(
-		PaymentMethods::AFTERPAY    => self::AFTERPAY,
+		PaymentMethods::AFTERPAY_NL => self::AFTERPAY,
 		PaymentMethods::BANCONTACT  => self::BANCONTACT,
 		PaymentMethods::CREDIT_CARD => self::CARDS,
 		PaymentMethods::IDEAL       => self::IDEAL,
