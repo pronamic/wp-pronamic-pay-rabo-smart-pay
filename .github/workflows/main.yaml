@@ -119,27 +119,6 @@ jobs:
           - name: WP 5.5
             php-version: 7.4
             wp-version: 5.5.*
-          # WordPress and PHP 7.4: https://make.wordpress.org/core/2019/10/11/wordpress-and-php-7-4/.
-          - name: WP 5.4
-            php-version: 7.4
-            wp-version: 5.4.*
-          - name: WP 5.3
-            php-version: 7.4
-            wp-version: 5.3.*
-          # WordPress 5.2 (or lower) will trigger PHP 7.4 (or higher) errors.
-          # @link https://make.wordpress.org/core/2019/10/11/wordpress-and-php-7-4/.
-          - name: WP 5.2
-            php-version: 7.3
-            wp-version: 5.2.*
-          - name: WP 5.1
-            php-version: 7.3
-            wp-version: 5.1.*
-          - name: WP 5.0
-            php-version: 7.3
-            wp-version: 5.0.*
-          - name: WP 4.9
-            php-version: 7.3
-            wp-version: 4.9.*
           # WordPress 4.8 (or lower) will trigger PHP 7.2 (or higher) errors.
           # @link https://make.wordpress.org/core/2018/10/15/wordpress-and-php-7-3/
           # @link https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/
@@ -154,11 +133,6 @@ jobs:
             php-version: 7.4
             WP_MULTISITE: 1
           - php-version: 7.4
-          - php-version: 7.3
-          - php-version: 7.2
-          - php-version: 7.1
-          - php-version: 7.0
-          - php-version: 5.6
 
     services:
       mysql:
@@ -285,32 +259,3 @@ jobs:
         run: |
           composer run-script coveralls
           bash <(curl -s https://codecov.io/bash)
-
-  es-sass-linting:
-    name: Scripts and Styles
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # https://github.com/actions/cache/blob/master/examples.md#macos-and-ubuntu
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12'
-
-      - name: Install Node packages
-        run: npm install
-
-      - name: ESLint
-        run: npm run-script eslint
-
-      - name: Sass Lint
-        run: npm run-script sass-lint
