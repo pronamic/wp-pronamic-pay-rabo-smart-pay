@@ -5,16 +5,4 @@ on: [ push, pull_request ]
 jobs:
   phpcs:
     name: PHP_CodeSniffer
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: composer install --dev --prefer-dist --no-progress --no-suggest
-
-      - name: Run PHP_CodeSniffer
-        uses: chekalsky/phpcs-action@v1
-        with:
-          phpcs_bin_path: vendor/bin/phpcs
+    uses: pronamic/actions/.github/workflows/phpcs.yml@main
