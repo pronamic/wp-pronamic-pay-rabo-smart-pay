@@ -26,7 +26,7 @@ class AddressTransformer {
 	 * @param PronamicAddress|null $pronamic_address Pronamic address to convert.
 	 * @return Address|null
 	 */
-	public static function transform(PronamicAddress $pronamic_address = null ) {
+	public static function transform( PronamicAddress $pronamic_address = null ) {
 		if ( null === $pronamic_address ) {
 			return null;
 		}
