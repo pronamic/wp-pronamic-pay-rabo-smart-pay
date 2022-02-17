@@ -87,7 +87,7 @@ class CustomerInformation implements \JsonSerializable {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Gender "%s" must be equal to `null`, "F" or "M".',
-					(string) $gender
+					$gender
 				)
 			);
 		}
