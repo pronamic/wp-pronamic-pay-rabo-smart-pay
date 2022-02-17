@@ -32,12 +32,21 @@ class Gateway extends Core_Gateway {
 	private $client;
 
 	/**
+	 * Config.
+	 * 
+	 * @var Config.
+	 */
+	private $config;
+
+	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
 	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
-		parent::__construct( $config );
+		parent::__construct();
+
+		$this->config = $config;
 
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 

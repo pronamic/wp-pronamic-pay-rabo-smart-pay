@@ -89,6 +89,7 @@ class Config extends GatewayConfig {
 	 * Set API URL.
 	 *
 	 * @param string $api_url API URL.
+	 * @return void
 	 */
 	public function set_api_url( $api_url ) {
 		$this->api_url = $api_url;
