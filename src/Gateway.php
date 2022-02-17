@@ -55,6 +55,27 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
+	 * Get issuers
+	 *
+	 * @see Core_Gateway::get_issuers()
+	 * @return array<int, array<string, array<string>>>
+	 */
+	public function get_issuers() {
+		$groups = array();
+
+		// Maybe update access token.
+		$this->maybe_update_access_token();
+
+		$result = $this->client->get_issuers( $this->config->access_token );
+
+		$groups[] = array(
+			'options' => $result,
+		);
+
+		return $groups;
+	}
+
+	/**
 	 * Get supported payment methods.
 	 *
 	 * @see \Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
@@ -158,6 +179,15 @@ class Gateway extends Core_Gateway {
 		if ( null !== $payment_brand ) {
 			// Payment brand force should only be set if payment brand is not empty.
 			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
+		}
+
+		// Issuer.
+		if ( PaymentBrands::IDEAL === $payment_brand ) {
+			$order->set_payment_brand_meta_data(
+				(object) array(
+					'issuerId' => $payment->get_meta( 'issuer' ),
+				) 
+			);
 		}
 
 		// Description.

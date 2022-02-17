@@ -273,4 +273,22 @@ class Client {
 
 		return OrderResults::from_object( $result );
 	}
+
+	/**
+	 * Get issuers.
+	 *
+	 * @link https://developer.rabobank.nl/product/8949/api/8826
+	 * @return array<string>
+	 */
+	public function get_issuers( $access_token ) {
+		$result = $this->request( 'GET', 'ideal/server/api/v2/issuers', $access_token );
+
+		$issuers = array();
+
+		foreach ( $result->issuers as $issuer ) {
+			$issuers[ $issuer->id ] = $issuer->name;
+		}
+
+		return $issuers;
+	}
 }

@@ -147,6 +147,13 @@ class Order extends Message implements \JsonSerializable {
 	private $payment_brand_force;
 
 	/**
+	 * Additional metadata specific to the brand as set in the paymentBrand field.
+	 *
+	 * @var object|null
+	 */
+	private $payment_brand_meta_data;
+
+	/**
 	 * Construct order.
 	 *
 	 * @param string $merchant_order_id    Merchant order ID.
@@ -274,6 +281,16 @@ class Order extends Message implements \JsonSerializable {
 	}
 
 	/**
+	 * Set payment brand meta data.
+	 *
+	 * @param object|null $payment_brand_meta_data Payment brand meta data.
+	 * @return void
+	 */
+	public function set_payment_brand_meta_data( $payment_brand_meta_data ) {
+		$this->payment_brand_meta_data = $payment_brand_meta_data;
+	}
+
+	/**
 	 * Create and set new order items.
 	 *
 	 * @return OrderItems
@@ -369,6 +386,10 @@ class Order extends Message implements \JsonSerializable {
 
 		if ( null !== $this->payment_brand_force ) {
 			$object->paymentBrandForce = $this->payment_brand_force;
+		}
+
+		if ( null !== $this->payment_brand_meta_data ) {
+			$object->paymentBrandMetaData = $this->payment_brand_meta_data;
 		}
 
 		return $object;
