@@ -49,13 +49,7 @@ class Gateway extends Core_Gateway {
 		// Client.
 		$this->client = new Client();
 
-		$url = Client::URL_PRODUCTION;
-
-		if ( self::MODE_TEST === $config->mode ) {
-			$url = Client::URL_SANDBOX;
-		}
-
-		$this->client->set_url( $url );
+		$this->client->set_url( $config->get_api_url() );
 		$this->client->set_refresh_token( $config->refresh_token );
 		$this->client->set_signing_key( $config->signing_key );
 	}

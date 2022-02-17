@@ -28,6 +28,13 @@ class Integration extends AbstractGatewayIntegration {
 	const REST_ROUTE_NAMESPACE = 'pronamic-pay/omnikassa-2/v1';
 
 	/**
+	 * API URL.
+	 * 
+	 * @var string
+	 */
+	private $api_url;
+
+	/**
 	 * Construct OmniKassa 2.0 integration.
 	 *
 	 * @param array<string, string|array> $args Arguments.
@@ -38,6 +45,7 @@ class Integration extends AbstractGatewayIntegration {
 			array(
 				'id'            => 'rabobank-omnikassa-2',
 				'name'          => 'Rabobank - OmniKassa 2.0',
+				'api_url'       => 'https://betalen.rabobank.nl/omnikassa-api/',
 				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/',
 				'dashboard_url' => 'https://bankieren.rabobank.nl/omnikassa-dashboard/',
 				'provider'      => 'rabobank',
@@ -53,6 +61,8 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
+
+		$this->api_url = $args['api_url'];
 
 		/**
 		 * Save post.
@@ -265,8 +275,9 @@ class Integration extends AbstractGatewayIntegration {
 	public function get_config( $post_id ) {
 		$config = new Config();
 
+		$config->set_api_url( $this->api_url );
+
 		$config->post_id                  = \intval( $post_id );
-		$config->mode                     = $this->get_meta( $post_id, 'mode' );
 		$config->refresh_token            = $this->get_meta( $post_id, 'omnikassa_2_refresh_token' );
 		$config->signing_key              = $this->get_meta( $post_id, 'omnikassa_2_signing_key' );
 		$config->access_token             = $this->get_meta( $post_id, 'omnikassa_2_access_token' );
@@ -296,6 +307,10 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return Gateway
 	 */
 	public function get_gateway( $post_id ) {
-		return new Gateway( $this->get_config( $post_id ) );
+		$gateway = new Gateway( $this->get_config( $post_id ) );
+
+		$gateway->set_mode( $this->get_mode() );
+
+		return $gateway;
 	}
 }

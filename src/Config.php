@@ -28,6 +28,13 @@ class Config extends GatewayConfig {
 	public $post_id;
 
 	/**
+	 * API URL.
+	 * 
+	 * @var string
+	 */
+	public $api_url;
+
+	/**
 	 * Refresh token.
 	 *
 	 * @var string
@@ -61,6 +68,31 @@ class Config extends GatewayConfig {
 	 * @var string
 	 */
 	public $order_id;
+
+	/**
+	 * Construct config.
+	 */
+	public function __construct() {
+		$this->api_url = Client::URL_PRODUCTION;
+	}
+
+	/**
+	 * Get API URL.
+	 *
+	 * @return string
+	 */
+	public function get_api_url() {
+		return $this->api_url;
+	}
+
+	/**
+	 * Set API URL.
+	 *
+	 * @param string $api_url API URL.
+	 */
+	public function set_api_url( $api_url ) {
+		$this->api_url = $api_url;
+	}
 
 	/**
 	 * Check if access token is valid.
