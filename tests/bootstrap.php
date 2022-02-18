@@ -8,10 +8,6 @@
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
-putenv( 'WP_PHPUNIT__TESTS_CONFIG=tests/wp-config.php' );
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
-require_once getenv( 'WP_PHPUNIT__DIR' ) . '/includes/functions.php';
-
-require getenv( 'WP_PHPUNIT__DIR' ) . '/includes/bootstrap.php';
+\WorDBless\Load::load();
