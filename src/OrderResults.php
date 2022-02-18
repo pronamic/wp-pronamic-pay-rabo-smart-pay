@@ -16,7 +16,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @author  Remco Tolsma
  * @version 2.1.10
  * @since   1.0.0
- * @implements \IteratorAggregate<int, OrderResult>
+ * @phpstan-implements \IteratorAggregate<int, OrderResult>
  */
 class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
@@ -84,7 +84,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * Get iterator.
 	 *
-	 * @return \ArrayIterator<int, OrderResult>
+	 * @return \Traversable<int, OrderResult>
 	 */
 	public function getIterator() {
 		return new \ArrayIterator( $this->order_results );
