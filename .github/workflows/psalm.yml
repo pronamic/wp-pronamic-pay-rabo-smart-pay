@@ -3,19 +3,5 @@ name: Psalm
 on: [ push, pull_request ]
 
 jobs:
-  phpstan:
-    name: Psalm
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-
-    - name: Install Psalm
-      run: composer bin psalm install
-
-    - name: Run Psalm
-      run: composer run-script psalm
+  psalm:
+    uses: pronamic/actions/.github/workflows/psalm.yml@main
