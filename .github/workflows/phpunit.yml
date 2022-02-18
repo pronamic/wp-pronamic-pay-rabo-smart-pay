@@ -1,0 +1,27 @@
+name: PHPUnit
+
+on: [ push, pull_request ]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0', '8.1']
+        wp-versions: ['5.7', '5.8', '5.9']
+
+    name: PHP ${{ matrix.php-versions }} WordPress ${{ matrix.wp-versions }}
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+
+    - name: Setup WordPress
+      run: composer require --dev --no-update --no-progress --no-suggest roots/wordpress:${{ matrix.wp-versions }} wp-phpunit/wp-phpunit:${{ matrix.wp-versions }}
+
+    - name: Run PHPUnit
+      run: vendor/bin/phpunit
