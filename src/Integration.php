@@ -131,7 +131,7 @@ class Integration extends AbstractGatewayIntegration {
 
 		$host = \wp_parse_url( \home_url( '/' ), \PHP_URL_HOST );
 
-		if ( \is_array( $host ) ) {
+		if ( ! \is_string( $host ) ) {
 			return;
 		}
 
