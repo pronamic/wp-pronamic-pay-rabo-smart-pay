@@ -23,5 +23,8 @@ jobs:
     - name: Setup WordPress
       run: composer require --dev --no-update --no-progress --no-suggest roots/wordpress:${{ matrix.wp-versions }} wp-phpunit/wp-phpunit:${{ matrix.wp-versions }}
 
+    - name: Install dependencies
+      run: composer install --dev --prefer-dist --no-progress --no-suggest
+
     - name: Run PHPUnit
       run: vendor/bin/phpunit
