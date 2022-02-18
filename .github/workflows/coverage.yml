@@ -17,6 +17,7 @@ jobs:
     - name: Run Coverage
       run: composer run-script coverage
 
-    - uses: codecov/codecov-action@v2
+    - name: Codecov
+      uses: codecov/codecov-action@v2
       with:
         files: build/logs/clover.xml
