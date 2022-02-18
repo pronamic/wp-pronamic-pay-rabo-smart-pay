@@ -4,5 +4,4 @@ on: [ push, pull_request ]
 
 jobs:
   phpcs:
-    name: PHP_CodeSniffer
     uses: pronamic/actions/.github/workflows/phpcs.yml@main
