@@ -59,7 +59,9 @@
 	"scripts": {
 		"ci": [
 			"@phpcs",
+			"@phplint",
 			"@phpstan",
+			"@phpunit",
 			"@psalm"
 		],
 		"coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text",

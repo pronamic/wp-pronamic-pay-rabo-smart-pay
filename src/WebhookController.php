@@ -169,7 +169,7 @@ class WebhookController {
 
 		try {
 			$gateway->handle_notification( $notification );
-		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+			// @phpstan-ignore-next-line
 		} catch ( \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException $e ) {
 			/**
 			 * We don't return an error for unknown order IDs, since OmniKassa
