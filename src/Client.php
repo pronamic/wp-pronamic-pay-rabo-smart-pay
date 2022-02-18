@@ -35,13 +35,6 @@ class Client {
 	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	/**
-	 * Error
-	 *
-	 * @var \WP_Error
-	 */
-	private $error;
-
-	/**
 	 * The URL.
 	 *
 	 * @var string
@@ -61,15 +54,6 @@ class Client {
 	 * @var string
 	 */
 	private $signing_key;
-
-	/**
-	 * Error.
-	 *
-	 * @return \WP_Error
-	 */
-	public function get_error() {
-		return $this->error;
-	}
 
 	/**
 	 * Get the URL.
