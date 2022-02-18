@@ -1,7 +1,0 @@
-name: PHPUnit
-
-on: [ push, pull_request ]
-
-jobs:
-  phpunit:
-    uses: pronamic/actions/.github/workflows/phpunit.yml@main

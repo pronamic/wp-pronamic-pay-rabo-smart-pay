@@ -1,7 +1,0 @@
-name: Coverage
-
-on: [ push, pull_request ]
-
-jobs:
-  coverage:
-    uses: pronamic/actions/.github/workflows/coverage.yml@main

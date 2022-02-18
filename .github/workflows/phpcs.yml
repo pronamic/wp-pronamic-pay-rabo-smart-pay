@@ -1,7 +1,0 @@
-name: PHP_CodeSniffer
-
-on: [ push, pull_request ]
-
-jobs:
-  phpcs:
-    uses: pronamic/actions/.github/workflows/phpcs.yml@main

@@ -1,7 +1,0 @@
-name: PHPLint
-
-on: [ push, pull_request ]
-
-jobs:
-  phplint:
-    uses: pronamic/actions/.github/workflows/phplint.yml@main

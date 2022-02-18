@@ -1,7 +1,0 @@
-name: Psalm
-
-on: [ push, pull_request ]
-
-jobs:
-  psalm:
-    uses: pronamic/actions/.github/workflows/psalm.yml@main
