@@ -84,9 +84,9 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	/**
 	 * Get iterator.
 	 *
-	 * @return \Traversable<int, OrderResult>
+	 * @return \ArrayIterator<int, OrderResult>
 	 */
-	public function getIterator() {
+	public function getIterator(): \Traversable {
 		return new \ArrayIterator( $this->order_results );
 	}
 
