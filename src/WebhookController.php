@@ -139,14 +139,14 @@ class WebhookController {
 		// Gateway configuration.
 		$id = $request->get_param( 'id' );
 
-		if ( null === $id ) {
+		if ( ! \is_numeric( $id ) ) {
 			return new \WP_Error(
 				'rest_omnikassa_2_gateway_no_id',
 				\__( 'No gateway ID given in `id` parameter.', 'pronamic_ideal' )
 			);
 		}
 
-		$gateway = Plugin::get_gateway( $id );
+		$gateway = Plugin::get_gateway( (int) $id );
 
 		if ( ! $gateway instanceof Gateway ) {
 			// Invalid gateway.
