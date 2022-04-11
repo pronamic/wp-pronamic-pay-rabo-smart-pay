@@ -32,12 +32,21 @@ class Gateway extends Core_Gateway {
 	private $client;
 
 	/**
+	 * Config.
+	 * 
+	 * @var Config.
+	 */
+	private $config;
+
+	/**
 	 * Constructs and initializes an OmniKassa 2.0 gateway.
 	 *
 	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
-		parent::__construct( $config );
+		parent::__construct();
+
+		$this->config = $config;
 
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
@@ -49,15 +58,30 @@ class Gateway extends Core_Gateway {
 		// Client.
 		$this->client = new Client();
 
-		$url = Client::URL_PRODUCTION;
-
-		if ( self::MODE_TEST === $config->mode ) {
-			$url = Client::URL_SANDBOX;
-		}
-
-		$this->client->set_url( $url );
+		$this->client->set_url( $config->get_api_url() );
 		$this->client->set_refresh_token( $config->refresh_token );
 		$this->client->set_signing_key( $config->signing_key );
+	}
+
+	/**
+	 * Get issuers
+	 *
+	 * @see Core_Gateway::get_issuers()
+	 * @return array<int, array<string, array<string>>>
+	 */
+	public function get_issuers() {
+		$groups = array();
+
+		// Maybe update access token.
+		$this->maybe_update_access_token();
+
+		$result = $this->client->get_issuers( $this->config->access_token );
+
+		$groups[] = array(
+			'options' => $result,
+		);
+
+		return $groups;
 	}
 
 	/**
@@ -164,6 +188,15 @@ class Gateway extends Core_Gateway {
 		if ( null !== $payment_brand ) {
 			// Payment brand force should only be set if payment brand is not empty.
 			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
+		}
+
+		// Issuer.
+		if ( PaymentBrands::IDEAL === $payment_brand ) {
+			$order->set_payment_brand_meta_data(
+				(object) array(
+					'issuerId' => $payment->get_meta( 'issuer' ),
+				) 
+			);
 		}
 
 		// Description.

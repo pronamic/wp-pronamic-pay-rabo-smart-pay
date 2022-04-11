@@ -20,6 +20,9 @@
 # PHP Coding Standards Fixer
 /.php_cs.cache
 
+# PHPUnit
+/.phpunit.result.cache
+
 # WordPress
 /wordpress/
 /wp-content/

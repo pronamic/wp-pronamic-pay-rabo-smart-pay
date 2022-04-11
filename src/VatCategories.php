@@ -42,7 +42,7 @@ class VatCategories {
 	/**
 	 * Category 'Geen (vrijgesteld van btw)'.
 	 *
-	 * @var int
+	 * @var string
 	 */
 	const EXEMPTED = '4';
 }

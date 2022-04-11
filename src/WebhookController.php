@@ -139,14 +139,14 @@ class WebhookController {
 		// Gateway configuration.
 		$id = $request->get_param( 'id' );
 
-		if ( null === $id ) {
+		if ( ! \is_numeric( $id ) ) {
 			return new \WP_Error(
 				'rest_omnikassa_2_gateway_no_id',
 				\__( 'No gateway ID given in `id` parameter.', 'pronamic_ideal' )
 			);
 		}
 
-		$gateway = Plugin::get_gateway( $id );
+		$gateway = Plugin::get_gateway( (int) $id );
 
 		if ( ! $gateway instanceof Gateway ) {
 			// Invalid gateway.
@@ -169,7 +169,7 @@ class WebhookController {
 
 		try {
 			$gateway->handle_notification( $notification );
-		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+			// @phpstan-ignore-next-line
 		} catch ( \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException $e ) {
 			/**
 			 * We don't return an error for unknown order IDs, since OmniKassa

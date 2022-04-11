@@ -29,20 +29,26 @@
 		}
 	},
 	"config": {
-		"sort-packages": true
+		"sort-packages": true,
+		"allow-plugins": {
+			"bamarni/composer-bin-plugin": true,
+			"roots/wordpress-core-installer": true,
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	},
 	"require": {
-		"php": ">=5.6.20",
+		"php": ">=7.4",
 		"justinrainbow/json-schema": "^5.2",
 		"pronamic/wp-http": "^1.0",
-		"wp-pay/core": "^4.0"
+		"wp-pay/core": "dev-develop as 4.0"
 	},
 	"require-dev": {
+		"automattic/wordbless": "^0.3.1",
 		"bamarni/composer-bin-plugin": "^1.4",
 		"overtrue/phplint": "^2.2",
 		"php-coveralls/php-coveralls": "^2.4",
 		"phpmd/phpmd": "^2.9",
-		"phpunit/phpunit": "^5.7 || ^6.0",
 		"pronamic/wp-coding-standards": "^1.0",
 		"roots/wordpress": "^5.8",
 		"sirbrillig/phpcs-variable-analysis": "^2.9",
@@ -51,6 +57,14 @@
 		"yoast/phpunit-polyfills": "^1.0"
 	},
 	"scripts": {
+		"ci": [
+			"@phpcs",
+			"@phplint",
+			"@phpstan",
+			"@phpunit",
+			"@psalm"
+		],
+		"coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text",
 		"coveralls": "vendor/bin/php-coveralls -v",
 		"phpcbf": "vendor/bin/phpcbf",
 		"phpcs": "XDEBUG_MODE=off vendor/bin/phpcs -s -v",
@@ -59,7 +73,10 @@
 		"phpstan": "vendor/bin/phpstan analyse --memory-limit=-1",
 		"phpunit": "vendor/bin/phpunit",
 		"post-install-cmd": "echo 'Optionally run: composer bin all install'",
-		"post-update-cmd": "echo 'Optionally run: composer bin all update'",
+		"post-update-cmd": [
+			"echo 'Optionally run: composer bin all update'",
+			"php -r \"copy('vendor/automattic/wordbless/src/dbless-wpdb.php', 'wordpress/wp-content/db.php');\""
+		],
 		"psalm": "vendor/bin/psalm",
 		"build-docs": [
 			"vendor/bin/wp-documentor parse src --format=markdown --relative=docs > docs/hooks.md"
