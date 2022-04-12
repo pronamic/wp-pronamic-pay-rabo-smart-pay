@@ -69,7 +69,7 @@ class OrderAnnounceResponse extends ResponseMessage {
 	 * @return array<string>
 	 */
 	public function get_signature_fields() {
-		return array();
+		return [];
 	}
 
 	/**
@@ -105,9 +105,9 @@ class OrderAnnounceResponse extends ResponseMessage {
 
 		$validator->validate(
 			$data,
-			(object) array(
+			(object) [
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/order-announce-response.json' ),
-			),
+			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 

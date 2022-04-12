@@ -72,10 +72,10 @@ class ReturnParameters extends ResponseMessage {
 	 * @return array<string>
 	 */
 	public function get_signature_fields() {
-		return array(
+		return [
 			$this->get_order_id(),
 			$this->get_status(),
-		);
+		];
 	}
 
 	/**

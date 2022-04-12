@@ -39,25 +39,25 @@ class Integration extends AbstractGatewayIntegration {
 	 *
 	 * @param array<string, string|array<string>> $args Arguments.
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = [] ) {
 		$args = \wp_parse_args(
 			$args,
-			array(
+			[
 				'id'            => 'rabobank-omnikassa-2',
 				'name'          => 'Rabobank - OmniKassa 2.0',
 				'api_url'       => 'https://betalen.rabobank.nl/omnikassa-api/',
 				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/',
 				'dashboard_url' => 'https://bankieren.rabobank.nl/omnikassa-dashboard/',
 				'provider'      => 'rabobank',
-				'supports'      => array(
+				'supports'      => [
 					'webhook',
 					'webhook_log',
-				),
+				],
 				'manual_url'    => \__(
 					'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/',
 					'pronamic_ideal'
 				),
-			)
+			]
 		);
 
 		parent::__construct( $args );
@@ -70,7 +70,7 @@ class Integration extends AbstractGatewayIntegration {
 		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
 		 * @var callable $delete_access_token_meta_function
 		 */
-		$delete_access_token_meta_function = array( $this, 'delete_access_token_meta' );
+		$delete_access_token_meta_function = [ $this, 'delete_access_token_meta' ];
 
 		if ( ! \has_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function ) ) {
 			\add_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function );
@@ -82,7 +82,7 @@ class Integration extends AbstractGatewayIntegration {
 		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-admin/admin-header.php#L259-L264
 		 * @var callable $admin_notices_function
 		 */
-		$admin_notices_function = array( $this, 'admin_notice_tld_test' );
+		$admin_notices_function = [ $this, 'admin_notice_tld_test' ];
 
 		if ( ! \has_action( 'admin_notices', $admin_notices_function ) ) {
 			\add_action( 'admin_notices', $admin_notices_function );
@@ -171,13 +171,13 @@ class Integration extends AbstractGatewayIntegration {
 			\esc_attr( $class ),
 			\wp_kses(
 				$message,
-				array(
-					'a'      => array(
+				[
+					'a'      => [
 						'href' => true,
-					),
-					'code'   => array(),
-					'strong' => array(),
-				)
+					],
+					'code'   => [],
+					'strong' => [],
+				]
 			)
 		);
 	}
@@ -188,38 +188,38 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return array<int, array<string, callable|int|string|bool|array<int|string,int|string>>>
 	 */
 	public function get_settings_fields() {
-		$fields = array();
+		$fields = [];
 
 		// Refresh Token.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_omnikassa_2_refresh_token',
 			'title'    => \_x( 'Refresh Token', 'omnikassa', 'pronamic_ideal' ),
 			'type'     => 'textarea',
-			'classes'  => array( 'code' ),
-		);
+			'classes'  => [ 'code' ],
+		];
 
 		// Signing Key.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_omnikassa_2_signing_key',
 			'title'    => \_x( 'Signing Key', 'omnikassa', 'pronamic_ideal' ),
 			'type'     => 'text',
-			'classes'  => array( 'large-text', 'code' ),
-		);
+			'classes'  => [ 'large-text', 'code' ],
+		];
 
 		// Purchase ID.
 		$code_field = \sprintf( '<code>%s</code>', 'merchantOrderId' );
 
-		$fields[] = array(
+		$fields[] = [
 			'section'     => 'advanced',
 			'filter'      => \FILTER_SANITIZE_STRING,
 			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
 			'title'       => \__( 'Order ID', 'pronamic_ideal' ),
 			'type'        => 'text',
-			'classes'     => array( 'regular-text', 'code' ),
+			'classes'     => [ 'regular-text', 'code' ],
 			'tooltip'     => \sprintf(
 				/* translators: %s: <code>merchantOrderId</code> */
 				\__( 'This setting defines the OmniKassa 2.0 %s field.', 'pronamic_ideal' ),
@@ -247,21 +247,21 @@ class Integration extends AbstractGatewayIntegration {
 					'{payment_id}'
 				)
 			),
-		);
+		];
 
 		// Webhook.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'feedback',
 			'title'    => \__( 'Webhook URL', 'pronamic_ideal' ),
 			'type'     => 'text',
-			'classes'  => array( 'large-text', 'code' ),
+			'classes'  => [ 'large-text', 'code' ],
 			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook/' . (string) \get_the_ID() ),
 			'readonly' => true,
 			'tooltip'  => \__(
 				'The Webhook URL as sent with each transaction to receive automatic payment status updates on.',
 				'pronamic_ideal'
 			),
-		);
+		];
 
 		return $fields;
 	}

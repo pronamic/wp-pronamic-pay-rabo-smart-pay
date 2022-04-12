@@ -28,7 +28,7 @@ class DataHelper {
 	 *
 	 * @var array<string>
 	 */
-	private static $characters_ans = array( 'A-Z', 'a-z', '0-9' );
+	private static $characters_ans = [ 'A-Z', 'a-z', '0-9' ];
 
 	/**
 	 * Validate AN..$max.

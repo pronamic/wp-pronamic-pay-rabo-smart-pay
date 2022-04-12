@@ -122,12 +122,12 @@ class Notification extends ResponseMessage {
 	 * @return array<string>
 	 */
 	public function get_signature_fields() {
-		return array(
+		return [
 			$this->get_authentication(),
 			$this->get_expiry(),
 			$this->get_event_name(),
 			\strval( $this->get_poi_id() ),
-		);
+		];
 	}
 
 	/**
@@ -182,9 +182,9 @@ class Notification extends ResponseMessage {
 
 		$validator->validate(
 			$data,
-			(object) array(
+			(object) [
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/notification.json' ),
-			),
+			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 

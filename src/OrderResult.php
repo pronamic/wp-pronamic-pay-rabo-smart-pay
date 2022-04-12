@@ -185,7 +185,7 @@ class OrderResult implements \JsonSerializable {
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		return (object) array(
+		return (object) [
 			'merchantOrderId'     => $this->get_merchant_order_id(),
 			'omnikassaOrderId'    => $this->get_omnikassa_order_id(),
 			'poiId'               => $this->get_poi_id(),
@@ -194,7 +194,7 @@ class OrderResult implements \JsonSerializable {
 			'errorCode'           => $this->get_error_code(),
 			'paidAmount'          => $this->get_paid_amount(),
 			'totalAmount'         => $this->get_total_amount(),
-		);
+		];
 	}
 
 	/**
@@ -263,9 +263,9 @@ class OrderResult implements \JsonSerializable {
 
 		$validator->validate(
 			$data,
-			(object) array(
+			(object) [
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-order-result.json' ),
-			),
+			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 

@@ -347,7 +347,7 @@ class Order extends Message implements \JsonSerializable {
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		$object = (object) array();
+		$object = (object) [];
 
 		$object->timestamp       = $this->timestamp->format( \DATE_ATOM );
 		$object->merchantOrderId = $this->merchant_order_id;
@@ -401,7 +401,7 @@ class Order extends Message implements \JsonSerializable {
 	 * @param array<string> $fields Fields.
 	 * @return array<string>
 	 */
-	public function get_signature_fields( $fields = array() ) {
+	public function get_signature_fields( $fields = [] ) {
 		$fields[] = $this->timestamp->format( \DATE_ATOM );
 		$fields[] = $this->merchant_order_id;
 

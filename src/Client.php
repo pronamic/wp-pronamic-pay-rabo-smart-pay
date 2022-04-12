@@ -137,13 +137,13 @@ class Client {
 		 * payment status. The value can also be adjusted via the
 		 * `pronamic_pay_omnikassa_2_request_args` filter.
 		 */
-		$args = array(
+		$args = [
 			'method'  => $method,
-			'headers' => array(
+			'headers' => [
 				'Authorization' => 'Bearer ' . $token,
-			),
+			],
 			'timeout' => 30,
-		);
+		];
 
 		if ( null !== $object ) {
 			$args['headers']['Content-Type'] = 'application/json';
@@ -268,7 +268,7 @@ class Client {
 	public function get_issuers( $access_token ) {
 		$result = $this->request( 'GET', 'ideal/server/api/v2/issuers', $access_token );
 
-		$issuers = array();
+		$issuers = [];
 
 		if ( \property_exists( $result, 'issuers' ) ) {
 			foreach ( $result->issuers as $issuer ) {
