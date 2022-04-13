@@ -96,7 +96,7 @@ class PaymentBrands {
 	 *
 	 * @var array<string, string>
 	 */
-	private static $map = array(
+	private static $map = [
 		PaymentMethods::AFTERPAY_NL => self::AFTERPAY,
 		PaymentMethods::BANCONTACT  => self::BANCONTACT,
 		PaymentMethods::CREDIT_CARD => self::CARDS,
@@ -106,7 +106,7 @@ class PaymentBrands {
 		PaymentMethods::PAYPAL      => self::PAYPAL,
 		PaymentMethods::V_PAY       => self::V_PAY,
 		PaymentMethods::VISA        => self::VISA,
-	);
+	];
 
 	/**
 	 * Transform WordPress payment method to OmniKassa method.

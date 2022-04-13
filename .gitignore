@@ -19,6 +19,7 @@
 
 # PHP Coding Standards Fixer
 /.php_cs.cache
+/.php-cs-fixer.cache
 
 # PHPUnit
 /.phpunit.result.cache

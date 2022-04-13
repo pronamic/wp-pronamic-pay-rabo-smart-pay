@@ -51,9 +51,9 @@ class Gateway extends Core_Gateway {
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Supported features.
-		$this->supports = array(
+		$this->supports = [
 			'webhook_log',
-		);
+		];
 
 		// Client.
 		$this->client = new Client();
@@ -70,16 +70,16 @@ class Gateway extends Core_Gateway {
 	 * @return array<int, array<string, array<string>>>
 	 */
 	public function get_issuers() {
-		$groups = array();
+		$groups = [];
 
 		// Maybe update access token.
 		$this->maybe_update_access_token();
 
 		$result = $this->client->get_issuers( $this->config->access_token );
 
-		$groups[] = array(
+		$groups[] = [
 			'options' => $result,
-		);
+		];
 
 		return $groups;
 	}
@@ -91,7 +91,7 @@ class Gateway extends Core_Gateway {
 	 * @return array<string>
 	 */
 	public function get_supported_payment_methods() {
-		return array(
+		return [
 			PaymentMethods::AFTERPAY_NL,
 			PaymentMethods::BANCONTACT,
 			PaymentMethods::CREDIT_CARD,
@@ -101,7 +101,7 @@ class Gateway extends Core_Gateway {
 			PaymentMethods::PAYPAL,
 			PaymentMethods::V_PAY,
 			PaymentMethods::VISA,
-		);
+		];
 	}
 
 	/**
@@ -193,9 +193,9 @@ class Gateway extends Core_Gateway {
 		// Issuer.
 		if ( PaymentBrands::IDEAL === $payment_brand ) {
 			$order->set_payment_brand_meta_data(
-				(object) array(
+				(object) [
 					'issuerId' => $payment->get_meta( 'issuer' ),
-				) 
+				] 
 			);
 		}
 
@@ -299,12 +299,12 @@ class Gateway extends Core_Gateway {
 		$parameters = ReturnParameters::from_array( $_GET );
 
 		// Note.
-		$note_values = array(
+		$note_values = [
 			'order_id'  => $parameters->get_order_id(),
 			'status'    => $parameters->get_status(),
 			'signature' => (string) $parameters->get_signature(),
 			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
-		);
+		];
 
 		$note = '';
 
@@ -368,7 +368,7 @@ class Gateway extends Core_Gateway {
 	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException Throws unknow order IDs exception when no payment could be find for on ore more OmniKassa order IDs.
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
-		$unknown_order_ids = array();
+		$unknown_order_ids = [];
 
 		do {
 			$order_results = $this->client->get_order_results( $notification->get_authentication() );

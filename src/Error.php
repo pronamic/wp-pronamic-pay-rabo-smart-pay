@@ -150,9 +150,9 @@ class Error extends \Exception {
 
 		$validator->validate(
 			$data,
-			(object) array(
+			(object) [
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/error.json' ),
-			),
+			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 

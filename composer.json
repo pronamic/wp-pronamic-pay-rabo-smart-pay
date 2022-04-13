@@ -41,7 +41,7 @@
 		"php": ">=7.4",
 		"justinrainbow/json-schema": "^5.2",
 		"pronamic/wp-http": "^1.0",
-		"wp-pay/core": "dev-develop as 4.0"
+		"wp-pay/core": "^4.1"
 	},
 	"require-dev": {
 		"automattic/wordbless": "^0.3.1",
@@ -50,10 +50,10 @@
 		"php-coveralls/php-coveralls": "^2.4",
 		"phpmd/phpmd": "^2.9",
 		"pronamic/wp-coding-standards": "^1.0",
-		"roots/wordpress": "^5.8",
+		"roots/wordpress": "^5.9",
 		"sirbrillig/phpcs-variable-analysis": "^2.9",
 		"slevomat/coding-standard": "^6.4",
-		"wp-phpunit/wp-phpunit": "^5.8",
+		"wp-phpunit/wp-phpunit": "^5.9",
 		"yoast/phpunit-polyfills": "^1.0"
 	},
 	"scripts": {

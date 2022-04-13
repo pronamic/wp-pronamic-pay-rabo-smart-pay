@@ -64,14 +64,14 @@ class ErrorTest extends \PHPUnit\Framework\TestCase {
 	 * @return array<array<string|int|null>>
 	 */
 	public function json_test_provider() {
-		return array(
-			array( 'error-5001-full-authentication-required.json', 5001, 'Full authentication is required to access this resource', null ),
-			array( 'error-5001-invalid-or-missing-signature.json', 5001, null, 'Invalid or missing signature' ),
-			array( 'error-5001-timestamp-invalid.json', 5001, null, 'The timestamp of the order announcement is invalid' ),
-			array( 'error-5017-currency-required.json', 5017, null, 'currency required and should be one of: [AUD, CAD, CHF, DKK, EUR, GBP, JPY, NOK, SEK, USD]' ),
-			array( 'error-5017-merchant-order-id-required.json', 5017, null, 'merchantOrderId is required' ),
-			array( 'error-5017-merchant-return-url-required.json', 5017, null, 'merchantReturnURL is required' ),
-			array( 'error-5017-order-amount.json', 5017, null, 'order amount must be greater than zero' ),
-		);
+		return [
+			[ 'error-5001-full-authentication-required.json', 5001, 'Full authentication is required to access this resource', null ],
+			[ 'error-5001-invalid-or-missing-signature.json', 5001, null, 'Invalid or missing signature' ],
+			[ 'error-5001-timestamp-invalid.json', 5001, null, 'The timestamp of the order announcement is invalid' ],
+			[ 'error-5017-currency-required.json', 5017, null, 'currency required and should be one of: [AUD, CAD, CHF, DKK, EUR, GBP, JPY, NOK, SEK, USD]' ],
+			[ 'error-5017-merchant-order-id-required.json', 5017, null, 'merchantOrderId is required' ],
+			[ 'error-5017-merchant-return-url-required.json', 5017, null, 'merchantReturnURL is required' ],
+			[ 'error-5017-order-amount.json', 5017, null, 'order amount must be greater than zero' ],
+		];
 	}
 }

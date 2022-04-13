@@ -62,7 +62,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	 * @return array<string>
 	 */
 	public function get_signature_fields() {
-		$fields = array();
+		$fields = [];
 
 		$fields[] = $this->more_available() ? 'true' : 'false';
 
@@ -114,7 +114,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 			throw new \InvalidArgumentException( 'The `orderResults` property must be an array.' );
 		}
 
-		$order_results = array();
+		$order_results = [];
 
 		foreach ( $object->orderResults as $o ) {
 			$order_results[] = OrderResult::from_object( $o );
@@ -137,9 +137,9 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 
 		$validator->validate(
 			$data,
-			(object) array(
+			(object) [
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/order-results.json' ),
-			),
+			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 

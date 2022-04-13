@@ -40,12 +40,12 @@ class PaymentBrandsTest extends TestCase {
 	 * @return array<array<string>>
 	 */
 	public function status_matrix_provider() {
-		return array(
-			array( PaymentMethods::BANCONTACT, PaymentBrands::BANCONTACT ),
-			array( PaymentMethods::CREDIT_CARD, PaymentBrands::CARDS ),
-			array( PaymentMethods::IDEAL, PaymentBrands::IDEAL ),
-			array( PaymentMethods::PAYPAL, PaymentBrands::PAYPAL ),
-			array( 'not existing status', null ),
-		);
+		return [
+			[ PaymentMethods::BANCONTACT, PaymentBrands::BANCONTACT ],
+			[ PaymentMethods::CREDIT_CARD, PaymentBrands::CARDS ],
+			[ PaymentMethods::IDEAL, PaymentBrands::IDEAL ],
+			[ PaymentMethods::PAYPAL, PaymentBrands::PAYPAL ],
+			[ 'not existing status', null ],
+		];
 	}
 }

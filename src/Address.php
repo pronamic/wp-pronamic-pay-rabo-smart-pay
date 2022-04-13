@@ -303,7 +303,7 @@ class Address implements \JsonSerializable {
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		$object = (object) array();
+		$object = (object) [];
 
 		$object->firstName  = $this->first_name;
 		$object->middleName = $this->middle_name;
@@ -331,7 +331,7 @@ class Address implements \JsonSerializable {
 	 * @param array<string> $fields Fields.
 	 * @return array<string>
 	 */
-	public function get_signature_fields( $fields = array() ) {
+	public function get_signature_fields( $fields = [] ) {
 		$fields[] = (string) $this->first_name;
 		$fields[] = (string) $this->middle_name;
 		$fields[] = $this->last_name;

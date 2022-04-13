@@ -26,11 +26,11 @@ class ReturnParametersTest extends TestCase {
 	public function test_return_parameters() {
 		$signing_key = 'QAhFrajUoLsKowfRo15vFXIpdbCgmI2S82idk6xPiCk=';
 
-		$get = array(
+		$get = [
 			'order_id'  => '77',
 			'status'    => 'COMPLETED',
 			'signature' => '045fdb9da232f1b4677921f9b14dcf739be130cf01a6620b1466b8c94a2df3ebaef92c86ef996d1a0685f2a2ec7d8c1fcb82976ec02f5af7b5bbf81bc1efd80c',
-		);
+		];
 
 		$this->assertTrue( ReturnParameters::contains( $get ) );
 

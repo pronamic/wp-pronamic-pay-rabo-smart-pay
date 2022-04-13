@@ -237,7 +237,7 @@ class OrderItem implements \JsonSerializable {
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		$object = (object) array();
+		$object = (object) [];
 
 		if ( null !== $this->id ) {
 			$object->id = $this->id;
@@ -271,7 +271,7 @@ class OrderItem implements \JsonSerializable {
 	 * @param array<string> $fields Fields.
 	 * @return array<string>
 	 */
-	public function get_signature_fields( $fields = array() ) {
+	public function get_signature_fields( $fields = [] ) {
 		if ( null !== $this->id ) {
 			$fields[] = $this->id;
 		}

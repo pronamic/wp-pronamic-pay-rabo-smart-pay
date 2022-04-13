@@ -83,7 +83,7 @@ class CustomerInformation implements \JsonSerializable {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when gender is not null, 'F' or 'M'.
 	 */
 	public function set_gender( $gender ) {
-		if ( ! \in_array( $gender, array( null, 'F', 'M' ), true ) ) {
+		if ( ! \in_array( $gender, [ null, 'F', 'M' ], true ) ) {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Gender "%s" must be equal to `null`, "F" or "M".',
@@ -121,7 +121,7 @@ class CustomerInformation implements \JsonSerializable {
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		$object = (object) array();
+		$object = (object) [];
 
 		if ( null !== $this->email_address ) {
 			$object->emailAddress = $this->email_address;
@@ -152,7 +152,7 @@ class CustomerInformation implements \JsonSerializable {
 	 * @param array<string> $fields Fields.
 	 * @return array<string>
 	 */
-	public function get_signature_fields( $fields = array() ) {
+	public function get_signature_fields( $fields = [] ) {
 		$fields[] = (string) $this->email_address;
 		$fields[] = ( null === $this->date_of_birth ) ? '' : $this->date_of_birth->format( 'd-m-Y' );
 		$fields[] = (string) $this->gender;

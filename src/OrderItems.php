@@ -97,7 +97,7 @@ class OrderItems implements \JsonSerializable {
 	 * @param array<string> $fields Fields.
 	 * @return array<string>
 	 */
-	public function get_signature_fields( $fields = array() ) {
+	public function get_signature_fields( $fields = [] ) {
 		foreach ( $this->get_order_items() as $item ) {
 			$fields = $item->get_signature_fields( $fields );
 		}

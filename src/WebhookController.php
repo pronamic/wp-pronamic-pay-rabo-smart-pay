@@ -27,9 +27,9 @@ class WebhookController {
 	 * @return void
 	 */
 	public function setup() {
-		\add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
+		\add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 
-		\add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
+		\add_action( 'wp_loaded', [ $this, 'wp_loaded' ] );
 	}
 
 	/**
@@ -43,27 +43,27 @@ class WebhookController {
 		\register_rest_route(
 			Integration::REST_ROUTE_NAMESPACE,
 			'/webhook',
-			array(
+			[
 				'methods'             => 'POST',
-				'callback'            => array( $this, 'rest_api_omnikassa_2_webhook' ),
+				'callback'            => [ $this, 'rest_api_omnikassa_2_webhook' ],
 				'permission_callback' => '__return_true',
-			)
+			]
 		);
 
 		\register_rest_route(
 			Integration::REST_ROUTE_NAMESPACE,
 			'/webhook/(?P<id>[\d]+)',
-			array(
-				'args'                => array(
-					'id' => array(
+			[
+				'args'                => [
+					'id' => [
 						'description' => \__( 'Unique identifier for the gateway configuration post.', 'pronamic_ideal' ),
 						'type'        => 'integer',
-					),
-				),
+					],
+				],
 				'methods'             => 'POST',
-				'callback'            => array( $this, 'rest_api_omnikassa_2_webhook_item' ),
+				'callback'            => [ $this, 'rest_api_omnikassa_2_webhook_item' ],
 				'permission_callback' => '__return_true',
-			)
+			]
 		);
 	}
 
@@ -77,23 +77,23 @@ class WebhookController {
 	public function rest_api_omnikassa_2_webhook( \WP_REST_Request $request ) {
 		// Query.
 		$query = new \WP_Query(
-			array(
+			[
 				'post_type'   => GatewayPostType::POST_TYPE,
 				'post_status' => 'publish',
 				'nopaging'    => true,
-				'meta_query'  => array(
-					array(
+				'meta_query'  => [
+					[
 						'key'   => '_pronamic_gateway_id',
 						'value' => 'rabobank-omnikassa-2',
-					),
-				),
-			)
+					],
+				],
+			]
 		);
 
-		$data = array(
+		$data = [
 			'success' => true,
-			'results' => array(),
-		);
+			'results' => [],
+		];
 
 		foreach ( $query->posts as $post ) {
 			$id = \get_post_field( 'ID', $post );
@@ -129,10 +129,10 @@ class WebhookController {
 			return new \WP_Error(
 				'rest_omnikassa_2_notification_invalid',
 				\__( 'Invalid OmniKassa 2.0 notification.', 'pronamic_ideal ' ),
-				array(
+				[
 					'status'       => 400,
 					'notification' => $json,
-				)
+				]
 			);
 		}
 
@@ -153,19 +153,19 @@ class WebhookController {
 			return new \WP_Error(
 				'rest_omnikassa_2_gateway_invalid',
 				\__( 'Invalid OmniKassa 2.0 gateway.', 'pronamic_ideal ' ),
-				array(
+				[
 					'status' => 400,
 					'id'     => $id,
-				)
+				]
 			);
 		}
 
 		/**
 		 * Data.
 		 */
-		$data = array(
+		$data = [
 			'success' => true,
-		);
+		];
 
 		try {
 			$gateway->handle_notification( $notification );
@@ -180,11 +180,11 @@ class WebhookController {
 			return new \WP_Error(
 				'rest_omnikassa_2_exception',
 				$e->getMessage(),
-				array(
+				[
 					'status'       => 400,
 					'notification' => $json,
 					'id'           => $id,
-				)
+				]
 			);
 		}
 

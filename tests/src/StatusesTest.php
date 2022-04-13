@@ -40,12 +40,12 @@ class StatusesTest extends TestCase {
 	 * @return array<array<string|null>>
 	 */
 	public function status_matrix_provider() {
-		return array(
-			array( Statuses::CANCELLED, PaymentStatus::CANCELLED ),
-			array( Statuses::COMPLETED, PaymentStatus::SUCCESS ),
-			array( Statuses::EXPIRED, PaymentStatus::EXPIRED ),
-			array( Statuses::IN_PROGRESS, PaymentStatus::OPEN ),
-			array( 'not existing status', null ),
-		);
+		return [
+			[ Statuses::CANCELLED, PaymentStatus::CANCELLED ],
+			[ Statuses::COMPLETED, PaymentStatus::SUCCESS ],
+			[ Statuses::EXPIRED, PaymentStatus::EXPIRED ],
+			[ Statuses::IN_PROGRESS, PaymentStatus::OPEN ],
+			[ 'not existing status', null ],
+		];
 	}
 }

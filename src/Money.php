@@ -67,10 +67,10 @@ class Money implements \JsonSerializable {
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		return (object) array(
+		return (object) [
 			'currency' => $this->get_currency(),
 			'amount'   => $this->get_amount(),
-		);
+		];
 	}
 
 	/**
@@ -106,9 +106,9 @@ class Money implements \JsonSerializable {
 
 		$validator->validate(
 			$data,
-			(object) array(
+			(object) [
 				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-money.json' ),
-			),
+			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
@@ -121,7 +121,7 @@ class Money implements \JsonSerializable {
 	 * @param array<string> $fields Fields.
 	 * @return array<string>
 	 */
-	public function get_signature_fields( $fields = array() ) {
+	public function get_signature_fields( $fields = [] ) {
 		$fields[] = $this->get_currency();
 		$fields[] = \strval( $this->get_amount() );
 
