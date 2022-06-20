@@ -342,6 +342,7 @@ class Gateway extends Core_Gateway {
 	 * @param Notification $notification Notification.
 	 * @return void
 	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signature exception when notification message does not match gateway configuration signature.
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException Throws unknown order IDs exception when no payment could be found for on ore more OmniKassa order IDs.
 	 */
 	public function handle_notification( Notification $notification ) {
 		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
@@ -365,7 +366,7 @@ class Gateway extends Core_Gateway {
 	 * @param Notification $notification Notification.
 	 * @return void
 	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signature exception when order results message does not match gateway configuration signature.
-	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException Throws unknow order IDs exception when no payment could be find for on ore more OmniKassa order IDs.
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException Throws unknown order IDs exception when no payment could be found for on ore more OmniKassa order IDs.
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
 		$unknown_order_ids = [];
