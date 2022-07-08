@@ -13,7 +13,9 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Core\SelectField;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -61,6 +63,27 @@ class Gateway extends Core_Gateway {
 		$this->client->set_url( $config->get_api_url() );
 		$this->client->set_refresh_token( $config->refresh_token );
 		$this->client->set_signing_key( $config->signing_key );
+
+		// Methods.
+		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
+
+		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
+
+		$ideal_issuer_field->set_options_callback( function() {
+			return $this->get_issuers();
+		} );
+
+		$ideal_payment_method->add_field( $ideal_issuer_field );
+
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::AFTERPAY_NL ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( $ideal_payment_method );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::MAESTRO ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::MASTERCARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYPAL ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::V_PAY ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::VISA ) );
 	}
 
 	/**
