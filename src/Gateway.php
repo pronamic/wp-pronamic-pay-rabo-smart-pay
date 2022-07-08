@@ -64,7 +64,7 @@ class Gateway extends Core_Gateway {
 		$this->client->set_refresh_token( $config->refresh_token );
 		$this->client->set_signing_key( $config->signing_key );
 
-		// Methods.
+		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 
 		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
@@ -75,6 +75,7 @@ class Gateway extends Core_Gateway {
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
+		// Payment methods.
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::AFTERPAY_NL ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
