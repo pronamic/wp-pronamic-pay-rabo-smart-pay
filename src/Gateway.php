@@ -13,9 +13,11 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\IDealIssuerSelectField;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\SelectField;
+use Pronamic\WordPress\Pay\Core\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -67,7 +69,7 @@ class Gateway extends Core_Gateway {
 		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 
-		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
+		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
 
 		$ideal_issuer_field->set_options_callback( function() {
 			return $this->get_ideal_issuers();
@@ -90,21 +92,21 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get iDEAL issuers.
 	 *
-	 * @return array<int, array<string, array<string>>>
+	 * @return SelectFieldOption[]
 	 */
 	private function get_ideal_issuers() {
-		$groups = [];
+		$options = [];
 
 		// Maybe update access token.
 		$this->maybe_update_access_token();
 
 		$result = $this->client->get_issuers( $this->config->access_token );
 
-		$groups[] = [
-			'options' => $result,
-		];
+		foreach ( $result as $id => $name ) {
+			$options[] = new SelectFieldOption( $id, $name );
+		}
 
-		return $groups;
+		return $options;
 	}
 
 	/**
