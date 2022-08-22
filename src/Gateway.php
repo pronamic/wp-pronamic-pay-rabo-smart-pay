@@ -90,6 +90,7 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYPAL ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::V_PAY ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::VISA ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::VOID ) );
 	}
 
 	/**
