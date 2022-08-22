@@ -15,6 +15,7 @@ use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
 use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
 use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -70,11 +71,12 @@ class Gateway extends Core_Gateway {
 
 		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
 
-		$ideal_issuer_field->set_cache_key( 'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) ) );
-
-		$ideal_issuer_field->set_options_callback( function() {
-			return $this->get_ideal_issuers();
-		} );
+		$ideal_issuer_field->set_options( new CachedCallbackOptions(
+			function() {
+				return $this->get_ideal_issuers();
+			},
+			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+		) );
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
