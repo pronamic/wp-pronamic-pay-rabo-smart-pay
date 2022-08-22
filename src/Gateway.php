@@ -13,11 +13,10 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
-use Pronamic\WordPress\Pay\Core\IDealIssuerSelectField;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
-use Pronamic\WordPress\Pay\Core\SelectField;
-use Pronamic\WordPress\Pay\Core\SelectFieldOption;
+use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
