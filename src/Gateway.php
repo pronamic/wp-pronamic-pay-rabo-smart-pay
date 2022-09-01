@@ -71,12 +71,14 @@ class Gateway extends Core_Gateway {
 
 		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
 
-		$ideal_issuer_field->set_options( new CachedCallbackOptions(
-			function() {
-				return $this->get_ideal_issuers();
-			},
-			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
-		) );
+		$ideal_issuer_field->set_options(
+			new CachedCallbackOptions(
+				function() {
+					return $this->get_ideal_issuers();
+				},
+				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+			) 
+		);
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
@@ -95,7 +97,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get iDEAL issuers.
 	 *
-	 * @return SelectFieldOption[]
+	 * @return array<SelectFieldOption>
 	 */
 	private function get_ideal_issuers() {
 		$options = [];

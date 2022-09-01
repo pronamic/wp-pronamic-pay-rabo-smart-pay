@@ -116,7 +116,7 @@ class Config extends GatewayConfig implements JsonSerializable {
 	 */
 	public function jsonSerialize() {
 		return [
-			'@type'         => __CLASS__,
+			'@type'         => self::class,
 			'api_url'       => $this->api_url,
 			'refresh_token' => $this->refresh_token,
 			'signing_key'   => $this->signing_key,
