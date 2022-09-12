@@ -16,7 +16,9 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
+use Pronamic\WordPress\Pay\Fields\DateField;
 use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Fields\SelectField;
 use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
@@ -82,8 +84,40 @@ class Gateway extends Core_Gateway {
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
+		/*
+		 * Payment method AfterPay.nl.
+		 */
+		$afterpay_payment_method = new PaymentMethod( PaymentMethods::AFTERPAY_NL );
+
+		// Gender field.
+		$field_gender = new SelectField( 'pronamic_pay_gender' );
+
+		$field_gender->meta_key = 'pronamic_pay_gender';
+
+		$field_gender->set_label( __( 'Gender', 'pronamic_ideal' ) );
+
+		$field_gender->set_options(
+			[
+				new SelectFieldOption( Gender::FEMALE, \__( 'Female', 'pronamic_ideal' ) ),
+				new SelectFieldOption( Gender::MALE, \__( 'Male', 'pronamic_ideal' ) ),
+				new SelectFieldOption( '', \__( 'Other', 'pronamic_ideal' ) ),
+			]
+		);
+
+		$afterpay_payment_method->add_field( $field_gender );
+
+		// Date of birth field.
+		$field_birth_date = new DateField( 'pronamic_pay_birth_date' );
+
+		$field_birth_date->meta_key = 'pronamic_pay_birth_date';
+
+		$field_birth_date->set_label( __( 'Date of birth', 'pronamic_ideal' ) );
+
+		$afterpay_payment_method->add_field( $field_birth_date );
+
+		$this->register_payment_method( $afterpay_payment_method );
+
 		// Payment methods.
-		$this->register_payment_method( new PaymentMethod( PaymentMethods::AFTERPAY_NL ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
 		$this->register_payment_method( $ideal_payment_method );
