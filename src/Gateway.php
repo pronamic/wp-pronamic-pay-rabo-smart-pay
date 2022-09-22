@@ -92,7 +92,7 @@ class Gateway extends Core_Gateway {
 		// Gender field.
 		$field_gender = new SelectField( 'pronamic_pay_gender' );
 
-		$field_gender->meta_key = 'pronamic_pay_gender';
+		$field_gender->meta_key = 'gender';
 
 		$field_gender->set_label( __( 'Gender', 'pronamic_ideal' ) );
 
@@ -109,7 +109,7 @@ class Gateway extends Core_Gateway {
 		// Date of birth field.
 		$field_birth_date = new DateField( 'pronamic_pay_birth_date' );
 
-		$field_birth_date->meta_key = 'pronamic_pay_birth_date';
+		$field_birth_date->meta_key = 'birth_date';
 
 		$field_birth_date->set_label( __( 'Date of birth', 'pronamic_ideal' ) );
 
