@@ -112,7 +112,7 @@ class Config extends GatewayConfig implements JsonSerializable {
 	/**
 	 * Serialize to JSON.
 	 *
-	 * @return mixed
+	 * @return array<string, string>
 	 */
 	public function jsonSerialize() {
 		return [

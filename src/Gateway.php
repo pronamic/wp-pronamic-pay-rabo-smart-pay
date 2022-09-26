@@ -94,7 +94,7 @@ class Gateway extends Core_Gateway {
 
 		$field_gender->meta_key = 'gender';
 
-		$field_gender->set_label( __( 'Gender', 'pronamic_ideal' ) );
+		$field_gender->set_label( \__( 'Gender', 'pronamic_ideal' ) );
 
 		$field_gender->set_options(
 			[
@@ -111,7 +111,7 @@ class Gateway extends Core_Gateway {
 
 		$field_birth_date->meta_key = 'birth_date';
 
-		$field_birth_date->set_label( __( 'Date of birth', 'pronamic_ideal' ) );
+		$field_birth_date->set_label( \__( 'Date of birth', 'pronamic_ideal' ) );
 
 		$afterpay_payment_method->add_field( $field_birth_date );
 
