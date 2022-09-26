@@ -13,7 +13,13 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
+use Pronamic\WordPress\Pay\Fields\DateField;
+use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Fields\SelectField;
+use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -61,47 +67,85 @@ class Gateway extends Core_Gateway {
 		$this->client->set_url( $config->get_api_url() );
 		$this->client->set_refresh_token( $config->refresh_token );
 		$this->client->set_signing_key( $config->signing_key );
+
+		// Payment method iDEAL.
+		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
+
+		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
+
+		$ideal_issuer_field->set_options(
+			new CachedCallbackOptions(
+				function() {
+					return $this->get_ideal_issuers();
+				},
+				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+			) 
+		);
+
+		$ideal_payment_method->add_field( $ideal_issuer_field );
+
+		/*
+		 * Payment method AfterPay.nl.
+		 */
+		$afterpay_payment_method = new PaymentMethod( PaymentMethods::AFTERPAY_NL );
+
+		// Gender field.
+		$field_gender = new SelectField( 'pronamic_pay_gender' );
+
+		$field_gender->meta_key = 'gender';
+
+		$field_gender->set_label( \__( 'Gender', 'pronamic_ideal' ) );
+
+		$field_gender->set_options(
+			[
+				new SelectFieldOption( Gender::FEMALE, \__( 'Female', 'pronamic_ideal' ) ),
+				new SelectFieldOption( Gender::MALE, \__( 'Male', 'pronamic_ideal' ) ),
+				new SelectFieldOption( '', \__( 'Other', 'pronamic_ideal' ) ),
+			]
+		);
+
+		$afterpay_payment_method->add_field( $field_gender );
+
+		// Date of birth field.
+		$field_birth_date = new DateField( 'pronamic_pay_birth_date' );
+
+		$field_birth_date->meta_key = 'birth_date';
+
+		$field_birth_date->set_label( \__( 'Date of birth', 'pronamic_ideal' ) );
+
+		$afterpay_payment_method->add_field( $field_birth_date );
+
+		$this->register_payment_method( $afterpay_payment_method );
+
+		// Payment methods.
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( $ideal_payment_method );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::MAESTRO ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::MASTERCARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYPAL ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::V_PAY ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::VISA ) );
 	}
 
 	/**
-	 * Get issuers
+	 * Get iDEAL issuers.
 	 *
-	 * @see Core_Gateway::get_issuers()
-	 * @return array<int, array<string, array<string>>>
+	 * @return array<SelectFieldOption>
 	 */
-	public function get_issuers() {
-		$groups = [];
+	private function get_ideal_issuers() {
+		$options = [];
 
 		// Maybe update access token.
 		$this->maybe_update_access_token();
 
 		$result = $this->client->get_issuers( $this->config->access_token );
 
-		$groups[] = [
-			'options' => $result,
-		];
+		foreach ( $result as $id => $name ) {
+			$options[] = new SelectFieldOption( $id, $name );
+		}
 
-		return $groups;
-	}
-
-	/**
-	 * Get supported payment methods.
-	 *
-	 * @see \Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
-	 * @return array<string>
-	 */
-	public function get_supported_payment_methods() {
-		return [
-			PaymentMethods::AFTERPAY_NL,
-			PaymentMethods::BANCONTACT,
-			PaymentMethods::CREDIT_CARD,
-			PaymentMethods::IDEAL,
-			PaymentMethods::MAESTRO,
-			PaymentMethods::MASTERCARD,
-			PaymentMethods::PAYPAL,
-			PaymentMethods::V_PAY,
-			PaymentMethods::VISA,
-		];
+		return $options;
 	}
 
 	/**
@@ -342,6 +386,7 @@ class Gateway extends Core_Gateway {
 	 * @param Notification $notification Notification.
 	 * @return void
 	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signature exception when notification message does not match gateway configuration signature.
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException Throws unknown order IDs exception when no payment could be found for on ore more OmniKassa order IDs.
 	 */
 	public function handle_notification( Notification $notification ) {
 		if ( ! $notification->is_valid( $this->config->signing_key ) ) {
@@ -365,7 +410,7 @@ class Gateway extends Core_Gateway {
 	 * @param Notification $notification Notification.
 	 * @return void
 	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws invalid signature exception when order results message does not match gateway configuration signature.
-	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException Throws unknow order IDs exception when no payment could be find for on ore more OmniKassa order IDs.
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException Throws unknown order IDs exception when no payment could be found for on ore more OmniKassa order IDs.
 	 */
 	private function handle_merchant_order_status_changed( Notification $notification ) {
 		$unknown_order_ids = [];

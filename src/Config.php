@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use JsonSerializable;
 use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
@@ -19,7 +20,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @version 2.1.8
  * @since   1.0.0
  */
-class Config extends GatewayConfig {
+class Config extends GatewayConfig implements JsonSerializable {
 	/**
 	 * Post ID.
 	 *
@@ -106,5 +107,19 @@ class Config extends GatewayConfig {
 		}
 
 		return \strtotime( $this->access_token_valid_until ) > \time();
+	}
+
+	/**
+	 * Serialize to JSON.
+	 *
+	 * @return array<string, string>
+	 */
+	public function jsonSerialize() {
+		return [
+			'@type'         => self::class,
+			'api_url'       => $this->api_url,
+			'refresh_token' => $this->refresh_token,
+			'signing_key'   => $this->signing_key,
+		];
 	}
 }
