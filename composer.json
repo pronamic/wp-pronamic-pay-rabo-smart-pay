@@ -41,7 +41,7 @@
 		"php": ">=7.4",
 		"justinrainbow/json-schema": "^5.2",
 		"pronamic/wp-http": "^1.0",
-		"wp-pay/core": "^4.1"
+		"wp-pay/core": "^4.4"
 	},
 	"require-dev": {
 		"automattic/wordbless": "^0.3.1",
