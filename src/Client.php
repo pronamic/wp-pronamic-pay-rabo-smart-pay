@@ -200,7 +200,7 @@ class Client {
 		if ( ! \is_object( $data ) ) {
 			throw new \Exception(
 				\sprintf(
-					'Could not JSON decode OmniKassa 2.0 response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
+					'Could not JSON decode Rabo Smart Pay response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
 					$response->status(),
 					$response->message(),
 					\strlen( $response->body() )

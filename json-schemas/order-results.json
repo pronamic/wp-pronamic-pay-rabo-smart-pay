@@ -1,7 +1,7 @@
 {
 	"$id": "https://example.com/person.schema.json",
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "OmniKassa 2.0 order results.",
+	"title": "Rabo Smart Pay order results.",
 	"type": "object",
 	"required": [
 		"moreOrderResultsAvailable",
