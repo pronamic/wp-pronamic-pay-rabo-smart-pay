@@ -44,7 +44,7 @@ class Integration extends AbstractGatewayIntegration {
 			$args,
 			[
 				'id'            => 'rabobank-omnikassa-2',
-				'name'          => 'Rabobank - Smart Pay',
+				'name'          => 'Rabobank - Rabo Smart Pay',
 				'api_url'       => 'https://betalen.rabobank.nl/omnikassa-api/',
 				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/klanten-laten-betalen/rabo-smart-pay',
 				'dashboard_url' => 'https://bankieren.rabobank.nl/smartpay-dashboard',
