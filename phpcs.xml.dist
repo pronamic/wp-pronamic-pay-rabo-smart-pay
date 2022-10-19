@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<ruleset name="WordPress Pay OmniKassa 2.0 rules">
+<ruleset name="WordPress Pay Rabo Smart Pay rules">
 	<file>.</file>
 
 	<exclude-pattern>tests/bootstrap.php</exclude-pattern>

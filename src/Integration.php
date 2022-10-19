@@ -44,10 +44,10 @@ class Integration extends AbstractGatewayIntegration {
 			$args,
 			[
 				'id'            => 'rabobank-omnikassa-2',
-				'name'          => 'Rabobank - OmniKassa 2.0',
+				'name'          => 'Rabobank - Rabo Smart Pay',
 				'api_url'       => 'https://betalen.rabobank.nl/omnikassa-api/',
-				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/geld-ontvangen/rabo-omnikassa/',
-				'dashboard_url' => 'https://bankieren.rabobank.nl/omnikassa-dashboard/',
+				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/klanten-laten-betalen/rabo-smart-pay',
+				'dashboard_url' => 'https://bankieren.rabobank.nl/smartpay-dashboard',
 				'provider'      => 'rabobank',
 				'supports'      => [
 					'webhook',
@@ -155,7 +155,7 @@ class Integration extends AbstractGatewayIntegration {
 		$message = \sprintf(
 			/* translators: 1: Pronamic Pay, 2: Documentation link, 3: <code>.test</code> */
 			\__(
-				'%1$s — <a href="%2$s">OmniKassa 2 does not accept payments from %3$s environments</a>.',
+				'%1$s — <a href="%2$s">Rabo Smart Pay does not accept payments from %3$s environments</a>.',
 				'pronamic_ideal'
 			),
 			\sprintf(
@@ -222,7 +222,7 @@ class Integration extends AbstractGatewayIntegration {
 			'classes'     => [ 'regular-text', 'code' ],
 			'tooltip'     => \sprintf(
 				/* translators: %s: <code>merchantOrderId</code> */
-				\__( 'This setting defines the OmniKassa 2.0 %s field.', 'pronamic_ideal' ),
+				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic_ideal' ),
 				$code_field
 			),
 			'description' => \sprintf(
@@ -230,7 +230,7 @@ class Integration extends AbstractGatewayIntegration {
 				\sprintf(
 					/* translators: %s: <code>merchantOrderId</code> */
 					\__(
-						'The OmniKassa 2.0 %s field must consist strictly of 24 alphanumeric characters, other characters, such as ".", "@", " " (space), etc. are not allowed.',
+						'The Rabo Smart Pay %s field must consist strictly of 24 alphanumeric characters, other characters, such as ".", "@", " " (space), etc. are not allowed.',
 						'pronamic_ideal'
 					),
 					$code_field

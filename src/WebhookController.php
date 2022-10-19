@@ -128,7 +128,7 @@ class WebhookController {
 			// Invalid input data.
 			return new \WP_Error(
 				'rest_omnikassa_2_notification_invalid',
-				\__( 'Invalid OmniKassa 2.0 notification.', 'pronamic_ideal ' ),
+				\__( 'Invalid Rabo Smart Pay notification.', 'pronamic_ideal ' ),
 				[
 					'status'       => 400,
 					'notification' => $json,
@@ -152,7 +152,7 @@ class WebhookController {
 			// Invalid gateway.
 			return new \WP_Error(
 				'rest_omnikassa_2_gateway_invalid',
-				\__( 'Invalid OmniKassa 2.0 gateway.', 'pronamic_ideal ' ),
+				\__( 'Invalid Rabo Smart Pay gateway.', 'pronamic_ideal ' ),
 				[
 					'status' => 400,
 					'id'     => $id,

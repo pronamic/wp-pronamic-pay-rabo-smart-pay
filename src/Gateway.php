@@ -353,7 +353,7 @@ class Gateway extends Core_Gateway {
 		$note = '';
 
 		$note .= '<p>';
-		$note .= \__( 'OmniKassa 2.0 return URL requested:', 'pronamic_ideal' );
+		$note .= \__( 'Rabo Smart Pay return URL requested:', 'pronamic_ideal' );
 		$note .= '</p>';
 
 		$note .= '<dl>';
@@ -465,7 +465,7 @@ class Gateway extends Core_Gateway {
 				// Note.
 				$note = \sprintf(
 					'<p>%s</p><pre>%s</pre>',
-					\__( 'OmniKassa 2.0 webhook URL requested:', 'pronamic_ideal' ),
+					\__( 'Rabo Smart Pay webhook URL requested:', 'pronamic_ideal' ),
 					(string) \wp_json_encode( $order_result, \JSON_PRETTY_PRINT )
 				);
 
@@ -478,7 +478,7 @@ class Gateway extends Core_Gateway {
 		if ( \count( $unknown_order_ids ) > 0 ) {
 			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException(
 				\sprintf(
-					'Could not find payments for the following OmniKassa order IDs: %s.',
+					'Could not find payments for the following Rabo Smart Pay order IDs: %s.',
 					\implode( ', ', $unknown_order_ids )
 				)
 			);
