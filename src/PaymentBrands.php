@@ -135,4 +135,19 @@ class PaymentBrands {
 
 		return $default;
 	}
+
+	/**
+	 * Convert method from OmniKassa 2 indicator to a Pronamic indicator.
+	 *
+	 * @param string $payment_brand Method.
+	 */
+	public static function from_omnikassa_to_pronamic( string $payment_brand ): ?string {
+		$key = \array_search( $payment_brand, self::$map, true );
+
+		if ( false === $key ) {
+			return null;
+		}
+
+		return $key;
+	}
 }

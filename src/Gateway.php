@@ -15,6 +15,7 @@ use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Core\PaymentMethodsCollection;
 use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
 use Pronamic\WordPress\Pay\Fields\DateField;
 use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
@@ -127,6 +128,97 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::SOFORT ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::V_PAY ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::VISA ) );
+	}
+
+	/**
+	 * Get payment methods.
+	 *
+	 * @param array<string> $args Query arguments.
+	 */
+	public function get_payment_methods( array $args = [] ): PaymentMethodsCollection {
+		try {
+			$this->maybe_enrich_payment_methods();
+		} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+			// No problem.
+		}
+
+		return parent::get_payment_methods( $args );
+	}
+
+	/**
+	 * Get credit card payment methods.
+	 *
+	 * @return array<string>
+	 */
+	private function get_credit_card_payment_methods() {
+		return [
+			PaymentMethods::MAESTRO,
+			PaymentMethods::MASTERCARD,
+			PaymentMethods::V_PAY,
+			PaymentMethods::VISA,
+		];
+	}
+
+	/**
+	 * Maybe enrich payment methods.
+	 *
+	 * @return void
+	 */
+	private function maybe_enrich_payment_methods() {
+		$cache_key = 'pronamic_pay_omnikassa_2_payment_brands_' . \md5( \wp_json_encode( $this->config ) );
+
+		$omnikassa_payment_brands = \get_transient( $cache_key );
+
+		if ( false === $omnikassa_payment_brands ) {
+			// Maybe update access token.
+			$this->maybe_update_access_token();
+
+			$omnikassa_payment_brands = $this->client->get_payment_brands( $this->config->access_token );
+
+			\set_transient( $cache_key, $omnikassa_payment_brands, \DAY_IN_SECONDS );
+		}
+
+		foreach ( $this->payment_methods as $payment_method ) {
+			$payment_method->set_status( 'inactive' );
+		}
+
+		foreach ( $omnikassa_payment_brands as $payment_brand => $status ) {
+			$payment_method_id = PaymentBrands::from_omnikassa_to_pronamic( $payment_brand );
+
+			if ( null === $payment_method_id ) {
+				continue;
+			}
+
+			$payment_method = $this->get_payment_method( $payment_method_id );
+
+			if ( null === $payment_method ) {
+				continue;
+			}
+
+			if ( 'Active' !== $status ) {
+				continue;
+			}
+
+			$payment_method->set_status( 'active' );
+		}
+
+		/**
+		 * Credit card.
+		 */
+		$credit_card_payment_methods = parent::get_payment_methods(
+			[
+				'id'     => $this->get_credit_card_payment_methods(),
+				'status' => [ '', 'active' ],
+			]
+		);
+
+		if ( \count( $credit_card_payment_methods ) > 0 ) {
+			$payment_method = $this->get_payment_method( PaymentMethods::CREDIT_CARD );
+
+			if ( null !== $payment_method ) {
+				$payment_method->set_status( 'active' );
+			}
+		}
 	}
 
 	/**

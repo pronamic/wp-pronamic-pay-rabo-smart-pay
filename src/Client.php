@@ -259,6 +259,27 @@ class Client {
 	}
 
 	/**
+	 * Get payment brands.
+	 *
+	 * @link https://developer.rabobank.nl/product/9619/api/9355#/RaboOmniKassaOnlinePaymentAPI_1010/operation/%2Forder%2Fserver%2Fapi%2Fpayment-brands/get
+	 * @param string $access_token Access token.
+	 * @return array<string>
+	 */
+	public function get_payment_brands( $access_token ) {
+		$result = $this->request( 'GET', 'order/server/api/payment-brands', $access_token );
+
+		$payment_brands = [];
+
+		if ( \property_exists( $result, 'paymentBrands' ) ) {
+			foreach ( $result->paymentBrands as $brand ) {
+				$payment_brands[ $brand->name ] = $brand->status;
+			}
+		}
+
+		return $payment_brands;
+	}
+
+	/**
 	 * Get issuers.
 	 *
 	 * @link https://developer.rabobank.nl/product/8949/api/8826
