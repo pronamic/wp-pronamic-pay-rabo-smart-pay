@@ -7,6 +7,11 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.0] - 2022-11-07
+- Changed name from "OmniKassa" to "Rabo Smart Pay". [#13](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/13)
+- Enrich payments methods from new `order/server/api/payment-brands` endpoint.
+- Added support for SOFORT payment method. [#16](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/16)
+
 ## [4.2.0] - 2022-09-26
 - Updated payment methods registration.
 
@@ -125,36 +130,37 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/omnikassa-2/compare/4.2.0...HEAD
+[unreleased]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.3.0...HEAD
+[4.3.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.1.1...4.2.0
-[4.1.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/4.1.0...4.1.1
-[4.1.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/4.0.0...4.1.0
-[4.0.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/3.0.1...4.0.0
-[3.0.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/3.0.0...3.0.1
-[3.0.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.4...3.0.0
-[2.3.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.3...2.3.4
-[2.3.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.2...2.3.3
-[2.3.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.1...2.3.2
-[2.3.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.3.0...2.3.1
-[2.3.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.4...2.3.0
-[2.2.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.3...2.2.4
-[2.2.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.2...2.2.3
-[2.2.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.1...2.2.2
-[2.2.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.2.0...2.2.1
-[2.2.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.10...2.2.0
-[2.1.10]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.9...2.1.10
-[2.1.9]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.8...2.1.9
-[2.1.8]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.7...2.1.8
-[2.1.7]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.6...2.1.7
-[2.1.6]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.5...2.1.6
-[2.1.5]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.4...2.1.5
-[2.1.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.3...2.1.4
-[2.1.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.2...2.1.3
-[2.1.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.1...2.1.2
-[2.1.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.1.0...2.1.1
-[2.1.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.4...2.1.0
-[2.0.4]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.3...2.0.4
-[2.0.3]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.2...2.0.3
-[2.0.2]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.1...2.0.2
-[2.0.1]: https://github.com/wp-pay-gateways/omnikassa-2/compare/2.0.0...2.0.1
-[2.0.0]: https://github.com/wp-pay-gateways/omnikassa-2/compare/1.0.0...2.0.0
+[4.1.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.1.0...4.1.1
+[4.1.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.0.0...4.1.0
+[4.0.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/3.0.1...4.0.0
+[3.0.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.3.4...3.0.0
+[2.3.4]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.3.3...2.3.4
+[2.3.3]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.3.2...2.3.3
+[2.3.2]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.3.1...2.3.2
+[2.3.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.3.0...2.3.1
+[2.3.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.2.4...2.3.0
+[2.2.4]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.2.3...2.2.4
+[2.2.3]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.2.2...2.2.3
+[2.2.2]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.2.1...2.2.2
+[2.2.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.2.0...2.2.1
+[2.2.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.10...2.2.0
+[2.1.10]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.9...2.1.10
+[2.1.9]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.8...2.1.9
+[2.1.8]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.7...2.1.8
+[2.1.7]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.6...2.1.7
+[2.1.6]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.5...2.1.6
+[2.1.5]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.4...2.1.5
+[2.1.4]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.3...2.1.4
+[2.1.3]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.2...2.1.3
+[2.1.2]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.1...2.1.2
+[2.1.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.1.0...2.1.1
+[2.1.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.0.4...2.1.0
+[2.0.4]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.0.3...2.0.4
+[2.0.3]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.0.2...2.0.3
+[2.0.2]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.0.1...2.0.2
+[2.0.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/2.0.0...2.0.1
+[2.0.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/1.0.0...2.0.0
