@@ -9,7 +9,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [4.3.0] - 2022-11-07
 - Changed name from "OmniKassa" to "Rabo Smart Pay". [#13](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/13)
-- Enrich payments methods from new `order/server/api/payment-brands` endpoint.
+- Enrich payments methods from new `order/server/api/payment-brands` endpoint. [#15](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/15)
 - Added support for SOFORT payment method. [#16](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/16)
 
 ## [4.2.0] - 2022-09-26
