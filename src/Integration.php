@@ -54,7 +54,7 @@ class Integration extends AbstractGatewayIntegration {
 					'webhook_log',
 				],
 				'manual_url'    => \__(
-					'https://www.pronamic.eu/support/how-to-connect-rabo-omnikassa-2-0-with-wordpress-via-pronamic-pay/',
+					'https://www.pronamicpay.com/en/manuals/how-to-connect-rabo-smart-pay-to-wordpress-with-pronamic-pay/',
 					'pronamic_ideal'
 				),
 			]
