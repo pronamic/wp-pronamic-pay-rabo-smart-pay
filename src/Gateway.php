@@ -40,7 +40,7 @@ class Gateway extends Core_Gateway {
 
 	/**
 	 * Config.
-	 * 
+	 *
 	 * @var Config.
 	 */
 	private $config;
@@ -80,7 +80,7 @@ class Gateway extends Core_Gateway {
 					return $this->get_ideal_issuers();
 				},
 				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
-			) 
+			)
 		);
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
@@ -332,7 +332,7 @@ class Gateway extends Core_Gateway {
 			$order->set_payment_brand_meta_data(
 				(object) [
 					'issuerId' => $payment->get_meta( 'issuer' ),
-				] 
+				]
 			);
 		}
 

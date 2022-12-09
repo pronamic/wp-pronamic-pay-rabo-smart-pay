@@ -30,7 +30,7 @@ class Config extends GatewayConfig implements JsonSerializable {
 
 	/**
 	 * API URL.
-	 * 
+	 *
 	 * @var string
 	 */
 	public $api_url;

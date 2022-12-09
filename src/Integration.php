@@ -29,7 +29,7 @@ class Integration extends AbstractGatewayIntegration {
 
 	/**
 	 * API URL.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $api_url;
