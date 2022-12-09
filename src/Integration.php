@@ -193,7 +193,6 @@ class Integration extends AbstractGatewayIntegration {
 		// Refresh Token.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_omnikassa_2_refresh_token',
 			'title'    => \_x( 'Refresh Token', 'omnikassa', 'pronamic_ideal' ),
 			'type'     => 'textarea',
@@ -203,7 +202,6 @@ class Integration extends AbstractGatewayIntegration {
 		// Signing Key.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_omnikassa_2_signing_key',
 			'title'    => \_x( 'Signing Key', 'omnikassa', 'pronamic_ideal' ),
 			'type'     => 'text',
@@ -215,7 +213,6 @@ class Integration extends AbstractGatewayIntegration {
 
 		$fields[] = [
 			'section'     => 'advanced',
-			'filter'      => \FILTER_SANITIZE_STRING,
 			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
 			'title'       => \__( 'Order ID', 'pronamic_ideal' ),
 			'type'        => 'text',
