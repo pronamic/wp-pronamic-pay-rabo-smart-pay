@@ -188,26 +188,18 @@ class Gateway extends Core_Gateway {
 
 		foreach ( $this->payment_methods as $payment_method ) {
 			$payment_method->set_status( 'inactive' );
-		}
 
-		foreach ( $omnikassa_payment_brands as $payment_brand => $status ) {
-			$payment_method_id = PaymentBrands::from_omnikassa_to_pronamic( $payment_brand );
+			$omnikassa_payment_brand = PaymentBrands::transform( $payment_method->get_id() );
 
-			if ( null === $payment_method_id ) {
-				continue;
+			if ( \array_key_exists( $omnikassa_payment_brand, $omnikassa_payment_brands ) ) {
+				$status = $omnikassa_payment_brands[ $omnikassa_payment_brand ];
+
+				if ( 'Active' !== $status ) {
+					continue;
+				}
+
+				$payment_method->set_status( 'active' );
 			}
-
-			$payment_method = $this->get_payment_method( $payment_method_id );
-
-			if ( null === $payment_method ) {
-				continue;
-			}
-
-			if ( 'Active' !== $status ) {
-				continue;
-			}
-
-			$payment_method->set_status( 'active' );
 		}
 
 		/**
