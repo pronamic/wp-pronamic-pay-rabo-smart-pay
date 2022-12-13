@@ -118,6 +118,14 @@ class Gateway extends Core_Gateway {
 
 		$this->register_payment_method( $afterpay_payment_method );
 
+		// Riverty
+		$riverty_payment_method = new PaymentMethod( PaymentMethods::RIVERTY );
+
+		$riverty_payment_method->add_field( $field_gender );
+		$riverty_payment_method->add_field( $field_birth_date );
+
+		$this->register_payment_method( $riverty_payment_method );
+
 		// Payment methods.
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
