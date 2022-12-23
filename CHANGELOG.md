@@ -7,6 +7,28 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.4.0] - 2022-12-23
+
+### Commits
+
+- Updated payment method status the other way around. ([6453eeb](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/6453eebed92faa7c8d9c2b6769f5b94313c4830b))
+- Register payment method Riverty. ([61435d4](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/61435d44879fa1cfb905e4a1b8e8441d4039d485))
+- Added support for Riverty payment method. ([ea91ccc](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/ea91ccccff3c840373ddf56cc3c6bda8f046c634))
+- Removed usage of deprecated `\FILTER_SANITIZE_STRING` in gateway settings fields. ([1003d7c](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/1003d7c5f85428f71a4c35ad65b9515dda4f1d30))
+- Fixed text domain. ([1986728](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/198672876fcb78426b42142103a0ab1c094a29ce))
+- Updated manual URL to pronamicpay.com (pronamic/pronamic-pay#15). ([0514c6e](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/0514c6edef6dee8d3615215ec3c29365db1297f1))
+
+### Composer
+
+- Changed `php` from `>=7.4` to `>=8.0`.
+- Changed `pronamic/wp-http` from `^1.0` to `v1.2.0`.
+	Release notes: https://github.com/pronamic/wp-http/releases/tag/v4.3.0
+- Changed `wp-pay/core` from `^4.5` to `v4.6.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.3.0
+Full set of changes: [`4.3.0...4.4.0`][4.4.0]
+
+[4.4.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.3.0...v4.4.0
+
 ## [4.3.0] - 2022-11-07
 - Changed name from "OmniKassa" to "Rabo Smart Pay". [#13](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/13)
 - Enrich payments methods from new `order/server/api/payment-brands` endpoint. [#15](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/15)
