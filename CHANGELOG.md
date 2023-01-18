@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.4.1] - 2023-01-18
+
+### Commits
+
+- Ignore `documentation` folder in archive files. ([95ed400](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/95ed40087c0f426ef3d88f6839e22bb0e271f042))
+- Happy 2023. ([05a0f18](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/05a0f1834172eeae9b6432a9e01ebefbf800e932))
+
+Full set of changes: [`4.4.0...4.4.1`][4.4.1]
+
+[4.4.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.4.0...v4.4.1
+
 ## [4.4.0] - 2022-12-23
 
 ### Commits
