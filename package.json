@@ -32,6 +32,7 @@
   },
   "homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
   "devDependencies": {
+    "@wordpress/env": "^5.7.0",
     "eslint": "^7.12.1",
     "eslint-plugin-json": "^2.1.2"
   },
