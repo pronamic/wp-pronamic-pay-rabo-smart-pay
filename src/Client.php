@@ -148,6 +148,10 @@ class Client {
 		if ( null !== $object ) {
 			$args['headers']['Content-Type'] = 'application/json';
 
+			if ( $object instanceof IdempotenceInterface ) {
+				$args['headers']['Request-ID'] = $object->get_idempotence_id();
+			}
+
 			$args['body'] = \wp_json_encode( $object );
 		}
 
@@ -240,6 +244,29 @@ class Client {
 		$result = $this->request( 'POST', 'order/server/api/v2/order', $config->access_token, $order );
 
 		return OrderAnnounceResponse::from_object( $result );
+	}
+
+	/**
+	 * Refund.
+	 *
+	 * @param Config        $config Config.
+	 * @param RefundRequest $refund Refund request.
+	 * @return RefundResponse
+	 */
+	public function refund( $config, RefundRequest $refund ) {
+		$result = $this->request(
+			'POST',
+			strtr(
+				'order/server/api/v2/refund/transactions/{transaction_id}/refunds',
+				[
+					'{transaction_id}' => $refund->transaction_id,
+				]
+			),
+			$config->access_token,
+			$refund
+		);
+
+		return RefundResponse::from_object( $result );
 	}
 
 	/**

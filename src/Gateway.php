@@ -22,6 +22,7 @@ use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
 use Pronamic\WordPress\Pay\Fields\SelectField;
 use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Refunds\Refund;
 
 /**
  * Gateway
@@ -59,6 +60,7 @@ class Gateway extends Core_Gateway {
 
 		// Supported features.
 		$this->supports = [
+			'refunds',
 			'webhook_log',
 		];
 
@@ -418,6 +420,36 @@ class Gateway extends Core_Gateway {
 
 		$payment->set_transaction_id( $response->get_omnikassa_order_id() );
 		$payment->set_action_url( $response->get_redirect_url() );
+	}
+
+	/**
+	 * Create refund.
+	 *
+	 * @param Refund $refund Refund.
+	 * @return void
+	 * @throws \Exception Throws exception on unknown resource type.
+	 */
+	public function create_refund( Refund $refund ) {
+		$payment = $refund->get_payment();
+
+		$transaction_id = $payment->get_transaction_id();
+
+		$amount = MoneyTransformer::transform( $refund->get_amount() );
+
+		$refund_request = new RefundRequest( $transaction_id, $amount );
+
+		$description = $refund->get_description();
+
+		if ( '' !== $description ) {
+			$refund_request->description = $description;
+		}
+
+		$refund_response = $this->client->refund( $this->config, $refund_request );
+
+		$refund->psp_id = $refund_response->id;
+
+		$refund->meta['rabo_smart_pay_refund_id'] = $refund_response->id;
+		$refund->meta['rabo_smart_pay_refund_transaction_id'] = $refund_response->transaction_id;
 	}
 
 	/**
