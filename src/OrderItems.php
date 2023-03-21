@@ -80,6 +80,7 @@ class OrderItems implements \JsonSerializable {
 	 *
 	 * @return array<object>|null
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$data = \array_map(
 			static function( OrderItem $item ) {

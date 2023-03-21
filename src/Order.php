@@ -346,6 +346,7 @@ class Order extends Message implements \JsonSerializable {
 	 *
 	 * @return object
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$object = (object) [];
 

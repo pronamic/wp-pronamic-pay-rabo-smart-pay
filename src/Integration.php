@@ -50,6 +50,7 @@ class Integration extends AbstractGatewayIntegration {
 				'dashboard_url' => 'https://bankieren.rabobank.nl/smartpay-dashboard',
 				'provider'      => 'rabobank',
 				'supports'      => [
+					'refunds',
 					'webhook',
 					'webhook_log',
 				],
