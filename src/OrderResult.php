@@ -184,6 +184,7 @@ class OrderResult implements \JsonSerializable {
 	 *
 	 * @return object
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return (object) [
 			'merchantOrderId'     => $this->get_merchant_order_id(),

@@ -120,6 +120,7 @@ class CustomerInformation implements \JsonSerializable {
 	 *
 	 * @return object
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$object = (object) [];
 

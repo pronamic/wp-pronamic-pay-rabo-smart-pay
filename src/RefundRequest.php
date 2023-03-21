@@ -67,6 +67,7 @@ class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	 *
 	 * @return object
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$properties = [
 			'money' => $this->amount->jsonSerialize(),

@@ -34,7 +34,7 @@ class RefundResponse {
 	 * @param string $refund_id      Refund ID.
 	 * @param string $transaction_id Transaction ID.
 	 */
-	public function __construct( string, $refund_id, string $transaction_id ) {
+	public function __construct( string $refund_id, string $transaction_id ) {
 		$this->id             = $refund_id;
 		$this->transaction_id = $transaction_id;
 	}
