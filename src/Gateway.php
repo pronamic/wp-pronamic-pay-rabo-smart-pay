@@ -120,7 +120,7 @@ class Gateway extends Core_Gateway {
 
 		$this->register_payment_method( $afterpay_payment_method );
 
-		// Riverty
+		// Riverty.
 		$riverty_payment_method = new PaymentMethod( PaymentMethods::RIVERTY );
 
 		$riverty_payment_method->add_field( $field_gender );
@@ -448,7 +448,7 @@ class Gateway extends Core_Gateway {
 
 		$refund->psp_id = $refund_response->id;
 
-		$refund->meta['rabo_smart_pay_refund_id'] = $refund_response->id;
+		$refund->meta['rabo_smart_pay_refund_id']             = $refund_response->id;
 		$refund->meta['rabo_smart_pay_refund_transaction_id'] = $refund_response->transaction_id;
 	}
 

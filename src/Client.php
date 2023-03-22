@@ -256,7 +256,7 @@ class Client {
 	public function refund( $config, RefundRequest $refund ) {
 		$result = $this->request(
 			'POST',
-			strtr(
+			\strtr(
 				'order/server/api/v2/refund/transactions/{transaction_id}/refunds',
 				[
 					'{transaction_id}' => $refund->transaction_id,
