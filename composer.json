@@ -3,7 +3,8 @@
 	"description": "Rabo Smart Pay driver for the WordPress payment processing library.",
 	"keywords": ["wordpress", "wp", "smart", "pay","omnikassa", "gateway", "pronamic"],
 	"homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
-	"license": "GPL-3.0-or-later" ,
+	"license": "GPL-3.0-or-later",
+	"type": "wordpress-plugin",
 	"authors": [
 		{
 			"name": "Pronamic",
