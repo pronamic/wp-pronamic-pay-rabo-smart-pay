@@ -7,6 +7,21 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.4.3] - 2023-03-29
+
+### Commits
+
+- Set Composer type to `wordpress-plugin`. ([b343ff6](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/b343ff62137eb21f023a3d8dbdc4cc4b5e82d176))
+- Added support for refunds. ([e7e8e98](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/e7e8e9801918e6cf84b8fd45f1be6d658204795f))
+
+### Composer
+
+- Changed `wp-pay/core` from `^4.6` to `v4.9.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.9.0
+Full set of changes: [`4.4.2...4.4.3`][4.4.3]
+
+[4.4.3]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.4.2...v4.4.3
+
 ## [4.4.2] - 2023-01-31
 ### Composer
 
