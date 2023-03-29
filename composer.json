@@ -42,7 +42,7 @@
 		"php": ">=7.4",
 		"justinrainbow/json-schema": "^5.2",
 		"pronamic/wp-http": "^1.2",
-		"wp-pay/core": "^4.6"
+		"wp-pay/core": "^4.9"
 	},
 	"require-dev": {
 		"automattic/wordbless": "^0.4.0",
