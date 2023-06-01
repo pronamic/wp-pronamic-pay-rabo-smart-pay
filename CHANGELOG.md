@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.4.4] - 2023-06-01
+
+### Commits
+
+- Switch from `pronamic/wp-deployer` to `pronamic/pronamic-cli`. ([c187c0b](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/c187c0b39979779f1ffbdd94529c835124c51061))
+- Updated .gitattributes ([714f64c](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/714f64cf5e3e4579984387056ce0eb6a9355cb3c))
+
+Full set of changes: [`4.4.3...4.4.4`][4.4.4]
+
+[4.4.4]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.4.3...v4.4.4
+
 ## [4.4.3] - 2023-03-29
 
 ### Commits
