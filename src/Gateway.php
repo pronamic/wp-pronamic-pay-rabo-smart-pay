@@ -256,7 +256,7 @@ class Gateway extends Core_Gateway {
 		$merchant_order_id = $payment->format_string( $this->config->order_id );
 
 		if ( '' === $merchant_order_id ) {
-			$merchant_order_id = $payment->get_id();
+			$merchant_order_id = (string) $payment->get_id();
 		}
 
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
