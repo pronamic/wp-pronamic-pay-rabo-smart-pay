@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.4.5] - 2023-07-12
+
+### Commits
+
+- Updated for removed payment ID fallback in formatted payment string (pronamic/wp-pronamic-pay-adyen#23). ([6fe8f00](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/6fe8f00c6c27e5cd29fbf309fd24fb8908ede03f))
+- Updated dashboard URL to new URL, closes #20. ([e8dcb7c](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/e8dcb7c99f74fe7ec9f2b60c6534e6c9dedacbf1))
+
+Full set of changes: [`4.4.4...4.4.5`][4.4.5]
+
+[4.4.5]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.4.4...v4.4.5
+
 ## [4.4.4] - 2023-06-01
 
 ### Commits
