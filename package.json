@@ -1,45 +1,45 @@
 {
-  "name": "omnikassa-2",
-  "version": "4.4.5",
-  "description": "Rabo Smart Pay driver for the WordPress payment processing library.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wp-pay-gateways/omnikassa-2"
-  },
-  "keywords": [
-    "wordpress",
-    "wp",
-    "pay",
-    "omnikassa",
-    "gateway",
-    "pronamic"
-  ],
-  "author": {
-    "name": "Pronamic",
-    "email": "info@pronamic.nl",
-    "url": "http://www.pronamic.nl/"
-  },
-  "contributors": [
-    {
-      "name": "Remco Tolsma",
-      "email": "info@remcotolsma.nl",
-      "url": "http://www.remcotolsma.nl/"
-    }
-  ],
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/wp-pay-gateways/omnikassa-2/issues"
-  },
-  "homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
-  "devDependencies": {
-    "@wordpress/env": "^8.9.0",
-    "@wordpress/prettier-config": "^3.0.0",
-    "eslint": "^8.51.0",
-    "eslint-plugin-json": "^3.1.0",
-    "prettier": "npm:wp-prettier@^3.0.3"
-  },
-  "prettier": "@wordpress/prettier-config",
-  "scripts": {
-    "eslint": "eslint . --ext .json --ext .js"
-  }
+	"name": "omnikassa-2",
+	"version": "4.4.5",
+	"description": "Rabo Smart Pay driver for the WordPress payment processing library.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wp-pay-gateways/omnikassa-2"
+	},
+	"keywords": [
+		"wordpress",
+		"wp",
+		"pay",
+		"omnikassa",
+		"gateway",
+		"pronamic"
+	],
+	"author": {
+		"name": "Pronamic",
+		"email": "info@pronamic.nl",
+		"url": "http://www.pronamic.nl/"
+	},
+	"contributors": [
+		{
+			"name": "Remco Tolsma",
+			"email": "info@remcotolsma.nl",
+			"url": "http://www.remcotolsma.nl/"
+		}
+	],
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/wp-pay-gateways/omnikassa-2/issues"
+	},
+	"homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
+	"devDependencies": {
+		"@wordpress/env": "^8.9.0",
+		"@wordpress/prettier-config": "^3.0.0",
+		"eslint": "^8.51.0",
+		"eslint-plugin-json": "^3.1.0",
+		"prettier": "npm:wp-prettier@^3.0.3"
+	},
+	"prettier": "@wordpress/prettier-config",
+	"scripts": {
+		"eslint": "eslint . --ext .json --ext .js"
+	}
 }
