@@ -278,7 +278,7 @@ class Client {
 	public function get_order_results( $notification_token ) {
 		$result = $this->request(
 			'GET',
-			'order/server/api/events/results/merchant.order.status.changed',
+			'order/server/api/v2/events/results/merchant.order.status.changed',
 			$notification_token
 		);
 
