@@ -422,7 +422,10 @@ class Gateway extends Core_Gateway {
 		// Announce order.
 		$response = $this->client->order_announce( $this->config, $order );
 
-		$payment->set_transaction_id( $response->get_omnikassa_order_id() );
+		$payment->set_slug( $this->get_payment_slug_for_omnikassa_order_id( $response->get_omnikassa_order_id() ) );
+
+		$payment->set_meta( 'omnikassa_order_id', $response->get_omnikassa_order_id() );
+
 		$payment->set_action_url( $response->get_redirect_url() );
 	}
 
@@ -533,6 +536,57 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
+	 * Get slug.
+	 * 
+	 * @param string $omnikassa_order_id OmniKassa order ID.
+	 * @return string
+	 */
+	private function get_payment_slug_for_omnikassa_order_id( $omnikassa_order_id ) {
+		return 'rabo-smart-pay-order-' . $omnikassa_order_id;
+	}
+
+	/**
+	 * Get Pronamic payment by OmniKassa order ID.
+	 * 
+	 * @param string $omnikassa_order_id OmniKassa order ID.
+	 * @return Payment|null
+	 */
+	private function get_payment_by_omnikassa_order_id( $omnikassa_order_id ) {
+		/**
+		 * Slug.
+		 * 
+		 * Since version 4.5 of this library, we store the OmniKassa order ID
+		 * in the slug of the payment so that the payment can be requested
+		 * efficiently.
+		 * 
+		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+		 * @link https://github.com/pronamic/wp-pay-core/issues/146
+		 */
+		$slug = $this->get_payment_slug_for_omnikassa_order_id( $omnikassa_order_id );
+
+		$payment = \get_pronamic_payment_by_meta( '', '', [
+			'name' => $slug,
+		] );
+
+		if ( null !== $payment ) {
+			return $payment;
+		}
+
+		/**
+		 * Order ID - transaction ID.
+		 * 
+		 * In older versions of this library we use the OmniKassa order ID as
+		 * the transaction ID. This piece of code is still in this library for
+		 * backward compatibility and may be removed in the future.
+		 * 
+		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+		 */
+		$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
+
+		return $payment;
+	}
+
+	/**
 	 * Handle `merchant.order.status.changed` event.
 	 *
 	 * @param Notification $notification Notification.
@@ -558,7 +612,7 @@ class Gateway extends Core_Gateway {
 			foreach ( $order_results as $order_result ) {
 				$omnikassa_order_id = $order_result->get_omnikassa_order_id();
 
-				$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
+				$payment = $this->get_payment_by_omnikassa_order_id( $omnikassa_order_id );
 
 				if ( empty( $payment ) ) {
 					/**
