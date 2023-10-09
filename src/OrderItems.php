@@ -83,7 +83,7 @@ class OrderItems implements \JsonSerializable {
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$data = \array_map(
-			static function( OrderItem $item ) {
+			static function ( OrderItem $item ) {
 				return $item;
 			},
 			$this->get_order_items()
