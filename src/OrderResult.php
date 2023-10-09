@@ -76,6 +76,13 @@ class OrderResult implements \JsonSerializable {
 	private $total_amount;
 
 	/**
+	 * Transactions.
+	 * 
+	 * @var Transaction[]
+	 */
+	private $transactions = [];
+
+	/**
 	 * Construct order result.
 	 *
 	 * @param string     $merchant_order_id     Merchant order ID.
@@ -180,6 +187,15 @@ class OrderResult implements \JsonSerializable {
 	}
 
 	/**
+	 * Get transactions.
+	 * 
+	 * @return Transaction[]
+	 */
+	public function get_transactions() {
+		return $this->transactions;
+	}
+
+	/**
 	 * Get JSON.
 	 *
 	 * @return object
@@ -238,7 +254,7 @@ class OrderResult implements \JsonSerializable {
 			throw new \InvalidArgumentException( 'Object must contain `totalAmount` property.' );
 		}
 
-		return new self(
+		$order_result = new self(
 			$object->merchantOrderId,
 			$object->omnikassaOrderId,
 			$object->poiId,
@@ -248,6 +264,14 @@ class OrderResult implements \JsonSerializable {
 			Money::from_object( $object->paidAmount ),
 			Money::from_object( $object->totalAmount )
 		);
+
+		if ( isset( $object->transactions ) ) {
+			foreach ( $object->transactions as $o ) {
+				$order_result->transactions[] = Transaction::from_object( $o );
+			}
+		}
+
+		return $order_result;
 	}
 
 	/**
