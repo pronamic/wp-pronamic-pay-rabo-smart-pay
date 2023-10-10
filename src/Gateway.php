@@ -644,6 +644,8 @@ class Gateway extends Core_Gateway {
 					$payment->set_status( $pronamic_status );
 				}
 
+				$this->update_payment_transaction_id_from_order_result( $payment, $order_result );
+
 				// Note.
 				$note = \sprintf(
 					'<p>%s</p><pre>%s</pre>',
@@ -665,6 +667,40 @@ class Gateway extends Core_Gateway {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Update payment transaction ID from order result.
+	 * 
+	 * @param Payment     $payment      Payment.
+	 * @param OrderResult $order_result Order result.
+	 * @return void
+	 */
+	private function update_payment_transaction_id_from_order_result( $payment, $order_result ) {
+		$transaction_id = (string) $payment->get_transaction_id();
+
+		if ( '' !== $transaction_id ) {
+			return;
+		}
+
+		if ( 'COMPLETED' !== $order_result->get_order_status() ) {
+			return;
+		}
+
+		$successful_transactions = \array_filter(
+			$order_result->get_transactions(),
+			function ( $transaction ) {
+				return ( 'SUCCESS' === $transaction->get_status() );
+			}
+		);
+
+		$successful_transaction = \array_shift( $successful_transactions );
+
+		if ( null === $successful_transaction ) {
+			return;
+		}
+
+		$payment->set_transaction_id( $successful_transaction->get_id() );
 	}
 
 	/**

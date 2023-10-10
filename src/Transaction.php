@@ -67,6 +67,15 @@ final class Transaction {
 	}
 
 	/**
+	 * Get status.
+	 * 
+	 * @return string
+	 */
+	public function get_status() {
+		return $this->status;
+	}
+
+	/**
 	 * Create transaction from object.
 	 *
 	 * @param object $object Object.
