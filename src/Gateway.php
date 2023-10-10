@@ -524,7 +524,7 @@ class Gateway extends Core_Gateway {
 			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
 				\sprintf(
 					'Signature on notification message does not match gateway configuration signature (%s).',
-					\substr( $this->config->signing_key, 0, 7 )
+					\esc_html( \substr( $this->config->signing_key, 0, 7 ) )
 				)
 			);
 		}
