@@ -36,6 +36,7 @@
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix" />
 
 		<exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException" />
+		<exclude name="SlevomatCodingStandard.Exceptions.RequireNonCapturingCatch.NonCapturingCatchRequired" />
 
 		<exclude name="SlevomatCodingStandard.Files.FunctionLength.FunctionLength" />
 		<exclude name="SlevomatCodingStandard.Files.LineLength.LineTooLong" />
