@@ -195,7 +195,7 @@ class Gateway extends Core_Gateway {
 		foreach ( $this->payment_methods as $payment_method ) {
 			$payment_method->set_status( 'inactive' );
 
-			$omnikassa_payment_brand = PaymentBrands::transform( $payment_method->get_id() );
+			$omnikassa_payment_brand = (string) PaymentBrands::transform( $payment_method->get_id() );
 
 			if ( \array_key_exists( $omnikassa_payment_brand, $omnikassa_payment_brands ) ) {
 				$status = $omnikassa_payment_brands[ $omnikassa_payment_brand ];
