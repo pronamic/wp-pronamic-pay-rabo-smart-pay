@@ -101,29 +101,29 @@ class Error extends \Exception {
 	/**
 	 * Create error from object.
 	 *
-	 * @param object $object Object.
+	 * @param object $data Object.
 	 * @return Error
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( $object ) {
-		if ( ! isset( $object->errorCode ) ) {
+	public static function from_object( $data ) {
+		if ( ! isset( $data->errorCode ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `errorCode` property.' );
 		}
 
-		$error_code       = $object->errorCode;
+		$error_code       = $data->errorCode;
 		$error_message    = null;
 		$consumer_message = null;
 
 		$message = \strval( $error_code );
 
-		if ( isset( $object->errorMessage ) ) {
-			$error_message = $object->errorMessage;
+		if ( isset( $data->errorMessage ) ) {
+			$error_message = $data->errorMessage;
 
 			$message = $error_message;
 		}
 
-		if ( isset( $object->consumerMessage ) ) {
-			$consumer_message = $object->consumerMessage;
+		if ( isset( $data->consumerMessage ) ) {
+			$consumer_message = $data->consumerMessage;
 
 			$message = $consumer_message;
 		}
