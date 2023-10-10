@@ -99,12 +99,7 @@ final class Transaction {
 			throw new \InvalidArgumentException( 'Object must contain `transactionStatus` property.' );
 		}
 
-		return new self(
-			$data->transactionId,
-			$data->paymentBrand,
-			$data->transactionType,
-			$data->transactionStatus
-		);
+		return new self( $data->transactionId, $data->paymentBrand, $data->transactionType, $data->transactionStatus );
 	}
 
 	/**
