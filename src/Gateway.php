@@ -181,7 +181,6 @@ class Gateway extends Core_Gateway {
 		$omnikassa_payment_brands = \get_transient( $cache_key );
 
 		if ( false === $omnikassa_payment_brands ) {
-			// Maybe update access token.
 			$this->maybe_update_access_token();
 
 			$omnikassa_payment_brands = $this->client->get_payment_brands( $this->config->access_token );
