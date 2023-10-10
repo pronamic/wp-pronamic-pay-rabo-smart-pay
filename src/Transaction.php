@@ -67,6 +67,24 @@ final class Transaction {
 	}
 
 	/**
+	 * Get payment brand.
+	 * 
+	 * @return string
+	 */
+	public function get_payment_brand() {
+		return $this->payment_brand;
+	}
+
+	/**
+	 * Get type.
+	 * 
+	 * @return string
+	 */
+	public function get_type() {
+		return $this->type;
+	}
+
+	/**
 	 * Get status.
 	 * 
 	 * @return string
