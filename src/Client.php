@@ -118,11 +118,11 @@ class Client {
 	 * @param string      $method   HTTP request method.
 	 * @param string      $endpoint URL endpoint to request.
 	 * @param string      $token    Authorization token.
-	 * @param object|null $object   Object.
+	 * @param object|null $data     Data.
 	 * @return object
 	 * @throws \Exception Throws exception when Rabobank OmniKassa 2.0 response is not what we expect.
 	 */
-	private function request( $method, $endpoint, $token, $object = null ) {
+	private function request( $method, $endpoint, $token, $data = null ) {
 		// URL.
 		$url = $this->get_url() . $endpoint;
 
@@ -145,14 +145,14 @@ class Client {
 			'timeout' => 30,
 		];
 
-		if ( null !== $object ) {
+		if ( null !== $data ) {
 			$args['headers']['Content-Type'] = 'application/json';
 
-			if ( $object instanceof IdempotenceInterface ) {
-				$args['headers']['Request-ID'] = $object->get_idempotence_id();
+			if ( $data instanceof IdempotenceInterface ) {
+				$args['headers']['Request-ID'] = $data->get_idempotence_id();
 			}
 
-			$args['body'] = \wp_json_encode( $object );
+			$args['body'] = \wp_json_encode( $data );
 		}
 
 		/**
