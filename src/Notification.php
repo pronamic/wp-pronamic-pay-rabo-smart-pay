@@ -160,11 +160,11 @@ class Notification extends ResponseMessage {
 		}
 
 		return new self(
-			$object->authentication,
-			$object->expiry,
-			$object->eventName,
-			$object->poiId,
-			$object->signature
+			$data->authentication,
+			$data->expiry,
+			$data->eventName,
+			$data->poiId,
+			$data->signature
 		);
 	}
 
