@@ -79,7 +79,6 @@
 	</rule>
 
 	<rule ref="PronamicWP">
-		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_key" />
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query" />
 
 		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
