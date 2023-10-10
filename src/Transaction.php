@@ -78,32 +78,32 @@ final class Transaction {
 	/**
 	 * Create transaction from object.
 	 *
-	 * @param object $object Object.
+	 * @param object $data Object.
 	 * @return Transaction
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( $object ) {
-		if ( ! isset( $object->transactionId ) ) {
+	public static function from_object( $data ) {
+		if ( ! isset( $data->transactionId ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `transactionId` property.' );
 		}
 
-		if ( ! isset( $object->paymentBrand ) ) {
+		if ( ! isset( $data->paymentBrand ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `paymentBrand` property.' );
 		}
 
-		if ( ! isset( $object->transactionType ) ) {
+		if ( ! isset( $data->transactionType ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `transactionType` property.' );
 		}
 
-		if ( ! isset( $object->transactionStatus ) ) {
+		if ( ! isset( $data->transactionStatus ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `transactionStatus` property.' );
 		}
 
 		return new self(
-			$object->transactionId,
-			$object->paymentBrand,
-			$object->transactionType,
-			$object->transactionStatus
+			$data->transactionId,
+			$data->paymentBrand,
+			$data->transactionType,
+			$data->transactionStatus
 		);
 	}
 
