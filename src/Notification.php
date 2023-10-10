@@ -159,13 +159,7 @@ class Notification extends ResponseMessage {
 			throw new \InvalidArgumentException( 'Object must contain `poiId` property.' );
 		}
 
-		return new self(
-			$data->authentication,
-			$data->expiry,
-			$data->eventName,
-			$data->poiId,
-			$data->signature
-		);
+		return new self( $data->authentication, $data->expiry, $data->eventName, $data->poiId, $data->signature );
 	}
 
 	/**
