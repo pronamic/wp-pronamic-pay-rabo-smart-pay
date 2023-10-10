@@ -173,6 +173,7 @@ class Gateway extends Core_Gateway {
 	 * Maybe enrich payment methods.
 	 *
 	 * @return void
+	 * @throws \Exception Throws an exception if OmniKassa payment brands cannot be requested.
 	 */
 	private function maybe_enrich_payment_methods() {
 		$cache_key = 'pronamic_pay_omnikassa_2_payment_brands_' . \md5( (string) \wp_json_encode( $this->config ) );
@@ -189,7 +190,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( ! \is_array( $omnikassa_payment_brands ) ) {
-			return;
+			throw new \Exception( 'OmniKassa payment brands invalid.' );
 		}
 
 		foreach ( $this->payment_methods as $payment_method ) {
