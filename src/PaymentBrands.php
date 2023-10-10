@@ -113,8 +113,8 @@ class PaymentBrands {
 		PaymentMethods::PAYPAL      => self::PAYPAL,
 		PaymentMethods::RIVERTY     => self::AFTERPAY,
 		PaymentMethods::SOFORT      => self::SOFORT,
-		PaymentMethods::V_PAY       => self::V_PAY,
 		PaymentMethods::VISA        => self::VISA,
+		PaymentMethods::V_PAY       => self::V_PAY,
 	];
 
 	/**
