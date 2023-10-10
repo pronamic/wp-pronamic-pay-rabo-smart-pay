@@ -44,9 +44,9 @@ class DataHelper {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Field `%s` value "%s" can not be longer then `%d`.',
-					$field,
-					$value,
-					$max
+					\esc_html( $field ),
+					\esc_html( $value ),
+					\esc_html( $max )
 				)
 			);
 		}
@@ -62,8 +62,8 @@ class DataHelper {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Field `%s` cannot contain HTML tags: `%s`.',
-					$field,
-					$value
+					\esc_html( $field ),
+					\esc_html( $value )
 				)
 			);
 		}
@@ -89,7 +89,7 @@ class DataHelper {
 		if ( false === $result ) {
 			throw new \Exception(
 				'PCRE regex execution error.',
-				\preg_last_error()
+				\esc_html( \preg_last_error() )
 			);
 		}
 
@@ -97,8 +97,8 @@ class DataHelper {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Field `%s` must consists strictly of alphanumeric characters: `%s`.',
-					$field,
-					$value
+					\esc_html( $field ),
+					\esc_html( $value )
 				)
 			);
 		}
