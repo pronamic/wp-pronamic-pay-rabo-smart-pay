@@ -188,6 +188,10 @@ class Gateway extends Core_Gateway {
 			\set_transient( $cache_key, $omnikassa_payment_brands, \DAY_IN_SECONDS );
 		}
 
+		if ( ! \is_array( $omnikassa_payment_brands ) ) {
+			return;
+		}
+
 		foreach ( $this->payment_methods as $payment_method ) {
 			$payment_method->set_status( 'inactive' );
 
