@@ -205,9 +205,9 @@ class Client {
 			throw new \Exception(
 				\sprintf(
 					'Could not JSON decode Rabo Smart Pay response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
-					$response->status(),
-					$response->message(),
-					\strlen( $response->body() )
+					\esc_html( $response->status() ),
+					\esc_html( $response->message() ),
+					\esc_html( \strlen( $response->body() ) )
 				),
 				\intval( $response->status() )
 			);
