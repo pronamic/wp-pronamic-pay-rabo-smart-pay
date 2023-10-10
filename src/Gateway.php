@@ -477,8 +477,8 @@ class Gateway extends Core_Gateway {
 		// Note.
 		$note_values = [
 			'order_id'  => $parameters->get_order_id(),
-			'status'    => $parameters->get_status(),
 			'signature' => (string) $parameters->get_signature(),
+			'status'    => $parameters->get_status(),
 			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
 		];
 
