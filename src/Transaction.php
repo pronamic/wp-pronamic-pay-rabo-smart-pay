@@ -119,16 +119,4 @@ final class Transaction {
 
 		return new self( $data->transactionId, $data->paymentBrand, $data->transactionType, $data->transactionStatus );
 	}
-
-	/**
-	 * Create transaction from JSON string.
-	 *
-	 * @param string $json JSON string.
-	 * @return Transaction
-	 */
-	public static function from_json( $json ) {
-		$data = \json_decode( $json );
-
-		return self::from_object( $data );
-	}
 }
