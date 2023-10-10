@@ -121,7 +121,11 @@ class OrderTest extends TestCase {
 		// Normal.
 		$merchant_order_id = 'order123';
 
-		$order = new Order( $merchant_order_id, new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+		$order = new Order(
+			$merchant_order_id,
+			new Money( 'EUR', 22500 ),
+			'https://mijn.webwinkel.nl/betalingsresultaat'
+		);
 
 		$this->assertEquals( $merchant_order_id, $order->get_merchant_order_id() );
 
