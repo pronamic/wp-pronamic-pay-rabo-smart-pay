@@ -69,8 +69,8 @@ class Money implements \JsonSerializable {
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return (object) [
-			'currency' => $this->get_currency(),
 			'amount'   => $this->get_amount(),
+			'currency' => $this->get_currency(),
 		];
 	}
 
