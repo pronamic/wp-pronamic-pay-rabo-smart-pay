@@ -89,7 +89,7 @@ class DataHelper {
 		if ( false === $result ) {
 			throw new \Exception(
 				'PCRE regex execution error.',
-				(int) \preg_last_error()
+				\intval( \preg_last_error() )
 			);
 		}
 
