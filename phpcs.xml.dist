@@ -29,6 +29,7 @@
 		<exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses.UselessParentheses" />
 		<exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator" />
 
+		<exclude name="SlevomatCodingStandard.Classes.ClassLength.ClassTooLong" />
 		<exclude name="SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition.DisallowedMultiPropertyDefinition" />
 		<exclude name="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces.NoEmptyLineAfterOpeningBrace" />
 		<exclude name="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces.NoEmptyLineBeforeClosingBrace" />
