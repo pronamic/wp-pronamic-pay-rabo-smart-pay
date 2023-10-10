@@ -203,13 +203,13 @@ class OrderResult implements \JsonSerializable {
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return (object) [
+			'errorCode'           => $this->get_error_code(),
 			'merchantOrderId'     => $this->get_merchant_order_id(),
 			'omnikassaOrderId'    => $this->get_omnikassa_order_id(),
-			'poiId'               => $this->get_poi_id(),
 			'orderStatus'         => $this->get_order_status(),
 			'orderStatusDateTime' => $this->get_order_status_datetime(),
-			'errorCode'           => $this->get_error_code(),
 			'paidAmount'          => $this->get_paid_amount(),
+			'poiId'               => $this->get_poi_id(),
 			'totalAmount'         => $this->get_total_amount(),
 		];
 	}
