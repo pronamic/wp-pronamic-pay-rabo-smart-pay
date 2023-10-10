@@ -127,11 +127,11 @@ class DataHelper {
 	/**
 	 * Sanitize string to the specified length.
 	 *
-	 * @param string $string String.
+	 * @param string $value  String.
 	 * @param int    $length Length.
 	 * @return string
 	 */
-	public static function sanitize_an( $string, $length ) {
+	public static function sanitize_an( $value, $length ) {
 		/**
 		 * HTML tags are not allowed.
 		 *
@@ -139,7 +139,7 @@ class DataHelper {
 		 */
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags -- We don't want the `trim` in `wp_strip_all_tags`.
-		$sanitized = \strip_tags( $string );
+		$sanitized = \strip_tags( $value );
 
 		/**
 		 * In version `2.1.6` of this library we used the `mb_strimwidth`
