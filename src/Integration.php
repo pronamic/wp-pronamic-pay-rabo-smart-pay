@@ -101,6 +101,11 @@ class Integration extends AbstractGatewayIntegration {
 			return;
 		}
 
+		// Return controller.
+		$return_controller = new ReturnController( $this );
+
+		$return_controller->setup();
+
 		// Webhook controller.
 		$webhook_controller = new WebhookController();
 

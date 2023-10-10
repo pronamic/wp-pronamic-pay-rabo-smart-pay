@@ -266,7 +266,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
 		// New order.
-		$merchant_return_url = $payment->get_return_url();
+		$merchant_return_url = \rest_url( Integration::REST_ROUTE_NAMESPACE . '/return/' . $payment->get_id() );
 
 		/**
 		 * Filters the OmniKassa 2.0 merchant return URL.
@@ -461,59 +461,6 @@ class Gateway extends Core_Gateway {
 
 		$refund->meta['rabo_smart_pay_refund_id']             = $refund_response->id;
 		$refund->meta['rabo_smart_pay_refund_transaction_id'] = $refund_response->transaction_id;
-	}
-
-	/**
-	 * Update status of the specified payment.
-	 *
-	 * @param Payment $payment Payment.
-	 * @return void
-	 */
-	public function update_status( Payment $payment ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
-		if ( ! ReturnParameters::contains( $_GET ) ) {
-			return;
-		}
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
-		$parameters = ReturnParameters::from_array( $_GET );
-
-		// Note.
-		$note_values = [
-			'order_id'  => $parameters->get_order_id(),
-			'signature' => (string) $parameters->get_signature(),
-			'status'    => $parameters->get_status(),
-			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
-		];
-
-		$note = '';
-
-		$note .= '<p>';
-		$note .= \__( 'Rabo Smart Pay return URL requested:', 'pronamic_ideal' );
-		$note .= '</p>';
-
-		$note .= '<dl>';
-
-		foreach ( $note_values as $key => $value ) {
-			$note .= \sprintf( '<dt>%s</dt>', \esc_html( $key ) );
-			$note .= \sprintf( '<dd>%s</dd>', \esc_html( $value ) );
-		}
-
-		$note .= '</dl>';
-
-		$payment->add_note( $note );
-
-		// Validate.
-		if ( ! $parameters->is_valid( $this->config->signing_key ) ) {
-			return;
-		}
-
-		// Status.
-		$pronamic_status = Statuses::transform( $parameters->get_status() );
-
-		if ( null !== $pronamic_status ) {
-			$payment->set_status( $pronamic_status );
-		}
 	}
 
 	/**
