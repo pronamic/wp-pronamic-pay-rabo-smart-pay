@@ -81,8 +81,6 @@
 	<rule ref="PronamicWP">
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query" />
 
-		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
-
 		<exclude name="WordPressVIPMinimum.Functions.StripTags.StripTagsOneParameter" />
 		<exclude name="WordPressVIPMinimum.Performance.NoPaging.nopaging_nopaging" />
 		<exclude name="WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout" />

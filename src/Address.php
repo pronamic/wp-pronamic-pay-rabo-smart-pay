@@ -304,26 +304,26 @@ class Address implements \JsonSerializable {
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
-		$object = (object) [];
+		$data = [];
 
-		$object->firstName  = $this->first_name;
-		$object->middleName = $this->middle_name;
-		$object->lastName   = $this->last_name;
-		$object->street     = $this->street;
+		$data['firstName']  = $this->first_name;
+		$data['middleName'] = $this->middle_name;
+		$data['lastName']   = $this->last_name;
+		$data['street']     = $this->street;
 
 		if ( null !== $this->house_number ) {
-			$object->houseNumber = $this->house_number;
+			$data['houseNumber'] = $this->house_number;
 		}
 
 		if ( null !== $this->house_number_addition ) {
-			$object->houseNumberAddition = $this->house_number_addition;
+			$data['houseNumberAddition'] = $this->house_number_addition;
 		}
 
-		$object->postalCode  = $this->postal_code;
-		$object->city        = $this->city;
-		$object->countryCode = $this->country_code;
+		$data['postalCode']  = $this->postal_code;
+		$data['city']        = $this->city;
+		$data['countryCode'] = $this->country_code;
 
-		return $object;
+		return (object) $data;
 	}
 
 	/**

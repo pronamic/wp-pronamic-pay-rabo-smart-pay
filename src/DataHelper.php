@@ -46,7 +46,7 @@ class DataHelper {
 					'Field `%s` value "%s" can not be longer then `%d`.',
 					\esc_html( $field ),
 					\esc_html( $value ),
-					(int) $max
+					\intval( $max )
 				)
 			);
 		}

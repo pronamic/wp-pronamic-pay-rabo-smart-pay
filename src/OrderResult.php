@@ -217,56 +217,27 @@ class OrderResult implements \JsonSerializable {
 	/**
 	 * Create order result from object.
 	 *
-	 * @param \stdClass $data Object.
+	 * @param object $data Object.
 	 * @return OrderResult
-	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( \stdClass $data ) {
-		if ( ! isset( $data->merchantOrderId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `merchantOrderId` property.' );
-		}
-
-		if ( ! isset( $data->omnikassaOrderId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `omnikassaOrderId` property.' );
-		}
-
-		if ( ! isset( $data->poiId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `poiId` property.' );
-		}
-
-		if ( ! isset( $data->orderStatus ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `orderStatus` property.' );
-		}
-
-		if ( ! isset( $data->orderStatusDateTime ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `orderStatusDateTime` property.' );
-		}
-
-		if ( ! isset( $data->errorCode ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `errorCode` property.' );
-		}
-
-		if ( ! isset( $data->paidAmount ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `paidAmount` property.' );
-		}
-
-		if ( ! isset( $data->totalAmount ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `totalAmount` property.' );
-		}
+	public static function from_object( $data ) {
+		$object_access = new ObjectAccess( $data );
 
 		$order_result = new self(
-			$data->merchantOrderId,
-			$data->omnikassaOrderId,
-			$data->poiId,
-			$data->orderStatus,
-			$data->orderStatusDateTime,
-			$data->errorCode,
-			Money::from_object( $data->paidAmount ),
-			Money::from_object( $data->totalAmount )
+			$object_access->get_string( 'merchantOrderId' ),
+			$object_access->get_string( 'omnikassaOrderId' ),
+			$object_access->get_string( 'poiId' ),
+			$object_access->get_string( 'orderStatus' ),
+			$object_access->get_string( 'orderStatusDateTime' ),
+			$object_access->get_string( 'errorCode' ),
+			Money::from_object( $object_access->get_object( 'paidAmount' ) ),
+			Money::from_object( $object_access->get_object( 'totalAmount' ) )
 		);
 
-		if ( isset( $data->transactions ) ) {
-			foreach ( $data->transactions as $item ) {
+		$transactions = $object_access->get_optional( 'transactions' );
+
+		if ( \is_array( $transactions ) ) {
+			foreach ( $transactions as $item ) {
 				$order_result->transactions[] = Transaction::from_object( $item );
 			}
 		}

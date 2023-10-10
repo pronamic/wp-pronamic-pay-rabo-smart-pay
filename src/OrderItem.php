@@ -238,32 +238,32 @@ class OrderItem implements \JsonSerializable {
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
-		$object = (object) [];
+		$data = [];
 
 		if ( null !== $this->id ) {
-			$object->id = $this->id;
+			$data['id'] = $this->id;
 		}
 
-		$object->name = $this->name;
+		$data['name'] = $this->name;
 
 		if ( null !== $this->description ) {
-			$object->description = $this->description;
+			$data['description'] = $this->description;
 		}
 
-		$object->quantity = $this->quantity;
-		$object->amount   = $this->amount;
+		$data['quantity'] = $this->quantity;
+		$data['amount']   = $this->amount;
 
 		if ( null !== $this->tax ) {
-			$object->tax = $this->tax;
+			$data['tax'] = $this->tax;
 		}
 
-		$object->category = $this->category;
+		$data['category'] = $this->category;
 
 		if ( null !== $this->vat_category ) {
-			$object->vatCategory = $this->vat_category;
+			$data['vatCategory'] = $this->vat_category;
 		}
 
-		return $object;
+		return (object) $data;
 	}
 
 	/**

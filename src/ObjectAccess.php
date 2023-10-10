@@ -61,6 +61,72 @@ class ObjectAccess {
 	}
 
 	/**
+	 * Get string.
+	 *
+	 * @param string $property Property.
+	 * @return string
+	 * @throws \Exception Throws exception when property is not a string.
+	 */
+	public function get_string( string $property ) {
+		$value = $this->get_property( $property );
+
+		if ( ! \is_string( $value ) ) {
+			throw new \Exception(
+				\sprintf(
+					'Property `%s` must be a string.',
+					\esc_html( $property )
+				)
+			);
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Get integer.
+	 *
+	 * @param string $property Property.
+	 * @return int
+	 * @throws \Exception Throws exception when property is not an integer.
+	 */
+	public function get_int( string $property ) {
+		$value = $this->get_property( $property );
+
+		if ( ! \is_int( $value ) ) {
+			throw new \Exception(
+				\sprintf(
+					'Property `%s` must be an integer.',
+					\esc_html( $property )
+				)
+			);
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Get object.
+	 *
+	 * @param string $property Property.
+	 * @return object
+	 * @throws \Exception Throws exception when property is not an integer.
+	 */
+	public function get_object( string $property ) {
+		$value = $this->get_property( $property );
+
+		if ( ! \is_object( $value ) ) {
+			throw new \Exception(
+				\sprintf(
+					'Property `%s` must be an object.',
+					\esc_html( $property )
+				)
+			);
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Get optional.
 	 *
 	 * @param string $property Property.

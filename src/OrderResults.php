@@ -98,29 +98,25 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( $data ) {
-		if ( ! isset( $data->signature ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `signature` property.' );
-		}
+		$object_access = new ObjectAccess( $data );
 
-		if ( ! isset( $data->moreOrderResultsAvailable ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `moreOrderResultsAvailable` property.' );
-		}
+		$data_order_results = $object_access->get_property( 'orderResults' );
 
-		if ( ! isset( $data->orderResults ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `orderResults` property.' );
-		}
-
-		if ( ! \is_array( $data->orderResults ) ) {
+		if ( ! \is_array( $data_order_results ) ) {
 			throw new \InvalidArgumentException( 'The `orderResults` property must be an array.' );
 		}
 
 		$order_results = [];
 
-		foreach ( $data->orderResults as $o ) {
+		foreach ( $data_order_results as $o ) {
 			$order_results[] = OrderResult::from_object( $o );
 		}
 
-		return new self( $data->moreOrderResultsAvailable, $order_results, $data->signature );
+		return new self(
+			( true === $object_access->get_property( 'moreOrderResultsAvailable' ) ),
+			$order_results,
+			$object_access->get_string( 'signature' )
+		);
 	}
 
 	/**

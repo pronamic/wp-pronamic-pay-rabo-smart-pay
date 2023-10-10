@@ -77,18 +77,14 @@ class OrderAnnounceResponse extends ResponseMessage {
 	 *
 	 * @param object $data Object.
 	 * @return OrderAnnounceResponse
-	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
 	public static function from_object( $data ) {
-		if ( ! isset( $data->omnikassaOrderId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `omnikassaOrderId` property.' );
-		}
+		$object_access = new ObjectAccess( $data );
 
-		if ( ! isset( $data->redirectUrl ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `redirectUrl` property.' );
-		}
-
-		return new self( $data->omnikassaOrderId, $data->redirectUrl );
+		return new self(
+			$object_access->get_string( 'omnikassaOrderId' ),
+			$object_access->get_string( 'redirectUrl' )
+		);
 	}
 
 	/**

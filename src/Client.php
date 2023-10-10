@@ -207,14 +207,16 @@ class Client {
 					'Could not JSON decode Rabo Smart Pay response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
 					\esc_html( (string) $response->status() ),
 					\esc_html( $response->message() ),
-					(int) \strlen( $response->body() )
+					\intval( \strlen( $response->body() ) )
 				),
 				\intval( $response->status() )
 			);
 		}
 
 		// Error.
-		if ( isset( $data->errorCode ) ) {
+		$object_access = new ObjectAccess( $data );
+
+		if ( $object_access->has_property( 'errorCode' ) ) {
 			$error = Error::from_object( $data );
 
 			throw $error;
@@ -295,12 +297,18 @@ class Client {
 	public function get_payment_brands( $access_token ) {
 		$result = $this->request( 'GET', 'order/server/api/payment-brands', $access_token );
 
+		$object_access = new ObjectAccess( $result );
+
+		$data = $object_access->get_optional( 'paymentBrands' );
+
+		if ( ! \is_array( $data ) ) {
+			return [];
+		}
+
 		$payment_brands = [];
 
-		if ( \property_exists( $result, 'paymentBrands' ) ) {
-			foreach ( $result->paymentBrands as $brand ) {
-				$payment_brands[ $brand->name ] = $brand->status;
-			}
+		foreach ( $data as $brand ) {
+			$payment_brands[ $brand->name ] = $brand->status;
 		}
 
 		return $payment_brands;
