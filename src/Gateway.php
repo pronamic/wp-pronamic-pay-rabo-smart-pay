@@ -143,7 +143,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get payment methods.
 	 *
-	 * @param array<string> $args Query arguments.
+	 * @param array<mixed, mixed> $args Query arguments.
 	 */
 	public function get_payment_methods( array $args = [] ): PaymentMethodsCollection {
 		try {
