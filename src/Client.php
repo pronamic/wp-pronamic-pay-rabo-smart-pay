@@ -138,10 +138,10 @@ class Client {
 		 * `pronamic_pay_omnikassa_2_request_args` filter.
 		 */
 		$args = [
-			'method'  => $method,
 			'headers' => [
 				'Authorization' => 'Bearer ' . $token,
 			],
+			'method'  => $method,
 			'timeout' => 30,
 		];
 
