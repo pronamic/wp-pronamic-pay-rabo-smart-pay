@@ -78,7 +78,7 @@ class OrderResult implements \JsonSerializable {
 	/**
 	 * Transactions.
 	 * 
-	 * @var Transaction[]
+	 * @var array<Transaction>
 	 */
 	private $transactions = [];
 
@@ -189,7 +189,7 @@ class OrderResult implements \JsonSerializable {
 	/**
 	 * Get transactions.
 	 * 
-	 * @return Transaction[]
+	 * @return array<Transaction>
 	 */
 	public function get_transactions() {
 		return $this->transactions;
