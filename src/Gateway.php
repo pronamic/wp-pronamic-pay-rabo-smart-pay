@@ -81,7 +81,7 @@ class Gateway extends Core_Gateway {
 				function () {
 					return $this->get_ideal_issuers();
 				},
-				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+				'pronamic_pay_ideal_issuers_' . \md5( (string) \wp_json_encode( $config ) )
 			)
 		);
 
@@ -175,7 +175,7 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 */
 	private function maybe_enrich_payment_methods() {
-		$cache_key = 'pronamic_pay_omnikassa_2_payment_brands_' . \md5( \wp_json_encode( $this->config ) );
+		$cache_key = 'pronamic_pay_omnikassa_2_payment_brands_' . \md5( (string) \wp_json_encode( $this->config ) );
 
 		$omnikassa_payment_brands = \get_transient( $cache_key );
 
