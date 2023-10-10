@@ -689,7 +689,7 @@ class Gateway extends Core_Gateway {
 
 		$successful_transactions = \array_filter(
 			$order_result->get_transactions(),
-			function ( $transaction ) {
+			static function ( $transaction ) {
 				return 'SUCCESS' === $transaction->get_status();
 			}
 		);
