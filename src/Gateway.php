@@ -439,7 +439,7 @@ class Gateway extends Core_Gateway {
 	public function create_refund( Refund $refund ) {
 		$payment = $refund->get_payment();
 
-		$transaction_id = $payment->get_transaction_id();
+		$transaction_id = (string) $payment->get_transaction_id();
 
 		$amount = MoneyTransformer::transform( $refund->get_amount() );
 
