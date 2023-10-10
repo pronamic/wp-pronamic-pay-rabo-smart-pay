@@ -42,7 +42,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Config.
 	 *
-	 * @var Config.
+	 * @var Config
 	 */
 	private $config;
 
