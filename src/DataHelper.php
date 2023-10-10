@@ -46,7 +46,7 @@ class DataHelper {
 					'Field `%s` value "%s" can not be longer then `%d`.',
 					\esc_html( $field ),
 					\esc_html( $value ),
-					\esc_html( $max )
+					(int) $max
 				)
 			);
 		}
@@ -89,7 +89,7 @@ class DataHelper {
 		if ( false === $result ) {
 			throw new \Exception(
 				'PCRE regex execution error.',
-				\esc_html( \preg_last_error() )
+				(int) \preg_last_error()
 			);
 		}
 
