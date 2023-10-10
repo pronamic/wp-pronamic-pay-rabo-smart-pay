@@ -663,7 +663,7 @@ class Gateway extends Core_Gateway {
 			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException(
 				\sprintf(
 					'Could not find payments for the following Rabo Smart Pay order IDs: %s.',
-					\implode( ', ', $unknown_order_ids )
+					\esc_html( \implode( ', ', $unknown_order_ids ) )
 				)
 			);
 		}
