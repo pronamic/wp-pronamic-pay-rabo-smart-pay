@@ -564,9 +564,13 @@ class Gateway extends Core_Gateway {
 		 */
 		$slug = $this->get_payment_slug_for_omnikassa_order_id( $omnikassa_order_id );
 
-		$payment = \get_pronamic_payment_by_meta( '', '', [
-			'name' => $slug,
-		] );
+		$payment = \get_pronamic_payment_by_meta(
+			'',
+			'',
+			[
+				'name' => $slug,
+			]
+		);
 
 		if ( null !== $payment ) {
 			return $payment;
