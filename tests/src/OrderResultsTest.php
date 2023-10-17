@@ -54,4 +54,26 @@ class OrderResultsTest extends TestCase {
 
 		$this->assertTrue( $order_results->is_valid( $signing_key ) );
 	}
+
+	/**
+	 * Test order results v2.
+	 * 
+	 * @link https://developer.rabobank.nl/product/10685/api/9770#/RaboSmartPayOnlinePaymentAPI_1013/operation/%2Forder%2Fserver%2Fapi%2Fv2%2Fevents%2Fresults%2Fmerchant.order.status.changed/get
+	 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+	 */
+	public function test_order_results_v2() {
+		$json = \file_get_contents( __DIR__ . '/../json/merchant.order.status.changed-v2.json', true );
+
+		$order_results = OrderResults::from_json( $json );
+
+		$items = \iterator_to_array( $order_results );
+
+		$order_result = \reset( $items );
+
+		$transactions = $order_result->get_transactions();
+
+		$transaction = \reset( $transactions );
+
+		$this->assertEquals( '22b36073-57a3-4c3d-9585-87f2e55275a5', $transaction->get_id() );
+	}
 }

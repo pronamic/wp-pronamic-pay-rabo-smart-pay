@@ -69,28 +69,24 @@ class Money implements \JsonSerializable {
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return (object) [
-			'currency' => $this->get_currency(),
 			'amount'   => $this->get_amount(),
+			'currency' => $this->get_currency(),
 		];
 	}
 
 	/**
 	 * Create money from object.
 	 *
-	 * @param \stdClass $object Object.
+	 * @param object $data Object.
 	 * @return Money
-	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( \stdClass $object ) {
-		if ( ! isset( $object->currency ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `currency` property.' );
-		}
+	public static function from_object( $data ) {
+		$object_access = new ObjectAccess( $data );
 
-		if ( ! isset( $object->amount ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `amount` property.' );
-		}
-
-		return new self( $object->currency, $object->amount );
+		return new self(
+			$object_access->get_string( 'currency' ),
+			$object_access->get_int( 'amount' )
+		);
 	}
 
 	/**

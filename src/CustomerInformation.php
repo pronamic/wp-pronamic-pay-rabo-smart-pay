@@ -87,7 +87,7 @@ class CustomerInformation implements \JsonSerializable {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Gender "%s" must be equal to `null`, "F" or "M".',
-					$gender
+					\esc_html( $gender )
 				)
 			);
 		}
@@ -122,29 +122,29 @@ class CustomerInformation implements \JsonSerializable {
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
-		$object = (object) [];
+		$data = [];
 
 		if ( null !== $this->email_address ) {
-			$object->emailAddress = $this->email_address;
+			$data['emailAddress'] = $this->email_address;
 		}
 
 		if ( null !== $this->date_of_birth ) {
-			$object->dateOfBirth = $this->date_of_birth->format( 'd-m-Y' );
+			$data['dateOfBirth'] = $this->date_of_birth->format( 'd-m-Y' );
 		}
 
 		if ( null !== $this->gender ) {
-			$object->gender = $this->gender;
+			$data['gender'] = $this->gender;
 		}
 
 		if ( null !== $this->initials ) {
-			$object->initials = $this->initials;
+			$data['initials'] = $this->initials;
 		}
 
 		if ( null !== $this->telephone_number ) {
-			$object->telephoneNumber = $this->telephone_number;
+			$data['telephoneNumber'] = $this->telephone_number;
 		}
 
-		return $object;
+		return (object) $data;
 	}
 
 	/**

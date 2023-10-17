@@ -41,7 +41,7 @@ class Security {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Signing key "%s" is empty.',
-					$signing_key
+					\esc_html( $signing_key )
 				)
 			);
 		}
@@ -53,7 +53,7 @@ class Security {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Signing key "%s" contains character from outside the base64 alphabet.',
-					$signing_key
+					\esc_html( $signing_key )
 				)
 			);
 		}

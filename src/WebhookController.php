@@ -44,8 +44,8 @@ class WebhookController {
 			Integration::REST_ROUTE_NAMESPACE,
 			'/webhook',
 			[
-				'methods'             => 'POST',
 				'callback'            => [ $this, 'rest_api_omnikassa_2_webhook' ],
+				'methods'             => 'POST',
 				'permission_callback' => '__return_true',
 			]
 		);
@@ -60,8 +60,8 @@ class WebhookController {
 						'type'        => 'integer',
 					],
 				],
-				'methods'             => 'POST',
 				'callback'            => [ $this, 'rest_api_omnikassa_2_webhook_item' ],
+				'methods'             => 'POST',
 				'permission_callback' => '__return_true',
 			]
 		);
@@ -78,21 +78,21 @@ class WebhookController {
 		// Query.
 		$query = new \WP_Query(
 			[
-				'post_type'   => GatewayPostType::POST_TYPE,
-				'post_status' => 'publish',
-				'nopaging'    => true,
 				'meta_query'  => [
 					[
 						'key'   => '_pronamic_gateway_id',
 						'value' => 'rabobank-omnikassa-2',
 					],
 				],
+				'nopaging'    => true,
+				'post_status' => 'publish',
+				'post_type'   => GatewayPostType::POST_TYPE,
 			]
 		);
 
 		$data = [
-			'success' => true,
 			'results' => [],
+			'success' => true,
 		];
 
 		foreach ( $query->posts as $post ) {
@@ -130,8 +130,8 @@ class WebhookController {
 				'rest_omnikassa_2_notification_invalid',
 				\__( 'Invalid Rabo Smart Pay notification.', 'pronamic_ideal' ),
 				[
-					'status'       => 400,
 					'notification' => $json,
+					'status'       => 400,
 				]
 			);
 		}
@@ -154,8 +154,8 @@ class WebhookController {
 				'rest_omnikassa_2_gateway_invalid',
 				\__( 'Invalid Rabo Smart Pay gateway.', 'pronamic_ideal' ),
 				[
-					'status' => 400,
 					'id'     => $id,
+					'status' => 400,
 				]
 			);
 		}
@@ -169,7 +169,7 @@ class WebhookController {
 
 		try {
 			$gateway->handle_notification( $notification );
-		} catch ( \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException $e ) {
+		} catch ( \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException $e ) { // @phpstan-ignore-line
 			/**
 			 * We don't return an error for unknown order IDs, since OmniKassa
 			 * otherwise assumes that the notification could not be processed.
@@ -180,9 +180,9 @@ class WebhookController {
 				'rest_omnikassa_2_exception',
 				$e->getMessage(),
 				[
-					'status'       => 400,
-					'notification' => $json,
 					'id'           => $id,
+					'notification' => $json,
+					'status'       => 400,
 				]
 			);
 		}

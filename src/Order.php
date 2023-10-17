@@ -348,52 +348,52 @@ class Order extends Message implements \JsonSerializable {
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
-		$object = (object) [];
+		$data = [];
 
-		$object->timestamp       = $this->timestamp->format( \DATE_ATOM );
-		$object->merchantOrderId = $this->merchant_order_id;
+		$data['timestamp']       = $this->timestamp->format( \DATE_ATOM );
+		$data['merchantOrderId'] = $this->merchant_order_id;
 
 		if ( null !== $this->description ) {
-			$object->description = $this->description;
+			$data['description'] = $this->description;
 		}
 
 		if ( null !== $this->order_items ) {
-			$object->orderItems = $this->order_items;
+			$data['orderItems'] = $this->order_items;
 		}
 
-		$object->amount = $this->amount;
+		$data['amount'] = $this->amount;
 
 		if ( null !== $this->shipping_detail ) {
-			$object->shippingDetail = $this->shipping_detail;
+			$data['shippingDetail'] = $this->shipping_detail;
 		}
 
 		if ( null !== $this->billing_detail ) {
-			$object->billingDetail = $this->billing_detail;
+			$data['billingDetail'] = $this->billing_detail;
 		}
 
 		if ( null !== $this->customer_information ) {
-			$object->customerInformation = $this->customer_information;
+			$data['customerInformation'] = $this->customer_information;
 		}
 
 		if ( null !== $this->language ) {
-			$object->language = $this->language;
+			$data['language'] = $this->language;
 		}
 
-		$object->merchantReturnURL = $this->merchant_return_url;
+		$data['merchantReturnURL'] = $this->merchant_return_url;
 
 		if ( null !== $this->payment_brand ) {
-			$object->paymentBrand = $this->payment_brand;
+			$data['paymentBrand'] = $this->payment_brand;
 		}
 
 		if ( null !== $this->payment_brand_force ) {
-			$object->paymentBrandForce = $this->payment_brand_force;
+			$data['paymentBrandForce'] = $this->payment_brand_force;
 		}
 
 		if ( null !== $this->payment_brand_meta_data ) {
-			$object->paymentBrandMetaData = $this->payment_brand_meta_data;
+			$data['paymentBrandMetaData'] = $this->payment_brand_meta_data;
 		}
 
-		return $object;
+		return (object) $data;
 	}
 
 	/**

@@ -42,19 +42,15 @@ class RefundResponse {
 	/**
 	 * Create refund response from object.
 	 *
-	 * @param object $object Object.
+	 * @param object $data Object.
 	 * @return self
-	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( $object ) {
-		if ( ! isset( $object->refundId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `refundId` property.' );
-		}
+	public static function from_object( $data ) {
+		$object_access = new ObjectAccess( $data );
 
-		if ( ! isset( $object->refundTransactionId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `refundTransactionId` property.' );
-		}
-
-		return new self( $object->refundId, $object->refundTransactionId );
+		return new self(
+			$object_access->get_string( 'refundId' ),
+			$object_access->get_string( 'refundTransactionId' )
+		);
 	}
 }

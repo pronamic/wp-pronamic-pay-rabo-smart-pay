@@ -77,45 +77,4 @@ class ReturnParameters extends ResponseMessage {
 			$this->get_status(),
 		];
 	}
-
-	/**
-	 * Check if data array contains return parameters.
-	 *
-	 * @param array<string> $data Data array.
-	 * @return bool True if array contains return parameters, false otherwise.
-	 */
-	public static function contains( array $data ) {
-		$result = (
-			\array_key_exists( 'order_id', $data )
-				&&
-			\array_key_exists( 'status', $data )
-				&&
-			\array_key_exists( 'signature', $data )
-		);
-
-		return $result;
-	}
-
-	/**
-	 * Get return parameters from the specified data array.
-	 *
-	 * @param array<string> $data Data array.
-	 * @return ReturnParameters
-	 * @throws \InvalidArgumentException Throws invalid argument exception when array does not contains the required keys.
-	 */
-	public static function from_array( array $data ) {
-		if ( ! \array_key_exists( 'order_id', $data ) ) {
-			throw new \InvalidArgumentException( 'Data array must contain `order_id` field.' );
-		}
-
-		if ( ! \array_key_exists( 'status', $data ) ) {
-			throw new \InvalidArgumentException( 'Data array must contain `status` field.' );
-		}
-
-		if ( ! \array_key_exists( 'signature', $data ) ) {
-			throw new \InvalidArgumentException( 'Data array must contain `signature` field.' );
-		}
-
-		return new self( $data['order_id'], $data['status'], $data['signature'] );
-	}
 }

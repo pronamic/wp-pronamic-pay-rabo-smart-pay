@@ -76,6 +76,13 @@ class OrderResult implements \JsonSerializable {
 	private $total_amount;
 
 	/**
+	 * Transactions.
+	 * 
+	 * @var array<Transaction>
+	 */
+	private $transactions = [];
+
+	/**
 	 * Construct order result.
 	 *
 	 * @param string     $merchant_order_id     Merchant order ID.
@@ -180,6 +187,15 @@ class OrderResult implements \JsonSerializable {
 	}
 
 	/**
+	 * Get transactions.
+	 * 
+	 * @return array<Transaction>
+	 */
+	public function get_transactions() {
+		return $this->transactions;
+	}
+
+	/**
 	 * Get JSON.
 	 *
 	 * @return object
@@ -187,13 +203,13 @@ class OrderResult implements \JsonSerializable {
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return (object) [
+			'errorCode'           => $this->get_error_code(),
 			'merchantOrderId'     => $this->get_merchant_order_id(),
 			'omnikassaOrderId'    => $this->get_omnikassa_order_id(),
-			'poiId'               => $this->get_poi_id(),
 			'orderStatus'         => $this->get_order_status(),
 			'orderStatusDateTime' => $this->get_order_status_datetime(),
-			'errorCode'           => $this->get_error_code(),
 			'paidAmount'          => $this->get_paid_amount(),
+			'poiId'               => $this->get_poi_id(),
 			'totalAmount'         => $this->get_total_amount(),
 		];
 	}
@@ -201,53 +217,32 @@ class OrderResult implements \JsonSerializable {
 	/**
 	 * Create order result from object.
 	 *
-	 * @param \stdClass $object Object.
+	 * @param object $data Object.
 	 * @return OrderResult
-	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required properties.
 	 */
-	public static function from_object( \stdClass $object ) {
-		if ( ! isset( $object->merchantOrderId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `merchantOrderId` property.' );
-		}
+	public static function from_object( $data ) {
+		$object_access = new ObjectAccess( $data );
 
-		if ( ! isset( $object->omnikassaOrderId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `omnikassaOrderId` property.' );
-		}
-
-		if ( ! isset( $object->poiId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `poiId` property.' );
-		}
-
-		if ( ! isset( $object->orderStatus ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `orderStatus` property.' );
-		}
-
-		if ( ! isset( $object->orderStatusDateTime ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `orderStatusDateTime` property.' );
-		}
-
-		if ( ! isset( $object->errorCode ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `errorCode` property.' );
-		}
-
-		if ( ! isset( $object->paidAmount ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `paidAmount` property.' );
-		}
-
-		if ( ! isset( $object->totalAmount ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `totalAmount` property.' );
-		}
-
-		return new self(
-			$object->merchantOrderId,
-			$object->omnikassaOrderId,
-			$object->poiId,
-			$object->orderStatus,
-			$object->orderStatusDateTime,
-			$object->errorCode,
-			Money::from_object( $object->paidAmount ),
-			Money::from_object( $object->totalAmount )
+		$order_result = new self(
+			$object_access->get_string( 'merchantOrderId' ),
+			$object_access->get_string( 'omnikassaOrderId' ),
+			$object_access->get_string( 'poiId' ),
+			$object_access->get_string( 'orderStatus' ),
+			$object_access->get_string( 'orderStatusDateTime' ),
+			$object_access->get_string( 'errorCode' ),
+			Money::from_object( $object_access->get_object( 'paidAmount' ) ),
+			Money::from_object( $object_access->get_object( 'totalAmount' ) )
 		);
+
+		$transactions = $object_access->get_optional( 'transactions' );
+
+		if ( \is_array( $transactions ) ) {
+			foreach ( $transactions as $item ) {
+				$order_result->transactions[] = Transaction::from_object( $item );
+			}
+		}
+
+		return $order_result;
 	}
 
 	/**

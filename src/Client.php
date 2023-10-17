@@ -118,11 +118,11 @@ class Client {
 	 * @param string      $method   HTTP request method.
 	 * @param string      $endpoint URL endpoint to request.
 	 * @param string      $token    Authorization token.
-	 * @param object|null $object   Object.
+	 * @param object|null $data     Data.
 	 * @return object
 	 * @throws \Exception Throws exception when Rabobank OmniKassa 2.0 response is not what we expect.
 	 */
-	private function request( $method, $endpoint, $token, $object = null ) {
+	private function request( $method, $endpoint, $token, $data = null ) {
 		// URL.
 		$url = $this->get_url() . $endpoint;
 
@@ -138,21 +138,21 @@ class Client {
 		 * `pronamic_pay_omnikassa_2_request_args` filter.
 		 */
 		$args = [
-			'method'  => $method,
 			'headers' => [
 				'Authorization' => 'Bearer ' . $token,
 			],
+			'method'  => $method,
 			'timeout' => 30,
 		];
 
-		if ( null !== $object ) {
+		if ( null !== $data ) {
 			$args['headers']['Content-Type'] = 'application/json';
 
-			if ( $object instanceof IdempotenceInterface ) {
-				$args['headers']['Request-ID'] = $object->get_idempotence_id();
+			if ( $data instanceof IdempotenceInterface ) {
+				$args['headers']['Request-ID'] = $data->get_idempotence_id();
 			}
 
-			$args['body'] = \wp_json_encode( $object );
+			$args['body'] = \wp_json_encode( $data );
 		}
 
 		/**
@@ -186,7 +186,7 @@ class Client {
 		$curl .= \sprintf( 'curl --request %s %s', $method, \escapeshellarg( $url ) ) . $eol;
 		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Authorization: Bearer ' . $token ) ) . $eol;
 		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Content-Type: application/json' ) ) . $eol;
-		$curl .= $tab . \sprintf( '--data %s', \escapeshellarg( \strval( \wp_json_encode( $object ) ) ) ) . $eol;
+		$curl .= $tab . \sprintf( '--data %s', \escapeshellarg( \strval( \wp_json_encode( $data ) ) ) ) . $eol;
 		$curl .= $tab . \sprintf(
 			'--user-agent %s',
 			\escapeshellarg( 'WordPress/' . \get_bloginfo( 'version' ) . '; ' . \get_bloginfo( 'url' ) )
@@ -205,16 +205,18 @@ class Client {
 			throw new \Exception(
 				\sprintf(
 					'Could not JSON decode Rabo Smart Pay response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
-					$response->status(),
-					$response->message(),
-					\strlen( $response->body() )
+					\esc_html( (string) $response->status() ),
+					\esc_html( $response->message() ),
+					\intval( \strlen( $response->body() ) )
 				),
 				\intval( $response->status() )
 			);
 		}
 
 		// Error.
-		if ( isset( $data->errorCode ) ) {
+		$object_access = new ObjectAccess( $data );
+
+		if ( $object_access->has_property( 'errorCode' ) ) {
 			$error = Error::from_object( $data );
 
 			throw $error;
@@ -278,7 +280,7 @@ class Client {
 	public function get_order_results( $notification_token ) {
 		$result = $this->request(
 			'GET',
-			'order/server/api/events/results/merchant.order.status.changed',
+			'order/server/api/v2/events/results/merchant.order.status.changed',
 			$notification_token
 		);
 
@@ -295,12 +297,18 @@ class Client {
 	public function get_payment_brands( $access_token ) {
 		$result = $this->request( 'GET', 'order/server/api/payment-brands', $access_token );
 
+		$object_access = new ObjectAccess( $result );
+
+		$data = $object_access->get_optional( 'paymentBrands' );
+
+		if ( ! \is_array( $data ) ) {
+			return [];
+		}
+
 		$payment_brands = [];
 
-		if ( \property_exists( $result, 'paymentBrands' ) ) {
-			foreach ( $result->paymentBrands as $brand ) {
-				$payment_brands[ $brand->name ] = $brand->status;
-			}
+		foreach ( $data as $brand ) {
+			$payment_brands[ $brand->name ] = $brand->status;
 		}
 
 		return $payment_brands;

@@ -133,38 +133,18 @@ class Notification extends ResponseMessage {
 	/**
 	 * Create notification from object.
 	 *
-	 * @param \stdClass $object Object.
+	 * @param \stdClass $data Object.
 	 * @return Notification
-	 * @throws \InvalidArgumentException Throws invalid argument exception when object does not contains the required
-	 * properties.
 	 */
-	public static function from_object( \stdClass $object ) {
-		if ( ! isset( $object->signature ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `signature` property.' );
-		}
-
-		if ( ! isset( $object->authentication ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `authentication` property.' );
-		}
-
-		if ( ! isset( $object->expiry ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `expiry` property.' );
-		}
-
-		if ( ! isset( $object->eventName ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `eventName` property.' );
-		}
-
-		if ( ! isset( $object->poiId ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `poiId` property.' );
-		}
+	public static function from_object( \stdClass $data ) {
+		$object_access = new ObjectAccess( $data );
 
 		return new self(
-			$object->authentication,
-			$object->expiry,
-			$object->eventName,
-			$object->poiId,
-			$object->signature
+			$object_access->get_string( 'authentication' ),
+			$object_access->get_string( 'expiry' ),
+			$object_access->get_string( 'eventName' ),
+			$object_access->get_int( 'poiId' ),
+			$object_access->get_string( 'signature' )
 		);
 	}
 

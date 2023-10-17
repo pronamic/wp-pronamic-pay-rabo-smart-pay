@@ -44,9 +44,9 @@ class DataHelper {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Field `%s` value "%s" can not be longer then `%d`.',
-					$field,
-					$value,
-					$max
+					\esc_html( $field ),
+					\esc_html( $value ),
+					\intval( $max )
 				)
 			);
 		}
@@ -62,8 +62,8 @@ class DataHelper {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Field `%s` cannot contain HTML tags: `%s`.',
-					$field,
-					$value
+					\esc_html( $field ),
+					\esc_html( $value )
 				)
 			);
 		}
@@ -89,7 +89,7 @@ class DataHelper {
 		if ( false === $result ) {
 			throw new \Exception(
 				'PCRE regex execution error.',
-				\preg_last_error()
+				\intval( \preg_last_error() )
 			);
 		}
 
@@ -97,8 +97,8 @@ class DataHelper {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'Field `%s` must consists strictly of alphanumeric characters: `%s`.',
-					$field,
-					$value
+					\esc_html( $field ),
+					\esc_html( $value )
 				)
 			);
 		}
@@ -127,11 +127,11 @@ class DataHelper {
 	/**
 	 * Sanitize string to the specified length.
 	 *
-	 * @param string $string String.
+	 * @param string $value  String.
 	 * @param int    $length Length.
 	 * @return string
 	 */
-	public static function sanitize_an( $string, $length ) {
+	public static function sanitize_an( $value, $length ) {
 		/**
 		 * HTML tags are not allowed.
 		 *
@@ -139,7 +139,7 @@ class DataHelper {
 		 */
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags -- We don't want the `trim` in `wp_strip_all_tags`.
-		$sanitized = \strip_tags( $string );
+		$sanitized = \strip_tags( $value );
 
 		/**
 		 * In version `2.1.6` of this library we used the `mb_strimwidth`

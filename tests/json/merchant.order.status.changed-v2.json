@@ -1,0 +1,108 @@
+{
+  "moreOrderResultsAvailable": true,
+  "orderResults": [
+    {
+      "merchantOrderId": "order123",
+      "omnikassaOrderId": "1d0a95f4-2589-439b-9562-c50aa19f9caf",
+      "poiId": "2004",
+      "orderStatus": "COMPLETED",
+      "orderStatusDateTime": "2018-11-25T12:20:03.157+00:00",
+      "errorCode": "fakekmirima",
+      "paidAmount": {
+        "amount": 10997,
+        "currency": "EUR"
+      },
+      "totalAmount": {
+        "amount": 10997,
+        "currency": "EUR"
+      },
+      "transactions": [
+        {
+          "transactionId": "22b36073-57a3-4c3d-9585-87f2e55275a5",
+          "paymentBrand": "IDEAL",
+          "transactionType": "AUTHORIZE",
+          "transactionStatus": "SUCCESS",
+          "amount": {
+            "amount": 10997,
+            "currency": "EUR"
+          },
+          "confirmedAmount": {
+            "amount": 10997,
+            "currency": "EUR"
+          },
+          "startDateTime": "2018-03-20T09:12:28Z",
+          "lastUpdateTime": "2018-03-20T09:12:28Z"
+        }
+      ]
+    },
+    {
+      "merchantOrderId": "order123",
+      "omnikassaOrderId": "1d0a95f4-2589-439b-9562-c50aa19f9caf",
+      "poiId": "2004",
+      "orderStatus": "COMPLETED",
+      "orderStatusDateTime": "2018-11-25T12:20:03.157+00:00",
+      "errorCode": "gupohaa",
+      "paidAmount": {
+        "amount": 10997,
+        "currency": "EUR"
+      },
+      "totalAmount": {
+        "amount": 10997,
+        "currency": "EUR"
+      },
+      "transactions": [
+        {
+          "transactionId": "22b36073-57a3-4c3d-9585-87f2e55275a5",
+          "paymentBrand": "IDEAL",
+          "transactionType": "AUTHORIZE",
+          "transactionStatus": "SUCCESS",
+          "amount": {
+            "amount": 10997,
+            "currency": "EUR"
+          },
+          "confirmedAmount": {
+            "amount": 10997,
+            "currency": "EUR"
+          },
+          "startDateTime": "2018-03-20T09:12:28Z",
+          "lastUpdateTime": "2018-03-20T09:12:28Z"
+        }
+      ]
+    },
+    {
+      "merchantOrderId": "order123",
+      "omnikassaOrderId": "1d0a95f4-2589-439b-9562-c50aa19f9caf",
+      "poiId": "2004",
+      "orderStatus": "COMPLETED",
+      "orderStatusDateTime": "2018-11-25T12:20:03.157+00:00",
+      "errorCode": "voldeholu",
+      "paidAmount": {
+        "amount": 10997,
+        "currency": "EUR"
+      },
+      "totalAmount": {
+        "amount": 10997,
+        "currency": "EUR"
+      },
+      "transactions": [
+        {
+          "transactionId": "22b36073-57a3-4c3d-9585-87f2e55275a5",
+          "paymentBrand": "IDEAL",
+          "transactionType": "AUTHORIZE",
+          "transactionStatus": "SUCCESS",
+          "amount": {
+            "amount": 10997,
+            "currency": "EUR"
+          },
+          "confirmedAmount": {
+            "amount": 10997,
+            "currency": "EUR"
+          },
+          "startDateTime": "2018-03-20T09:12:28Z",
+          "lastUpdateTime": "2018-03-20T09:12:28Z"
+        }
+      ]
+    }
+  ],
+  "signature": "99ca2487243fbad72bbaa456a3219db7b0d2a19777f436cedb3c045e999b86c05001bb0837b43caa3d1757321d00959ac2a161f473a103af72bf440db5147b4a"
+}

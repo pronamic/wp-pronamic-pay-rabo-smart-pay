@@ -113,8 +113,8 @@ class PaymentBrands {
 		PaymentMethods::PAYPAL      => self::PAYPAL,
 		PaymentMethods::RIVERTY     => self::AFTERPAY,
 		PaymentMethods::SOFORT      => self::SOFORT,
-		PaymentMethods::V_PAY       => self::V_PAY,
 		PaymentMethods::VISA        => self::VISA,
+		PaymentMethods::V_PAY       => self::V_PAY,
 	];
 
 	/**
@@ -122,10 +122,10 @@ class PaymentBrands {
 	 *
 	 * @since 1.0.0
 	 * @param string|null $payment_method Payment method.
-	 * @param string      $default        Default payment method.
+	 * @param string      $fallback       Default payment method.
 	 * @return string|null
 	 */
-	public static function transform( $payment_method, $default = null ) {
+	public static function transform( $payment_method, $fallback = null ) {
 		if ( ! \is_scalar( $payment_method ) ) {
 			return null;
 		}
@@ -134,7 +134,7 @@ class PaymentBrands {
 			return self::$map[ $payment_method ];
 		}
 
-		return $default;
+		return $fallback;
 	}
 
 	/**

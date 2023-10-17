@@ -43,21 +43,21 @@ class Integration extends AbstractGatewayIntegration {
 		$args = \wp_parse_args(
 			$args,
 			[
-				'id'            => 'rabobank-omnikassa-2',
-				'name'          => 'Rabobank - Rabo Smart Pay',
 				'api_url'       => 'https://betalen.rabobank.nl/omnikassa-api/',
-				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/klanten-laten-betalen/rabo-smart-pay',
 				'dashboard_url' => 'https://bankieren.rabobank.nl/smartpay/dashboard/home',
+				'id'            => 'rabobank-omnikassa-2',
+				'manual_url'    => \__(
+					'https://www.pronamicpay.com/en/manuals/how-to-connect-rabo-smart-pay-to-wordpress-with-pronamic-pay/',
+					'pronamic_ideal'
+				),
+				'name'          => 'Rabobank - Rabo Smart Pay',
+				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/klanten-laten-betalen/rabo-smart-pay',
 				'provider'      => 'rabobank',
 				'supports'      => [
 					'refunds',
 					'webhook',
 					'webhook_log',
 				],
-				'manual_url'    => \__(
-					'https://www.pronamicpay.com/en/manuals/how-to-connect-rabo-smart-pay-to-wordpress-with-pronamic-pay/',
-					'pronamic_ideal'
-				),
 			]
 		);
 
@@ -100,6 +100,11 @@ class Integration extends AbstractGatewayIntegration {
 		if ( ! $this->is_active() ) {
 			return;
 		}
+
+		// Return controller.
+		$return_controller = new ReturnController( $this );
+
+		$return_controller->setup();
 
 		// Webhook controller.
 		$webhook_controller = new WebhookController();
@@ -193,36 +198,27 @@ class Integration extends AbstractGatewayIntegration {
 
 		// Refresh Token.
 		$fields[] = [
-			'section'  => 'general',
+			'classes'  => [ 'code' ],
 			'meta_key' => '_pronamic_gateway_omnikassa_2_refresh_token',
+			'section'  => 'general',
 			'title'    => \_x( 'Refresh Token', 'omnikassa', 'pronamic_ideal' ),
 			'type'     => 'textarea',
-			'classes'  => [ 'code' ],
 		];
 
 		// Signing Key.
 		$fields[] = [
-			'section'  => 'general',
+			'classes'  => [ 'large-text', 'code' ],
 			'meta_key' => '_pronamic_gateway_omnikassa_2_signing_key',
+			'section'  => 'general',
 			'title'    => \_x( 'Signing Key', 'omnikassa', 'pronamic_ideal' ),
 			'type'     => 'text',
-			'classes'  => [ 'large-text', 'code' ],
 		];
 
 		// Purchase ID.
 		$code_field = \sprintf( '<code>%s</code>', 'merchantOrderId' );
 
 		$fields[] = [
-			'section'     => 'advanced',
-			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
-			'title'       => \__( 'Order ID', 'pronamic_ideal' ),
-			'type'        => 'text',
 			'classes'     => [ 'regular-text', 'code' ],
-			'tooltip'     => \sprintf(
-				/* translators: %s: <code>merchantOrderId</code> */
-				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic_ideal' ),
-				$code_field
-			),
 			'description' => \sprintf(
 				'%s<br />%s %s<br />%s',
 				\sprintf(
@@ -245,20 +241,29 @@ class Integration extends AbstractGatewayIntegration {
 					'{payment_id}'
 				)
 			),
+			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
+			'section'     => 'advanced',
+			'title'       => \__( 'Order ID', 'pronamic_ideal' ),
+			'tooltip'     => \sprintf(
+				/* translators: %s: <code>merchantOrderId</code> */
+				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic_ideal' ),
+				$code_field
+			),
+			'type'        => 'text',
 		];
 
 		// Webhook.
 		$fields[] = [
+			'classes'  => [ 'large-text', 'code' ],
+			'readonly' => true,
 			'section'  => 'feedback',
 			'title'    => \__( 'Webhook URL', 'pronamic_ideal' ),
-			'type'     => 'text',
-			'classes'  => [ 'large-text', 'code' ],
-			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook/' . (string) \get_the_ID() ),
-			'readonly' => true,
 			'tooltip'  => \__(
 				'The Webhook URL as sent with each transaction to receive automatic payment status updates on.',
 				'pronamic_ideal'
 			),
+			'type'     => 'text',
+			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook/' . (string) \get_the_ID() ),
 		];
 
 		return $fields;

@@ -42,7 +42,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Config.
 	 *
-	 * @var Config.
+	 * @var Config
 	 */
 	private $config;
 
@@ -81,7 +81,7 @@ class Gateway extends Core_Gateway {
 				function () {
 					return $this->get_ideal_issuers();
 				},
-				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+				'pronamic_pay_ideal_issuers_' . \md5( (string) \wp_json_encode( $config ) )
 			)
 		);
 
@@ -143,7 +143,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get payment methods.
 	 *
-	 * @param array<string> $args Query arguments.
+	 * @param array<mixed, mixed> $args Query arguments.
 	 */
 	public function get_payment_methods( array $args = [] ): PaymentMethodsCollection {
 		try {
@@ -173,14 +173,14 @@ class Gateway extends Core_Gateway {
 	 * Maybe enrich payment methods.
 	 *
 	 * @return void
+	 * @throws \Exception Throws an exception if OmniKassa payment brands cannot be requested.
 	 */
 	private function maybe_enrich_payment_methods() {
-		$cache_key = 'pronamic_pay_omnikassa_2_payment_brands_' . \md5( \wp_json_encode( $this->config ) );
+		$cache_key = 'pronamic_pay_omnikassa_2_payment_brands_' . \md5( (string) \wp_json_encode( $this->config ) );
 
 		$omnikassa_payment_brands = \get_transient( $cache_key );
 
 		if ( false === $omnikassa_payment_brands ) {
-			// Maybe update access token.
 			$this->maybe_update_access_token();
 
 			$omnikassa_payment_brands = $this->client->get_payment_brands( $this->config->access_token );
@@ -188,10 +188,14 @@ class Gateway extends Core_Gateway {
 			\set_transient( $cache_key, $omnikassa_payment_brands, \DAY_IN_SECONDS );
 		}
 
+		if ( ! \is_array( $omnikassa_payment_brands ) ) {
+			throw new \Exception( 'OmniKassa payment brands invalid.' );
+		}
+
 		foreach ( $this->payment_methods as $payment_method ) {
 			$payment_method->set_status( 'inactive' );
 
-			$omnikassa_payment_brand = PaymentBrands::transform( $payment_method->get_id() );
+			$omnikassa_payment_brand = (string) PaymentBrands::transform( $payment_method->get_id() );
 
 			if ( \array_key_exists( $omnikassa_payment_brand, $omnikassa_payment_brands ) ) {
 				$status = $omnikassa_payment_brands[ $omnikassa_payment_brand ];
@@ -262,7 +266,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_meta( 'omnikassa_2_merchant_order_id', $merchant_order_id );
 
 		// New order.
-		$merchant_return_url = $payment->get_return_url();
+		$merchant_return_url = \rest_url( Integration::REST_ROUTE_NAMESPACE . '/return/' . $payment->get_id() );
 
 		/**
 		 * Filters the OmniKassa 2.0 merchant return URL.
@@ -422,7 +426,10 @@ class Gateway extends Core_Gateway {
 		// Announce order.
 		$response = $this->client->order_announce( $this->config, $order );
 
-		$payment->set_transaction_id( $response->get_omnikassa_order_id() );
+		$payment->set_slug( $this->get_payment_slug_for_omnikassa_order_id( $response->get_omnikassa_order_id() ) );
+
+		$payment->set_meta( 'omnikassa_order_id', $response->get_omnikassa_order_id() );
+
 		$payment->set_action_url( $response->get_redirect_url() );
 	}
 
@@ -436,7 +443,7 @@ class Gateway extends Core_Gateway {
 	public function create_refund( Refund $refund ) {
 		$payment = $refund->get_payment();
 
-		$transaction_id = $payment->get_transaction_id();
+		$transaction_id = (string) $payment->get_transaction_id();
 
 		$amount = MoneyTransformer::transform( $refund->get_amount() );
 
@@ -457,59 +464,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Update status of the specified payment.
-	 *
-	 * @param Payment $payment Payment.
-	 * @return void
-	 */
-	public function update_status( Payment $payment ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
-		if ( ! ReturnParameters::contains( $_GET ) ) {
-			return;
-		}
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
-		$parameters = ReturnParameters::from_array( $_GET );
-
-		// Note.
-		$note_values = [
-			'order_id'  => $parameters->get_order_id(),
-			'status'    => $parameters->get_status(),
-			'signature' => (string) $parameters->get_signature(),
-			'valid'     => $parameters->is_valid( $this->config->signing_key ) ? 'true' : 'false',
-		];
-
-		$note = '';
-
-		$note .= '<p>';
-		$note .= \__( 'Rabo Smart Pay return URL requested:', 'pronamic_ideal' );
-		$note .= '</p>';
-
-		$note .= '<dl>';
-
-		foreach ( $note_values as $key => $value ) {
-			$note .= \sprintf( '<dt>%s</dt>', \esc_html( $key ) );
-			$note .= \sprintf( '<dd>%s</dd>', \esc_html( $value ) );
-		}
-
-		$note .= '</dl>';
-
-		$payment->add_note( $note );
-
-		// Validate.
-		if ( ! $parameters->is_valid( $this->config->signing_key ) ) {
-			return;
-		}
-
-		// Status.
-		$pronamic_status = Statuses::transform( $parameters->get_status() );
-
-		if ( null !== $pronamic_status ) {
-			$payment->set_status( $pronamic_status );
-		}
-	}
-
-	/**
 	 * Handle notification.
 	 *
 	 * @param Notification $notification Notification.
@@ -521,7 +475,7 @@ class Gateway extends Core_Gateway {
 			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
 				\sprintf(
 					'Signature on notification message does not match gateway configuration signature (%s).',
-					\substr( $this->config->signing_key, 0, 7 )
+					\esc_html( \substr( $this->config->signing_key, 0, 7 ) )
 				)
 			);
 		}
@@ -530,6 +484,61 @@ class Gateway extends Core_Gateway {
 			case 'merchant.order.status.changed':
 				$this->handle_merchant_order_status_changed( $notification );
 		}
+	}
+
+	/**
+	 * Get slug.
+	 * 
+	 * @param string $omnikassa_order_id OmniKassa order ID.
+	 * @return string
+	 */
+	private function get_payment_slug_for_omnikassa_order_id( $omnikassa_order_id ) {
+		return 'rabo-smart-pay-order-' . $omnikassa_order_id;
+	}
+
+	/**
+	 * Get Pronamic payment by OmniKassa order ID.
+	 * 
+	 * @param string $omnikassa_order_id OmniKassa order ID.
+	 * @return Payment|null
+	 */
+	private function get_payment_by_omnikassa_order_id( $omnikassa_order_id ) {
+		/**
+		 * Slug.
+		 * 
+		 * Since version 4.5 of this library, we store the OmniKassa order ID
+		 * in the slug of the payment so that the payment can be requested
+		 * efficiently.
+		 * 
+		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+		 * @link https://github.com/pronamic/wp-pay-core/issues/146
+		 */
+		$slug = $this->get_payment_slug_for_omnikassa_order_id( $omnikassa_order_id );
+
+		$payment = \get_pronamic_payment_by_meta(
+			'',
+			'',
+			[
+				'name' => $slug,
+			]
+		);
+
+		if ( null !== $payment ) {
+			return $payment;
+		}
+
+		/**
+		 * Order ID - transaction ID.
+		 * 
+		 * In older versions of this library we use the OmniKassa order ID as
+		 * the transaction ID. This piece of code is still in this library for
+		 * backward compatibility and may be removed in the future.
+		 * 
+		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+		 */
+		$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
+
+		return $payment;
 	}
 
 	/**
@@ -550,7 +559,7 @@ class Gateway extends Core_Gateway {
 				throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException(
 					\sprintf(
 						'Signature on order results message does not match gateway configuration signature (%s).',
-						\substr( $this->config->signing_key, 0, 7 )
+						\esc_html( \substr( $this->config->signing_key, 0, 7 ) )
 					)
 				);
 			}
@@ -558,7 +567,7 @@ class Gateway extends Core_Gateway {
 			foreach ( $order_results as $order_result ) {
 				$omnikassa_order_id = $order_result->get_omnikassa_order_id();
 
-				$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
+				$payment = $this->get_payment_by_omnikassa_order_id( $omnikassa_order_id );
 
 				if ( empty( $payment ) ) {
 					/**
@@ -590,6 +599,8 @@ class Gateway extends Core_Gateway {
 					$payment->set_status( $pronamic_status );
 				}
 
+				$this->update_payment_transaction_id_from_order_result( $payment, $order_result );
+
 				// Note.
 				$note = \sprintf(
 					'<p>%s</p><pre>%s</pre>',
@@ -607,10 +618,44 @@ class Gateway extends Core_Gateway {
 			throw new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\UnknownOrderIdsException(
 				\sprintf(
 					'Could not find payments for the following Rabo Smart Pay order IDs: %s.',
-					\implode( ', ', $unknown_order_ids )
+					\esc_html( \implode( ', ', $unknown_order_ids ) )
 				)
 			);
 		}
+	}
+
+	/**
+	 * Update payment transaction ID from order result.
+	 * 
+	 * @param Payment     $payment      Payment.
+	 * @param OrderResult $order_result Order result.
+	 * @return void
+	 */
+	private function update_payment_transaction_id_from_order_result( $payment, $order_result ) {
+		$transaction_id = (string) $payment->get_transaction_id();
+
+		if ( '' !== $transaction_id ) {
+			return;
+		}
+
+		if ( 'COMPLETED' !== $order_result->get_order_status() ) {
+			return;
+		}
+
+		$successful_transactions = \array_filter(
+			$order_result->get_transactions(),
+			static function ( $transaction ) {
+				return 'SUCCESS' === $transaction->get_status();
+			}
+		);
+
+		$successful_transaction = \array_shift( $successful_transactions );
+
+		if ( null === $successful_transaction ) {
+			return;
+		}
+
+		$payment->set_transaction_id( $successful_transaction->get_id() );
 	}
 
 	/**

@@ -24,16 +24,16 @@ class DataHelperTest extends TestCase {
 	 * Test validate AN.
 	 *
 	 * @dataProvider validate_an_provider
-	 * @param string      $string   String.
-	 * @param int         $length   Length.
+	 * @param string      $value     String.
+	 * @param int         $length    Length.
 	 * @param string|null $exception Expected.
 	 */
-	public function test_validate_an( $string, $length, $exception = null ) {
+	public function test_validate_an( $value, $length, $exception = null ) {
 		if ( null !== $exception ) {
 			$this->expectException( $exception );
 		}
 
-		$result = DataHelper::validate_an( $string, $length, 'PHPUnit test' );
+		$result = DataHelper::validate_an( $value, $length, 'PHPUnit test' );
 
 		if ( null === $exception ) {
 			$this->assertTrue( $result );
@@ -68,12 +68,12 @@ class DataHelperTest extends TestCase {
 	 * Test sanitize AN.
 	 *
 	 * @dataProvider sanitize_an_provider
-	 * @param string $string   String.
+	 * @param string $value    String.
 	 * @param int    $length   Length.
 	 * @param string $expected Expected.
 	 */
-	public function test_sanitize_an( $string, $length, $expected ) {
-		$result = DataHelper::sanitize_an( $string, $length, 'PHPUnit test' );
+	public function test_sanitize_an( $value, $length, $expected ) {
+		$result = DataHelper::sanitize_an( $value, $length, 'PHPUnit test' );
 
 		$this->assertEquals( $expected, $result );
 	}
