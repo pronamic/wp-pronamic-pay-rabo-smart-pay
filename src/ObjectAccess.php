@@ -92,16 +92,16 @@ class ObjectAccess {
 	public function get_int( string $property ) {
 		$value = $this->get_property( $property );
 
-		if ( ! \is_int( $value ) ) {
+		if ( ! \is_numeric( $value ) ) {
 			throw new \Exception(
 				\sprintf(
-					'Property `%s` must be an integer.',
+					'Property `%s` must be numeric.',
 					\esc_html( $property )
 				)
 			);
 		}
 
-		return $value;
+		return (int) $value;
 	}
 
 	/**
