@@ -702,26 +702,26 @@ class Gateway extends Core_Gateway {
 
 		$data = $this->client->get_access_token_data();
 
-		if ( isset( $data->token ) ) {
-			$this->config->access_token = $data->token;
+		$object_access = new ObjectAccess( $data );
 
-			\update_post_meta( $this->config->post_id, '_pronamic_gateway_omnikassa_2_access_token', $data->token );
+		if ( $object_access->has_property( 'token' ) ) {
+			$this->config->access_token = $object_access->get_string( 'token' );
+
+			\update_post_meta(
+				$this->config->post_id,
+				'_pronamic_gateway_omnikassa_2_access_token',
+				$this->config->access_token
+			);
 		}
 
-		/*
-		 * @codingStandardsIgnoreStart
-		 *
-		 * Ignore coding standards because of sniff WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-		 */
-		if ( isset( $data->validUntil ) ) {
-			$this->config->access_token_valid_until = $data->validUntil;
+		if ( $object_access->has_property( 'validUntil' ) ) {
+			$this->config->access_token_valid_until = $object_access->get_string( 'validUntil' );
 
 			\update_post_meta(
 				$this->config->post_id,
 				'_pronamic_gateway_omnikassa_2_access_token_valid_until',
-				$data->validUntil
+				$this->config->access_token_valid_until
 			);
 		}
-		// @codingStandardsIgnoreEnd
 	}
 }
