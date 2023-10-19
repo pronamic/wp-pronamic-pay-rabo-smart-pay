@@ -1,0 +1,7 @@
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "redirectUrl": "https://betalen.rabobank.nl/omnikassa/nl/payment-brand?token=eyJraWQiOiJFTU8iLCJhbGciOiJFUzI1NiJ9.eyJlbW8iOiJhYWZhMDAxM",
+  "omnikassaOrderId": "1d0a95f4-2589-439b-9562-c50aa19f9caf"
+}
