@@ -605,7 +605,7 @@ class Gateway extends Core_Gateway {
 				 */
 				\do_action( 'pronamic_pay_webhook_log_payment', $payment );
 
-				$pronamic_status = Statuses::transform( $order_result->get_order_status() );
+				$pronamic_status = OrderStatus::transform( $order_result->get_order_status() );
 
 				if ( null !== $pronamic_status ) {
 					$payment->set_status( $pronamic_status );
@@ -644,8 +644,6 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 */
 	private function update_payment_transaction_id_from_order_result( $payment, $order_result ) {
-		$transaction_id = (string) $payment->get_transaction_id();
-
 		$transaction_statuses = [
 			TransactionStatus::SUCCESS,
 			TransactionStatus::ACCEPTED,
@@ -678,7 +676,7 @@ class Gateway extends Core_Gateway {
 
 		$transactions = \array_filter(
 			$order_result->get_transactions(),
-			function ( $transaction ) use ( $transaction_statuses ) {
+			static function ( $transaction ) use ( $transaction_statuses ) {
 				return \in_array( $transaction->get_status(), $transaction_statuses, true );
 			}
 		);
