@@ -24,7 +24,7 @@ class WebhookControllerTest extends WP_UnitTestCase {
 	/**
 	 * REST server.
 	 * 
-	 * @var WP_REST_Server;
+	 * @var WP_REST_Server
 	 */
 	private $rest_server;
 
@@ -157,7 +157,7 @@ class WebhookControllerTest extends WP_UnitTestCase {
 	/**
 	 * Webhook test provider.
 	 *
-	 * @return array
+	 * @return array<string>
 	 */
 	public static function webhook_test_provider() {
 		return [
