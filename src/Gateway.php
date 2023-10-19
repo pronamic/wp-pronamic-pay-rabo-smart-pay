@@ -519,7 +519,19 @@ class Gateway extends Core_Gateway {
 			'',
 			'',
 			[
-				'name' => $slug,
+				/**
+				 * During development we also used the `name` argument here,
+				 * this caused the `WP_Query->is_single` flag to be set to `true`.
+				 * For single post queries WordPress will check if the post status
+				 * of the post is public. If the post status is not public,
+				 * WordPress will not return the post for users with
+				 * insufficient permissions. Therefore, we use the
+				 * `post_name__in` parameter here to bypass this behavior.
+				 *
+				 * @link https://github.com/WordPress/wordpress-develop/blob/6.3/src/wp-includes/class-wp-query.php#L3394-L3412
+				 * @link https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
+				 */
+				'post_name__in' => [ $slug ],
 			]
 		);
 
