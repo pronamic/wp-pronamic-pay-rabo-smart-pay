@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "token": "eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+  "validUntil": "2018-11-24T16:54:51.216+0000",
+  "durationInMillis": 360000
+}
