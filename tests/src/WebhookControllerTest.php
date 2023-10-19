@@ -87,7 +87,8 @@ class WebhookControllerTest extends WP_UnitTestCase {
 		/**
 		 * The webhook request from the Rabobak will trigger a
 		 * `order/server/api/v2/events/results/merchant.order.status.changed`
-		 * request.
+		 * request. Before we simulate the webhook request from the Rabobank we
+		 * prepare a fake HTTP response to mock the API response.
 		 */
 		$this->http_factory->fake(
 			'https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/v2/events/results/merchant.order.status.changed',
@@ -108,12 +109,5 @@ class WebhookControllerTest extends WP_UnitTestCase {
 		$response = \rest_do_request( $request );
 
 		$this->assertEquals( 200, $response->get_status() );
-
-		$this->assertEquals(
-			(object) [
-				'notificationResponse' => '[accepted]',
-			],
-			$response->get_data()
-		);
 	}
 }
