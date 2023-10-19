@@ -15,9 +15,7 @@ require_once getenv( 'WP_PHPUNIT__DIR' ) . '/includes/functions.php';
 tests_add_filter(
 	'muplugins_loaded',
 	function() {
-		global $pronamic_ideal;
-
-		$pronamic_ideal = pronamic_pay_plugin();
+		require __DIR__ . '/../pronamic-pay-with-rabo-smart-pay.php';
 	}
 );
 
