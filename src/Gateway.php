@@ -646,28 +646,50 @@ class Gateway extends Core_Gateway {
 	private function update_payment_transaction_id_from_order_result( $payment, $order_result ) {
 		$transaction_id = (string) $payment->get_transaction_id();
 
-		if ( '' !== $transaction_id ) {
-			return;
+		$transaction_statuses = [
+			TransactionStatus::SUCCESS,
+			TransactionStatus::ACCEPTED,
+			TransactionStatus::CANCELLED,
+			TransactionStatus::EXPIRED,
+			TransactionStatus::FAILURE,
+		];
+
+		switch ( $order_result->get_order_status() ) {
+			case OrderStatus::COMPLETED:
+				$transaction_statuses = [
+					TransactionStatus::SUCCESS,
+					TransactionStatus::ACCEPTED,
+				];
+
+				break;
+			case OrderStatus::CANCELLED:
+				$transaction_statuses = [
+					TransactionStatus::CANCELLED,
+				];
+
+				break;
+			case OrderStatus::EXPIRED:
+				$transaction_statuses = [
+					TransactionStatus::EXPIRED,
+				];
+
+				break;
 		}
 
-		if ( 'COMPLETED' !== $order_result->get_order_status() ) {
-			return;
-		}
-
-		$successful_transactions = \array_filter(
+		$transactions = \array_filter(
 			$order_result->get_transactions(),
-			static function ( $transaction ) {
-				return 'SUCCESS' === $transaction->get_status();
+			function ( $transaction ) use ( $transaction_statuses ) {
+				return \in_array( $transaction->get_status(), $transaction_statuses, true );
 			}
 		);
 
-		$successful_transaction = \array_shift( $successful_transactions );
+		$transaction = \array_shift( $transactions );
 
-		if ( null === $successful_transaction ) {
+		if ( null === $transaction ) {
 			return;
 		}
 
-		$payment->set_transaction_id( $successful_transaction->get_id() );
+		$payment->set_transaction_id( $transaction->get_id() );
 	}
 
 	/**
