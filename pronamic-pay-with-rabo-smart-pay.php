@@ -37,29 +37,29 @@ require_once __DIR__ . '/vendor/autoload_packages.php';
  */
 \Pronamic\WordPress\Pay\Plugin::instance(
 	[
-		'file'             => __FILE__,
 		'action_scheduler' => __DIR__ . '/packages/woocommerce/action-scheduler/action-scheduler.php',
+		'file'             => __FILE__,
 	]
 );
 
 add_filter(
 	'pronamic_pay_gateways',
-	function( $gateways ) {
+	static function ( $gateways ) {
 		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Integration(
 			[
-				'id'      => 'rabobank-omnikassa-2',
-				'name'    => 'Rabobank - Rabo Smart Pay',
-				'mode'    => 'live',
 				'api_url' => 'https://betalen.rabobank.nl/omnikassa-api/',
+				'id'      => 'rabobank-omnikassa-2',
+				'mode'    => 'live',
+				'name'    => 'Rabobank - Rabo Smart Pay',
 			]
 		);
 
 		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Integration(
 			[
-				'id'      => 'rabobank-omnikassa-2-sandbox',
-				'name'    => 'Rabobank - Rabo Smart Pay - Sandbox',
-				'mode'    => 'test',
 				'api_url' => 'https://betalen.rabobank.nl/omnikassa-api-sandbox/',
+				'id'      => 'rabobank-omnikassa-2-sandbox',
+				'mode'    => 'test',
+				'name'    => 'Rabobank - Rabo Smart Pay - Sandbox',
 			]
 		);
 
