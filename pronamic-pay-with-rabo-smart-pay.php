@@ -37,7 +37,7 @@ require_once __DIR__ . '/vendor/autoload_packages.php';
  */
 \Pronamic\WordPress\Pay\Plugin::instance(
 	[
-		'action_scheduler' => __DIR__ . '/packages/woocommerce/action-scheduler/action-scheduler.php',
+		'action_scheduler' => __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php',
 		'file'             => __FILE__,
 	]
 );

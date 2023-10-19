@@ -65,9 +65,13 @@ class WebhookControllerTest extends WP_UnitTestCase {
 	/**
 	 * Test webhook.
 	 * 
+	 * @dataProvider webhook_test_provider
+	 * @param string $response_file  Response file.
+	 * @param string $payment_status Payment status.
+	 * @param string $transaction_id Transaction ID.
 	 * @return void
 	 */
-	public function test_webhook() {
+	public function test_webhook( $response_file, $payment_status, $transaction_id ) {
 		/**
 		 * Setup gateway.
 		 */
@@ -123,7 +127,7 @@ class WebhookControllerTest extends WP_UnitTestCase {
 		 */
 		$this->http_factory->fake(
 			'https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/v2/events/results/merchant.order.status.changed',
-			__DIR__ . '/../http/merchant.order.status.changed.http'
+			$response_file
 		);
 
 		/**
@@ -139,12 +143,34 @@ class WebhookControllerTest extends WP_UnitTestCase {
 
 		$response = \rest_do_request( $request );
 
-		$this->assertEquals( 200, $response->get_status() );
+		$error = $response->as_error();
+
+		$this->assertEquals( 200, $response->get_status(), null === $error ? '' : $error->get_error_message() );
 
 		/**
 		 * Assert payment.
 		 */
-		$this->assertEquals( PaymentStatus::SUCCESS, $payment->get_status() );
-		$this->assertEquals( '22b36073-57a3-4c3d-9585-87f2e55275a5', $payment->get_transaction_id() );
+		$this->assertEquals( $payment_status, $payment->get_status() );
+		$this->assertEquals( $transaction_id, $payment->get_transaction_id() );
+	}
+
+	/**
+	 * Webhook test provider.
+	 *
+	 * @return array
+	 */
+	public static function webhook_test_provider() {
+		return [
+			[
+				__DIR__ . '/../http/merchant.order.status.changed.http',
+				PaymentStatus::SUCCESS,
+				'22b36073-57a3-4c3d-9585-87f2e55275a5',
+			],
+			[
+				__DIR__ . '/../http/merchant.order.status.changed-cancelled.http',
+				PaymentStatus::CANCELLED,
+				'22b36073-57a3-4c3d-9585-87f2e55275a5',
+			],
+		];
 	}
 }
