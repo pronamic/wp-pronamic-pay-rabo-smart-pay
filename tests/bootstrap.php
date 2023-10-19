@@ -10,4 +10,15 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-\WorDBless\Load::load();
+require_once getenv( 'WP_PHPUNIT__DIR' ) . '/includes/functions.php';
+
+tests_add_filter(
+	'muplugins_loaded',
+	function() {
+		global $pronamic_ideal;
+
+		$pronamic_ideal = pronamic_pay_plugin();
+	}
+);
+
+require getenv( 'WP_PHPUNIT__DIR' ) . '/includes/bootstrap.php';
