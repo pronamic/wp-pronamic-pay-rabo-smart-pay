@@ -11,8 +11,10 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Http\Factory;
+use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
+use Pronamic\WordPress\Pay\Plugin;
 use WP_REST_Request;
-use WP_REST_Server;
 use WP_UnitTestCase;
 
 /**
@@ -67,7 +69,7 @@ class WebhookControllerTest extends WP_UnitTestCase {
 	 */
 	public function test_webhook() {
 		/**
-		 * Setup gateway configuration.
+		 * Setup gateway.
 		 */
 		$config_id = \wp_insert_post(
 			[
@@ -83,6 +85,35 @@ class WebhookControllerTest extends WP_UnitTestCase {
 		);
 
 		$this->assertIsInt( $config_id );
+
+		/**
+		 * The start payment routine will trigger a
+		 * `gatekeeper/refresh` request.
+		 */
+		$this->http_factory->fake(
+			'https://betalen.rabobank.nl/omnikassa-api-sandbox/gatekeeper/refresh',
+			__DIR__ . '/../http/gatekeeper-refresh.http'
+		);
+
+		/**
+		 * The start payment routine will trigger a
+		 * `order/server/api/v2/order` request.
+		 */
+		$this->http_factory->fake(
+			'https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/v2/order',
+			__DIR__ . '/../http/announce-order-response.http'
+		);
+
+		/**
+		 * Setup payment.
+		 */
+		$payment = new Payment();
+
+		$payment->set_config_id( $config_id );
+
+		Plugin::start_payment( $payment );
+
+		$this->assertEquals( 'rabo-smart-pay-order-1d0a95f4-2589-439b-9562-c50aa19f9caf', $payment->get_slug() );
 
 		/**
 		 * The webhook request from the Rabobak will trigger a
@@ -109,5 +140,11 @@ class WebhookControllerTest extends WP_UnitTestCase {
 		$response = \rest_do_request( $request );
 
 		$this->assertEquals( 200, $response->get_status() );
+
+		/**
+		 * Assert payment.
+		 */
+		$this->assertEquals( PaymentStatus::SUCCESS, $payment->get_status() );
+		$this->assertEquals( '22b36073-57a3-4c3d-9585-87f2e55275a5', $payment->get_transaction_id() );
 	}
 }
