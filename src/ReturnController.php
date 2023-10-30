@@ -168,28 +168,22 @@ class ReturnController {
 
 			$payment->add_note( $note );
 
+			if ( $parameters->is_valid( $config->signing_key ) ) {
+				$pronamic_status = Statuses::transform( $parameters->get_status() );
+
+				if ( null !== $pronamic_status ) {
+					$payment->set_status( $pronamic_status );
+
+					$payment->save();
+				}
+			}
+
 			/**
 			 * 303 See Other.
 			 *
 			 * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
 			 */
 			$result = new \WP_REST_Response( null, 303, [ 'Location' => $payment->get_return_redirect_url() ] );
-
-			// Validate.
-			if ( ! $parameters->is_valid( $config->signing_key ) ) {
-				return $result;
-			}
-
-			// Status.
-			$pronamic_status = Statuses::transform( $parameters->get_status() );
-
-			if ( null !== $pronamic_status ) {
-				$payment->set_status( $pronamic_status );
-
-				$result->header( 'Location', $payment->get_return_redirect_url() );
-			}
-
-			$payment->save();
 
 			return $result;
 		} catch ( \Exception $e ) {
