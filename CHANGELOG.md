@@ -7,6 +7,20 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.5.0] - 2023-10-30
+
+### Changed
+
+- Improvements in differences between order and transaction IDs. ([21](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21))
+
+### Composer
+
+- Added `automattic/jetpack-autoloader` `^2.12`.
+
+Full set of changes: [`4.4.5...4.5.0`][4.5.0]
+
+[4.5.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.4.5...v4.5.0
+
 ## [4.4.5] - 2023-07-12
 
 ### Commits
