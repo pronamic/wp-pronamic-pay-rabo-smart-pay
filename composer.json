@@ -51,7 +51,7 @@
 		"overtrue/phplint": "^9.0",
 		"php-coveralls/php-coveralls": "^2.5",
 		"phpmd/phpmd": "^2.9",
-		"pronamic/pronamic-cli": "^1.0",
+		"pronamic/pronamic-cli": "^1.1",
 		"pronamic/wp-coding-standards": "^2.0",
 		"roots/wordpress": "^6.0",
 		"sirbrillig/phpcs-variable-analysis": "^2.9",
