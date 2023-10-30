@@ -81,7 +81,7 @@ class ReturnController {
 
 	/**
 	 * Get return parameters.
-	 * 
+	 *
 	 * @param WP_REST_Request $request WordPress REST API request.
 	 * @return ReturnParameters
 	 * @throws \InvalidArgumentException Throws exception when REST request does not contain valid return parameter values.
@@ -93,7 +93,7 @@ class ReturnController {
 
 		if ( ! \is_string( $order_id ) || ! \is_string( $status ) || ! \is_string( $signature ) ) {
 			throw new \InvalidArgumentException(
-				'WordPress REST API request does not contain valid return parameter values.' 
+				'WordPress REST API request does not contain valid return parameter values.'
 			);
 		}
 
@@ -102,7 +102,7 @@ class ReturnController {
 
 	/**
 	 * Get payment.
-	 * 
+	 *
 	 * @param WP_REST_Request $request WordPress REST API request.
 	 * @return Payment
 	 * @throws \InvalidArgumentException Throws exception when REST request does not contain valid payment ID.
@@ -185,6 +185,8 @@ class ReturnController {
 
 			if ( null !== $pronamic_status ) {
 				$payment->set_status( $pronamic_status );
+
+				$result->header( 'Location', $payment->get_return_redirect_url() );
 			}
 
 			$payment->save();
