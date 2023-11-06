@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.5.1] - 2023-11-06
+
+### Fixed
+
+- Fixed redirect to return redirect URL after updated payment status (#23). ([e09fa36](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/e09fa368998198c71b1b1e8e3cfe91c1b929a536)) ([4afc90d](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/4afc90d4b2789c137acf6f36239891ff06cf6465))
+
+Full set of changes: [`4.5.0...4.5.1`][4.5.1]
+
+[4.5.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.5.0...v4.5.1
+
 ## [4.5.0] - 2023-10-30
 
 ### Changed
