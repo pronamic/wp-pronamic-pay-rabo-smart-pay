@@ -196,6 +196,30 @@ class OrderResult implements \JsonSerializable {
 	}
 
 	/**
+	 * Get signature fields.
+	 *
+	 * @param array<string> $fields Fields.
+	 * @return array<string>
+	 */
+	public function get_signature_fields( $fields = [] ) {
+		$fields[] = $this->get_merchant_order_id();
+		$fields[] = $this->get_omnikassa_order_id();
+		$fields[] = \strval( $this->get_poi_id() );
+		$fields[] = $this->get_order_status();
+		$fields[] = $this->get_order_status_datetime();
+		$fields[] = $this->get_error_code();
+
+		$fields = $this->get_paid_amount()->get_signature_fields( $fields );
+		$fields = $this->get_total_amount()->get_signature_fields( $fields );
+
+		foreach ( $this->get_transactions() as $item ) {
+			$fields = $item->get_signature_fields( $fields );
+		}
+
+		return $fields;
+	}
+
+	/**
 	 * Get JSON.
 	 *
 	 * @return object
