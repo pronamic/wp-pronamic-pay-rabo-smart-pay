@@ -103,10 +103,10 @@ final class Transaction {
 		$object_access = new ObjectAccess( $data );
 
 		return new self(
-			$object_access->get_string( 'transactionId' ),
+			$object_access->get_string( 'id' ),
 			$object_access->get_string( 'paymentBrand' ),
-			$object_access->get_string( 'transactionType' ),
-			$object_access->get_string( 'transactionStatus' )
+			$object_access->get_string( 'type' ),
+			$object_access->get_string( 'status' )
 		);
 	}
 }
