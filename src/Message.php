@@ -75,11 +75,12 @@ abstract class Message implements Signable {
 	/**
 	 * Verify signature.
 	 * 
-	 * @throws \Exception Throws an exception when the signature cannot be verified.
+	 * @param string $signing_key Signing key.
 	 * @return void
+	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws an exception when the signature cannot be verified.
 	 */
 	public function verify_signature( $signing_key ) {
-		$signature_enclosed = $this->get_signature();
+		$signature_enclosed = (string) $this->get_signature();
 
 		$signature_calculated = Security::get_signature( $this, $signing_key );
 
@@ -90,7 +91,7 @@ abstract class Message implements Signable {
 				\sprintf(
 					'Signature `%s` in message does not match signature `%s` calculated with signing key: `%s`.',
 					\esc_html( $signature_enclosed ),
-					\esc_html( $signature_calculated ),				
+					\esc_html( $signature_calculated ),             
 					\esc_html(
 						\str_pad(
 							\substr( $signing_key, 0, 7 ),

@@ -1,0 +1,37 @@
+{
+	"signature":"e60e2a7b4b4c7a20bbdc1711a5db7baca373f4d0685abde75245ae391f5eb384235da6b54eb2ce77072bcb132f886f3f7b999a9a5f0b1ad5fe2280ffbfdd8d21",
+	"moreOrderResultsAvailable":false,
+	"orderResults":[
+		{
+			"merchantOrderId":"941",
+			"omnikassaOrderId":"da608eb4-b20b-40e4-8045-10bbd1309084",
+			"poiId":"5000",
+			"orderStatus":"EXPIRED",
+			"orderStatusDateTime":"2023-11-08T13:10:00.281+01:00",
+			"errorCode":"",
+			"paidAmount":{
+				"currency":"EUR",
+				"amount":"0"
+			},
+			"totalAmount":{
+				"currency":"EUR",
+				"amount":"123700"
+			},
+			"transactions":[
+				{
+					"id":"2d8a6da6-77cc-45fb-8974-64a0f80d2517",
+					"paymentBrand":"MASTERCARD",
+					"type":"PAYMENT",
+					"status":"EXPIRED",
+					"amount":{
+						"currency":"EUR",
+						"amount":"123700"
+					},
+					"confirmedAmount":null,
+					"startTime":"2023-11-08T12:37:39.366+01:00",
+					"lastUpdateTime":"2023-11-08T13:10:00.281+01:00"
+				}
+			]
+		}
+	]
+}

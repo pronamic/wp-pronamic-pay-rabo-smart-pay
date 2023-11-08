@@ -67,15 +67,7 @@ class OrderResults extends ResponseMessage implements \IteratorAggregate {
 		$fields[] = $this->more_available() ? 'true' : 'false';
 
 		foreach ( $this->order_results as $order_result ) {
-			$fields[] = $order_result->get_merchant_order_id();
-			$fields[] = $order_result->get_omnikassa_order_id();
-			$fields[] = \strval( $order_result->get_poi_id() );
-			$fields[] = $order_result->get_order_status();
-			$fields[] = $order_result->get_order_status_datetime();
-			$fields[] = $order_result->get_error_code();
-
-			$fields = $order_result->get_paid_amount()->get_signature_fields( $fields );
-			$fields = $order_result->get_total_amount()->get_signature_fields( $fields );
+			$fields = $order_result->get_signature_fields( $fields );
 		}
 
 		return $fields;
