@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.5.2] - 2023-11-08
+
+### Fixed
+
+- Fixed problem with Rabo Smart Pay notification (webhook) and status pull call requests, due to incorrect documentation from Rabobank. ([27](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/27))
+
+Full set of changes: [`4.5.1...4.5.2`][4.5.2]
+
+[4.5.2]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.5.1...v4.5.2
+
 ## [4.5.1] - 2023-11-06
 
 ### Fixed
