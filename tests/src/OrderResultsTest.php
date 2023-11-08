@@ -61,11 +61,12 @@ class OrderResultsTest extends TestCase {
 	 * @link https://developer.rabobank.nl/product/10685/api/9770#/RaboSmartPayOnlinePaymentAPI_1013/operation/%2Forder%2Fserver%2Fapi%2Fv2%2Fevents%2Fresults%2Fmerchant.order.status.changed/get
 	 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
 	 * @dataProvider order_results_provider
-	 * @param string $file           JSON test file.
-	 * @param string $transaction_id Transaction ID.
+	 * @param string   $file                      JSON test file.
+	 * @param string   $transaction_id            Transaction ID.
+	 * @param int|null $expected_confirmed_amount Expected confirmed amount.
 	 */
 	public function test_order_results_v2( $file, $transaction_id, $expected_confirmed_amount ) {
-		$json = \file_get_contents( $file, true );
+		$json = \file_get_contents( __DIR__ . '/../json/' . $file, true );
 
 		$order_results = OrderResults::from_json( $json );
 
@@ -99,15 +100,15 @@ class OrderResultsTest extends TestCase {
 	public static function order_results_provider() {
 		return [
 			[
-				 __DIR__ . '/../json/merchant.order.status.changed-v2.json',
+				'merchant.order.status.changed-v2.json',
 				'22b36073-57a3-4c3d-9585-87f2e55275a5',
-				10997
+				10997,
 
 			],
 			[
-				__DIR__ . '/../json/merchant.order.status.changed-v2-confirmed-amount-null.json',
+				'merchant.order.status.changed-v2-confirmed-amount-null.json',
 				'2d8a6da6-77cc-45fb-8974-64a0f80d2517',
-				null
+				null,
 			],
 		];
 	}
