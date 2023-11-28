@@ -28,15 +28,6 @@ class PaymentBrands {
 	const IDEAL = 'IDEAL';
 
 	/**
-	 * Payment brand 'AFTERPAY'.
-	 *
-	 * Note: this is for AfterPay (afterpay.nl) and not for Afterpay (afterpay.com).
-	 *
-	 * @var string
-	 */
-	const AFTERPAY = 'AFTERPAY';
-
-	/**
 	 * Payment brand 'PAYPAL'.
 	 *
 	 * @var string
@@ -104,14 +95,12 @@ class PaymentBrands {
 	 * @var array<string, string>
 	 */
 	private static $map = [
-		PaymentMethods::AFTERPAY_NL => self::AFTERPAY,
 		PaymentMethods::BANCONTACT  => self::BANCONTACT,
 		PaymentMethods::CREDIT_CARD => self::CARDS,
 		PaymentMethods::IDEAL       => self::IDEAL,
 		PaymentMethods::MAESTRO     => self::MAESTRO,
 		PaymentMethods::MASTERCARD  => self::MASTERCARD,
 		PaymentMethods::PAYPAL      => self::PAYPAL,
-		PaymentMethods::RIVERTY     => self::AFTERPAY,
 		PaymentMethods::SOFORT      => self::SOFORT,
 		PaymentMethods::VISA        => self::VISA,
 		PaymentMethods::V_PAY       => self::V_PAY,
