@@ -17,9 +17,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\PaymentMethodsCollection;
 use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
-use Pronamic\WordPress\Pay\Fields\DateField;
 use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
-use Pronamic\WordPress\Pay\Fields\SelectField;
 use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Refunds\Refund;
@@ -86,47 +84,6 @@ class Gateway extends Core_Gateway {
 		);
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
-
-		/*
-		 * Payment method AfterPay.nl.
-		 */
-		$afterpay_payment_method = new PaymentMethod( PaymentMethods::AFTERPAY_NL );
-
-		// Gender field.
-		$field_gender = new SelectField( 'pronamic_pay_gender' );
-
-		$field_gender->meta_key = 'gender';
-
-		$field_gender->set_label( \__( 'Gender', 'pronamic_ideal' ) );
-
-		$field_gender->set_options(
-			[
-				new SelectFieldOption( Gender::FEMALE, \__( 'Female', 'pronamic_ideal' ) ),
-				new SelectFieldOption( Gender::MALE, \__( 'Male', 'pronamic_ideal' ) ),
-				new SelectFieldOption( '', \__( 'Other', 'pronamic_ideal' ) ),
-			]
-		);
-
-		$afterpay_payment_method->add_field( $field_gender );
-
-		// Date of birth field.
-		$field_birth_date = new DateField( 'pronamic_pay_birth_date' );
-
-		$field_birth_date->meta_key = 'birth_date';
-
-		$field_birth_date->set_label( \__( 'Date of birth', 'pronamic_ideal' ) );
-
-		$afterpay_payment_method->add_field( $field_birth_date );
-
-		$this->register_payment_method( $afterpay_payment_method );
-
-		// Riverty.
-		$riverty_payment_method = new PaymentMethod( PaymentMethods::RIVERTY );
-
-		$riverty_payment_method->add_field( $field_gender );
-		$riverty_payment_method->add_field( $field_birth_date );
-
-		$this->register_payment_method( $riverty_payment_method );
 
 		// Payment methods.
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
@@ -392,16 +349,6 @@ class Gateway extends Core_Gateway {
 
 				// Description.
 				$description = $line->get_description();
-
-				if ( empty( $description ) && PaymentBrands::AFTERPAY === $payment_brand ) {
-					/*
-					 * The `OrderItem.description` field is documented as `0..1` (optional),
-					 * but for AfterPay payments it is required.
-					 *
-					 * @link https://github.com/wp-pay-gateways/omnikassa-2/tree/feature/post-pay/documentation#error-5024
-					 */
-					$description = $name;
-				}
 
 				if ( null !== $description ) {
 					$description = DataHelper::sanitize_an( $description, 100 );
