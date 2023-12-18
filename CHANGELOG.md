@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.5.3] - 2023-12-18
+
+### Commits
+
+- AfterPay specific code for description is no longer required. ([084c6dc](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/084c6dc9b946a56a3de68b1fd8871ed6c8e9d45f))
+- Removed Riverty (formerly AfterPay) because Rabobank no longer supports it ([eda5176](https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/commit/eda51760336ac3d162d973a191e7a678076bd775))
+
+Full set of changes: [`4.5.2...4.5.3`][4.5.3]
+
+[4.5.3]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/v4.5.2...v4.5.3
+
 ## [4.5.2] - 2023-11-08
 
 ### Fixed
