@@ -1,13 +1,13 @@
 <p align="center">
 	<a href="https://www.wp-pay.org/">
-		<img src="https://www.wp-pay.org/assets/pronamic-pay.svgo-min.svg" alt="WordPress Pay » Gateway » OmniKassa 2.0" width="72" height="72">
+		<img src="https://www.wp-pay.org/assets/pronamic-pay.svgo-min.svg" alt="Pronamic Pay → Gateway → Rabo Smart Pay" width="72" height="72">
 	</a>
 </p>
 
-<h1 align="center">WordPress Pay » Gateway » OmniKassa 2.0</h3>
+<h1 align="center">Pronamic Pay → Gateway → Rabo Smart Pay</h3>
 
 <p align="center">
-	OmniKassa 2.0 driver for the WordPress payment processing library.
+	Rabo Smart Pay driver for the WordPress payment processing library.
 </p>
 
 ## Table of contents
