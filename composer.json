@@ -41,7 +41,7 @@
 	},
 	"require": {
 		"php": ">=7.4",
-		"automattic/jetpack-autoloader": "^2.12",
+		"automattic/jetpack-autoloader": "^3.0",
 		"justinrainbow/json-schema": "^5.2",
 		"pronamic/wp-http": "^1.2",
 		"wp-pay/core": "^4.9"
