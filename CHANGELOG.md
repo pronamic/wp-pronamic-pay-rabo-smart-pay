@@ -7,6 +7,19 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.5.4] - 2024-02-07
+
+### Composer
+
+- Changed `automattic/jetpack-autoloader` from `^2.12` to `v3.0.2`.
+	Release notes: https://github.com/Automattic/jetpack-autoloader/releases/tag/v3.0.2
+- Changed `wp-pay/core` from `^4.9` to `v4.15.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.15.0
+
+Full set of changes: [`4.5.3...4.5.4`][4.5.4]
+
+[4.5.4]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.5.3...v4.5.4
+
 ## [4.5.3] - 2023-12-18
 
 ### Commits

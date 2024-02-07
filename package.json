@@ -1,6 +1,6 @@
 {
 	"name": "omnikassa-2",
-	"version": "4.5.3",
+	"version": "4.5.4",
 	"description": "Rabo Smart Pay driver for the WordPress payment processing library.",
 	"repository": {
 		"type": "git",
