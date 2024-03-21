@@ -10,7 +10,6 @@
 		"https://downloads.wordpress.org/plugin/wp-plugin-dependencies.zip"
 	],
 	"mappings": {
-		"wp-content/plugins/pronamic-ideal": "../../../",
 		"wp-content/plugins/pronamic-pay-rabo-smart-pay": "."
 	},
 	"config": {
