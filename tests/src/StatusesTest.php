@@ -39,7 +39,7 @@ class StatusesTest extends TestCase {
 	 *
 	 * @return array<array<string|null>>
 	 */
-	public function status_matrix_provider() {
+	public static function status_matrix_provider() {
 		return [
 			[ Statuses::CANCELLED, PaymentStatus::CANCELLED ],
 			[ Statuses::COMPLETED, PaymentStatus::SUCCESS ],

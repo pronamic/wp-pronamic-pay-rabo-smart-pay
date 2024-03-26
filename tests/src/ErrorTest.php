@@ -63,7 +63,7 @@ class ErrorTest extends \PHPUnit\Framework\TestCase {
 	 *
 	 * @return array<array<string|int|null>>
 	 */
-	public function json_test_provider() {
+	public static function json_test_provider() {
 		return [
 			[ 'error-5001-full-authentication-required.json', 5001, 'Full authentication is required to access this resource', null ],
 			[ 'error-5001-invalid-or-missing-signature.json', 5001, null, 'Invalid or missing signature' ],

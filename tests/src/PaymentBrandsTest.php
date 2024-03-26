@@ -39,7 +39,7 @@ class PaymentBrandsTest extends TestCase {
 	 *
 	 * @return array<array<string>>
 	 */
-	public function status_matrix_provider() {
+	public static function status_matrix_provider() {
 		return [
 			[ PaymentMethods::BANCONTACT, PaymentBrands::BANCONTACT ],
 			[ PaymentMethods::CREDIT_CARD, PaymentBrands::CARDS ],

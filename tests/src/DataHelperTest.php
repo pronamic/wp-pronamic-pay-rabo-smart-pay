@@ -45,7 +45,7 @@ class DataHelperTest extends TestCase {
 	 *
 	 * @return array<array<string|int>>
 	 */
-	public function validate_an_provider() {
+	public static function validate_an_provider() {
 		return [
 			// Valid.
 			[ '1234567890', 50 ],
@@ -83,7 +83,7 @@ class DataHelperTest extends TestCase {
 	 *
 	 * @return array<array<string|int>>
 	 */
-	public function sanitize_an_provider() {
+	public static function sanitize_an_provider() {
 		return [
 			// Nothing to-do.
 			[ '1234567890', 10, '1234567890' ],
