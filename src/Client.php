@@ -139,7 +139,8 @@ class Client {
 		 */
 		$args = [
 			'headers' => [
-				'Authorization' => 'Bearer ' . $token,
+				'Authorization'    => 'Bearer ' . $token,
+				'X-Api-User-Agent' => '(pr: RSP-PRON-0001)',
 			],
 			'method'  => $method,
 			'timeout' => 30,
