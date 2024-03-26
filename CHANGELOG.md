@@ -7,6 +7,22 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.6.0] - 2024-03-26
+
+### Changed
+
+- Added `X-Api-User-Agent` header. ([b3f685d](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/b3f685db7b79be8876b3c2e309fe38144d7ecefb))
+
+### Composer
+
+- Changed `php` from `>=7.4` to `>=8.0`.
+- Changed `wp-pay/core` from `^4.15` to `v4.16.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.16.0
+
+Full set of changes: [`4.5.4...4.6.0`][4.6.0]
+
+[4.6.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.5.4...v4.6.0
+
 ## [4.5.4] - 2024-02-07
 
 ### Composer
