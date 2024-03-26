@@ -32,8 +32,8 @@
 	},
 	"homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
 	"devDependencies": {
-		"@wordpress/env": "^9.5.0",
-		"@wordpress/prettier-config": "^3.10.0",
+		"@wordpress/env": "^9.6.0",
+		"@wordpress/prettier-config": "^3.11.0",
 		"eslint": "^8.57.0",
 		"eslint-plugin-json": "^3.1.0",
 		"prettier": "npm:wp-prettier@^3.0.3"
