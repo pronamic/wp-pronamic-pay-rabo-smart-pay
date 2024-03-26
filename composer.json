@@ -47,17 +47,17 @@
 		"wp-pay/core": "^4.16"
 	},
 	"require-dev": {
-		"bamarni/composer-bin-plugin": "^1.4",
-		"overtrue/phplint": "^9.0",
-		"php-coveralls/php-coveralls": "^2.5",
-		"phpmd/phpmd": "^2.9",
+		"bamarni/composer-bin-plugin": "^1.8",
+		"overtrue/phplint": "^9.1",
+		"php-coveralls/php-coveralls": "^2.7",
+		"phpmd/phpmd": "^2.15",
 		"pronamic/pronamic-cli": "^1.1",
-		"pronamic/wp-coding-standards": "^2.0",
-		"roots/wordpress": "^6.0",
-		"sirbrillig/phpcs-variable-analysis": "^2.9",
-		"slevomat/coding-standard": "^8.14",
-		"wp-phpunit/wp-phpunit": "^6.3",
-		"yoast/phpunit-polyfills": "^1.1"
+		"pronamic/wp-coding-standards": "^2.2",
+		"roots/wordpress": "^6.4",
+		"sirbrillig/phpcs-variable-analysis": "^2.11",
+		"slevomat/coding-standard": "^8.15",
+		"wp-phpunit/wp-phpunit": "^6.4",
+		"yoast/phpunit-polyfills": "^2.0"
 	},
 	"scripts": {
 		"ci": [
