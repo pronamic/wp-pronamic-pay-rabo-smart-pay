@@ -10,8 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
-use PHPUnit\Framework\TestCase;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Statuses test

@@ -11,7 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use DateTime;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Order test

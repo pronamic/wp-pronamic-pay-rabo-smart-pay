@@ -15,12 +15,12 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Plugin;
 use WP_REST_Request;
-use WP_UnitTestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Webhook controller test class
  */
-class WebhookControllerTest extends WP_UnitTestCase {
+class WebhookControllerTest extends TestCase {
 	/**
 	 * REST server.
 	 * 

@@ -39,6 +39,12 @@
 			"automattic/jetpack-autoloader": true
 		}
 	},
+	"repositories": [
+		{
+			"url": "https://github.com/wordpress/sqlite-database-integration.git",
+			"type": "git"
+		}
+	],
 	"require": {
 		"php": ">=8.0",
 		"automattic/jetpack-autoloader": "^3.0",
@@ -56,7 +62,8 @@
 		"roots/wordpress": "^6.4",
 		"sirbrillig/phpcs-variable-analysis": "^2.11",
 		"slevomat/coding-standard": "^8.15",
-		"wp-phpunit/wp-phpunit": "^6.4",
+		"wordpress/sqlite-database-integration": "^2.1",
+		"wp-phpunit/wp-phpunit": "^6.5",
 		"yoast/phpunit-polyfills": "^2.0"
 	},
 	"scripts": {

@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * Error test
  *
@@ -17,7 +19,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.10
  * @since   2.0.2
  */
-class ErrorTest extends \PHPUnit\Framework\TestCase {
+class ErrorTest extends TestCase {
 	/**
 	 * Get test error.
 	 *
