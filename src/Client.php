@@ -123,7 +123,6 @@ class Client {
 	 * @throws \Exception Throws exception when Rabobank OmniKassa 2.0 response is not what we expect.
 	 */
 	private function request( $method, $endpoint, $token, $data = null ) {
-		// URL.
 		$url = $this->get_url() . $endpoint;
 
 		/*
@@ -171,12 +170,10 @@ class Client {
 		 */
 		$args = \apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
 
-		// Request.
 		$response = Http::request( $url, $args );
 
 		$data = $response->json();
 
-		// Object.
 		if ( ! \is_object( $data ) ) {
 			throw new \Exception(
 				\sprintf(
@@ -189,7 +186,6 @@ class Client {
 			);
 		}
 
-		// Error.
 		$object_access = new ObjectAccess( $data );
 
 		if ( $object_access->has_property( 'errorCode' ) ) {
@@ -198,7 +194,6 @@ class Client {
 			throw $error;
 		}
 
-		// Ok.
 		return $data;
 	}
 
