@@ -171,31 +171,6 @@ class Client {
 		 */
 		$args = \apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );
 
-		/**
-		 * Build cURL command for debug purposes.
-		 *
-		 * @link https://curl.haxx.se/
-		 */
-
-		// phpcs:disable SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-
-		$curl = '';
-
-		$tab = "\t";
-		$eol = ' \\' . \PHP_EOL;
-
-		$curl .= \sprintf( 'curl --request %s %s', $method, \escapeshellarg( $url ) ) . $eol;
-		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Authorization: Bearer ' . $token ) ) . $eol;
-		$curl .= $tab . \sprintf( '--header %s', \escapeshellarg( 'Content-Type: application/json' ) ) . $eol;
-		$curl .= $tab . \sprintf( '--data %s', \escapeshellarg( \strval( \wp_json_encode( $data ) ) ) ) . $eol;
-		$curl .= $tab . \sprintf(
-			'--user-agent %s',
-			\escapeshellarg( 'WordPress/' . \get_bloginfo( 'version' ) . '; ' . \get_bloginfo( 'url' ) )
-		) . $eol;
-		$curl .= $tab . '--verbose';
-
-		// phpcs:enable
-
 		// Request.
 		$response = Http::request( $url, $args );
 
