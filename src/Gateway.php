@@ -63,11 +63,7 @@ final class Gateway extends Core_Gateway {
 		];
 
 		// Client.
-		$this->client = new Client(
-			$config->get_api_url(),
-			$config->refresh_token,
-			$config->signing_key
-		);
+		$this->client = new Client( $config );
 
 		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
@@ -352,7 +348,7 @@ final class Gateway extends Core_Gateway {
 		$this->maybe_update_access_token();
 
 		// Announce order.
-		$response = $this->client->order_announce( $this->config, $order );
+		$response = $this->client->order_announce( $order );
 
 		$payment->set_slug( $this->get_payment_slug_for_omnikassa_order_id( $response->get_omnikassa_order_id() ) );
 
@@ -383,7 +379,7 @@ final class Gateway extends Core_Gateway {
 			$refund_request->description = $description;
 		}
 
-		$refund_response = $this->client->refund( $this->config, $refund_request );
+		$refund_response = $this->client->refund( $refund_request );
 
 		$refund->psp_id = $refund_response->id;
 

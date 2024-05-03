@@ -35,37 +35,19 @@ final class Client {
 	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	/**
-	 * The URL.
+	 * Config.
 	 *
-	 * @var string
+	 * @var Config
 	 */
-	private $url;
-
-	/**
-	 * Refresh token.
-	 *
-	 * @var string
-	 */
-	private $refresh_token;
-
-	/**
-	 * Signing key.
-	 *
-	 * @var string
-	 */
-	private $signing_key;
+	private $config;
 
 	/**
 	 * Construct client.
 	 * 
-	 * @param string $url           URL.
-	 * @param string $refresh_token Refresh token.
-	 * @param string $signing_key   Signing key.
+	 * @param Config $config Configuration object.
 	 */
-	public function __construct( $url, $refresh_token, $signing_key ) {
-		$this->url           = $url;
-		$this->refresh_token = $refresh_token;
-		$this->signing_key   = $signing_key;
+	public function __construct( $config ) {
+		$this->config = $config;
 	}
 
 	/**
@@ -79,7 +61,7 @@ final class Client {
 	 * @throws \Exception Throws exception when Rabobank OmniKassa 2.0 response is not what we expect.
 	 */
 	private function request( $method, $endpoint, $token, $data = null ) {
-		$url = $this->url . $endpoint;
+		$url = $this->config->api_url . $endpoint;
 
 		/*
 		 * Arguments.
@@ -159,18 +141,17 @@ final class Client {
 	 * @return object
 	 */
 	public function get_access_token_data() {
-		return $this->request( 'GET', 'gatekeeper/refresh', $this->refresh_token );
+		return $this->request( 'GET', 'gatekeeper/refresh', $this->config->refresh_token );
 	}
 
 	/**
 	 * Order announce.
 	 *
-	 * @param Config $config Config.
-	 * @param Order  $order  Order.
+	 * @param Order $order  Order.
 	 * @return OrderAnnounceResponse
 	 */
-	public function order_announce( $config, Order $order ) {
-		$result = $this->request( 'POST', 'order/server/api/v2/order', $config->access_token, $order );
+	public function order_announce( Order $order ) {
+		$result = $this->request( 'POST', 'order/server/api/v2/order', $this->config->access_token, $order );
 
 		return OrderAnnounceResponse::from_object( $result );
 	}
@@ -178,11 +159,10 @@ final class Client {
 	/**
 	 * Refund.
 	 *
-	 * @param Config        $config Config.
 	 * @param RefundRequest $refund Refund request.
 	 * @return RefundResponse
 	 */
-	public function refund( $config, RefundRequest $refund ) {
+	public function refund( RefundRequest $refund ) {
 		$result = $this->request(
 			'POST',
 			\strtr(
@@ -191,7 +171,7 @@ final class Client {
 					'{transaction_id}' => $refund->transaction_id,
 				]
 			),
-			$config->access_token,
+			$this->config->access_token,
 			$refund
 		);
 
