@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use JsonSerializable;
+
 /**
  * Address
  *
@@ -17,7 +19,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.10
  * @since   2.0.2
  */
-class Address implements \JsonSerializable {
+final class Address implements JsonSerializable {
 	/**
 	 * First name.
 	 *

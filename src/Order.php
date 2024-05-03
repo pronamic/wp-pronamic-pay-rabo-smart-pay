@@ -11,6 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use DateTime;
+use JsonSerializable;
 
 /**
  * Order
@@ -19,7 +20,7 @@ use DateTime;
  * @version 2.2.4
  * @since   1.0.0
  */
-class Order extends Message implements \JsonSerializable {
+final class Order extends Message implements JsonSerializable {
 	/**
 	 * ISO 8601 standard Date / time on which the order is announced at ROK.
 	 * As a rule, this is the current date / time.
