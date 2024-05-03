@@ -23,7 +23,7 @@ class OrderItems implements \JsonSerializable {
 	 *
 	 * @var array<OrderItem>
 	 */
-	private $order_items;
+	private $order_items = [];
 
 	/**
 	 * Construct order results message.
