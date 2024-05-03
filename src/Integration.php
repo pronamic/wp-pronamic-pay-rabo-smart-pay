@@ -147,7 +147,7 @@ final class Integration extends AbstractGatewayIntegration {
 
 		$post_id = \get_the_ID();
 
-		if ( empty( $post_id ) ) {
+		if ( false === $post_id ) {
 			return;
 		}
 
