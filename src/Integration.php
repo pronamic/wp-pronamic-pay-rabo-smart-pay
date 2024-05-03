@@ -86,7 +86,7 @@ class Integration extends AbstractGatewayIntegration {
 		$admin_notices_function = [ $this, 'admin_notice_tld_test' ];
 
 		if ( ! \has_action( 'admin_notices', $admin_notices_function ) ) {
-			\add_action( 'admin_notices', $admin_notices_function );
+			\add_action( 'admin_notices', $admin_notices_function, 10, 0 );
 		}
 	}
 
