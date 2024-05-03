@@ -56,60 +56,16 @@ class Client {
 	private $signing_key;
 
 	/**
-	 * Get the URL.
-	 *
-	 * @return string
-	 */
-	public function get_url() {
-		return $this->url;
-	}
-
-	/**
-	 * Set the action URL
-	 *
-	 * @param string $url URL.
-	 * @return void
-	 */
-	public function set_url( $url ) {
-		$this->url = $url;
-	}
-
-	/**
-	 * Get refresh token.
-	 *
-	 * @return string
-	 */
-	public function get_refresh_token() {
-		return $this->refresh_token;
-	}
-
-	/**
-	 * Set refresh token.
-	 *
+	 * Construct client.
+	 * 
+	 * @param string $url           URL.
 	 * @param string $refresh_token Refresh token.
-	 * @return void
+	 * @param string $signing_key   Signing key.
 	 */
-	public function set_refresh_token( $refresh_token ) {
+	public function __construct( $url, $refresh_token, $signing_key ) {
+		$this->url           = $url;
 		$this->refresh_token = $refresh_token;
-	}
-
-	/**
-	 * Get signing key.
-	 *
-	 * @return string
-	 */
-	public function get_signing_key() {
-		return $this->signing_key;
-	}
-
-	/**
-	 * Set signing key.
-	 *
-	 * @param string $signing_key Signing key.
-	 * @return void
-	 */
-	public function set_signing_key( $signing_key ) {
-		$this->signing_key = $signing_key;
+		$this->signing_key   = $signing_key;
 	}
 
 	/**
@@ -123,7 +79,7 @@ class Client {
 	 * @throws \Exception Throws exception when Rabobank OmniKassa 2.0 response is not what we expect.
 	 */
 	private function request( $method, $endpoint, $token, $data = null ) {
-		$url = $this->get_url() . $endpoint;
+		$url = $this->url . $endpoint;
 
 		/*
 		 * Arguments.
@@ -203,7 +159,7 @@ class Client {
 	 * @return object
 	 */
 	public function get_access_token_data() {
-		return $this->request( 'GET', 'gatekeeper/refresh', $this->get_refresh_token() );
+		return $this->request( 'GET', 'gatekeeper/refresh', $this->refresh_token );
 	}
 
 	/**

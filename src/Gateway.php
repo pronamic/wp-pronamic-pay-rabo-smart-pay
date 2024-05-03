@@ -63,11 +63,11 @@ class Gateway extends Core_Gateway {
 		];
 
 		// Client.
-		$this->client = new Client();
-
-		$this->client->set_url( $config->get_api_url() );
-		$this->client->set_refresh_token( $config->refresh_token );
-		$this->client->set_signing_key( $config->signing_key );
+		$this->client = new Client(
+			$config->get_api_url(),
+			$config->refresh_token,
+			$config->signing_key
+		);
 
 		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
