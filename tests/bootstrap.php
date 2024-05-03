@@ -16,13 +16,6 @@
 require_once getenv( 'WP_PHPUNIT__DIR' ) . '/includes/functions.php';
 
 /**
- * Psalm.
- */
-if ( defined( 'PSALM_VERSION' ) ) {
-	return;
-}
-
-/**
  * SQLite integration.
  * 
  * @link https://github.com/WordPress/sqlite-database-integration/issues/7#issuecomment-1646660980
