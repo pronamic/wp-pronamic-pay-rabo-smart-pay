@@ -13,7 +13,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Transaction status class
  */
-class TransactionStatus {
+final class TransactionStatus {
 	/**
 	 * Success.
 	 *

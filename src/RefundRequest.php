@@ -15,7 +15,7 @@ use JsonSerializable;
 /**
  * Refund request class
  */
-class RefundRequest implements IdempotenceInterface, JsonSerializable {
+final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	/**
 	 * Transaction ID.
 	 *

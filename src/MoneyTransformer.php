@@ -19,7 +19,7 @@ use Pronamic\WordPress\Money\Money as PronamicMoney;
  * @version 2.1.8
  * @since   2.0.2
  */
-class MoneyTransformer {
+final class MoneyTransformer {
 	/**
 	 * Transform Pronamic money to OmniKassa 2.0 money.
 	 *

@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * @version 2.1.0
  * @since   1.0.0
  */
-class Statuses {
+final class Statuses {
 	/**
 	 * Cancelled.
 	 *

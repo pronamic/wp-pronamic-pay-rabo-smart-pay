@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.2.4
  * @since   2.0.2
  */
-class OrderAnnounceResponse extends ResponseMessage {
+final class OrderAnnounceResponse extends ResponseMessage {
 	/**
 	 * OmniKassa order ID.
 	 *

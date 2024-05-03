@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.8
  * @since   2.0.2
  */
-class Money implements \JsonSerializable {
+final class Money implements \JsonSerializable {
 	/**
 	 * Currency.
 	 *

@@ -15,7 +15,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 /**
  * Order status class
  */
-class OrderStatus {
+final class OrderStatus {
 	/**
 	 * Successful payment of the order.
 	 *

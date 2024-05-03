@@ -29,7 +29,7 @@ use Pronamic\WordPress\Pay\Refunds\Refund;
  * @version 2.3.4
  * @since   1.0.0
  */
-class Gateway extends Core_Gateway {
+final class Gateway extends Core_Gateway {
 	/**
 	 * Client.
 	 *

@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use JsonSerializable;
+
 /**
  * Order items.
  *
@@ -17,7 +19,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.8
  * @since   2.0.3
  */
-class OrderItems implements \JsonSerializable {
+final class OrderItems implements JsonSerializable {
 	/**
 	 * Order items.
 	 *

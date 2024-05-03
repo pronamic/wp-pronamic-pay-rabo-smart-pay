@@ -19,7 +19,7 @@ use Pronamic\WordPress\Http\Facades\Http;
  * @version 2.3.4
  * @since   1.0.0
  */
-class Client {
+final class Client {
 	/**
 	 * URL OmniKassa API.
 	 *

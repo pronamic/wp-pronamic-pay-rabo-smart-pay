@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentLineType;
  * @version 2.1.8
  * @since   2.0.4
  */
-class ProductCategories {
+final class ProductCategories {
 	/**
 	 * Product category 'PHYSICAL'.
 	 *

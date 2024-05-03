@@ -17,7 +17,7 @@ use WP_REST_Server;
 /**
  * Return controller class
  */
-class ReturnController {
+final class ReturnController {
 	/**
 	 * Integration.
 	 *

@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.10
  * @since   2.0.2
  */
-class Error extends \Exception {
+final class Error extends \Exception {
 	/**
 	 * Error code.
 	 *

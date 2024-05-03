@@ -18,7 +18,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.9
  * @since   2.0.2
  */
-class DataHelper {
+final class DataHelper {
 	/**
 	 * Strictly alphanumerical (letters and numbers only).
 	 *

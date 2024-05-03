@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
  * @version 2.3.4
  * @since   1.0.0
  */
-class Integration extends AbstractGatewayIntegration {
+final class Integration extends AbstractGatewayIntegration {
 	/**
 	 * REST route namespace.
 	 *

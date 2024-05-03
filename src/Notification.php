@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.10
  * @since   2.0.2
  */
-class Notification extends ResponseMessage {
+final class Notification extends ResponseMessage {
 	/**
 	 * The token that can be used to do the status pull.
 	 *

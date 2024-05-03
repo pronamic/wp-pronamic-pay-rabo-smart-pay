@@ -17,6 +17,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.3.3
  * @since   2.3.3
  */
-class InvalidSignatureException extends \Exception {
+final class InvalidSignatureException extends \Exception {
 
 }

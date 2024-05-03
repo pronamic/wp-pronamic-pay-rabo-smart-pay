@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Address as PronamicAddress;
  * @version 2.1.9
  * @since   2.0.2
  */
-class AddressTransformer {
+final class AddressTransformer {
 	/**
 	 * Transform Pronamic address to OmniKassa 2.0 address.
 	 *

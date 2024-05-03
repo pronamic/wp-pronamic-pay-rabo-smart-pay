@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
  * @version 2.1.8
  * @since   1.0.0
  */
-class PaymentBrands {
+final class PaymentBrands {
 	/**
 	 * Payment brand 'IDEAL'.
 	 *

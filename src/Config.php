@@ -20,7 +20,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @version 2.1.8
  * @since   1.0.0
  */
-class Config extends GatewayConfig implements JsonSerializable {
+final class Config extends GatewayConfig implements JsonSerializable {
 	/**
 	 * Post ID.
 	 *

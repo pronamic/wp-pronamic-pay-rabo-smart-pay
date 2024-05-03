@@ -13,7 +13,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Object access class
  */
-class ObjectAccess {
+final class ObjectAccess {
 	/**
 	 * Object.
 	 *

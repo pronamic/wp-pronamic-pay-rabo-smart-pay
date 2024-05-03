@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.0
  * @since   1.0.0
  */
-class PaymentBrandForce {
+final class PaymentBrandForce {
 	/**
 	 * In the case of FORCE_ONCE, the indicated paymentBrand is only enforced on the first
 	 * transaction. If this fails, the consumer can still choose another payment method.

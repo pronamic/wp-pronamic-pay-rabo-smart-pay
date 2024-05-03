@@ -21,7 +21,7 @@ use WP_REST_Server;
  * @version 2.3.4
  * @since   2.3.0
  */
-class WebhookController {
+final class WebhookController {
 	/**
 	 * Setup.
 	 *

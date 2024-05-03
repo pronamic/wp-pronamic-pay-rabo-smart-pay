@@ -13,7 +13,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Refund response class
  */
-class RefundResponse {
+final class RefundResponse {
 	/**
 	 * Refund ID.
 	 *

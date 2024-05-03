@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
+use IteratorAggregate;
+
 /**
  * Order results.
  *
@@ -18,7 +20,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @since   1.0.0
  * @phpstan-implements \IteratorAggregate<int, OrderResult>
  */
-class OrderResults extends ResponseMessage implements \IteratorAggregate {
+final class OrderResults extends ResponseMessage implements IteratorAggregate {
 	/**
 	 * More order results available flag.
 	 *

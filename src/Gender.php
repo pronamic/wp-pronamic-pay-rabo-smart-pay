@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Gender as Core_Gender;
  * @since   2.1.0
  * @version 2.0.4
  */
-class Gender {
+final class Gender {
 	/**
 	 * Female.
 	 *

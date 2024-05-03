@@ -11,6 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use DateTimeInterface;
+use JsonSerializable;
 
 /**
  * Customer information.
@@ -19,7 +20,7 @@ use DateTimeInterface;
  * @version 2.2.4
  * @since   2.0.2
  */
-class CustomerInformation implements \JsonSerializable {
+final class CustomerInformation implements JsonSerializable {
 	/**
 	 * The e-mailadress of the consumer.
 	 *

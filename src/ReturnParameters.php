@@ -17,7 +17,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
  * @version 2.1.8
  * @since   2.0.2
  */
-class ReturnParameters extends ResponseMessage {
+final class ReturnParameters extends ResponseMessage {
 	/**
 	 * The "merchantOrderId" as used in the Order announce.
 	 *
