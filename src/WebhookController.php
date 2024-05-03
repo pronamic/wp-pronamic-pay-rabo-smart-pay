@@ -29,7 +29,7 @@ class WebhookController {
 	public function setup() {
 		\add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 
-		\add_action( 'wp_loaded', [ $this, 'wp_loaded' ] );
+		\add_action( 'wp_loaded', [ $this, 'wp_loaded' ], 10, 0 );
 	}
 
 	/**
