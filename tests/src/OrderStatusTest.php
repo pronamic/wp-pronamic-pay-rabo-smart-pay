@@ -1,6 +1,6 @@
 <?php
 /**
- * Statuses test
+ * Order status test
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2023 Pronamic
@@ -14,22 +14,18 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
- * Statuses test
- *
- * @author  Remco Tolsma
- * @version 2.1.9
- * @since   2.0.2
+ * Order status test class
  */
-class StatusesTest extends TestCase {
+class OrderStatusTest extends TestCase {
 	/**
 	 * Test transform.
 	 *
 	 * @dataProvider status_matrix_provider
-	 * @param string $omnikassa_2_status OmniKassa 2.0 status string.
-	 * @param string $expected           Expected Pronamic Pay status string.
+	 * @param string $rabo_smart_pay_status Rabo Smart Pay order status string.
+	 * @param string $expected              Expected Pronamic Pay status string.
 	 */
-	public function test_transform( $omnikassa_2_status, $expected ) {
-		$pronamic_pay_status = Statuses::transform( $omnikassa_2_status );
+	public function test_transform( $rabo_smart_pay_status, $expected ) {
+		$pronamic_pay_status = OrderStatus::transform( $rabo_smart_pay_status );
 
 		$this->assertEquals( $expected, $pronamic_pay_status );
 	}
@@ -41,10 +37,10 @@ class StatusesTest extends TestCase {
 	 */
 	public static function status_matrix_provider() {
 		return [
-			[ Statuses::CANCELLED, PaymentStatus::CANCELLED ],
-			[ Statuses::COMPLETED, PaymentStatus::SUCCESS ],
-			[ Statuses::EXPIRED, PaymentStatus::EXPIRED ],
-			[ Statuses::IN_PROGRESS, PaymentStatus::OPEN ],
+			[ OrderStatus::CANCELLED, PaymentStatus::CANCELLED ],
+			[ OrderStatus::COMPLETED, PaymentStatus::SUCCESS ],
+			[ OrderStatus::EXPIRED, PaymentStatus::EXPIRED ],
+			[ OrderStatus::IN_PROGRESS, PaymentStatus::OPEN ],
 			[ 'not existing status', null ],
 		];
 	}

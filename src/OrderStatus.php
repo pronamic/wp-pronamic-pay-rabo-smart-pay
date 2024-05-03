@@ -38,6 +38,18 @@ final class OrderStatus {
 	const EXPIRED = 'EXPIRED';
 
 	/**
+	 * In progress.
+	 * 
+	 * The payment has not yet been completed. This can occur as a result of a
+	 * breakdown or delay in the hinterland of payment processing. This is a
+	 * possible outcome of an iDEAL or credit card payment.
+	 *
+	 * @link https://developer.rabobank.nl/rabo-smart-pay-online-payment-api#customer-returns-to-the-web-shop
+	 * @var string
+	 */
+	const IN_PROGRESS = 'IN_PROGRESS';
+
+	/**
 	 * Transform Rabo Smart Pay order status to Pronamic Pay status.
 	 *
 	 * @param string $status OmniKassa 2.0 status.
@@ -51,6 +63,8 @@ final class OrderStatus {
 				return PaymentStatus::CANCELLED;
 			case self::EXPIRED:
 				return PaymentStatus::EXPIRED;
+			case self::IN_PROGRESS:
+				return PaymentStatus::OPEN;
 			default:
 				return null;
 		}

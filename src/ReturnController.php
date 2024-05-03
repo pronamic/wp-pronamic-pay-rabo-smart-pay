@@ -169,7 +169,7 @@ final class ReturnController {
 			$payment->add_note( $note );
 
 			if ( $parameters->is_valid( $config->signing_key ) ) {
-				$pronamic_status = Statuses::transform( $parameters->get_status() );
+				$pronamic_status = OrderStatus::transform( $parameters->get_status() );
 
 				if ( null !== $pronamic_status ) {
 					$payment->set_status( $pronamic_status );
