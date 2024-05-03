@@ -12,6 +12,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Pay\Payments\Payment;
 use WP_REST_Request;
+use WP_REST_Server;
 
 /**
  * Return controller class
@@ -47,9 +48,10 @@ class ReturnController {
 	 *
 	 * @link https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 	 * @link https://developer.wordpress.org/reference/hooks/rest_api_init/
+	 * @param WP_REST_Server $wp_rest_server Server object.
 	 * @return void
 	 */
-	public function rest_api_init() {
+	public function rest_api_init( $wp_rest_server ) {
 		\register_rest_route(
 			Integration::REST_ROUTE_NAMESPACE,
 			'/return/(?P<payment_id>[\d]+)',
