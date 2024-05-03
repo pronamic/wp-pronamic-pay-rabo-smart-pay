@@ -26,7 +26,7 @@ final class Config extends GatewayConfig implements JsonSerializable {
 	 *
 	 * @var int
 	 */
-	public $post_id;
+	public $post_id = 0;
 
 	/**
 	 * API URL.
@@ -40,35 +40,35 @@ final class Config extends GatewayConfig implements JsonSerializable {
 	 *
 	 * @var string
 	 */
-	public $refresh_token;
+	public $refresh_token = '';
 
 	/**
 	 * Signing key.
 	 *
 	 * @var string
 	 */
-	public $signing_key;
+	public $signing_key = '';
 
 	/**
 	 * Access token.
 	 *
 	 * @var string
 	 */
-	public $access_token;
+	public $access_token = '';
 
 	/**
 	 * Access token valid until.
 	 *
 	 * @var string
 	 */
-	public $access_token_valid_until;
+	public $access_token_valid_until = '';
 
 	/**
 	 * Order ID.
 	 *
 	 * @var string
 	 */
-	public $order_id;
+	public $order_id = '';
 
 	/**
 	 * Construct config.
