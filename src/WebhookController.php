@@ -12,6 +12,8 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Pay\GatewayPostType;
 use Pronamic\WordPress\Pay\Plugin;
+use WP_Query;
+use WP_REST_Request;
 
 /**
  * Webhook controller
@@ -70,13 +72,13 @@ final class WebhookController {
 	/**
 	 * REST API OmniKassa 2.0 webhook handler.
 	 *
-	 * @param \WP_REST_Request $request Request.
+	 * @param WP_REST_Request $request Request.
 	 * @return object
 	 * @throws \Exception Throws exception when something unexpected happens ;-).
 	 */
-	public function rest_api_omnikassa_2_webhook( \WP_REST_Request $request ) {
+	public function rest_api_omnikassa_2_webhook( WP_REST_Request $request ) {
 		// Query.
-		$query = new \WP_Query(
+		$query = new WP_Query(
 			[
 				'meta_query'  => [
 					[
@@ -114,11 +116,11 @@ final class WebhookController {
 	/**
 	 * REST API OmniKassa 2.0 webhook handler.
 	 *
-	 * @param \WP_REST_Request $request Request.
+	 * @param WP_REST_Request $request Request.
 	 * @return object
 	 * @throws \Exception Throws exception when something unexpected happens ;-).
 	 */
-	public function rest_api_omnikassa_2_webhook_item( \WP_REST_Request $request ) {
+	public function rest_api_omnikassa_2_webhook_item( WP_REST_Request $request ) {
 		// Input.
 		$json = $request->get_body();
 
