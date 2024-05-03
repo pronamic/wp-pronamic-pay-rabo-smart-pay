@@ -2,10 +2,12 @@
 	"name": "omnikassa-2",
 	"version": "4.6.0",
 	"description": "Rabo Smart Pay driver for the WordPress payment processing library.",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/wp-pay-gateways/omnikassa-2"
+	"author": {
+		"name": "Pronamic",
+		"email": "info@pronamic.nl",
+		"url": "http://www.pronamic.nl/"
 	},
+	"license": "GPL-2.0-or-later",
 	"keywords": [
 		"wordpress",
 		"wp",
@@ -14,10 +16,10 @@
 		"gateway",
 		"pronamic"
 	],
-	"author": {
-		"name": "Pronamic",
-		"email": "info@pronamic.nl",
-		"url": "http://www.pronamic.nl/"
+	"homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wp-pay-gateways/omnikassa-2"
 	},
 	"contributors": [
 		{
@@ -26,20 +28,17 @@
 			"url": "http://www.remcotolsma.nl/"
 		}
 	],
-	"license": "GPL-3.0",
 	"bugs": {
 		"url": "https://github.com/wp-pay-gateways/omnikassa-2/issues"
 	},
-	"homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
 	"devDependencies": {
 		"@wordpress/env": "^9.9.0",
 		"@wordpress/prettier-config": "^3.14.0",
-		"eslint": "^9.1.1",
-		"eslint-plugin-json": "^3.1.0",
+		"@wordpress/scripts": "^27.8.0",
 		"prettier": "npm:wp-prettier@^3.0.3"
 	},
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
-		"eslint": "eslint . --ext .json --ext .js"
+		"lint:pkg-json": "wp-scripts lint-pkg-json"
 	}
 }
