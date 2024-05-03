@@ -152,6 +152,11 @@ class WebhookControllerTest extends TestCase {
 		 */
 		$this->assertEquals( $payment_status, $payment->get_status() );
 		$this->assertEquals( $transaction_id, $payment->get_transaction_id() );
+
+		/**
+		 * Cleanup.
+		 */
+		\wp_delete_post( $payment->get_id(), true );
 	}
 
 	/**
