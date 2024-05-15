@@ -7,6 +7,26 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.7.0] - 2024-05-15
+
+### Commits
+
+- Updated hooks.md ([6671e02](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/6671e028331a9e44f919976ffc30b2134f709707))
+- Removed `Statuses` class, see #24. ([68970bf](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/68970bffd50b58b0839fd21f261e778d3d23c8e5))
+- Simplify client. ([9534e65](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/9534e65e53285e39388c98a125ec6f84a9c8d982))
+- Removed the 'pronamic_pay_omnikassa_2_merchant_return_url' filter, see #26. ([ae58afd](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/ae58afdb5997fa68cabadec4fe8026ddcd98941a))
+- Simplify the 'rest_api_init' callback signature. ([70871c5](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/70871c5ebc2722ec05b30bc0a4d44745aed59a52))
+- Make all classes final. ([05a4911](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/05a4911c3890ad064d43ad385dadf44d26c60a78))
+- Fixed #33. ([a8a4480](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/a8a4480f94c4bb92215f997afee496e5370457f8))
+
+### Composer
+
+- Changed `php` from `>=8.0` to `>=8.1`.
+
+Full set of changes: [`4.6.0...4.7.0`][4.7.0]
+
+[4.7.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.6.0...v4.7.0
+
 ## [4.6.0] - 2024-03-26
 
 ### Changed
