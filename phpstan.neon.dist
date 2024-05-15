@@ -1,6 +1,8 @@
 parameters:
-	checkGenericClassInNonGenericObjectType: false
 	customRulesetUsed: false
 	level: max
 	paths:
 		- src/
+	ignoreErrors:
+		-
+			identifier: missingType.generics
