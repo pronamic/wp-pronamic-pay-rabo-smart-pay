@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.7.1] - 2024-05-15
+
+### Commits
+
+- Updated .gitattributes ([d916e14](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/d916e14f9df033f77c23bceb75bf14cb9ab8634d))
+- Updated .gitattributes ([ad3e737](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/ad3e73777db9880b58ccea008c74d72948801aea))
+
+Full set of changes: [`4.7.0...4.7.1`][4.7.1]
+
+[4.7.1]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.7.0...v4.7.1
+
 ## [4.7.0] - 2024-05-15
 
 ### Commits
