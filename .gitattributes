@@ -20,5 +20,3 @@
 /psalm.xml.dist    export-ignore
 /tests/            export-ignore
 /vendor-bin/       export-ignore
-
-vendor-bin/**/composer.lock binary
