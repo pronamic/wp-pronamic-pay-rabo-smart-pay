@@ -24,6 +24,10 @@
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Autoload.
  */
