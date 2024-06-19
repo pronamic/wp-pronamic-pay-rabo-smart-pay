@@ -7,6 +7,22 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.7.2] - 2024-06-19
+
+### Commits
+
+- composer require automattic/jetpack-autoloader wp-pay/core ([69c8a74](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/69c8a741bfaacd66cd3a923659fe16bde2380a07))
+- Fixed "Allowing Direct File Access to plugin files" issue. ([6d25213](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/6d25213361489c01665a1cc8b9b71ee2115533c7))
+
+### Composer
+
+- Changed `wp-pay/core` from `^4.16` to `v4.17.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.17.0
+
+Full set of changes: [`4.7.1...4.7.2`][4.7.2]
+
+[4.7.2]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.7.1...v4.7.2
+
 ## [4.7.1] - 2024-05-15
 
 ### Commits
