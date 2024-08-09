@@ -3,7 +3,7 @@
  * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -412,7 +412,7 @@ final class Gateway extends Core_Gateway {
 
 	/**
 	 * Get slug.
-	 * 
+	 *
 	 * @param string $omnikassa_order_id OmniKassa order ID.
 	 * @return string
 	 */
@@ -422,18 +422,18 @@ final class Gateway extends Core_Gateway {
 
 	/**
 	 * Get Pronamic payment by OmniKassa order ID.
-	 * 
+	 *
 	 * @param string $omnikassa_order_id OmniKassa order ID.
 	 * @return Payment|null
 	 */
 	private function get_payment_by_omnikassa_order_id( $omnikassa_order_id ) {
 		/**
 		 * Slug.
-		 * 
+		 *
 		 * Since version 4.5 of this library, we store the OmniKassa order ID
 		 * in the slug of the payment so that the payment can be requested
 		 * efficiently.
-		 * 
+		 *
 		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
 		 * @link https://github.com/pronamic/wp-pay-core/issues/146
 		 */
@@ -465,11 +465,11 @@ final class Gateway extends Core_Gateway {
 
 		/**
 		 * Order ID - transaction ID.
-		 * 
+		 *
 		 * In older versions of this library we use the OmniKassa order ID as
 		 * the transaction ID. This piece of code is still in this library for
 		 * backward compatibility and may be removed in the future.
-		 * 
+		 *
 		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
 		 */
 		$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
@@ -554,7 +554,7 @@ final class Gateway extends Core_Gateway {
 
 	/**
 	 * Update payment transaction ID from order result.
-	 * 
+	 *
 	 * @param Payment     $payment      Payment.
 	 * @param OrderResult $order_result Order result.
 	 * @return void

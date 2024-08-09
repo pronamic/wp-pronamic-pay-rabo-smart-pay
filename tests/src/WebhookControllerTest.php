@@ -3,7 +3,7 @@
  * Webhook controller test
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -23,14 +23,14 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class WebhookControllerTest extends TestCase {
 	/**
 	 * REST server.
-	 * 
+	 *
 	 * @var WP_REST_Server
 	 */
 	private $rest_server;
 
 	/**
 	 * Controller.
-	 * 
+	 *
 	 * @var WebhookController
 	 */
 	private $controller;
@@ -64,7 +64,7 @@ class WebhookControllerTest extends TestCase {
 
 	/**
 	 * Test webhook.
-	 * 
+	 *
 	 * @dataProvider webhook_test_provider
 	 * @param string $response_file  Response file.
 	 * @param string $payment_status Payment status.

@@ -3,7 +3,7 @@
  * Message
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -74,7 +74,7 @@ abstract class Message implements Signable {
 
 	/**
 	 * Verify signature.
-	 * 
+	 *
 	 * @param string $signing_key Signing key.
 	 * @return void
 	 * @throws \Pronamic\WordPress\Pay\Gateways\OmniKassa2\InvalidSignatureException Throws an exception when the signature cannot be verified.
@@ -91,7 +91,7 @@ abstract class Message implements Signable {
 				\sprintf(
 					'Signature `%s` in message does not match signature `%s` calculated with signing key: `%s`.',
 					\esc_html( $signature_enclosed ),
-					\esc_html( $signature_calculated ),             
+					\esc_html( $signature_calculated ),
 					\esc_html(
 						\str_pad(
 							\substr( $signing_key, 0, 7 ),

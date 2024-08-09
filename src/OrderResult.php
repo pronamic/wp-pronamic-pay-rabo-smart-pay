@@ -3,7 +3,7 @@
  * Order result
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -79,7 +79,7 @@ final class OrderResult implements JsonSerializable {
 
 	/**
 	 * Transactions.
-	 * 
+	 *
 	 * @var array<Transaction>
 	 */
 	private $transactions = [];
@@ -190,7 +190,7 @@ final class OrderResult implements JsonSerializable {
 
 	/**
 	 * Get transactions.
-	 * 
+	 *
 	 * @return array<Transaction>
 	 */
 	public function get_transactions() {

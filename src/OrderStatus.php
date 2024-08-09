@@ -3,7 +3,7 @@
  * Order status
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -39,7 +39,7 @@ final class OrderStatus {
 
 	/**
 	 * In progress.
-	 * 
+	 *
 	 * The payment has not yet been completed. This can occur as a result of a
 	 * breakdown or delay in the hinterland of payment processing. This is a
 	 * possible outcome of an iDEAL or credit card payment.

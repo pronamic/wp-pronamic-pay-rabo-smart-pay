@@ -3,7 +3,7 @@
  * Transaction
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -44,7 +44,7 @@ final class Transaction {
 
 	/**
 	 * Amount.
-	 * 
+	 *
 	 * The total order amount in cents, including VAT. The amount must be equal
 	 * to the sum over all order items of the piece price (including VAT)
 	 * multiplied by the quantity. Note: if the amount is not equal to the sum
@@ -58,7 +58,7 @@ final class Transaction {
 
 	/**
 	 * Amount.
-	 * 
+	 *
 	 * The amount that was confirmed by the external payment processor. This
 	 * field is only filled when the transaction status is SUCCESS or ACCEPTED.
 	 *
@@ -68,14 +68,14 @@ final class Transaction {
 
 	/**
 	 * Start time.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $start_time;
 
 	/**
 	 * Last update time.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $last_update_time;
@@ -103,7 +103,7 @@ final class Transaction {
 
 	/**
 	 * Get ID.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_id() {
@@ -112,7 +112,7 @@ final class Transaction {
 
 	/**
 	 * Get payment brand.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_payment_brand() {
@@ -121,7 +121,7 @@ final class Transaction {
 
 	/**
 	 * Get type.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_type() {
@@ -130,7 +130,7 @@ final class Transaction {
 
 	/**
 	 * Get status.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_status() {
@@ -139,7 +139,7 @@ final class Transaction {
 
 	/**
 	 * Get amount.
-	 * 
+	 *
 	 * @return Money
 	 */
 	public function get_amount() {
@@ -148,7 +148,7 @@ final class Transaction {
 
 	/**
 	 * Get confirmed amount.
-	 * 
+	 *
 	 * @return Money|null
 	 */
 	public function get_confirmed_amount() {

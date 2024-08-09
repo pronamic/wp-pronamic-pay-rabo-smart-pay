@@ -3,7 +3,7 @@
  * Order results test
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\OmniKassa2
  */
@@ -57,7 +57,7 @@ class OrderResultsTest extends TestCase {
 
 	/**
 	 * Test order results v2.
-	 * 
+	 *
 	 * @link https://developer.rabobank.nl/product/10685/api/9770#/RaboSmartPayOnlinePaymentAPI_1013/operation/%2Forder%2Fserver%2Fapi%2Fv2%2Fevents%2Fresults%2Fmerchant.order.status.changed/get
 	 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
 	 * @dataProvider order_results_provider
