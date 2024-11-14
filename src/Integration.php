@@ -170,9 +170,13 @@ final class Integration extends AbstractGatewayIntegration {
 			'readonly' => true,
 			'section'  => 'feedback',
 			'title'    => \__( 'Webhook URL', 'pronamic_ideal' ),
-			'tooltip'  => \__(
-				'The Webhook URL as sent with each transaction to receive automatic payment status updates on.',
-				'pronamic_ideal'
+			'tooltip'  => \sprintf(
+				/* translators: %s: payment provider name */
+				\__(
+					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
+					'pronamic_ideal'
+				),
+				\__( 'Rabo Smart Pay', 'pronamic_ideal' )
 			),
 			'type'     => 'text',
 			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook/' . (string) \get_the_ID() ),
