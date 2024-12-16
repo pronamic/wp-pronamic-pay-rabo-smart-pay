@@ -155,6 +155,13 @@ final class Order extends Message implements JsonSerializable {
 	private $payment_brand_meta_data;
 
 	/**
+	 * Skip hosted result page (also referred to as the success/thank you page) in the payment process.
+	 *
+	 * @var bool|null
+	 */
+	private $skip_hosted_result_page;
+
+	/**
 	 * Construct order.
 	 *
 	 * @param string $merchant_order_id    Merchant order ID.
@@ -292,6 +299,16 @@ final class Order extends Message implements JsonSerializable {
 	}
 
 	/**
+	 * Set skip hosted result page.
+	 *
+	 * @param bool $skip_hosted_result_page Skip hosted result page.
+	 * @return void
+	 */
+	public function set_skip_hosted_result_page( $skip_hosted_result_page ) {
+		$this->skip_hosted_result_page = $skip_hosted_result_page;
+	}
+
+	/**
 	 * Create and set new order items.
 	 *
 	 * @return OrderItems
@@ -392,6 +409,10 @@ final class Order extends Message implements JsonSerializable {
 
 		if ( null !== $this->payment_brand_meta_data ) {
 			$data['paymentBrandMetaData'] = $this->payment_brand_meta_data;
+		}
+
+		if ( null !== $this->skip_hosted_result_page ) {
+			$data['skipHppResultPage'] = $this->skip_hosted_result_page;
 		}
 
 		return (object) $data;
