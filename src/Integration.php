@@ -164,6 +164,31 @@ final class Integration extends AbstractGatewayIntegration {
 			'type'        => 'text',
 		];
 
+		// Skip hosted result page.
+		$code_field = \sprintf( '<code>%s</code>', 'skipHppResultPage' );
+
+		$fields[] = [
+			'classes'     => [ 'regular-text', 'code' ],
+			'description' => \sprintf(
+				/* translators: %s: <code>skipHppResultPage</code> */
+				\__(
+					'The Rabo Smart Pay %s field makes it possible to skip the hosted result page (also referred to as the "Success" or "Thank you" page).',
+					'pronamic_ideal'
+				),
+				$code_field
+			),
+			'label'       => \__( 'Skip hosted result page', 'pronamic_ideal' ),
+			'meta_key'    => '_pronamic_gateway_omnikassa_2_skip_hosted_result_page',
+			'section'     => 'advanced',
+			'title'       => \__( 'Skip hosted result page', 'pronamic_ideal' ),
+			'tooltip'     => \sprintf(
+				/* translators: %s: <code>skipHppResultPage</code> */
+				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic_ideal' ),
+				$code_field
+			),
+			'type'        => 'checkbox',
+		];
+
 		// Webhook.
 		$fields[] = [
 			'classes'  => [ 'large-text', 'code' ],
@@ -202,6 +227,10 @@ final class Integration extends AbstractGatewayIntegration {
 		$config->access_token             = $this->get_meta( $post_id, 'omnikassa_2_access_token' );
 		$config->access_token_valid_until = $this->get_meta( $post_id, 'omnikassa_2_access_token_valid_until' );
 		$config->order_id                 = $this->get_meta( $post_id, 'omnikassa_2_order_id' );
+
+		$skip_hosted_result_page = $this->get_meta( $post_id, 'omnikassa_2_skip_hosted_result_page' );
+
+		$config->skip_hosted_result_page = 1 === \intval( $skip_hosted_result_page );
 
 		return $config;
 	}

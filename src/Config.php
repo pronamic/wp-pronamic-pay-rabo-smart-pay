@@ -71,6 +71,13 @@ final class Config extends GatewayConfig implements JsonSerializable {
 	public $order_id = '';
 
 	/**
+	 * Skip hosted result page.
+	 *
+	 * @var bool
+	 */
+	public $skip_hosted_result_page = false;
+
+	/**
 	 * Construct config.
 	 */
 	public function __construct() {

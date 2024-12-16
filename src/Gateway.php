@@ -344,6 +344,9 @@ final class Gateway extends Core_Gateway {
 			}
 		}
 
+		// Skip hosted result page.
+		$order->set_skip_hosted_result_page( $this->config->skip_hosted_result_page );
+
 		// Maybe update access token.
 		$this->maybe_update_access_token();
 
