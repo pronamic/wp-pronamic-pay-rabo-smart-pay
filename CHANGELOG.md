@@ -7,6 +7,18 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.8.0] - 2024-12-17
+
+### Commits
+
+- Added support for `skipHppResultPage` parameter. ([f542395](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/f54239595e294b40736f32f6fd860769c21cb853))
+- Updated webhook URL tooltip. ([f90d6da](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/f90d6dae66826c6d2ef8c52ede19f1baf4145edb))
+- Happy 2024. ([3c6f00d](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/3c6f00d282bc49ea11638f7b15ffe5f7c06c79d1))
+
+Full set of changes: [`4.7.2...4.8.0`][4.8.0]
+
+[4.8.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.7.2...v4.8.0
+
 ## [4.7.2] - 2024-06-19
 
 ### Commits
