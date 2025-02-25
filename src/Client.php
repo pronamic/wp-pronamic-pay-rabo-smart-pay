@@ -220,25 +220,4 @@ final class Client {
 
 		return $payment_brands;
 	}
-
-	/**
-	 * Get issuers.
-	 *
-	 * @link https://developer.rabobank.nl/product/8949/api/8826
-	 * @param string $access_token Access token.
-	 * @return array<string>
-	 */
-	public function get_issuers( $access_token ) {
-		$result = $this->request( 'GET', 'ideal/server/api/v2/issuers', $access_token );
-
-		$issuers = [];
-
-		if ( \property_exists( $result, 'issuers' ) ) {
-			foreach ( $result->issuers as $issuer ) {
-				$issuers[ $issuer->id ] = $issuer->name;
-			}
-		}
-
-		return $issuers;
-	}
 }

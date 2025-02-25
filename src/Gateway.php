@@ -16,9 +16,6 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\PaymentMethodsCollection;
-use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
-use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
-use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Refunds\Refund;
 
@@ -67,19 +64,6 @@ final class Gateway extends Core_Gateway {
 
 		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
-
-		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
-
-		$ideal_issuer_field->set_options(
-			new CachedCallbackOptions(
-				function () {
-					return $this->get_ideal_issuers();
-				},
-				'pronamic_pay_ideal_issuers_' . \md5( (string) \wp_json_encode( $config ) )
-			)
-		);
-
-		$ideal_payment_method->add_field( $ideal_issuer_field );
 
 		// Payment methods.
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
@@ -181,26 +165,6 @@ final class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get iDEAL issuers.
-	 *
-	 * @return array<SelectFieldOption>
-	 */
-	private function get_ideal_issuers() {
-		$options = [];
-
-		// Maybe update access token.
-		$this->maybe_update_access_token();
-
-		$result = $this->client->get_issuers( $this->config->access_token );
-
-		foreach ( $result as $id => $name ) {
-			$options[] = new SelectFieldOption( $id, $name );
-		}
-
-		return $options;
-	}
-
-	/**
 	 * Start.
 	 *
 	 * @param Payment $payment Payment.
@@ -269,15 +233,6 @@ final class Gateway extends Core_Gateway {
 		if ( null !== $payment_brand ) {
 			// Payment brand force should only be set if payment brand is not empty.
 			$order->set_payment_brand_force( PaymentBrandForce::FORCE_ONCE );
-		}
-
-		// Issuer.
-		if ( PaymentBrands::IDEAL === $payment_brand ) {
-			$order->set_payment_brand_meta_data(
-				(object) [
-					'issuerId' => $payment->get_meta( 'issuer' ),
-				]
-			);
 		}
 
 		// Description.
