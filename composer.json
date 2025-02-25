@@ -40,7 +40,8 @@
 			"automattic/jetpack-autoloader": true,
 			"phpstan/extension-installer": true
 		},
-		"sort-packages": true
+		"sort-packages": true,
+		"wp-slug": "pronamic-pay-rabo-smart-pay"
 	},
 	"repositories": [
 		{
