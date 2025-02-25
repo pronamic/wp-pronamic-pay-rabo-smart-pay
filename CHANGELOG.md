@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.9.0] - 2025-02-25
+
+### Removed
+
+- Removed iDEAL issuer selection. ([9916e49](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/9916e49529d25cb61e3a669c5774acb8a9d62b1c))
+
+Full set of changes: [`4.8.0...4.9.0`][4.9.0]
+
+[4.9.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.8.0...v4.9.0
+
 ## [4.8.0] - 2024-12-17
 
 ### Commits
