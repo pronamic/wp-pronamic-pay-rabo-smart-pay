@@ -54,7 +54,7 @@
 		"automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
 		"justinrainbow/json-schema": "^5.2",
 		"pronamic/wp-http": "^1.2",
-		"wp-pay/core": "^4.17"
+		"wp-pay/core": "^4.26"
 	},
 	"require-dev": {
 		"humanmade/psalm-plugin-wordpress": "^3.1",

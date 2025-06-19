@@ -7,6 +7,24 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.9.1] - 2025-06-19
+
+### Commits
+
+- Allow Jetpack autoloader 3, 4 and 5. ([1b21f01](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/1b21f01a012072460780aa8af87f9c36877f7ced))
+- Added `wp-slug` in composer.json. ([4e55af2](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/4e55af2826e6508a11c4712a252b9f50134fb020))
+
+### Composer
+
+- Changed `automattic/jetpack-autoloader` from `^3.0` to `v5.0.7`.
+	Release notes: https://github.com/Automattic/jetpack-autoloader/releases/tag/v5.0.7
+- Changed `wp-pay/core` from `^4.17` to `v4.26.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.26.0
+
+Full set of changes: [`4.9.0...4.9.1`][4.9.1]
+
+[4.9.1]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.9.0...v4.9.1
+
 ## [4.9.0] - 2025-02-25
 
 ### Removed
