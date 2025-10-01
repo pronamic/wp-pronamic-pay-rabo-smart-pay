@@ -46,10 +46,7 @@ final class Integration extends AbstractGatewayIntegration {
 				'api_url'       => 'https://betalen.rabobank.nl/omnikassa-api/',
 				'dashboard_url' => 'https://bankieren.rabobank.nl/smartpay/dashboard/home',
 				'id'            => 'rabobank-omnikassa-2',
-				'manual_url'    => \__(
-					'https://www.pronamicpay.com/en/manuals/how-to-connect-rabo-smart-pay-to-wordpress-with-pronamic-pay/',
-					'pronamic_ideal'
-				),
+				'manual_url'    => 'https://www.pronamicpay.com/en/manuals/how-to-connect-rabo-smart-pay-to-wordpress-with-pronamic-pay/',
 				'name'          => 'Rabobank - Rabo Smart Pay',
 				'product_url'   => 'https://www.rabobank.nl/bedrijven/betalen/klanten-laten-betalen/rabo-smart-pay',
 				'provider'      => 'rabobank',
