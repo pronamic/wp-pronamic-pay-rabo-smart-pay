@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.9.2] - 2025-11-11
+
+### Commits
+
+- Added this point we shoud not use translation functions. ([adfe7fe](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/adfe7fe5baa44922ae855d6f138cf87805010a59))
+
+Full set of changes: [`4.9.1...4.9.2`][4.9.2]
+
+[4.9.2]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.9.1...v4.9.2
+
 ## [4.9.1] - 2025-06-19
 
 ### Commits

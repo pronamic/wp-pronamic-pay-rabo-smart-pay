@@ -4,7 +4,7 @@
  * Plugin URI: https://www.pronamic.eu/plugins/pronamic-pay-with-rabo-smart-pay/
  * Description:
  *
- * Version: 4.9.1
+ * Version: 4.9.2
  * Requires at least: 5.9
  * Requires PHP: 7.4
  *
