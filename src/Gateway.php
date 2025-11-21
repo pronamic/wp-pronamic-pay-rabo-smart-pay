@@ -12,6 +12,7 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Money\TaxedMoney;
+use Pronamic\WordPress\Number\Number;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
@@ -269,9 +270,26 @@ final class Gateway extends Core_Gateway {
 					$unit_price = new Money();
 				}
 
+				$quantity = $line->get_quantity();
+
+				if ( null === $quantity ) {
+					throw new \InvalidArgumentException( 'Payment line quantity is required.' );
+				}
+
+				// Handle decimal quantities.
+				if ( (float) $quantity->to_int() !== (float) $quantity->get_value() ) {
+					$description = \sprintf(
+						'%s × %s',
+						$quantity->format_i18n_non_trailing_zeros(),
+						(string) $description
+					);
+
+					$quantity = new Number( 1 );
+				}
+
 				$item = $order_items->new_item(
 					DataHelper::sanitize_an( $name, 50 ),
-					(int) $line->get_quantity(),
+					$quantity->to_int(),
 					// The amount in cents, including VAT, of the item each, see below for more details.
 					MoneyTransformer::transform( $unit_price ),
 					ProductCategories::transform( $line->get_type() )
