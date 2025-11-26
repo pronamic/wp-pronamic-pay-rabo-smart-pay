@@ -276,6 +276,8 @@ final class Gateway extends Core_Gateway {
 					throw new \InvalidArgumentException( 'Payment line quantity is required.' );
 				}
 
+				$description = $line->get_description();
+
 				// Handle decimal quantities.
 				if ( ! $quantity->is_whole_number() ) {
 					$description = \sprintf(
@@ -298,8 +300,6 @@ final class Gateway extends Core_Gateway {
 				$item->set_id( $line->get_id() );
 
 				// Description.
-				$description = $line->get_description();
-
 				if ( null !== $description ) {
 					$description = DataHelper::sanitize_an( $description, 100 );
 				}
