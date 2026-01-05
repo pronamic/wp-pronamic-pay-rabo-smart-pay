@@ -7,6 +7,23 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.10.0] - 2026-01-05
+
+### Commits
+
+- Merge pull request #40 from pronamic/core-230-payment-line-quantity-type ([8a0524c](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/8a0524cd1bd00e06b560ac634ece41e7ef74bb50))
+- Fixed line item description. ([8f40d50](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/8f40d501cb9719461e8cc11ca5229a245c92ebe9))
+- Use `Number::is_whole_number()` helper. ([0392ba0](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/0392ba0b6ad8ee192b9f3704cb628bd7042d6caa))
+- Updated for quantity `Number` (https://github.com/pronamic/wp-pay-core/issues/230). ([039b693](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/commit/039b69362d87df055dd0ed0b3e97415b224f2a75))
+
+### Composer
+
+- Added `pronamic/wp-number` `^1.4`.
+
+Full set of changes: [`4.9.2...4.10.0`][4.10.0]
+
+[4.10.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.9.2...v4.10.0
+
 ## [4.9.2] - 2025-11-11
 
 ### Commits
