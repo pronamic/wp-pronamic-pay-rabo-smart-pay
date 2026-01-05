@@ -15,7 +15,6 @@ use JsonSerializable;
 /**
  * Order item.
  *
- * @author  Reüel van der Steege
  * @version 2.1.10
  * @since   2.0.3
  */

@@ -16,7 +16,6 @@ use JsonSerializable;
 /**
  * Order
  *
- * @author  Remco Tolsma
  * @version 2.2.4
  * @since   1.0.0
  */

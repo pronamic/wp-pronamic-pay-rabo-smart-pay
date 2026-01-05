@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Invalid Signature Exception
  *
- * @author  Remco Tolsma
  * @version 2.3.3
  * @since   2.3.3
  */

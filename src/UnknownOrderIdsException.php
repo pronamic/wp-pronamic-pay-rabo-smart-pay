@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Unknown Order IDs Exception
  *
- * @author  Remco Tolsma
  * @version 2.3.4
  * @since   2.3.4
  */

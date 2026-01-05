@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * VAT categories.
  *
- * @author  Reüel van der Steege
  * @version 2.1.8
  * @since   2.0.4
  */

@@ -15,7 +15,6 @@ use JsonSerializable;
 /**
  * Address
  *
- * @author  Remco Tolsma
  * @version 2.1.10
  * @since   2.0.2
  */

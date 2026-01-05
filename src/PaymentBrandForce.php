@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Payment brand force.
  *
- * @author  Remco Tolsma
  * @version 2.1.0
  * @since   1.0.0
  */

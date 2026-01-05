@@ -16,7 +16,6 @@ use JsonSerializable;
 /**
  * Customer information.
  *
- * @author  Remco Tolsma
  * @version 2.2.4
  * @since   2.0.2
  */

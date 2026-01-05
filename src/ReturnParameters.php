@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Return parameters
  *
- * @author  Remco Tolsma
  * @version 2.1.8
  * @since   2.0.2
  */

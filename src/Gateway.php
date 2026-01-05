@@ -23,7 +23,6 @@ use Pronamic\WordPress\Pay\Refunds\Refund;
 /**
  * Gateway
  *
- * @author  Remco Tolsma
  * @version 2.3.4
  * @since   1.0.0
  */

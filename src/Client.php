@@ -15,7 +15,6 @@ use Pronamic\WordPress\Http\Facades\Http;
 /**
  * Client.
  *
- * @author  Remco Tolsma
  * @version 2.3.4
  * @since   1.0.0
  */

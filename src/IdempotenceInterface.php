@@ -13,7 +13,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 /**
  * Idempotence interface
  *
- * @author  Remco Tolsma
  * @since   2.1.0
  * @version 2.0.4
  */

@@ -18,7 +18,6 @@ use WP_REST_Request;
 /**
  * Webhook controller
  *
- * @author  Remco Tolsma
  * @version 2.3.4
  * @since   2.3.0
  */
