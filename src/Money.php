@@ -103,7 +103,7 @@ final class Money implements \JsonSerializable {
 		$validator->validate(
 			$data,
 			(object) [
-				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/money.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-money.json' ),
 			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);

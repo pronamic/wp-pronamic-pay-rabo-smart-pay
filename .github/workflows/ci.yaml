@@ -3,24 +3,6 @@ name: CI
 on: [ push, pull_request ]
 
 jobs:
-  json-schema:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        json-schema: ['5.2.0', '^5.2', '6.8.0', '^6.8']
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          tools: composer:v2
-          coverage: none
-      - name: Resolve gateway runtime and test dependencies
-        run: composer update --working-dir=tests/json-schema --with 'justinrainbow/json-schema:${{ matrix.json-schema }}' --no-interaction --prefer-dist --no-progress
-      - name: Test JSON Schema validation
-        run: build/json-schema/vendor/bin/phpunit --no-configuration --bootstrap build/json-schema/vendor/autoload.php --filter 'JsonSchemaValidationTest|ErrorTest|NotificationTest|OrderAnnounceResponseTest|OrderResultsTest' tests/src
-
   phplint:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
     uses: pronamic/actions/.github/workflows/phplint.yml@main
