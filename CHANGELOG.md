@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
--
+- Allow Jetpack Autoloader 6.x alongside the supported 3.x, 4.x and 5.x versions.
 
 ## [4.10.0] - 2026-01-05
 
