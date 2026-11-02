@@ -6,10 +6,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+## [4.11.0] - 2026-11-02
+
 ### Composer
 
-- Allow Jetpack Autoloader 6.x alongside the supported 3.x, 4.x and 5.x versions.
-- Require `justinrainbow/json-schema` `^6.8` for compatibility with PayPal 2.4.0.
+- Changed `automattic/jetpack-autoloader` from `^3.0 || ^4.0 || ^5.0` to `^3.0 || ^4.0 || ^5.0 || ^6.0` to allow Jetpack Autoloader 6.x. Jetpack Autoloader 6.0.0 only raises its minimum PHP version to 7.4. Release notes: https://github.com/Automattic/jetpack-autoloader/blob/v6.0.0/CHANGELOG.md
+- Changed `justinrainbow/json-schema` from `^5.2` to `^6.8` for compatibility with Pronamic Pay PayPal 2.4.0. Version 6 is a new major release of the JSON Schema validator with improved type coercion, `const` support and centralized error handling. Upstream marks 6.8.0 as broken; 6.8.1 restores its changes. Release notes: https://github.com/jsonrainbow/json-schema/releases/tag/6.0.0 and https://github.com/jsonrainbow/json-schema/releases/tag/6.8.1
+
+Full set of changes: [`4.10.0...4.11.0`][4.11.0]
+
+[4.11.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.10.0...v4.11.0
 
 ## [4.10.0] - 2026-01-05
 
@@ -400,7 +406,7 @@ Full set of changes: [`4.3.0...4.4.0`][4.4.0]
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.3.0...HEAD
+[unreleased]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.11.0...HEAD
 [4.3.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.1.1...4.2.0
 [4.1.1]: https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/compare/4.1.0...4.1.1
