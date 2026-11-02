@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
--
+
+### Fixed
+
+- Corrected local schema references in `Money::from_json()` and `OrderResult::from_json()`.
+
+### Composer
+
+- Allow `justinrainbow/json-schema` `^5.2 || ^6.8`, including compatibility with PayPal 2.4.0.
 
 ## [4.10.0] - 2026-01-05
 

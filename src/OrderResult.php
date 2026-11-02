@@ -285,7 +285,7 @@ final class OrderResult implements JsonSerializable {
 		$validator->validate(
 			$data,
 			(object) [
-				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/json-schema-order-result.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/order-result.json' ),
 			],
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);

@@ -13,6 +13,7 @@
 ## Table of contents
 
 - [Status](#status)
+- [JSON Schema compatibility](#json-schema-compatibility)
 - [WordPress Filters](#wordpress-filters)
 - [Errors](#errors)
 - [Simulate Requests](#simulate-requests)
@@ -38,6 +39,21 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d115fb4e5c1ae697a0cf/test_coverage)](https://codeclimate.com/github/wp-pay-gateways/omnikassa-2/test_coverage)
 [![CircleCI](https://circleci.com/gh/wp-pay-gateways/omnikassa-2/tree/master.svg)](https://circleci.com/gh/wp-pay-gateways/omnikassa-2/tree/master)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_shield)
+
+## JSON Schema compatibility
+
+The gateway supports `justinrainbow/json-schema` `^5.2 || ^6.8`. CI checks the minimum and latest versions in both ranges, including valid responses, validation exceptions, date-time formats and nested local schema references.
+
+Run the focused checks without the WordPress test environment or the development WP-CLI dependency tree:
+
+```sh
+composer update --working-dir=tests/json-schema --with justinrainbow/json-schema:6.8.0
+build/json-schema/vendor/bin/phpunit --no-configuration --bootstrap build/json-schema/vendor/autoload.php --filter 'JsonSchemaValidationTest|ErrorTest|NotificationTest|OrderAnnounceResponseTest|OrderResultsTest' tests/src
+```
+
+Replace `6.8.0` with `5.2.0`, `'^5.2'` or `'^6.8'` to exercise the other matrix entries. The isolated Composer project resolves the gateway's actual runtime dependencies from this checkout; its lock file is disabled and dependencies are installed under `build/`.
+
+Allowing JSON Schema 6 does not remove other packages' JSON Schema 5 constraints. In particular, projects pinned to `composer/composer` 2.2 through `wp-cli/package-command` must resolve that tooling constraint separately.
 
 ## WordPress Filters
 
