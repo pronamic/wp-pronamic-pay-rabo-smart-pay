@@ -8,6 +8,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ### Composer
 
+- Allow Jetpack Autoloader 6.x alongside the supported 3.x, 4.x and 5.x versions.
 - Require `justinrainbow/json-schema` `^6.8` for compatibility with PayPal 2.4.0.
 
 ## [4.10.0] - 2026-01-05
