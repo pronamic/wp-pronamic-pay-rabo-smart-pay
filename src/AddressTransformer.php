@@ -32,7 +32,7 @@ final class AddressTransformer {
 
 		$name = $pronamic_address->get_name();
 
-		$last_name    = null === $name ? null : $name->get_last_name();
+		$last_name    = $name?->get_last_name();
 		$street       = $pronamic_address->get_street_name();
 		$postal_code  = $pronamic_address->get_postal_code();
 		$city         = $pronamic_address->get_city();
