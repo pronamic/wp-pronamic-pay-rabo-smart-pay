@@ -18,5 +18,6 @@
 	},
 	"lifecycleScripts": {
 		"afterStart": "wp-env run cli wp language core install nl_NL --activate && wp-env run cli wp language plugin install --all nl_NL"
-	}
+	},
+	"testsEnvironment": false
 }
