@@ -48,14 +48,13 @@
 		<exclude name="SlevomatCodingStandard.Exceptions.RequireNonCapturingCatch.NonCapturingCatchRequired" />
 
 		<exclude name="SlevomatCodingStandard.Files.FileLength.FileTooLong" />
-		<exclude name="SlevomatCodingStandard.Files.FunctionLength.FunctionLength" />
 		<exclude name="SlevomatCodingStandard.Files.LineLength.LineTooLong" />
 		<exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName" />
 
 		<exclude name="SlevomatCodingStandard.Functions.FunctionLength.FunctionLength" />
 		<exclude name="SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction" />
 		<exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall.MissingTrailingComma" />
-		<exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration.MissingTrailingComma" /> 
+		<exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration.MissingTrailingComma" />
 
 		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation.NonFullyQualifiedClassName" />
 		<exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName" />
@@ -77,7 +76,6 @@
 		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation" />
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint" />
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation" />
-		<exclude name="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint.UselessVarAnnotation" />
 
 		<exclude name="SlevomatCodingStandard.Variables.UselessVariable.UselessVariable" />
 
