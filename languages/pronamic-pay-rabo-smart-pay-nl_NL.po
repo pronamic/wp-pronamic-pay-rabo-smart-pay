@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Pronamic Pay with Rabo Smart Pay 4.11.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pronamic-pay-rabo-"
 "smart-pay\n"
-"POT-Creation-Date: 2026-11-04T09:36:08+00:00\n"
+"POT-Creation-Date: 2026-11-04T11:38:15+00:00\n"
 "PO-Revision-Date: 2026-11-04 10:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -26,6 +26,15 @@ msgstr "Pronamic Pay with Rabo Smart Pay"
 msgid "https://www.pronamic.eu/plugins/pronamic-pay-with-rabo-smart-pay/"
 msgstr "https://www.pronamic.eu/plugins/pronamic-pay-with-rabo-smart-pay/"
 
+#. Description of the plugin
+#: pronamic-pay-with-rabo-smart-pay.php:5
+msgid ""
+"Accept payments in WordPress via Rabo Smart Pay (formerly Rabo OmniKassa "
+"2.0) with the Pronamic Pay payment processing library."
+msgstr ""
+"Accepteer betalingen in WordPress via Rabo Smart Pay (voorheen Rabo "
+"OmniKassa 2.0) met de Pronamic Pay betaalverwerkingsbibliotheek."
+
 #. Author of the plugin
 #: pronamic-pay-with-rabo-smart-pay.php:11
 msgid "Pronamic"
@@ -37,27 +46,27 @@ msgid "https://www.pronamic.eu/"
 msgstr "https://www.pronamic.nl/"
 
 #. translators: %s: item index
-#: src/Gateway.php:256
+#: src/Gateway.php:274
 #, php-format
 msgid "Item %s"
 msgstr "Item %s"
 
-#: src/Gateway.php:510
+#: src/Gateway.php:526
 msgid "Rabo Smart Pay webhook URL requested:"
 msgstr "Rabo Smart Pay webhook URL aangevraagd:"
 
-#: src/Integration.php:112
+#: src/Integration.php:110
 msgctxt "omnikassa"
 msgid "Refresh Token"
 msgstr "Refresh token"
 
-#: src/Integration.php:121
+#: src/Integration.php:119
 msgctxt "omnikassa"
 msgid "Signing Key"
 msgstr "Signing key"
 
 #. translators: %s: <code>merchantOrderId</code>
-#: src/Integration.php:134
+#: src/Integration.php:132
 #, php-format
 msgid ""
 "The Rabo Smart Pay %s field must consist strictly of 24 alphanumeric "
@@ -67,28 +76,48 @@ msgstr ""
 "Het Rabo Smart Pay %s veld moet strikt uit 24 alfanumerieke tekens bestaan, "
 "andere tekens, zoals “.”, “@”, “ ” (spatie), etc. zijn niet toegestaan."
 
-#: src/Integration.php:140
+#: src/Integration.php:138 src/Integration.php:176
 msgid "Available tags:"
 msgstr "Beschikbare tags:"
 
 #. translators: %s: default code
-#: src/Integration.php:148
+#: src/Integration.php:146
 #, php-format
 msgid "Default: <code>%s</code>"
 msgstr "Standaard: <code>%s</code>"
 
-#: src/Integration.php:154
+#: src/Integration.php:152
 msgid "Order ID"
 msgstr "Bestelling ID"
 
 #. translators: %s: Rabo Smart Pay field name
-#: src/Integration.php:157 src/Integration.php:182
+#: src/Integration.php:155 src/Integration.php:189 src/Integration.php:214
 #, php-format
 msgid "This setting defines the Rabo Smart Pay %s field."
 msgstr "Deze instelling definieert het Rabo Smart Pay %s veld."
 
-#. translators: %s: <code>skipHppResultPage</code>
+#. translators: %s: <code>shopperBankstatementReference</code>
 #: src/Integration.php:170
+#, php-format
+msgid ""
+"The Rabo Smart Pay %s field is the reference a customer will find on their "
+"bank statement. Only alphanumeric characters are used, other characters are "
+"removed, and the value is shortened to 24 characters."
+msgstr ""
+"Het Rabo Smart Pay %s veld is de omschrijving die een klant op het "
+"bankafschrift terugziet. Alleen alfanumerieke tekens worden gebruikt, andere "
+"tekens worden verwijderd en de waarde wordt ingekort tot 24 tekens."
+
+#: src/Integration.php:182
+msgid "Default: empty, the field is not sent."
+msgstr "Standaard: leeg, het veld wordt niet verzonden."
+
+#: src/Integration.php:186
+msgid "Bank statement reference"
+msgstr "Omschrijving op bankafschrift"
+
+#. translators: %s: <code>skipHppResultPage</code>
+#: src/Integration.php:202
 #, php-format
 msgid ""
 "The Rabo Smart Pay %s field makes it possible to skip the hosted result page "
@@ -97,16 +126,16 @@ msgstr ""
 "Het Rabo Smart Pay veld %s maakt het mogelijk om de gehoste resultaatpagina "
 "over te slaan (ook wel de succes- of bedankpagina genoemd)."
 
-#: src/Integration.php:176 src/Integration.php:179
+#: src/Integration.php:208 src/Integration.php:211
 msgid "Skip hosted result page"
 msgstr "Gehoste resultaatpagina overslaan"
 
-#: src/Integration.php:193
+#: src/Integration.php:225
 msgid "Webhook URL"
 msgstr "Webhook URL"
 
 #. translators: %s: payment provider name
-#: src/Integration.php:196
+#: src/Integration.php:228
 #, php-format
 msgid ""
 "Copy the Webhook URL to the %s dashboard to receive automatic transaction "
@@ -115,7 +144,7 @@ msgstr ""
 "Kopieer de Webhook URL naar het %s dashboard om automatische transactie "
 "status updates te ontvangen."
 
-#: src/Integration.php:200
+#: src/Integration.php:232
 msgid "Rabo Smart Pay"
 msgstr "Rabo Smart Pay"
 
@@ -149,14 +178,14 @@ msgstr "Rabo Smart Pay return URL aangevraagd:"
 msgid "Unique identifier for the gateway configuration post."
 msgstr "Unieke ID voor de gateway configuratie."
 
-#: src/WebhookController.php:132
+#: src/WebhookController.php:135
 msgid "Invalid Rabo Smart Pay notification."
 msgstr "Ongeldige Rabo Smart Pay notificatie."
 
-#: src/WebhookController.php:146
+#: src/WebhookController.php:149
 msgid "No gateway ID given in `id` parameter."
 msgstr "Geen configuratie ID opgegeven in de parameter `id`."
 
-#: src/WebhookController.php:156
+#: src/WebhookController.php:159
 msgid "Invalid Rabo Smart Pay gateway."
 msgstr "Ongeldige Rabo Smart Pay gateway."
