@@ -118,9 +118,7 @@ final class Gateway extends Core_Gateway {
 		$omnikassa_payment_brands = \get_transient( $cache_key );
 
 		if ( false === $omnikassa_payment_brands ) {
-			$this->maybe_update_access_token();
-
-			$omnikassa_payment_brands = $this->client->get_payment_brands( $this->config->access_token );
+			$omnikassa_payment_brands = $this->client->get_payment_brands();
 
 			\set_transient( $cache_key, $omnikassa_payment_brands, \DAY_IN_SECONDS );
 		}
@@ -335,9 +333,6 @@ final class Gateway extends Core_Gateway {
 		// Skip hosted result page.
 		$order->set_skip_hosted_result_page( $this->config->skip_hosted_result_page );
 
-		// Maybe update access token.
-		$this->maybe_update_access_token();
-
 		// Announce order.
 		$response = $this->client->order_announce( $order );
 
@@ -359,6 +354,18 @@ final class Gateway extends Core_Gateway {
 		$payment = $refund->get_payment();
 
 		$transaction_id = (string) $payment->get_transaction_id();
+
+		if ( '' === $transaction_id ) {
+			throw new \Exception(
+				'Cannot refund: the payment has no Rabo Smart Pay transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment.'
+			);
+		}
+
+		if ( $transaction_id === $payment->get_meta( 'omnikassa_order_id' ) ) {
+			throw new \Exception(
+				'Cannot refund: the payment transaction ID is a Rabo Smart Pay order ID instead of a transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment.'
+			);
+		}
 
 		$amount = MoneyTransformer::transform( $refund->get_amount() );
 
@@ -595,40 +602,5 @@ final class Gateway extends Core_Gateway {
 		}
 
 		$payment->set_transaction_id( $transaction->get_id() );
-	}
-
-	/**
-	 * Maybe update access token.
-	 *
-	 * @return void
-	 */
-	private function maybe_update_access_token() {
-		if ( $this->config->is_access_token_valid() ) {
-			return;
-		}
-
-		$data = $this->client->get_access_token_data();
-
-		$object_access = new ObjectAccess( $data );
-
-		if ( $object_access->has_property( 'token' ) ) {
-			$this->config->access_token = $object_access->get_string( 'token' );
-
-			\update_post_meta(
-				$this->config->post_id,
-				'_pronamic_gateway_omnikassa_2_access_token',
-				$this->config->access_token
-			);
-		}
-
-		if ( $object_access->has_property( 'validUntil' ) ) {
-			$this->config->access_token_valid_until = $object_access->get_string( 'validUntil' );
-
-			\update_post_meta(
-				$this->config->post_id,
-				'_pronamic_gateway_omnikassa_2_access_token_valid_until',
-				$this->config->access_token_valid_until
-			);
-		}
 	}
 }

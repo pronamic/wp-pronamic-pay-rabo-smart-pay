@@ -15,6 +15,12 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 - Changed the API base URLs to the new Rabo Smart Pay domains: `https://api.pay.rabobank.nl/omnikassa-api/` (production) and `https://api.pay-sandbox.rabobank.nl/omnikassa-api/` (sandbox), replacing `https://betalen.rabobank.nl/omnikassa-api(-sandbox)/`. The Rabobank PHP SDK switched to these domains in version 1.18.0: https://github.com/rabobank-nederland/omnikassa-php-sdk#version-1180
 
+### Fixed
+
+- Fixed refunds failing with `Response is empty, HTTP response: "404 Not Found".` when the access token was missing or expired, for example after reinstalling the plugin. Refunds did not refresh the access token. The client now refreshes the access token itself before every request that needs it and fires the new `pronamic_pay_omnikassa_2_access_token_refreshed` action, which the plugin uses to store the new access token.
+- Refunds for payments without a Rabo Smart Pay transaction ID (or with the Rabo Smart Pay order ID as transaction ID) now fail with a clear message instead of an API error.
+- Rabo Smart Pay API errors with an empty or non-JSON response now mention the request method, endpoint and HTTP status.
+
 ### Removed
 
 - Removed outdated AfterPay/Riverty references from code comments and the hooks documentation. Rabo Smart Pay no longer supports AfterPay (SDK documentation version 1.18): https://github.com/rabobank-nederland/omnikassa-sdk-doc

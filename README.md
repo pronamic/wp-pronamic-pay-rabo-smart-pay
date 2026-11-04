@@ -14,6 +14,7 @@
 
 - [Status](#status)
 - [WordPress Filters](#wordpress-filters)
+- [WordPress Actions](#wordpress-actions)
 - [Errors](#errors)
 - [Simulate Requests](#simulate-requests)
 - [Webhook](#webhook)
@@ -48,6 +49,18 @@ add_filter( 'pronamic_pay_omnikassa_2_merchant_return_url', function( $url ) {
 	$url = 'https://example.com/';
 
 	return $url;
+} );
+```
+
+## WordPress Actions
+
+### pronamic_pay_omnikassa_2_access_token_refreshed
+
+The client refreshes the Rabo Smart Pay access token itself when it is missing or expired. After a refresh it fires this action with the `Config` object that holds the new access token. The plugin uses it to store the access token in the gateway configuration post meta.
+
+```php
+add_action( 'pronamic_pay_omnikassa_2_access_token_refreshed', function( $config ) {
+	error_log( 'Rabo Smart Pay access token valid until: ' . $config->access_token_valid_until );
 } );
 ```
 

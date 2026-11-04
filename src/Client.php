@@ -39,6 +39,10 @@ final class Client {
 	/**
 	 * Construct client.
 	 *
+	 * The client refreshes the access token itself when needed and then
+	 * triggers the `pronamic_pay_omnikassa_2_access_token_refreshed` action,
+	 * so the new access token can be stored.
+	 *
 	 * @param Config $config Configuration object.
 	 */
 	public function __construct( $config ) {
@@ -104,15 +108,28 @@ final class Client {
 
 		$response = Http::request( $url, $args );
 
-		$data = $response->json();
+		$body = $response->body();
+
+		$data = \json_decode( $body );
 
 		if ( ! \is_object( $data ) ) {
+			$body_description = 'empty body';
+
+			if ( '' !== $body ) {
+				$body_description = \sprintf(
+					'body length %d is not a JSON object',
+					\strlen( $body )
+				);
+			}
+
 			throw new \Exception(
 				\sprintf(
-					'Could not JSON decode Rabo Smart Pay response to an object, HTTP response: "%s %s", HTTP body length: "%d".',
+					'Rabo Smart Pay request failed: %s %s, HTTP response: "%s %s", %s.',
+					\esc_html( $method ),
+					\esc_html( $endpoint ),
 					\esc_html( (string) $response->status() ),
 					\esc_html( $response->message() ),
-					\intval( \strlen( $response->body() ) )
+					\esc_html( $body_description )
 				),
 				\intval( $response->status() )
 			);
@@ -139,13 +156,40 @@ final class Client {
 	}
 
 	/**
+	 * Get a valid access token, refresh it when needed.
+	 *
+	 * @return string
+	 */
+	private function get_access_token() {
+		if ( $this->config->is_access_token_valid() ) {
+			return $this->config->access_token;
+		}
+
+		$data = $this->get_access_token_data();
+
+		$object_access = new ObjectAccess( $data );
+
+		$this->config->access_token             = $object_access->get_string( 'token' );
+		$this->config->access_token_valid_until = $object_access->get_string( 'validUntil' );
+
+		/**
+		 * Fires after the Rabo Smart Pay access token has been refreshed.
+		 *
+		 * @param Config $config Config with the new access token.
+		 */
+		\do_action( 'pronamic_pay_omnikassa_2_access_token_refreshed', $this->config );
+
+		return $this->config->access_token;
+	}
+
+	/**
 	 * Order announce.
 	 *
 	 * @param Order $order  Order.
 	 * @return OrderAnnounceResponse
 	 */
 	public function order_announce( Order $order ) {
-		$result = $this->request( 'POST', 'order/server/api/v2/order', $this->config->access_token, $order );
+		$result = $this->request( 'POST', 'order/server/api/v2/order', $this->get_access_token(), $order );
 
 		return OrderAnnounceResponse::from_object( $result );
 	}
@@ -165,7 +209,7 @@ final class Client {
 					'{transaction_id}' => $refund->transaction_id,
 				]
 			),
-			$this->config->access_token,
+			$this->get_access_token(),
 			$refund
 		);
 
@@ -192,11 +236,10 @@ final class Client {
 	 * Get payment brands.
 	 *
 	 * @link https://developer.rabobank.nl/product/9619/api/9355#/RaboOmniKassaOnlinePaymentAPI_1010/operation/%2Forder%2Fserver%2Fapi%2Fpayment-brands/get
-	 * @param string $access_token Access token.
 	 * @return array<string>
 	 */
-	public function get_payment_brands( $access_token ) {
-		$result = $this->request( 'GET', 'order/server/api/payment-brands', $access_token );
+	public function get_payment_brands() {
+		$result = $this->request( 'GET', 'order/server/api/payment-brands', $this->get_access_token() );
 
 		$object_access = new ObjectAccess( $result );
 

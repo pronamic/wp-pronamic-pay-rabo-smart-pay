@@ -58,18 +58,6 @@ final class Integration extends AbstractGatewayIntegration {
 		parent::__construct( $args );
 
 		$this->api_url = $args['api_url'];
-
-		/**
-		 * Save post.
-		 *
-		 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
-		 * @var callable $delete_access_token_meta_function
-		 */
-		$delete_access_token_meta_function = [ $this, 'delete_access_token_meta' ];
-
-		if ( ! \has_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function ) ) {
-			\add_action( 'save_post_pronamic_gateway', $delete_access_token_meta_function );
-		}
 	}
 
 	/**
@@ -78,6 +66,8 @@ final class Integration extends AbstractGatewayIntegration {
 	 * @return void
 	 */
 	public function setup() {
+		AccessTokenController::instance();
+
 		// Check if dependencies are met and integration is active.
 		if ( ! $this->is_active() ) {
 			return;
@@ -266,19 +256,6 @@ final class Integration extends AbstractGatewayIntegration {
 		$config->skip_hosted_result_page = 1 === \intval( $skip_hosted_result_page );
 
 		return $config;
-	}
-
-	/**
-	 * Delete access token meta for the specified post ID.
-	 *
-	 * @link https://github.com/WordPress/WordPress/blob/5.0/wp-includes/post.php#L3724-L3736
-	 * @link https://codex.wordpress.org/Function_Reference/delete_post_meta
-	 * @param int $post_id Post ID.
-	 * @return void
-	 */
-	public static function delete_access_token_meta( $post_id ) {
-		\delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token' );
-		\delete_post_meta( $post_id, '_pronamic_gateway_omnikassa_2_access_token_valid_until' );
 	}
 
 	/**
