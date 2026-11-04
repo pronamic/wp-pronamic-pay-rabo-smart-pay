@@ -49,7 +49,7 @@
 		"justinrainbow/json-schema": "^6.14",
 		"pronamic/wp-http": "^1.2",
 		"pronamic/wp-number": "^1.4",
-		"wp-pay/core": "^4.26"
+		"wp-pay/core": "^4.35"
 	},
 	"require-dev": {
 		"humanmade/psalm-plugin-wordpress": "^3.1",
