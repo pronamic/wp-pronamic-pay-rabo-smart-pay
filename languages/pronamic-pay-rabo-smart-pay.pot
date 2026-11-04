@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-04T11:38:15+00:00\n"
+"POT-Creation-Date: 2026-11-04T12:51:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pronamic-pay-rabo-smart-pay\n"
@@ -40,90 +40,98 @@ msgid "https://www.pronamic.eu/"
 msgstr ""
 
 #. translators: %s: item index
-#: src/Gateway.php:274
+#: src/Gateway.php:272
 #, php-format
 msgid "Item %s"
 msgstr ""
 
-#: src/Gateway.php:526
+#: src/Gateway.php:360
+msgid "Cannot refund: the payment has no Rabo Smart Pay transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment."
+msgstr ""
+
+#: src/Gateway.php:369
+msgid "Cannot refund: the payment transaction ID is a Rabo Smart Pay order ID instead of a transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment."
+msgstr ""
+
+#: src/Gateway.php:539
 msgid "Rabo Smart Pay webhook URL requested:"
 msgstr ""
 
-#: src/Integration.php:110
+#: src/Integration.php:100
 msgctxt "omnikassa"
 msgid "Refresh Token"
 msgstr ""
 
-#: src/Integration.php:119
+#: src/Integration.php:109
 msgctxt "omnikassa"
 msgid "Signing Key"
 msgstr ""
 
 #. translators: %s: <code>merchantOrderId</code>
-#: src/Integration.php:132
+#: src/Integration.php:122
 #, php-format
 msgid "The Rabo Smart Pay %s field must consist strictly of 24 alphanumeric characters, other characters, such as \".\", \"@\", \" \" (space), etc. are not allowed."
 msgstr ""
 
-#: src/Integration.php:138
-#: src/Integration.php:176
+#: src/Integration.php:128
+#: src/Integration.php:166
 msgid "Available tags:"
 msgstr ""
 
 #. translators: %s: default code
-#: src/Integration.php:146
+#: src/Integration.php:136
 #, php-format
 msgid "Default: <code>%s</code>"
 msgstr ""
 
-#: src/Integration.php:152
+#: src/Integration.php:142
 msgid "Order ID"
 msgstr ""
 
 #. translators: %s: Rabo Smart Pay field name
-#: src/Integration.php:155
-#: src/Integration.php:189
-#: src/Integration.php:214
+#: src/Integration.php:145
+#: src/Integration.php:179
+#: src/Integration.php:204
 #, php-format
 msgid "This setting defines the Rabo Smart Pay %s field."
 msgstr ""
 
 #. translators: %s: <code>shopperBankstatementReference</code>
-#: src/Integration.php:170
+#: src/Integration.php:160
 #, php-format
 msgid "The Rabo Smart Pay %s field is the reference a customer will find on their bank statement. Only alphanumeric characters are used, other characters are removed, and the value is shortened to 24 characters."
 msgstr ""
 
-#: src/Integration.php:182
+#: src/Integration.php:172
 msgid "Default: empty, the field is not sent."
 msgstr ""
 
-#: src/Integration.php:186
+#: src/Integration.php:176
 msgid "Bank statement reference"
 msgstr ""
 
 #. translators: %s: <code>skipHppResultPage</code>
-#: src/Integration.php:202
+#: src/Integration.php:192
 #, php-format
 msgid "The Rabo Smart Pay %s field makes it possible to skip the hosted result page (also referred to as the \"Success\" or \"Thank you\" page)."
 msgstr ""
 
-#: src/Integration.php:208
-#: src/Integration.php:211
+#: src/Integration.php:198
+#: src/Integration.php:201
 msgid "Skip hosted result page"
 msgstr ""
 
-#: src/Integration.php:225
+#: src/Integration.php:215
 msgid "Webhook URL"
 msgstr ""
 
 #. translators: %s: payment provider name
-#: src/Integration.php:228
+#: src/Integration.php:218
 #, php-format
 msgid "Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates."
 msgstr ""
 
-#: src/Integration.php:232
+#: src/Integration.php:222
 msgid "Rabo Smart Pay"
 msgstr ""
 

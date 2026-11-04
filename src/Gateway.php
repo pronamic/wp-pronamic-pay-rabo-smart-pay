@@ -357,13 +357,19 @@ final class Gateway extends Core_Gateway {
 
 		if ( '' === $transaction_id ) {
 			throw new \Exception(
-				'Cannot refund: the payment has no Rabo Smart Pay transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment.'
+				\esc_html__(
+					'Cannot refund: the payment has no Rabo Smart Pay transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment.',
+					'pronamic-pay-rabo-smart-pay'
+				)
 			);
 		}
 
 		if ( $transaction_id === $payment->get_meta( 'omnikassa_order_id' ) ) {
 			throw new \Exception(
-				'Cannot refund: the payment transaction ID is a Rabo Smart Pay order ID instead of a transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment.'
+				\esc_html__(
+					'Cannot refund: the payment transaction ID is a Rabo Smart Pay order ID instead of a transaction ID. The Rabo Smart Pay webhook may not have been processed for this payment.',
+					'pronamic-pay-rabo-smart-pay'
+				)
 			);
 		}
 
