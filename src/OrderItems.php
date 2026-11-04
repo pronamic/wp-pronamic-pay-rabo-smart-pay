@@ -79,7 +79,7 @@ final class OrderItems implements JsonSerializable {
 	/**
 	 * Get JSON.
 	 *
-	 * @return array<object>|null
+	 * @return array<object>
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {

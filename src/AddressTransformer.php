@@ -49,17 +49,15 @@ final class AddressTransformer {
 		// New address.
 		$address = new Address( $last_name, $street, $postal_code, $city, $country_code );
 
-		if ( null !== $name ) {
-			$first_name  = $name->get_first_name();
-			$middle_name = $name->get_middle_name();
+		$first_name  = $name->get_first_name();
+		$middle_name = $name->get_middle_name();
 
-			if ( null !== $first_name ) {
-				$address->set_first_name( $first_name );
-			}
+		if ( null !== $first_name ) {
+			$address->set_first_name( $first_name );
+		}
 
-			if ( null !== $middle_name ) {
-				$address->set_middle_name( $middle_name );
-			}
+		if ( null !== $middle_name ) {
+			$address->set_middle_name( $middle_name );
 		}
 
 		$address->set_house_number( $pronamic_address->get_house_number_base() );
