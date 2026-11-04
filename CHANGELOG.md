@@ -6,13 +6,22 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+## [5.0.0] - 2026-11-04
+
+This major release raises the minimum PHP version to 8.3 and changes the text domain. Check your PHP version before updating.
+
 ### Added
 
+- Added a Dutch (`nl_NL`) translation and a POT file in the `languages/` folder.
+- Added a `readme.txt` file.
 - Added the customer's full name as `customerInformation.fullName` to the order announcement. Rabo Smart Pay uses this field as the preferred source for the customer name in the dashboard: https://github.com/rabobank-nederland/omnikassa-sdk-doc#customer-name-dashboard
 - Added an optional "Bank statement reference" gateway setting for the Rabo Smart Pay `shopperBankstatementReference` field, the reference a customer finds on their bank statement. It supports the `{order_id}` and `{payment_id}` tags, keeps only alphanumeric characters and is limited to 24 characters. When empty, the field is not sent. See: https://github.com/rabobank-nederland/omnikassa-sdk-doc#field-description
 
 ### Changed
 
+- Raised the minimum PHP version from 7.4 to 8.3.
+- Changed the text domain from `pronamic_ideal` to `pronamic-pay-rabo-smart-pay`, the plugin slug. Custom translations for the old `pronamic_ideal` text domain no longer apply to this plugin.
+- Refund error messages can now be translated.
 - Changed the API base URLs to the new Rabo Smart Pay domains: `https://api.pay.rabobank.nl/omnikassa-api/` (production) and `https://api.pay-sandbox.rabobank.nl/omnikassa-api/` (sandbox), replacing `https://betalen.rabobank.nl/omnikassa-api(-sandbox)/`. The Rabobank PHP SDK switched to these domains in version 1.18.0: https://github.com/rabobank-nederland/omnikassa-php-sdk#version-1180
 
 ### Fixed
@@ -20,18 +29,22 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 - Fixed refunds failing with `Response is empty, HTTP response: "404 Not Found".` when the access token was missing or expired, for example after reinstalling the plugin. Refunds did not refresh the access token. The client now refreshes the access token itself before every request that needs it and fires the new `pronamic_pay_omnikassa_2_access_token_refreshed` action, which the plugin uses to store the new access token.
 - Refunds for payments without a Rabo Smart Pay transaction ID (or with the Rabo Smart Pay order ID as transaction ID) now fail with a clear message instead of an API error.
 - Rabo Smart Pay API errors with an empty or non-JSON response now mention the request method, endpoint and HTTP status.
+- Fixed the refund `Request-ID` header: it now uses a UUID v4 generated once per refund request instead of the per-request `wp_unique_id()` counter, so refunds are no longer at risk of being treated as duplicates. See also Rabobank PHP SDK 1.18.3: https://github.com/rabobank-nederland/omnikassa-php-sdk/releases/tag/v1.18.3
 
 ### Removed
 
 - Removed outdated AfterPay/Riverty references from code comments and the hooks documentation. Rabo Smart Pay no longer supports AfterPay (SDK documentation version 1.18): https://github.com/rabobank-nederland/omnikassa-sdk-doc
 
-### Fixed
-
-- Fixed the refund `Request-ID` header: it now uses a UUID v4 generated once per refund request instead of the per-request `wp_unique_id()` counter, so refunds are no longer at risk of being treated as duplicates. See also Rabobank PHP SDK 1.18.3: https://github.com/rabobank-nederland/omnikassa-php-sdk/releases/tag/v1.18.3
-
 ### Composer
 
+- Changed `php` from `>=8.1` to `>=8.3`.
+- Changed `justinrainbow/json-schema` from `^6.8` to `^6.14`, locked at `6.14.0`. Versions 6.9 to 6.14 add Draft 2019-09 support and fix many format and error-path validation bugs. An unresolvable `$ref` now throws an error instead of passing silently. Release notes: https://github.com/jsonrainbow/json-schema/releases/tag/6.14.0
+- Changed `wp-pay/core` from `^4.26` to `^4.35`, locked at `v4.35.0`. Pronamic Pay core 4.35.0 changes the default subscription renewal notice period from 1 week to 14 days. It also fixes a currency mismatch exception for payment lines in currencies other than EUR, and errors when loading payments or subscriptions whose post no longer exists. Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.35.0
 - Replaced development dependency `pronamic/wp-documentor` with `solvebeam/wp-hooks-documentor` `^1.5` for generating the hooks documentation in `docs/hooks.md`.
+
+Full set of changes: [`4.11.0...5.0.0`][5.0.0]
+
+[5.0.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.11.0...v5.0.0
 
 ## [4.11.0] - 2026-11-02
 
@@ -433,7 +446,7 @@ Full set of changes: [`4.3.0...4.4.0`][4.4.0]
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v4.11.0...HEAD
+[unreleased]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v5.0.0...HEAD
 [4.3.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.1.1...4.2.0
 [4.1.1]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.1.0...4.1.1
