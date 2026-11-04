@@ -78,6 +78,9 @@
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation" />
 
 		<exclude name="SlevomatCodingStandard.Variables.UselessVariable.UselessVariable" />
+
+		<!-- Conflicts with WordPress.Arrays.MultipleStatementAlignment and Generic.Formatting.MultipleStatementAlignment, which require aligned `=>` and `=`. -->
+		<exclude name="SlevomatCodingStandard.Whitespaces.DuplicateSpaces.DuplicateSpaces" />
 	</rule>
 
 	<rule ref="PronamicWP">
