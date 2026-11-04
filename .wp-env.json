@@ -1,5 +1,9 @@
 {
 	"core": null,
+	"config": {
+		"JETPACK_AUTOLOAD_DEV": true,
+		"PRONAMIC_PAY_DEBUG": true
+	},
 	"plugins": [
 		"pronamic/wp-env-quick-login",
 		"pronamic/wp-pronamic-pay-test-helper",
@@ -12,7 +16,7 @@
 	"mappings": {
 		"wp-content/plugins/pronamic-pay-rabo-smart-pay": "."
 	},
-	"config": {
-		"PRONAMIC_PAY_DEBUG": true
+	"lifecycleScripts": {
+		"afterStart": "wp-env run cli wp language core install nl_NL --activate && wp-env run cli wp language plugin install --all nl_NL"
 	}
 }
