@@ -6,6 +6,7 @@
 .eslintignore
 .jshintignore
 .phplint.yml
+.travis.yml
 
 .git/
 .github/
@@ -20,6 +21,7 @@
 phpcs.xml.dist
 phpmd.ruleset.xml
 phpstan.neon.dist
+phpunit.xml
 phpunit.xml.dist
 psalm.xml.dist
 rector.php
@@ -32,6 +34,9 @@ rector.php
 /node_modules/
 /package.json
 /package-lock.json
+
+/vendor/bin/
+/vendor/justinrainbow/json-schema/bin/
 
 /wordpress/
 /wp-content/
