@@ -81,7 +81,7 @@ final class DataHelper {
 	 * @throws \Exception Throws exception when PCRE regex execution results in error.
 	 */
 	public static function validate_ans( $value, $max, $field ) {
-		$pattern = '#[^' . \implode( self::$characters_ans ) . ']#';
+		$pattern = '#[^' . \implode( '', self::$characters_ans ) . ']#';
 
 		$result = \preg_match( $pattern, $value );
 

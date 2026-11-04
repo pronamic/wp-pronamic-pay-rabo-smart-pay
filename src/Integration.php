@@ -21,10 +21,8 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 final class Integration extends AbstractGatewayIntegration {
 	/**
 	 * REST route namespace.
-	 *
-	 * @var string
 	 */
-	const REST_ROUTE_NAMESPACE = 'pronamic-pay/omnikassa-2/v1';
+	const string REST_ROUTE_NAMESPACE = 'pronamic-pay/omnikassa-2/v1';
 
 	/**
 	 * API URL.

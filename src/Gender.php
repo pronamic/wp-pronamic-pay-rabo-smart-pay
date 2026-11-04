@@ -21,17 +21,13 @@ use Pronamic\WordPress\Pay\Gender as Core_Gender;
 final class Gender {
 	/**
 	 * Female.
-	 *
-	 * @var string
 	 */
-	const FEMALE = 'F';
+	const string FEMALE = 'F';
 
 	/**
 	 * Male.
-	 *
-	 * @var string
 	 */
-	const MALE = 'M';
+	const string MALE = 'M';
 
 	/**
 	 * Transform WordPress pay gender to OmniKassa gender.
@@ -40,14 +36,10 @@ final class Gender {
 	 * @return string|null
 	 */
 	public static function transform( $gender ) {
-		switch ( $gender ) {
-			case Core_Gender::FEMALE:
-				return self::FEMALE;
-			case Core_Gender::MALE:
-				return self::MALE;
-			case Core_Gender::OTHER:
-			default:
-				return null;
-		}
+		return match ( $gender ) {
+			Core_Gender::FEMALE => self::FEMALE,
+			Core_Gender::MALE => self::MALE,
+			default => null,
+		};
 	}
 }

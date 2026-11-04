@@ -57,7 +57,10 @@ final class WebhookController {
 			[
 				'args'                => [
 					'id' => [
-						'description' => \__( 'Unique identifier for the gateway configuration post.', 'pronamic-pay-rabo-smart-pay' ),
+						'description' => \__(
+							'Unique identifier for the gateway configuration post.',
+							'pronamic-pay-rabo-smart-pay' 
+						),
 						'type'        => 'integer',
 					],
 				],

@@ -21,17 +21,13 @@ use Pronamic\WordPress\Http\Facades\Http;
 final class Client {
 	/**
 	 * URL OmniKassa API.
-	 *
-	 * @var string
 	 */
-	const URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
+	const string URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
 
 	/**
 	 * URL OmniKassa sandbox API.
-	 *
-	 * @var string
 	 */
-	const URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
+	const string URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	/**
 	 * Config.

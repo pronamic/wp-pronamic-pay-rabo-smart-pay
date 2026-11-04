@@ -21,59 +21,43 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
 final class PaymentBrands {
 	/**
 	 * Payment brand 'IDEAL'.
-	 *
-	 * @var string
 	 */
-	const IDEAL = 'IDEAL';
+	const string IDEAL = 'IDEAL';
 
 	/**
 	 * Payment brand 'PAYPAL'.
-	 *
-	 * @var string
 	 */
-	const PAYPAL = 'PAYPAL';
+	const string PAYPAL = 'PAYPAL';
 
 	/**
 	 * Payment brand 'MASTERCARD'.
-	 *
-	 * @var string
 	 */
-	const MASTERCARD = 'MASTERCARD';
+	const string MASTERCARD = 'MASTERCARD';
 
 	/**
 	 * Payment brand 'VISA'.
-	 *
-	 * @var string
 	 */
-	const VISA = 'VISA';
+	const string VISA = 'VISA';
 
 	/**
 	 * Payment brand 'BANCONTACT'.
-	 *
-	 * @var string
 	 */
-	const BANCONTACT = 'BANCONTACT';
+	const string BANCONTACT = 'BANCONTACT';
 
 	/**
 	 * Payment brand 'MAESTRO'.
-	 *
-	 * @var string
 	 */
-	const MAESTRO = 'MAESTRO';
+	const string MAESTRO = 'MAESTRO';
 
 	/**
 	 * Payment brand 'SOFORT'.
-	 *
-	 * @var string
 	 */
-	const SOFORT = 'SOFORT';
+	const string SOFORT = 'SOFORT';
 
 	/**
 	 * Payment brand 'V_PAY'.
-	 *
-	 * @var string
 	 */
-	const V_PAY = 'V_PAY';
+	const string V_PAY = 'V_PAY';
 
 	/**
 	 * Payment brand 'CARDS'.
@@ -83,10 +67,8 @@ final class PaymentBrands {
 	 *
 	 * Dutch: De waarde CARDS zorgt ervoor dat de consument kan kiezen uit de betaalmethoden:
 	 * MASTERCARD, VISA, BANCONTACT, MAESTRO en V_PAY.
-	 *
-	 * @var string
 	 */
-	const CARDS = 'CARDS';
+	const string CARDS = 'CARDS';
 
 	/**
 	 * Map payment methods to payment brands.
@@ -118,11 +100,7 @@ final class PaymentBrands {
 			return null;
 		}
 
-		if ( isset( self::$map[ $payment_method ] ) ) {
-			return self::$map[ $payment_method ];
-		}
-
-		return $fallback;
+		return self::$map[ $payment_method ] ?? $fallback;
 	}
 
 	/**

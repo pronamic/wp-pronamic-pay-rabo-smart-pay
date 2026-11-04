@@ -265,9 +265,7 @@ final class Gateway extends Core_Gateway {
 
 				$unit_price = $line->get_unit_price();
 
-				if ( null === $unit_price ) {
-					$unit_price = new Money();
-				}
+				$unit_price ??= new Money();
 
 				$quantity = $line->get_quantity();
 

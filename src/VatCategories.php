@@ -19,29 +19,21 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 final class VatCategories {
 	/**
 	 * Category 'Hoog'.
-	 *
-	 * @var string
 	 */
-	const HIGH = '1';
+	const string HIGH = '1';
 
 	/**
 	 * Category 'Laag'.
-	 *
-	 * @var string
 	 */
-	const LOW = '2';
+	const string LOW = '2';
 
 	/**
 	 * Category 'Nul (0%)'.
-	 *
-	 * @var string
 	 */
-	const ZERO = '3';
+	const string ZERO = '3';
 
 	/**
 	 * Category 'Geen (vrijgesteld van btw)'.
-	 *
-	 * @var string
 	 */
-	const EXEMPTED = '4';
+	const string EXEMPTED = '4';
 }

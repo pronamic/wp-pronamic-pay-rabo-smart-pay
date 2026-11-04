@@ -20,15 +20,11 @@ final class PaymentBrandForce {
 	/**
 	 * In the case of FORCE_ONCE, the indicated paymentBrand is only enforced on the first
 	 * transaction. If this fails, the consumer can still choose another payment method.
-	 *
-	 * @var string
 	 */
-	const FORCE_ONCE = 'FORCE_ONCE';
+	const string FORCE_ONCE = 'FORCE_ONCE';
 
 	/**
 	 * When FORCE_ALWAYS is chosen, the consumer can not choose another payment method.
-	 *
-	 * @var string
 	 */
-	const FORCE_ALWAYS = 'FORCE_ALWAYS';
+	const string FORCE_ALWAYS = 'FORCE_ALWAYS';
 }

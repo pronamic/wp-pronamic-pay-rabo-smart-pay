@@ -18,24 +18,18 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 final class OrderStatus {
 	/**
 	 * Successful payment of the order.
-	 *
-	 * @var string
 	 */
-	const COMPLETED = 'COMPLETED';
+	const string COMPLETED = 'COMPLETED';
 
 	/**
 	 * The payment was cancelled.
-	 *
-	 * @var string
 	 */
-	const CANCELLED = 'CANCELLED';
+	const string CANCELLED = 'CANCELLED';
 
 	/**
 	 * The consumer has not paid within the stipulated period.
-	 *
-	 * @var string
 	 */
-	const EXPIRED = 'EXPIRED';
+	const string EXPIRED = 'EXPIRED';
 
 	/**
 	 * In progress.
@@ -45,9 +39,8 @@ final class OrderStatus {
 	 * possible outcome of an iDEAL or credit card payment.
 	 *
 	 * @link https://developer.rabobank.nl/rabo-smart-pay-online-payment-api#customer-returns-to-the-web-shop
-	 * @var string
 	 */
-	const IN_PROGRESS = 'IN_PROGRESS';
+	const string IN_PROGRESS = 'IN_PROGRESS';
 
 	/**
 	 * Transform Rabo Smart Pay order status to Pronamic Pay status.
@@ -56,17 +49,12 @@ final class OrderStatus {
 	 * @return string|null
 	 */
 	public static function transform( $status ) {
-		switch ( $status ) {
-			case self::COMPLETED:
-				return PaymentStatus::SUCCESS;
-			case self::CANCELLED:
-				return PaymentStatus::CANCELLED;
-			case self::EXPIRED:
-				return PaymentStatus::EXPIRED;
-			case self::IN_PROGRESS:
-				return PaymentStatus::OPEN;
-			default:
-				return null;
-		}
+		return match ( $status ) {
+			self::COMPLETED => PaymentStatus::SUCCESS,
+			self::CANCELLED => PaymentStatus::CANCELLED,
+			self::EXPIRED => PaymentStatus::EXPIRED,
+			self::IN_PROGRESS => PaymentStatus::OPEN,
+			default => null,
+		};
 	}
 }

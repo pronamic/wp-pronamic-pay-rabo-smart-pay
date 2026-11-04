@@ -21,17 +21,13 @@ use Pronamic\WordPress\Pay\Payments\PaymentLineType;
 final class ProductCategories {
 	/**
 	 * Product category 'PHYSICAL'.
-	 *
-	 * @var string
 	 */
-	const PHYSICAL = 'PHYSICAL';
+	const string PHYSICAL = 'PHYSICAL';
 
 	/**
 	 * Product category 'DIGITAL'.
-	 *
-	 * @var string
 	 */
-	const DIGITAL = 'DIGITAL';
+	const string DIGITAL = 'DIGITAL';
 
 	/**
 	 * Transform Pronamic payment line type to OmniKassa 2.0 product category.
@@ -40,14 +36,9 @@ final class ProductCategories {
 	 * @return string
 	 */
 	public static function transform( $type ) {
-		switch ( $type ) {
-			case PaymentLineType::PHYSICAL:
-				return self::PHYSICAL;
-			case PaymentLineType::DIGITAL:
-			case PaymentLineType::DISCOUNT:
-			case PaymentLineType::SHIPPING:
-			default:
-				return self::DIGITAL;
-		}
+		return match ( $type ) {
+			PaymentLineType::PHYSICAL => self::PHYSICAL,
+			default => self::DIGITAL,
+		};
 	}
 }

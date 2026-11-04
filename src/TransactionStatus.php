@@ -16,36 +16,26 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 final class TransactionStatus {
 	/**
 	 * Success.
-	 *
-	 * @var string
 	 */
-	const SUCCESS = 'SUCCESS';
+	const string SUCCESS = 'SUCCESS';
 
 	/**
 	 * Accepted.
-	 *
-	 * @var string
 	 */
-	const ACCEPTED = 'ACCEPTED';
+	const string ACCEPTED = 'ACCEPTED';
 
 	/**
 	 * Cancelled.
-	 *
-	 * @var string
 	 */
-	const CANCELLED = 'CANCELLED';
+	const string CANCELLED = 'CANCELLED';
 
 	/**
 	 * Expired.
-	 *
-	 * @var string
 	 */
-	const EXPIRED = 'EXPIRED';
+	const string EXPIRED = 'EXPIRED';
 
 	/**
 	 * Failure.
-	 *
-	 * @var string
 	 */
-	const FAILURE = 'FAILURE';
+	const string FAILURE = 'FAILURE';
 }
