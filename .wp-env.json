@@ -14,7 +14,8 @@
 		"https://downloads.wordpress.org/plugin/wp-plugin-dependencies.zip"
 	],
 	"mappings": {
-		"wp-content/plugins/pronamic-pay-rabo-smart-pay": "."
+		"wp-content/plugins/pronamic-pay-rabo-smart-pay-dev": "./",
+		"wp-content/plugins/pronamic-pay-rabo-smart-pay": "./build/pronamic-pay-rabo-smart-pay/"
 	},
 	"lifecycleScripts": {
 		"afterStart": "wp-env run cli wp language core install nl_NL --activate && wp-env run cli wp language plugin install --all nl_NL"
