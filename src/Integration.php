@@ -153,7 +153,7 @@ final class Integration extends AbstractGatewayIntegration {
 			'section'     => 'advanced',
 			'title'       => \__( 'Order ID', 'pronamic-pay-rabo-smart-pay' ),
 			'tooltip'     => \sprintf(
-				/* translators: %s: <code>merchantOrderId</code> */
+				/* translators: %s: Rabo Smart Pay field name */
 				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic-pay-rabo-smart-pay' ),
 				$code_field
 			),
@@ -178,7 +178,7 @@ final class Integration extends AbstractGatewayIntegration {
 			'section'     => 'advanced',
 			'title'       => \__( 'Skip hosted result page', 'pronamic-pay-rabo-smart-pay' ),
 			'tooltip'     => \sprintf(
-				/* translators: %s: <code>skipHppResultPage</code> */
+				/* translators: %s: Rabo Smart Pay field name */
 				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic-pay-rabo-smart-pay' ),
 				$code_field
 			),
