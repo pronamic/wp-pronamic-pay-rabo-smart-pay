@@ -6,6 +6,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Added the customer's full name as `customerInformation.fullName` to the order announcement. Rabo Smart Pay uses this field as the preferred source for the customer name in the dashboard: https://github.com/rabobank-nederland/omnikassa-sdk-doc#customer-name-dashboard
+
 ### Changed
 
 - Changed the API base URLs to the new Rabo Smart Pay domains: `https://api.pay.rabobank.nl/omnikassa-api/` (production) and `https://api.pay-sandbox.rabobank.nl/omnikassa-api/` (sandbox), replacing `https://betalen.rabobank.nl/omnikassa-api(-sandbox)/`. The Rabobank PHP SDK switched to these domains in version 1.18.0: https://github.com/rabobank-nederland/omnikassa-php-sdk#version-1180

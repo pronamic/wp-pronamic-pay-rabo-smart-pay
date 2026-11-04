@@ -220,6 +220,12 @@ final class Gateway extends Core_Gateway {
 
 			if ( null !== $name ) {
 				$customer_information->set_initials( $name->get_initials() );
+
+				$full_name = (string) $name;
+
+				if ( '' !== $full_name ) {
+					$customer_information->set_full_name( DataHelper::sanitize_an( $full_name, 128 ) );
+				}
 			}
 
 			$order->set_customer_information( $customer_information );
