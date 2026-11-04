@@ -3,6 +3,12 @@
 <ruleset name="WordPress Pay Rabo Smart Pay rules">
 	<file>.</file>
 
+	<exclude-pattern type="relative">^build/*</exclude-pattern>
+	<exclude-pattern type="relative">^node_modules/*</exclude-pattern>
+	<exclude-pattern type="relative">^vendor/*</exclude-pattern>
+	<exclude-pattern type="relative">^wordpress/*</exclude-pattern>
+	<exclude-pattern type="relative">^wp-content/*</exclude-pattern>
+
 	<exclude-pattern>tests/bootstrap.php</exclude-pattern>
 	<exclude-pattern>tests/wp-config.php</exclude-pattern>
 
@@ -91,15 +97,6 @@
 			<property name="text_domain" type="array">
 				<element value="pronamic-pay-rabo-smart-pay" />
 			</property>
-		</properties>
-	</rule>
-
-	<rule ref="WordPress.Utils.I18nTextDomainFixer">
-		<properties>
-			<property name="old_text_domain" type="array">
-				<element value="pronamic_ideal" />
-			</property>
-			<property name="new_text_domain" value="pronamic-pay-rabo-smart-pay" />
 		</properties>
 	</rule>
 
