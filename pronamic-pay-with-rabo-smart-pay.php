@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Pronamic Pay with Rabo Smart Pay
  * Plugin URI: https://www.pronamic.eu/plugins/pronamic-pay-with-rabo-smart-pay/
- * Description:
+ * Description: Accept payments in WordPress via Rabo Smart Pay (formerly Rabo OmniKassa 2.0) with the Pronamic Pay payment processing library.
  *
  * Version: 4.11.0
  * Requires at least: 5.9
