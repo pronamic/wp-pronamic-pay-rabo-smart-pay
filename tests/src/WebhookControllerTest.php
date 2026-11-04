@@ -95,7 +95,7 @@ class WebhookControllerTest extends TestCase {
 		 * `gatekeeper/refresh` request.
 		 */
 		$this->http_factory->fake(
-			'https://betalen.rabobank.nl/omnikassa-api-sandbox/gatekeeper/refresh',
+			'https://api.pay-sandbox.rabobank.nl/omnikassa-api/gatekeeper/refresh',
 			__DIR__ . '/../http/gatekeeper-refresh.http'
 		);
 
@@ -104,7 +104,7 @@ class WebhookControllerTest extends TestCase {
 		 * `order/server/api/v2/order` request.
 		 */
 		$this->http_factory->fake(
-			'https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/v2/order',
+			'https://api.pay-sandbox.rabobank.nl/omnikassa-api/order/server/api/v2/order',
 			__DIR__ . '/../http/announce-order-response.http'
 		);
 
@@ -126,7 +126,7 @@ class WebhookControllerTest extends TestCase {
 		 * prepare a fake HTTP response to mock the API response.
 		 */
 		$this->http_factory->fake(
-			'https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/v2/events/results/merchant.order.status.changed',
+			'https://api.pay-sandbox.rabobank.nl/omnikassa-api/order/server/api/v2/events/results/merchant.order.status.changed',
 			$response_file
 		);
 

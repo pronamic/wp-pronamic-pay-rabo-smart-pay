@@ -67,7 +67,7 @@ add_filter( 'pronamic_pay_omnikassa_2_merchant_return_url', function( $url ) {
 ### Refresh
 
 ```
-curl --request GET https://betalen.rabobank.nl/omnikassa-api/gatekeeper/refresh \
+curl --request GET https://api.pay.rabobank.nl/omnikassa-api/gatekeeper/refresh \
 	--header "Authorization: Bearer __refresh_token__" \
 	--connect-timeout 5 \
 	--max-time 5 \
@@ -78,7 +78,7 @@ curl --request GET https://betalen.rabobank.nl/omnikassa-api/gatekeeper/refresh 
 ### Order
 
 ```
-curl --request POST https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/order \
+curl --request POST https://api.pay-sandbox.rabobank.nl/omnikassa-api/order/server/api/order \
 	--header "Authorization: Bearer __refresh_token__" \
 	--connect-timeout 5 \
 	--max-time 5 \
@@ -102,7 +102,7 @@ http POST https://example.com/wp-json/pronamic-pay/omnikassa-2/v1/webhook @tests
 ### Event
 
 ```
-curl --request GET https://betalen.rabobank.nl/omnikassa-api-sandbox/order/server/api/events/results/merchant.order.status.changed \
+curl --request GET https://api.pay-sandbox.rabobank.nl/omnikassa-api/order/server/api/events/results/merchant.order.status.changed \
 	--header "Authorization: Bearer __refresh_token__" \
 	--connect-timeout 5 \
 	--max-time 5 \
@@ -111,7 +111,7 @@ curl --request GET https://betalen.rabobank.nl/omnikassa-api-sandbox/order/serve
 ```
 
 ```
-curl --request GET https://betalen.rabobank.nl/omnikassa-api/order/server/api/events/results/merchant.order.status.changed \
+curl --request GET https://api.pay.rabobank.nl/omnikassa-api/order/server/api/events/results/merchant.order.status.changed \
 	--header "Authorization: Bearer __refresh_token__" \
 	--connect-timeout 5 \
 	--max-time 5 \

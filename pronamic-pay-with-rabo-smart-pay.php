@@ -48,7 +48,7 @@ add_filter(
 	static function ( $gateways ) {
 		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Integration(
 			[
-				'api_url' => 'https://betalen.rabobank.nl/omnikassa-api/',
+				'api_url' => 'https://api.pay.rabobank.nl/omnikassa-api/',
 				'id'      => 'rabobank-omnikassa-2',
 				'mode'    => 'live',
 				'name'    => 'Rabobank - Rabo Smart Pay',
@@ -57,7 +57,7 @@ add_filter(
 
 		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\OmniKassa2\Integration(
 			[
-				'api_url' => 'https://betalen.rabobank.nl/omnikassa-api-sandbox/',
+				'api_url' => 'https://api.pay-sandbox.rabobank.nl/omnikassa-api/',
 				'id'      => 'rabobank-omnikassa-2-sandbox',
 				'mode'    => 'test',
 				'name'    => 'Rabobank - Rabo Smart Pay - Sandbox',
