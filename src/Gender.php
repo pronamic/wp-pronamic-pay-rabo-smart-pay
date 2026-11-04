@@ -22,12 +22,12 @@ final class Gender {
 	/**
 	 * Female.
 	 */
-	const string FEMALE = 'F';
+	public const string FEMALE = 'F';
 
 	/**
 	 * Male.
 	 */
-	const string MALE = 'M';
+	public const string MALE = 'M';
 
 	/**
 	 * Transform WordPress pay gender to OmniKassa gender.

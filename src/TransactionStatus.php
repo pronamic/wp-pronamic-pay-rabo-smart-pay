@@ -17,25 +17,25 @@ final class TransactionStatus {
 	/**
 	 * Success.
 	 */
-	const string SUCCESS = 'SUCCESS';
+	public const string SUCCESS = 'SUCCESS';
 
 	/**
 	 * Accepted.
 	 */
-	const string ACCEPTED = 'ACCEPTED';
+	public const string ACCEPTED = 'ACCEPTED';
 
 	/**
 	 * Cancelled.
 	 */
-	const string CANCELLED = 'CANCELLED';
+	public const string CANCELLED = 'CANCELLED';
 
 	/**
 	 * Expired.
 	 */
-	const string EXPIRED = 'EXPIRED';
+	public const string EXPIRED = 'EXPIRED';
 
 	/**
 	 * Failure.
 	 */
-	const string FAILURE = 'FAILURE';
+	public const string FAILURE = 'FAILURE';
 }

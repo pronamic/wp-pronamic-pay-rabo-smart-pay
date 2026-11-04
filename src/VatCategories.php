@@ -20,20 +20,20 @@ final class VatCategories {
 	/**
 	 * Category 'Hoog'.
 	 */
-	const string HIGH = '1';
+	public const string HIGH = '1';
 
 	/**
 	 * Category 'Laag'.
 	 */
-	const string LOW = '2';
+	public const string LOW = '2';
 
 	/**
 	 * Category 'Nul (0%)'.
 	 */
-	const string ZERO = '3';
+	public const string ZERO = '3';
 
 	/**
 	 * Category 'Geen (vrijgesteld van btw)'.
 	 */
-	const string EXEMPTED = '4';
+	public const string EXEMPTED = '4';
 }

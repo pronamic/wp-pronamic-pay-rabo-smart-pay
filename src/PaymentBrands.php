@@ -22,42 +22,42 @@ final class PaymentBrands {
 	/**
 	 * Payment brand 'IDEAL'.
 	 */
-	const string IDEAL = 'IDEAL';
+	public const string IDEAL = 'IDEAL';
 
 	/**
 	 * Payment brand 'PAYPAL'.
 	 */
-	const string PAYPAL = 'PAYPAL';
+	public const string PAYPAL = 'PAYPAL';
 
 	/**
 	 * Payment brand 'MASTERCARD'.
 	 */
-	const string MASTERCARD = 'MASTERCARD';
+	public const string MASTERCARD = 'MASTERCARD';
 
 	/**
 	 * Payment brand 'VISA'.
 	 */
-	const string VISA = 'VISA';
+	public const string VISA = 'VISA';
 
 	/**
 	 * Payment brand 'BANCONTACT'.
 	 */
-	const string BANCONTACT = 'BANCONTACT';
+	public const string BANCONTACT = 'BANCONTACT';
 
 	/**
 	 * Payment brand 'MAESTRO'.
 	 */
-	const string MAESTRO = 'MAESTRO';
+	public const string MAESTRO = 'MAESTRO';
 
 	/**
 	 * Payment brand 'SOFORT'.
 	 */
-	const string SOFORT = 'SOFORT';
+	public const string SOFORT = 'SOFORT';
 
 	/**
 	 * Payment brand 'V_PAY'.
 	 */
-	const string V_PAY = 'V_PAY';
+	public const string V_PAY = 'V_PAY';
 
 	/**
 	 * Payment brand 'CARDS'.
@@ -68,7 +68,7 @@ final class PaymentBrands {
 	 * Dutch: De waarde CARDS zorgt ervoor dat de consument kan kiezen uit de betaalmethoden:
 	 * MASTERCARD, VISA, BANCONTACT, MAESTRO en V_PAY.
 	 */
-	const string CARDS = 'CARDS';
+	public const string CARDS = 'CARDS';
 
 	/**
 	 * Map payment methods to payment brands.

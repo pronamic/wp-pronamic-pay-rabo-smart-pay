@@ -22,12 +22,12 @@ final class Client {
 	/**
 	 * URL OmniKassa API.
 	 */
-	const string URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
+	public const string URL_PRODUCTION = 'https://betalen.rabobank.nl/omnikassa-api/';
 
 	/**
 	 * URL OmniKassa sandbox API.
 	 */
-	const string URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
+	public const string URL_SANDBOX = 'https://betalen.rabobank.nl/omnikassa-api-sandbox/';
 
 	/**
 	 * Config.

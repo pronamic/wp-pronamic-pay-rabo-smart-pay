@@ -18,8 +18,6 @@
 
 		<exclude name="SlevomatCodingStandard.Attributes.AttributesOrder" />
 
-		<!-- Class constant visibility modifiers - As of PHP 7.1.0 -->
-		<exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility" />
 		<exclude name="SlevomatCodingStandard.Classes.ClassStructure.IncorrectGroupOrder" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix" />
 

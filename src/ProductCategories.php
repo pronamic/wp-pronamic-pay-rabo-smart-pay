@@ -22,12 +22,12 @@ final class ProductCategories {
 	/**
 	 * Product category 'PHYSICAL'.
 	 */
-	const string PHYSICAL = 'PHYSICAL';
+	public const string PHYSICAL = 'PHYSICAL';
 
 	/**
 	 * Product category 'DIGITAL'.
 	 */
-	const string DIGITAL = 'DIGITAL';
+	public const string DIGITAL = 'DIGITAL';
 
 	/**
 	 * Transform Pronamic payment line type to OmniKassa 2.0 product category.

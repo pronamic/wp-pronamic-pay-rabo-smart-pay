@@ -19,17 +19,17 @@ final class OrderStatus {
 	/**
 	 * Successful payment of the order.
 	 */
-	const string COMPLETED = 'COMPLETED';
+	public const string COMPLETED = 'COMPLETED';
 
 	/**
 	 * The payment was cancelled.
 	 */
-	const string CANCELLED = 'CANCELLED';
+	public const string CANCELLED = 'CANCELLED';
 
 	/**
 	 * The consumer has not paid within the stipulated period.
 	 */
-	const string EXPIRED = 'EXPIRED';
+	public const string EXPIRED = 'EXPIRED';
 
 	/**
 	 * In progress.
@@ -40,7 +40,7 @@ final class OrderStatus {
 	 *
 	 * @link https://developer.rabobank.nl/rabo-smart-pay-online-payment-api#customer-returns-to-the-web-shop
 	 */
-	const string IN_PROGRESS = 'IN_PROGRESS';
+	public const string IN_PROGRESS = 'IN_PROGRESS';
 
 	/**
 	 * Transform Rabo Smart Pay order status to Pronamic Pay status.

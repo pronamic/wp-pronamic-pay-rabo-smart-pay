@@ -22,7 +22,7 @@ final class Integration extends AbstractGatewayIntegration {
 	/**
 	 * REST route namespace.
 	 */
-	const string REST_ROUTE_NAMESPACE = 'pronamic-pay/omnikassa-2/v1';
+	public const string REST_ROUTE_NAMESPACE = 'pronamic-pay/omnikassa-2/v1';
 
 	/**
 	 * API URL.
