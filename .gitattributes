@@ -1,5 +1,6 @@
 *.http text eol=crlf
 
+/.distignore       export-ignore
 /.editorconfig     export-ignore
 /.eslintignore     export-ignore
 /.eslintrc         export-ignore

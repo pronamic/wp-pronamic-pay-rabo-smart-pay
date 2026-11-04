@@ -73,10 +73,19 @@
 		"szepeviktor/phpstan-wordpress": "^1.3",
 		"vimeo/psalm": "^5.24",
 		"wordpress/sqlite-database-integration": "^2.1",
+		"wp-cli/dist-archive-command": "*",
+		"wp-cli/wp-cli-bundle": "*",
 		"wp-phpunit/wp-phpunit": "^6.5",
 		"yoast/phpunit-polyfills": "^2.0"
 	},
 	"scripts": {
+		"build": [
+			"rm -rf ./build/stage-1",
+			"rsync --recursive --verbose --exclude-from=.distignore --exclude=/vendor/ ./ ./build/stage-1/",
+			"composer install --no-dev --prefer-dist --optimize-autoloader --working-dir=./build/stage-1/",
+			"rsync --recursive --delete --delete-excluded --verbose --exclude-from=.distignore ./build/stage-1/ ./build/pronamic-pay-rabo-smart-pay/",
+			"vendor/bin/wp dist-archive ./build/pronamic-pay-rabo-smart-pay/ --plugin-dirname=pronamic-pay-rabo-smart-pay --force"
+		],
 		"ci": [
 			"@phpcs",
 			"@phplint",
@@ -86,6 +95,7 @@
 		],
 		"coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text",
 		"coveralls": "vendor/bin/php-coveralls -v",
+		"make-pot": "vendor/bin/wp i18n make-pot . languages/pronamic-pay-rabo-smart-pay.pot --slug=pronamic-pay-rabo-smart-pay --domain=pronamic-pay-rabo-smart-pay --exclude=build,docs,documentation,node_modules,tests,vendor,wordpress,wp-content",
 		"phpcbf": "XDEBUG_MODE=off vendor/bin/phpcbf",
 		"phpcs": "XDEBUG_MODE=off vendor/bin/phpcs -s -v",
 		"phplint": "vendor/bin/phplint",
