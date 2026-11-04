@@ -22,22 +22,12 @@
 ## Status
 
 [![GitHub Stars](https://img.shields.io/github/tag/pronamic/wp-pronamic-pay-rabo-smart-pay.svg?style=social&label=Star)](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay)
-[![Build Status](https://travis-ci.org/wp-pay-gateways/omnikassa-2.svg?branch=master)](https://travis-ci.org/wp-pay-gateways/omnikassa-2)
-[![Coverage Status](https://coveralls.io/repos/wp-pay-gateways/omnikassa-2/badge.svg?branch=master&service=github)](https://coveralls.io/github/wp-pay-gateways/omnikassa-2?branch=master)
+[![CI](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/actions/workflows/ci.yaml/badge.svg)](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/actions/workflows/ci.yaml)
 [![Latest Stable Version](https://img.shields.io/packagist/v/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
 [![Total Downloads](https://img.shields.io/packagist/dt/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
 [![Packagist Pre Release](https://img.shields.io/packagist/vpre/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
 [![License](https://img.shields.io/packagist/l/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)
-[![Built with Grunt](https://gruntjs.com/cdn/builtwith.svg)](http://gruntjs.com/)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/build.png?b=master)](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/build-status/master)
-[![Code Intelligence Status](https://scrutinizer-ci.com/g/wp-pay-gateways/omnikassa-2/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
-[![Maintainability](https://api.codeclimate.com/v1/badges/d115fb4e5c1ae697a0cf/maintainability)](https://codeclimate.com/github/wp-pay-gateways/omnikassa-2/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/d115fb4e5c1ae697a0cf/test_coverage)](https://codeclimate.com/github/wp-pay-gateways/omnikassa-2/test_coverage)
-[![CircleCI](https://circleci.com/gh/wp-pay-gateways/omnikassa-2/tree/master.svg)](https://circleci.com/gh/wp-pay-gateways/omnikassa-2/tree/master)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_shield)
 
 ## WordPress Filters
 
@@ -145,4 +135,5 @@ However, the WordPress REST API has the option to override the HTTP method via t
 https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwp-pay-gateways%2Fomnikassa-2?ref=badge_large)
+
+GPL-3.0-or-later
