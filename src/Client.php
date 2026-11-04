@@ -98,7 +98,7 @@ final class Client {
 		 * Mainly because the OmniKassa servers sometimes respond slowly when
 		 * starting AfterPay payments.
 		 *
-		 * @link https://github.com/wp-pay-gateways/omnikassa-2#pronamic_pay_omnikassa_2_request_args
+		 * @link https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay#pronamic_pay_omnikassa_2_request_args
 		 * @param array $args WordPress remote request arguments.
 		 */
 		$args = \apply_filters( 'pronamic_pay_omnikassa_2_request_args', $args );

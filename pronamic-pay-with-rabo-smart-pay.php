@@ -16,7 +16,7 @@
  *
  * License: GPL-3.0-or-later
  *
- * GitHub URI: https://github.com/wp-pay-gateways/omnikassa-2
+ * GitHub URI: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2026 Pronamic

@@ -58,7 +58,7 @@ class OrderResultsTest extends TestCase {
 	 * Test order results v2.
 	 *
 	 * @link https://developer.rabobank.nl/product/10685/api/9770#/RaboSmartPayOnlinePaymentAPI_1013/operation/%2Forder%2Fserver%2Fapi%2Fv2%2Fevents%2Fresults%2Fmerchant.order.status.changed/get
-	 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+	 * @link https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues/21
 	 * @dataProvider order_results_provider
 	 * @param string   $file                      JSON test file.
 	 * @param string   $transaction_id            Transaction ID.

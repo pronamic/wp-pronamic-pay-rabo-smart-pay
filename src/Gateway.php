@@ -407,7 +407,7 @@ final class Gateway extends Core_Gateway {
 		 * in the slug of the payment so that the payment can be requested
 		 * efficiently.
 		 *
-		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+		 * @link https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues/21
 		 * @link https://github.com/pronamic/wp-pay-core/issues/146
 		 */
 		$slug = $this->get_payment_slug_for_omnikassa_order_id( $omnikassa_order_id );
@@ -443,7 +443,7 @@ final class Gateway extends Core_Gateway {
 		 * the transaction ID. This piece of code is still in this library for
 		 * backward compatibility and may be removed in the future.
 		 *
-		 * @link https://github.com/pronamic/wp-pronamic-pay-omnikassa-2/issues/21
+		 * @link https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues/21
 		 */
 		$payment = \get_pronamic_payment_by_transaction_id( $omnikassa_order_id );
 

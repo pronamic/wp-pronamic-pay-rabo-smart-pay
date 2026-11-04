@@ -21,7 +21,7 @@
 
 ## Status
 
-[![GitHub Stars](https://img.shields.io/github/tag/wp-pay-gateways/omnikassa-2.svg?style=social&label=Star)](https://github.com/wp-pay-gateways/omnikassa-2)
+[![GitHub Stars](https://img.shields.io/github/tag/pronamic/wp-pronamic-pay-rabo-smart-pay.svg?style=social&label=Star)](https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay)
 [![Build Status](https://travis-ci.org/wp-pay-gateways/omnikassa-2.svg?branch=master)](https://travis-ci.org/wp-pay-gateways/omnikassa-2)
 [![Coverage Status](https://coveralls.io/repos/wp-pay-gateways/omnikassa-2/badge.svg?branch=master&service=github)](https://coveralls.io/github/wp-pay-gateways/omnikassa-2?branch=master)
 [![Latest Stable Version](https://img.shields.io/packagist/v/wp-pay-gateways/omnikassa-2.svg)](https://packagist.org/packages/wp-pay-gateways/omnikassa-2)

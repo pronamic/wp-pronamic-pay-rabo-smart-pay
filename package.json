@@ -19,7 +19,7 @@
 	"homepage": "http://www.wp-pay.org/gateways/omnikassa-2/",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wp-pay-gateways/omnikassa-2"
+		"url": "https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay"
 	},
 	"contributors": [
 		{
@@ -29,7 +29,7 @@
 		}
 	],
 	"bugs": {
-		"url": "https://github.com/wp-pay-gateways/omnikassa-2/issues"
+		"url": "https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues"
 	},
 	"devDependencies": {
 		"@wordpress/env": "^12.1.0",
