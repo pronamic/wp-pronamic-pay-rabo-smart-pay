@@ -253,7 +253,7 @@ final class Gateway extends Core_Gateway {
 			foreach ( $lines as $line ) {
 				$name = \sprintf(
 					/* translators: %s: item index */
-					\__( 'Item %s', 'pronamic_ideal' ),
+					\__( 'Item %s', 'pronamic-pay-rabo-smart-pay' ),
 					$i++
 				);
 
@@ -507,7 +507,7 @@ final class Gateway extends Core_Gateway {
 				// Note.
 				$note = \sprintf(
 					'<p>%s</p><pre>%s</pre>',
-					\__( 'Rabo Smart Pay webhook URL requested:', 'pronamic_ideal' ),
+					\__( 'Rabo Smart Pay webhook URL requested:', 'pronamic-pay-rabo-smart-pay' ),
 					(string) \wp_json_encode( $order_result, \JSON_PRETTY_PRINT )
 				);
 

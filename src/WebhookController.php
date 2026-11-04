@@ -57,7 +57,7 @@ final class WebhookController {
 			[
 				'args'                => [
 					'id' => [
-						'description' => \__( 'Unique identifier for the gateway configuration post.', 'pronamic_ideal' ),
+						'description' => \__( 'Unique identifier for the gateway configuration post.', 'pronamic-pay-rabo-smart-pay' ),
 						'type'        => 'integer',
 					],
 				],
@@ -129,7 +129,7 @@ final class WebhookController {
 			// Invalid input data.
 			return new \WP_Error(
 				'rest_omnikassa_2_notification_invalid',
-				\__( 'Invalid Rabo Smart Pay notification.', 'pronamic_ideal' ),
+				\__( 'Invalid Rabo Smart Pay notification.', 'pronamic-pay-rabo-smart-pay' ),
 				[
 					'notification' => $json,
 					'status'       => 400,
@@ -143,7 +143,7 @@ final class WebhookController {
 		if ( ! \is_numeric( $id ) ) {
 			return new \WP_Error(
 				'rest_omnikassa_2_gateway_no_id',
-				\__( 'No gateway ID given in `id` parameter.', 'pronamic_ideal' )
+				\__( 'No gateway ID given in `id` parameter.', 'pronamic-pay-rabo-smart-pay' )
 			);
 		}
 
@@ -153,7 +153,7 @@ final class WebhookController {
 			// Invalid gateway.
 			return new \WP_Error(
 				'rest_omnikassa_2_gateway_invalid',
-				\__( 'Invalid Rabo Smart Pay gateway.', 'pronamic_ideal' ),
+				\__( 'Invalid Rabo Smart Pay gateway.', 'pronamic-pay-rabo-smart-pay' ),
 				[
 					'id'     => $id,
 					'status' => 400,

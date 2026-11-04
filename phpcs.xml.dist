@@ -89,8 +89,17 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
+				<element value="pronamic-pay-rabo-smart-pay" />
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.Utils.I18nTextDomainFixer">
+		<properties>
+			<property name="old_text_domain" type="array">
 				<element value="pronamic_ideal" />
 			</property>
+			<property name="new_text_domain" value="pronamic-pay-rabo-smart-pay" />
 		</properties>
 	</rule>
 

@@ -56,19 +56,19 @@ final class ReturnController {
 			[
 				'args'                => [
 					'order_id'   => [
-						'description' => \__( 'OmniKassa order ID.', 'pronamic_ideal' ),
+						'description' => \__( 'OmniKassa order ID.', 'pronamic-pay-rabo-smart-pay' ),
 						'type'        => 'string',
 					],
 					'payment_id' => [
-						'description' => \__( 'Unique identifier for the payment.', 'pronamic_ideal' ),
+						'description' => \__( 'Unique identifier for the payment.', 'pronamic-pay-rabo-smart-pay' ),
 						'type'        => 'integer',
 					],
 					'signature'  => [
-						'description' => \__( 'OmniKassa signature.', 'pronamic_ideal' ),
+						'description' => \__( 'OmniKassa signature.', 'pronamic-pay-rabo-smart-pay' ),
 						'type'        => 'string',
 					],
 					'status'     => [
-						'description' => \__( 'OmniKassa order status.', 'pronamic_ideal' ),
+						'description' => \__( 'OmniKassa order status.', 'pronamic-pay-rabo-smart-pay' ),
 						'type'        => 'string',
 					],
 				],
@@ -120,7 +120,7 @@ final class ReturnController {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					/* translators: %s: Payment ID. */
-					\esc_html__( 'No payment found by `payment_id` variable: %s.', 'pronamic_ideal' ),
+					\esc_html__( 'No payment found by `payment_id` variable: %s.', 'pronamic-pay-rabo-smart-pay' ),
 					\esc_html( (string) $payment_id )
 				)
 			);
@@ -154,7 +154,7 @@ final class ReturnController {
 			$note = '';
 
 			$note .= '<p>';
-			$note .= \__( 'Rabo Smart Pay return URL requested:', 'pronamic_ideal' );
+			$note .= \__( 'Rabo Smart Pay return URL requested:', 'pronamic-pay-rabo-smart-pay' );
 			$note .= '</p>';
 
 			$note .= '<dl>';

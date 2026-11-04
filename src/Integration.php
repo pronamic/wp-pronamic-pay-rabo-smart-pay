@@ -109,7 +109,7 @@ final class Integration extends AbstractGatewayIntegration {
 			'classes'  => [ 'code' ],
 			'meta_key' => '_pronamic_gateway_omnikassa_2_refresh_token',
 			'section'  => 'general',
-			'title'    => \_x( 'Refresh Token', 'omnikassa', 'pronamic_ideal' ),
+			'title'    => \_x( 'Refresh Token', 'omnikassa', 'pronamic-pay-rabo-smart-pay' ),
 			'type'     => 'textarea',
 		];
 
@@ -118,7 +118,7 @@ final class Integration extends AbstractGatewayIntegration {
 			'classes'  => [ 'large-text', 'code' ],
 			'meta_key' => '_pronamic_gateway_omnikassa_2_signing_key',
 			'section'  => 'general',
-			'title'    => \_x( 'Signing Key', 'omnikassa', 'pronamic_ideal' ),
+			'title'    => \_x( 'Signing Key', 'omnikassa', 'pronamic-pay-rabo-smart-pay' ),
 			'type'     => 'text',
 		];
 
@@ -133,11 +133,11 @@ final class Integration extends AbstractGatewayIntegration {
 					/* translators: %s: <code>merchantOrderId</code> */
 					\__(
 						'The Rabo Smart Pay %s field must consist strictly of 24 alphanumeric characters, other characters, such as ".", "@", " " (space), etc. are not allowed.',
-						'pronamic_ideal'
+						'pronamic-pay-rabo-smart-pay'
 					),
 					$code_field
 				),
-				\__( 'Available tags:', 'pronamic_ideal' ),
+				\__( 'Available tags:', 'pronamic-pay-rabo-smart-pay' ),
 				\sprintf(
 					'<code>%s</code> <code>%s</code>',
 					'{order_id}',
@@ -145,16 +145,16 @@ final class Integration extends AbstractGatewayIntegration {
 				),
 				\sprintf(
 					/* translators: %s: default code */
-					\__( 'Default: <code>%s</code>', 'pronamic_ideal' ),
+					\__( 'Default: <code>%s</code>', 'pronamic-pay-rabo-smart-pay' ),
 					'{payment_id}'
 				)
 			),
 			'meta_key'    => '_pronamic_gateway_omnikassa_2_order_id',
 			'section'     => 'advanced',
-			'title'       => \__( 'Order ID', 'pronamic_ideal' ),
+			'title'       => \__( 'Order ID', 'pronamic-pay-rabo-smart-pay' ),
 			'tooltip'     => \sprintf(
 				/* translators: %s: <code>merchantOrderId</code> */
-				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic_ideal' ),
+				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic-pay-rabo-smart-pay' ),
 				$code_field
 			),
 			'type'        => 'text',
@@ -169,17 +169,17 @@ final class Integration extends AbstractGatewayIntegration {
 				/* translators: %s: <code>skipHppResultPage</code> */
 				\__(
 					'The Rabo Smart Pay %s field makes it possible to skip the hosted result page (also referred to as the "Success" or "Thank you" page).',
-					'pronamic_ideal'
+					'pronamic-pay-rabo-smart-pay'
 				),
 				$code_field
 			),
-			'label'       => \__( 'Skip hosted result page', 'pronamic_ideal' ),
+			'label'       => \__( 'Skip hosted result page', 'pronamic-pay-rabo-smart-pay' ),
 			'meta_key'    => '_pronamic_gateway_omnikassa_2_skip_hosted_result_page',
 			'section'     => 'advanced',
-			'title'       => \__( 'Skip hosted result page', 'pronamic_ideal' ),
+			'title'       => \__( 'Skip hosted result page', 'pronamic-pay-rabo-smart-pay' ),
 			'tooltip'     => \sprintf(
 				/* translators: %s: <code>skipHppResultPage</code> */
-				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic_ideal' ),
+				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic-pay-rabo-smart-pay' ),
 				$code_field
 			),
 			'type'        => 'checkbox',
@@ -190,14 +190,14 @@ final class Integration extends AbstractGatewayIntegration {
 			'classes'  => [ 'large-text', 'code' ],
 			'readonly' => true,
 			'section'  => 'feedback',
-			'title'    => \__( 'Webhook URL', 'pronamic_ideal' ),
+			'title'    => \__( 'Webhook URL', 'pronamic-pay-rabo-smart-pay' ),
 			'tooltip'  => \sprintf(
 				/* translators: %s: payment provider name */
 				\__(
 					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
-					'pronamic_ideal'
+					'pronamic-pay-rabo-smart-pay'
 				),
-				\__( 'Rabo Smart Pay', 'pronamic_ideal' )
+				\__( 'Rabo Smart Pay', 'pronamic-pay-rabo-smart-pay' )
 			),
 			'type'     => 'text',
 			'value'    => \rest_url( self::REST_ROUTE_NAMESPACE . '/webhook/' . (string) \get_the_ID() ),
