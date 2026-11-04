@@ -169,7 +169,7 @@ final class Gateway extends Core_Gateway {
 	 *
 	 * @param Payment $payment Payment.
 	 * @return void
-	 * @throws \Exception Throws exception when payment could not start at Rabobank OmniKassa 2.0.
+	 * @throws \InvalidArgumentException Throws exception when a payment line has no quantity.
 	 * @see Core_Gateway::start()
 	 */
 	public function start( Payment $payment ) {
