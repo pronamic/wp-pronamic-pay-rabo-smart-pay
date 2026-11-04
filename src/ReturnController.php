@@ -104,7 +104,6 @@ final class ReturnController {
 	 * Get payment.
 	 *
 	 * @param WP_REST_Request $request WordPress REST API request.
-	 * @return Payment
 	 * @throws \InvalidArgumentException Throws exception when REST request does not contain valid payment ID.
 	 */
 	private function get_payment( WP_REST_Request $request ): Payment {

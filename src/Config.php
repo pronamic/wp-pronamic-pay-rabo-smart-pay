@@ -124,8 +124,6 @@ final class Config extends GatewayConfig implements JsonSerializable {
 
 	/**
 	 * Serialize to JSON.
-	 *
-	 * @return object
 	 */
 	public function jsonSerialize(): object {
 		return (object) [

@@ -43,8 +43,6 @@ final class AccessTokenController {
 
 	/**
 	 * Instance.
-	 *
-	 * @return self
 	 */
 	public static function instance(): self {
 		self::$instance ??= new self();

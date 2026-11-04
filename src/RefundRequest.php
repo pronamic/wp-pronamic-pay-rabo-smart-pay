@@ -94,8 +94,6 @@ final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 
 	/**
 	 * Get idempotence ID.
-	 *
-	 * @return string
 	 */
 	public function get_idempotence_id(): string {
 		return $this->idempotence_id;

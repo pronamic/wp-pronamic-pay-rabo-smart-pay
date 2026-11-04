@@ -19,8 +19,6 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 interface IdempotenceInterface {
 	/**
 	 * Get idempotence ID.
-	 *
-	 * @return string
 	 */
 	public function get_idempotence_id(): string;
 }
