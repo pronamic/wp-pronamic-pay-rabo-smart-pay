@@ -161,6 +161,16 @@ final class Order extends Message implements JsonSerializable {
 	private $skip_hosted_result_page;
 
 	/**
+	 * The reference to the order a consumer will find on their bank statement.
+	 *
+	 * May consist only of alphanumeric characters, max 24 characters.
+	 *
+	 * @link https://github.com/rabobank-nederland/omnikassa-sdk-doc#field-description
+	 * @var string|null
+	 */
+	private $shopper_bankstatement_reference;
+
+	/**
 	 * Construct order.
 	 *
 	 * @param string $merchant_order_id    Merchant order ID.
@@ -308,6 +318,16 @@ final class Order extends Message implements JsonSerializable {
 	}
 
 	/**
+	 * Set shopper bank statement reference.
+	 *
+	 * @param string|null $shopper_bankstatement_reference Shopper bank statement reference.
+	 * @return void
+	 */
+	public function set_shopper_bankstatement_reference( $shopper_bankstatement_reference ) {
+		$this->shopper_bankstatement_reference = $shopper_bankstatement_reference;
+	}
+
+	/**
 	 * Create and set new order items.
 	 *
 	 * @return OrderItems
@@ -369,6 +389,10 @@ final class Order extends Message implements JsonSerializable {
 
 		$data['timestamp']       = $this->timestamp->format( \DATE_ATOM );
 		$data['merchantOrderId'] = $this->merchant_order_id;
+
+		if ( null !== $this->shopper_bankstatement_reference ) {
+			$data['shopperBankstatementReference'] = $this->shopper_bankstatement_reference;
+		}
 
 		if ( null !== $this->description ) {
 			$data['description'] = $this->description;

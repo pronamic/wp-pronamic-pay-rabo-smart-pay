@@ -157,4 +157,21 @@ class OrderTest extends TestCase {
 
 		new Order( '12345 @ 67890 .', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
 	}
+
+	/**
+	 * Test shopper bank statement reference in JSON.
+	 */
+	public function test_shopper_bankstatement_reference() {
+		$order = new Order( 'order123', new Money( 'EUR', 22500 ), 'https://mijn.webwinkel.nl/betalingsresultaat' );
+
+		$data = (array) $order->jsonSerialize();
+
+		$this->assertArrayNotHasKey( 'shopperBankstatementReference', $data );
+
+		$order->set_shopper_bankstatement_reference( 'ORDER1234' );
+
+		$data = (array) $order->jsonSerialize();
+
+		$this->assertSame( 'ORDER1234', $data['shopperBankstatementReference'] );
+	}
 }

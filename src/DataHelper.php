@@ -124,6 +124,19 @@ final class DataHelper {
 	}
 
 	/**
+	 * Sanitize string to alphanumeric characters with the specified length.
+	 *
+	 * @param string $value  String.
+	 * @param int    $length Length.
+	 * @return string
+	 */
+	public static function sanitize_alphanumeric( $value, $length ) {
+		$sanitized = (string) \preg_replace( '/[^A-Za-z0-9]/', '', $value );
+
+		return \substr( $sanitized, 0, $length );
+	}
+
+	/**
 	 * Sanitize string to the specified length.
 	 *
 	 * @param string $value  String.

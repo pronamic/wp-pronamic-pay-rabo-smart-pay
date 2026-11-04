@@ -99,4 +99,30 @@ class DataHelperTest extends TestCase {
 			[ "line 1\r\nline 2\r\nline 3", 100, "line 1\r\nline 2\r\nline 3" ],
 		];
 	}
+
+	/**
+	 * Test sanitize alphanumeric.
+	 *
+	 * @dataProvider sanitize_alphanumeric_provider
+	 * @param string $value    String.
+	 * @param int    $length   Length.
+	 * @param string $expected Expected.
+	 */
+	public function test_sanitize_alphanumeric( $value, $length, $expected ) {
+		$this->assertSame( $expected, DataHelper::sanitize_alphanumeric( $value, $length ) );
+	}
+
+	/**
+	 * Sanitize alphanumeric provider.
+	 *
+	 * @return array<array<string|int>>
+	 */
+	public static function sanitize_alphanumeric_provider() {
+		return [
+			[ 'ORDER1234', 24, 'ORDER1234' ],
+			[ 'Order #1234 - Shop', 24, 'Order1234Shop' ],
+			[ 'Bestelling ë 12', 24, 'Bestelling12' ],
+			[ '1234567890123456789012345678', 24, '123456789012345678901234' ],
+		];
+	}
 }

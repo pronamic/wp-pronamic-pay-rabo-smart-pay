@@ -9,6 +9,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ### Added
 
 - Added the customer's full name as `customerInformation.fullName` to the order announcement. Rabo Smart Pay uses this field as the preferred source for the customer name in the dashboard: https://github.com/rabobank-nederland/omnikassa-sdk-doc#customer-name-dashboard
+- Added an optional "Bank statement reference" gateway setting for the Rabo Smart Pay `shopperBankstatementReference` field, the reference a customer finds on their bank statement. It supports the `{order_id}` and `{payment_id}` tags, keeps only alphanumeric characters and is limited to 24 characters. When empty, the field is not sent. See: https://github.com/rabobank-nederland/omnikassa-sdk-doc#field-description
 
 ### Changed
 
