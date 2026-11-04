@@ -40,7 +40,7 @@ final class Integration extends AbstractGatewayIntegration {
 		$args = \wp_parse_args(
 			$args,
 			[
-				'api_url'       => 'https://betalen.rabobank.nl/omnikassa-api/',
+				'api_url'       => 'https://api.pay.rabobank.nl/omnikassa-api/',
 				'dashboard_url' => 'https://bankieren.rabobank.nl/smartpay/dashboard/home',
 				'id'            => 'rabobank-omnikassa-2',
 				'manual_url'    => 'https://www.pronamicpay.com/en/manuals/how-to-connect-rabo-smart-pay-to-wordpress-with-pronamic-pay/',
