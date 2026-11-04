@@ -56,6 +56,16 @@ final class CustomerInformation implements JsonSerializable {
 	private $telephone_number;
 
 	/**
+	 * The full name of the consumer.
+	 *
+	 * Preferred way to show the name of the customer in the Rabo Smart Pay dashboard.
+	 *
+	 * @link https://github.com/rabobank-nederland/omnikassa-sdk-doc#customer-name-dashboard
+	 * @var string|null
+	 */
+	private $full_name;
+
+	/**
 	 * Set the e-mailadress of the consumer.
 	 *
 	 * @param string|null $email_address E-mailadress of the consumer.
@@ -116,6 +126,16 @@ final class CustomerInformation implements JsonSerializable {
 	}
 
 	/**
+	 * Set full name.
+	 *
+	 * @param string|null $full_name Full name.
+	 * @return void
+	 */
+	public function set_full_name( $full_name ) {
+		$this->full_name = $full_name;
+	}
+
+	/**
 	 * Get JSON.
 	 *
 	 * @return object
@@ -142,6 +162,10 @@ final class CustomerInformation implements JsonSerializable {
 
 		if ( null !== $this->telephone_number ) {
 			$data['telephoneNumber'] = $this->telephone_number;
+		}
+
+		if ( null !== $this->full_name ) {
+			$data['fullName'] = $this->full_name;
 		}
 
 		return (object) $data;
