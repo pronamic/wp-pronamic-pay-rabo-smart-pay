@@ -6,6 +6,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed the refund `Request-ID` header: it now uses a UUID v4 generated once per refund request instead of the per-request `wp_unique_id()` counter, so refunds are no longer at risk of being treated as duplicates. See also Rabobank PHP SDK 1.18.3: https://github.com/rabobank-nederland/omnikassa-php-sdk/releases/tag/v1.18.3
+
 ### Composer
 
 - Replaced development dependency `pronamic/wp-documentor` with `solvebeam/wp-hooks-documentor` `^1.5` for generating the hooks documentation in `docs/hooks.md`.
