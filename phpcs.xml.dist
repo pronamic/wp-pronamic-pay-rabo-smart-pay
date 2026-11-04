@@ -65,6 +65,9 @@
 		<exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators.DisallowedPostIncrementOperator" />
 		<exclude name="SlevomatCodingStandard.Operators.RequireOnlyStandaloneIncrementAndDecrementOperators.PostIncrementOperatorNotUsedStandalone" />
 
+		<!-- Conflicts with the WordPress first-class callable style `$this->method( ... )`, the spread operator spacing is checked by WordPress (Generic.WhiteSpace.SpreadOperatorSpacingAfter). -->
+		<exclude name="SlevomatCodingStandard.Operators.SpreadOperatorSpacing.IncorrectSpacesAfterOperator" />
+
 		<exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion.RequiredExplicitAssertion" />
 		<exclude name="SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses" />
 

@@ -39,7 +39,7 @@ final class ReturnController {
 	 * @return void
 	 */
 	public function setup() {
-		\add_action( 'rest_api_init', [ $this, 'rest_api_init' ], 10, 0 );
+		\add_action( 'rest_api_init', $this->rest_api_init( ... ), 10, 0 );
 	}
 
 	/**

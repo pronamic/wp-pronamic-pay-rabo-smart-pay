@@ -15,7 +15,6 @@ use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php80\Rector\Ternary\TernaryToNullsafeCoalesceRector;
-use Rector\Php81\Rector\Array_\ArrayToFirstClassCallableRector;
 
 return RectorConfig::configure()
 	->withPaths(
@@ -29,12 +28,6 @@ return RectorConfig::configure()
 	->withCodeQualityLevel( 0 )
 	->withSkip(
 		[
-			/**
-			 * Keep `[ $this, 'method' ]` callbacks, so hooks can still be
-			 * removed with `remove_action()` and checked with `has_action()`.
-			 */
-			ArrayToFirstClassCallableRector::class,
-
 			/**
 			 * Disallowed by our coding standard (see `phpcs.xml.dist`).
 			 */

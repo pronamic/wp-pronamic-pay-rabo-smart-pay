@@ -56,7 +56,7 @@ final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	 *
 	 * @var string
 	 */
-	private string $idempotence_id;
+	private readonly string $idempotence_id;
 
 	/**
 	 * Construct refund request.

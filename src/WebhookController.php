@@ -28,9 +28,9 @@ final class WebhookController {
 	 * @return void
 	 */
 	public function setup() {
-		\add_action( 'rest_api_init', [ $this, 'rest_api_init' ], 10, 0 );
+		\add_action( 'rest_api_init', $this->rest_api_init( ... ), 10, 0 );
 
-		\add_action( 'wp_loaded', [ $this, 'wp_loaded' ], 10, 0 );
+		\add_action( 'wp_loaded', $this->wp_loaded( ... ), 10, 0 );
 	}
 
 	/**
