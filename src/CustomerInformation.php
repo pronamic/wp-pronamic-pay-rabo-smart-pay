@@ -81,7 +81,7 @@ final class CustomerInformation implements JsonSerializable {
 	 * @param DateTimeInterface|null $date_of_birth Date of birth.
 	 * @return void
 	 */
-	public function set_date_of_birth( DateTimeInterface $date_of_birth = null ) {
+	public function set_date_of_birth( ?DateTimeInterface $date_of_birth = null ) {
 		$this->date_of_birth = $date_of_birth;
 	}
 

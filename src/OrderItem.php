@@ -187,7 +187,7 @@ final class OrderItem implements JsonSerializable {
 	 * @param Money|null $tax Tax.
 	 * @return void
 	 */
-	public function set_tax( Money $tax = null ) {
+	public function set_tax( ?Money $tax = null ) {
 		$this->tax = $tax;
 	}
 

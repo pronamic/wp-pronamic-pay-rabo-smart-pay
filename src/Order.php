@@ -343,7 +343,7 @@ final class Order extends Message implements JsonSerializable {
 	 * @param OrderItems|null $order_items Order items.
 	 * @return void
 	 */
-	public function set_order_items( OrderItems $order_items = null ) {
+	public function set_order_items( ?OrderItems $order_items = null ) {
 		$this->order_items = $order_items;
 	}
 
@@ -353,7 +353,7 @@ final class Order extends Message implements JsonSerializable {
 	 * @param Address|null $shipping_detail Shipping address details.
 	 * @return void
 	 */
-	public function set_shipping_detail( Address $shipping_detail = null ) {
+	public function set_shipping_detail( ?Address $shipping_detail = null ) {
 		$this->shipping_detail = $shipping_detail;
 	}
 
@@ -363,7 +363,7 @@ final class Order extends Message implements JsonSerializable {
 	 * @param Address|null $billing_detail Billing address details.
 	 * @return void
 	 */
-	public function set_billing_detail( Address $billing_detail = null ) {
+	public function set_billing_detail( ?Address $billing_detail = null ) {
 		$this->billing_detail = $billing_detail;
 	}
 
