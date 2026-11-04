@@ -18,6 +18,8 @@
 
 		<exclude name="SlevomatCodingStandard.Attributes.AttributesOrder" />
 
+		<!-- Class constant visibility modifiers - As of PHP 7.1.0 -->
+		<exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility" />
 		<exclude name="SlevomatCodingStandard.Classes.ClassStructure.IncorrectGroupOrder" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix" />
 
@@ -76,8 +78,6 @@
 		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation" />
 
 		<exclude name="SlevomatCodingStandard.Variables.UselessVariable.UselessVariable" />
-
-		<exclude name="SlevomatCodingStandard.Whitespaces.DuplicateSpaces.DuplicateSpaces" />
 	</rule>
 
 	<rule ref="PronamicWP">
