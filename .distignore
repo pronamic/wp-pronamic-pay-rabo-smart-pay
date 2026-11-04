@@ -19,9 +19,11 @@
 
 phpcs.xml.dist
 phpmd.ruleset.xml
+phpstan-baseline.neon
 phpstan.neon.dist
 phpunit.xml.dist
 psalm.xml.dist
+rector.php
 
 /build/
 /docs/
