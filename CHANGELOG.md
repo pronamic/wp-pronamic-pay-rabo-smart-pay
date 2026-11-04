@@ -15,6 +15,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 - Changed the API base URLs to the new Rabo Smart Pay domains: `https://api.pay.rabobank.nl/omnikassa-api/` (production) and `https://api.pay-sandbox.rabobank.nl/omnikassa-api/` (sandbox), replacing `https://betalen.rabobank.nl/omnikassa-api(-sandbox)/`. The Rabobank PHP SDK switched to these domains in version 1.18.0: https://github.com/rabobank-nederland/omnikassa-php-sdk#version-1180
 
+### Removed
+
+- Removed outdated AfterPay/Riverty references from code comments and the hooks documentation. Rabo Smart Pay no longer supports AfterPay (SDK documentation version 1.18): https://github.com/rabobank-nederland/omnikassa-sdk-doc
+
 ### Fixed
 
 - Fixed the refund `Request-ID` header: it now uses a UUID v4 generated once per refund request instead of the per-request `wp_unique_id()` counter, so refunds are no longer at risk of being treated as duplicates. See also Rabobank PHP SDK 1.18.3: https://github.com/rabobank-nederland/omnikassa-php-sdk/releases/tag/v1.18.3

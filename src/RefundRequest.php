@@ -33,8 +33,7 @@ final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	/**
 	 * Description.
 	 *
-	 * Reason for refund request. This field is required for partial refunds of payment
-	 * transactions with payment brand Riverty/AfterPay.
+	 * Reason for refund request.
 	 *
 	 * @var string|null
 	 */
@@ -44,8 +43,7 @@ final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	 * VAT Category.
 	 *
 	 * The VAT category of the product. The values refer to the different rates used in
-	 * the Netherlands. This field is required for partial refunds of payment transactions
-	 * with payment brand Riverty/AfterPay.
+	 * the Netherlands.
 	 *
 	 * @var string|null
 	 */

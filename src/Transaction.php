@@ -48,9 +48,8 @@ final class Transaction {
 	 * The total order amount in cents, including VAT. The amount must be equal
 	 * to the sum over all order items of the piece price (including VAT)
 	 * multiplied by the quantity. Note: if the amount is not equal to the sum
-	 * of the amounts of the order items then 1. the order items from the order
-	 * announcement are filtered, and 2. Riverty/AfterPay is not possible as a
-	 * payment method
+	 * of the amounts of the order items then the order items from the order
+	 * announcement are filtered.
 	 *
 	 * @var Money
 	 */
