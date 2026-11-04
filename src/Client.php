@@ -62,8 +62,8 @@ final class Client {
 		 * Arguments.
 		 *
 		 * The `timeout` argument is intentionally increased from the WordPress
-		 * default `5` seconds to `30`. This is mainly important for AfterPay
-		 * order announcements requests, but it can't hurt for other requests.
+		 * default `5` seconds to `30`. The Rabo Smart Pay servers sometimes
+		 * respond slowly, so it can't hurt to wait a little longer.
 		 * It is probably better to wait a little longer for an answer than
 		 * having timeout issues while starting a payment or requesting a
 		 * payment status. The value can also be adjusted via the
@@ -94,9 +94,8 @@ final class Client {
 		 * Developers who want to adjust the WordPress remote request arguments
 		 * towards the OmniKassa servers can use this filter. For example, it
 		 * can be used to increase the HTTP timeout to, for example, 3600. This
-		 * is sometimes useful for testing AfterPay payments for example.
-		 * Mainly because the OmniKassa servers sometimes respond slowly when
-		 * starting AfterPay payments.
+		 * is sometimes useful for testing, mainly because the Rabo Smart Pay
+		 * servers sometimes respond slowly.
 		 *
 		 * @link https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay#pronamic_pay_omnikassa_2_request_args
 		 * @param array $args WordPress remote request arguments.
