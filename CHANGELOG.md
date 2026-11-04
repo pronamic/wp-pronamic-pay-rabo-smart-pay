@@ -6,6 +6,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+### Composer
+
+- Replaced development dependency `pronamic/wp-documentor` with `solvebeam/wp-hooks-documentor` `^1.5` for generating the hooks documentation in `docs/hooks.md`.
+
 ## [4.11.0] - 2026-11-02
 
 ### Composer

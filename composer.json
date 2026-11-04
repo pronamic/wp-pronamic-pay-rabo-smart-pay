@@ -61,11 +61,11 @@
 		"phpunit/phpunit": "^10.5",
 		"pronamic/pronamic-cli": "^1.1",
 		"pronamic/wp-coding-standards": "^2.2",
-		"pronamic/wp-documentor": "^1.4",
 		"rector/rector": "^2.6",
 		"roots/wordpress": "^6.4",
 		"sirbrillig/phpcs-variable-analysis": "^2.11",
 		"slevomat/coding-standard": "^8.15",
+		"solvebeam/wp-hooks-documentor": "^1.5",
 		"szepeviktor/phpstan-wordpress": "^2.0",
 		"vimeo/psalm": "^5.24",
 		"wp-cli/dist-archive-command": "*",
@@ -101,7 +101,7 @@
 		"psalm": "vendor/bin/psalm",
 		"rector": "vendor/bin/rector",
 		"build-docs": [
-			"vendor/bin/wp-documentor parse src --format=markdown --relative=docs > docs/hooks.md"
+			"vendor/bin/wphd parse src --format=markdown --relative=docs > docs/hooks.md"
 		]
 	},
 	"extra": {
