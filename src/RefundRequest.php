@@ -52,6 +52,15 @@ final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	public ?string $vat_category = null;
 
 	/**
+	 * Idempotence ID.
+	 *
+	 * Sent as `Request-ID` header, generated once so retries of this request reuse it.
+	 *
+	 * @var string
+	 */
+	private string $idempotence_id;
+
+	/**
 	 * Construct refund request.
 	 *
 	 * @param string $transaction_id Transaction ID.
@@ -60,6 +69,7 @@ final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	public function __construct( string $transaction_id, Money $amount ) {
 		$this->transaction_id = $transaction_id;
 		$this->amount         = $amount;
+		$this->idempotence_id = \wp_generate_uuid4();
 	}
 
 	/**
@@ -90,6 +100,6 @@ final class RefundRequest implements IdempotenceInterface, JsonSerializable {
 	 * @return string
 	 */
 	public function get_idempotence_id(): string {
-		return \wp_unique_id();
+		return $this->idempotence_id;
 	}
 }
