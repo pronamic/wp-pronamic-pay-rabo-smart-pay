@@ -16,8 +16,6 @@
 		<exclude name="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace.SpaceAfterArrayOpen" />
 		<exclude name="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace.SpaceBeforeArrayClose" />
 
-		<exclude name="SlevomatCodingStandard.Attributes.AttributesOrder" />
-
 		<exclude name="SlevomatCodingStandard.Classes.ClassStructure.IncorrectGroupOrder" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix" />
 
@@ -66,7 +64,6 @@
 		<!-- Conflicts with the WordPress first-class callable style `$this->method( ... )`, the spread operator spacing is checked by WordPress (Generic.WhiteSpace.SpreadOperatorSpacingAfter). -->
 		<exclude name="SlevomatCodingStandard.Operators.SpreadOperatorSpacing.IncorrectSpacesAfterOperator" />
 
-		<exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion.RequiredExplicitAssertion" />
 		<exclude name="SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses" />
 
 		<exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing" />
@@ -81,6 +78,12 @@
 
 		<!-- Conflicts with WordPress.Arrays.MultipleStatementAlignment and Generic.Formatting.MultipleStatementAlignment, which require aligned `=>` and `=`. -->
 		<exclude name="SlevomatCodingStandard.Whitespaces.DuplicateSpaces.DuplicateSpaces" />
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.Attributes.AttributesOrder">
+		<properties>
+			<property name="orderAlphabetically" value="true" />
+		</properties>
 	</rule>
 
 	<rule ref="PronamicWP">
