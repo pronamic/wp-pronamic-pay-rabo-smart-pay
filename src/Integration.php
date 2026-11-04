@@ -158,6 +158,40 @@ final class Integration extends AbstractGatewayIntegration {
 			'type'        => 'text',
 		];
 
+		// Shopper bank statement reference.
+		$code_field = \sprintf( '<code>%s</code>', 'shopperBankstatementReference' );
+
+		$fields[] = [
+			'classes'     => [ 'regular-text', 'code' ],
+			'description' => \sprintf(
+				'%s<br />%s %s<br />%s',
+				\sprintf(
+					/* translators: %s: <code>shopperBankstatementReference</code> */
+					\__(
+						'The Rabo Smart Pay %s field is the reference a customer will find on their bank statement. Only alphanumeric characters are used, other characters are removed, and the value is shortened to 24 characters.',
+						'pronamic-pay-rabo-smart-pay'
+					),
+					$code_field
+				),
+				\__( 'Available tags:', 'pronamic-pay-rabo-smart-pay' ),
+				\sprintf(
+					'<code>%s</code> <code>%s</code>',
+					'{order_id}',
+					'{payment_id}'
+				),
+				\__( 'Default: empty, the field is not sent.', 'pronamic-pay-rabo-smart-pay' )
+			),
+			'meta_key'    => '_pronamic_gateway_omnikassa_2_shopper_bankstatement_reference',
+			'section'     => 'advanced',
+			'title'       => \__( 'Bank statement reference', 'pronamic-pay-rabo-smart-pay' ),
+			'tooltip'     => \sprintf(
+				/* translators: %s: Rabo Smart Pay field name */
+				\__( 'This setting defines the Rabo Smart Pay %s field.', 'pronamic-pay-rabo-smart-pay' ),
+				$code_field
+			),
+			'type'        => 'text',
+		];
+
 		// Skip hosted result page.
 		$code_field = \sprintf( '<code>%s</code>', 'skipHppResultPage' );
 
@@ -221,6 +255,11 @@ final class Integration extends AbstractGatewayIntegration {
 		$config->access_token             = $this->get_meta( $post_id, 'omnikassa_2_access_token' );
 		$config->access_token_valid_until = $this->get_meta( $post_id, 'omnikassa_2_access_token_valid_until' );
 		$config->order_id                 = $this->get_meta( $post_id, 'omnikassa_2_order_id' );
+
+		$config->shopper_bankstatement_reference = $this->get_meta(
+			$post_id,
+			'omnikassa_2_shopper_bankstatement_reference'
+		);
 
 		$skip_hosted_result_page = $this->get_meta( $post_id, 'omnikassa_2_skip_hosted_result_page' );
 

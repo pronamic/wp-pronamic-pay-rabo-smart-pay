@@ -191,6 +191,18 @@ final class Gateway extends Core_Gateway {
 			$merchant_return_url
 		);
 
+		// Shopper bank statement reference.
+		if ( '' !== $this->config->shopper_bankstatement_reference ) {
+			$shopper_bankstatement_reference = DataHelper::sanitize_alphanumeric(
+				$payment->format_string( $this->config->shopper_bankstatement_reference ),
+				24
+			);
+
+			if ( '' !== $shopper_bankstatement_reference ) {
+				$order->set_shopper_bankstatement_reference( $shopper_bankstatement_reference );
+			}
+		}
+
 		// Shipping address.
 		$order->set_shipping_detail( AddressTransformer::transform( $payment->get_shipping_address() ) );
 
