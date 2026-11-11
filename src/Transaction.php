@@ -197,7 +197,7 @@ final class Transaction {
 			$object_access->get_string( 'lastUpdateTime' )
 		);
 
-		$object = $object_access->get_property( 'confirmedAmount' );
+		$object = $object_access->get_optional( 'confirmedAmount' );
 
 		if ( \is_object( $object ) ) {
 			$transaction->confirmed_amount = Money::from_object( $object );
