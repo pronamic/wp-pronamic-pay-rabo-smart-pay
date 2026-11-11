@@ -1,5 +1,13 @@
 # OmniKassa 2.0 Documentation
 
+## OpenAPI definition
+
+[`rabo-smart-pay-online-payment-api-1.4.4.json`](rabo-smart-pay-online-payment-api-1.4.4.json) is the OpenAPI definition of the Rabo Smart Pay Online Payment API (version 1.4.4), downloaded on 11 November 2026 from:
+
+https://docs.developer.rabobank.com/smartpay/openapi/Online%20Payment%20API.json
+
+The API reference is available at https://docs.developer.rabobank.com/smartpay/reference.
+
 ## merchantReturnURL is not a valid web address
 
 OmniKassa 2 requires for each order announcement a merchant return URL. OmniKassa 2 does not allow all merchant return URL's. An order announcement with a merchant return URL's with the TLD `.test` will for example result in the following error:

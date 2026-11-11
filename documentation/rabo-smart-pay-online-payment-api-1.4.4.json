@@ -1,0 +1,2070 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"contact": {
+			"email": "contact@omnikassa.rabobank.nl",
+			"name": "Rabo Smart Pay"
+		},
+		"description": "",
+		"termsOfService": "https://media.rabobank.com/m/44dda7865df479bd/original/General-Terms-and-Conditions-Rabo-Smart-Pay-English.pdf",
+		"title": "Online Payment API",
+		"version": "1.4.4",
+		"x-api-id": "c4136539-dcb7-49fa-914a-07c9fafe9066",
+		"x-ibm-name": "omnikassa"
+	},
+	"servers": [
+		{
+			"url": "https://api.pay.rabobank.nl",
+			"description": "Production server"
+		},
+		{
+			"url": "https://api.pay-sandbox.rabobank.nl",
+			"description": "Sandbox server"
+		}
+	],
+	"paths": {
+		"/omnikassa-api/gatekeeper/refresh": {
+			"get": {
+				"parameters": [
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with an actual refresh token.",
+						"example": "Bearer eyJraWQiOiIrcUNTdzlvL2dGcUMxeVlHWVhHZFBReGFVVTVLYlpPYWVCZjNiOHFrYWxvPSIsImFsZyI6IkVTMjU2In0.eyJta2lkIjoxMDI0LCJleHAiOjIxODg5OTUwODF9.iAk8kl6bfd7B2JceMRf5-WTf_IL5x_Ix9uZwhN43yaQ8oTfvFRrt0_cDShAdFKHAPZwgV6gIDCfHlHA8VEB_DQ",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GateKeeperResponse"
+								}
+							}
+						},
+						"description": "Authorization is successful. The access token and expiry information are returned."
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "Authorization has failed."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "No access token could be returned because of an internal server error."
+					}
+				},
+				"tags": [
+					"Authentication"
+				],
+				"description": "This endpoint, known as the Refresh Call, is used to request a new access token using a valid refresh token. The refresh token can be retrieved from the merchant dashboard. This ensures your integration with Rabo Smart Pay remains authenticated without manual intervention.",
+				"operationId": "get-access-token",
+				"summary": "Get access token"
+			}
+		},
+		"/omnikassa-api/order/server/api/v2/order": {
+			"post": {
+				"parameters": [
+					{
+						"description": "Content type of the request (application/json)",
+						"in": "header",
+						"name": "Content-Type",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The header containing the User Agent and the Partner Reference. User Agent should be formatted as the User-Agent header standard, found here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent, Partner Reference should be formatted like (pr: {value}) if there are multiple of these references, only the first one will be picked up",
+						"example": "Guzzle/7.0 curl/7.54 MyPlatform/8.6.2 (pr: 12345)",
+						"in": "header",
+						"name": "X-Api-User-Agent",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OrderAnnouncementResponseV2"
+								}
+							}
+						},
+						"description": "Successful announcement of the order."
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The order announcement failed because of an authorization error."
+					},
+					"403": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The order announcement was rejected by ROK."
+					},
+					"422": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The order announcement failed because of one or more invalid order details."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The order announcement could not be processed because of an internal server error."
+					}
+				},
+				"tags": [
+					"Payments"
+				],
+				"description": "This endpoint initiates the payment process by announcing a new order to Rabo Smart Pay. You can tailor the request with fields such as amount, currency, language, and payment brand to match the payment type and customer experience. Upon success, it returns a redirect URL to send the customer to the payment page.",
+				"operationId": "create-order-announcement",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderAnnouncementV2"
+							}
+						}
+					},
+					"description": "The details of the order.",
+					"required": true
+				},
+				"summary": "Create order announcement"
+			}
+		},
+		"/omnikassa-api/order/server/api/v2/events/results/merchant.order.status.changed": {
+			"get": {
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/XJwsSignature"
+					},
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with the token that is included in the field `authentication` from the notification as sent to the web hook.",
+						"example": "Bearer eyJraWQiOiIrcUNTdzlvL2dGcUMxeVlHWVhHZFBReGFVVTVLYlpPYWVCZjNiOHFrYWxvPSIsImFsZyI6IkVTMjU2In0.eyJta2lkIjoxMDI0LCJleHAiOjIxODg5OTUwODF9.iAk8kl6bfd7B2JceMRf5-WTf_IL5x_Ix9uZwhN43yaQ8oTfvFRrt0_cDShAdFKHAPZwgV6gIDCfHlHA8VEB_DQ",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StatusResponseV2"
+								}
+							}
+						},
+						"description": "The request to retrieve the status information was successful."
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to retrieve the status information was rejected because of an authorization error."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to retrieve the status information could not be fulfilled because of an internal server error."
+					}
+				},
+				"tags": [
+					"Payments"
+				],
+				"operationId": "get-order-status",
+				"summary": "Get order status",
+				"description": "Use this endpoint to retrieve the order statuses from Rabo Smart Pay. After receiving a notification that new information is available, you can use this endpoint to pull the latest status changes."
+			}
+		},
+		"/v2/orders/{orderId}": {
+			"get": {
+				"parameters": [
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The order identifier matching the value of `omnikassaOrderId` provided in the response of the order announcement.",
+						"example": "1d0a95f4-2589-439b-9562-c50aa19f9caf",
+						"in": "path",
+						"name": "orderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetOrderStatusResponse"
+								}
+							}
+						},
+						"description": "Order status information."
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The requested resource was unauthorized."
+					},
+					"404": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The requested resource was not found."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "Something went wrong."
+					}
+				},
+				"tags": [
+					"Payments"
+				],
+				"description": "This endpoint retrieves the current status and details of a specific order using its order ID. It returns information such as payment status, timestamps, and transaction references. This call is intended as a backup mechanism to the status pull flow and should only be used when event-based updates are unavailable. Polling this endpoint as the primary method for status updates is not permitted.",
+				"operationId": "get-order-details",
+				"summary": "Get order details"
+			}
+		},
+		"/omnikassa-api/order/server/api/payment-brands": {
+			"get": {
+				"parameters": [
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaymentBrandsResponse"
+								}
+							}
+						},
+						"description": "A list of payment brands is returned."
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "Authorization has failed."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The payment brands could not be returned because of an internal server error."
+					}
+				},
+				"tags": [
+					"Payments"
+				],
+				"description": "This endpoint returns a list of available payment brands that can be offered during checkout, such as iDEAL, Visa, or Apple Pay. Use it to dynamically display supported payment options based on your configuration and customer preferences.",
+				"operationId": "get-payment-brands",
+				"summary": "Get payment brands"
+			}
+		},
+		"/v1/shopper-payment-details": {
+			"get": {
+				"parameters": [
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The shopper identifier matching the value of `ShopperRef` provided in the order announcement.",
+						"example": "ShopperRef123",
+						"in": "query",
+						"name": "shopper-ref",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ShopperPaymentDetailsResponse"
+								}
+							}
+						},
+						"description": "List of Cards on file."
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The requested resource was unauthorized."
+					}
+				},
+				"tags": [
+					"Shoppers"
+				],
+				"description": "This endpoint is used to fetch all stored payment details for a shopper. It returns cards on file: saved cards that can be reused for future payments without re-entering card details.\n\nThe request must include a shopperRef, which uniquely identifies the shopper. Use the same reference that was provided in the initial order announcement for which the payment details were saved.",
+				"operationId": "get-payment-details",
+				"summary": "Get payment details"
+			}
+		},
+		"/v1/shopper-payment-details/{id}": {
+			"delete": {
+				"parameters": [
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The shopper identifier matching the value of `ShopperRef` provided in the order announcement.",
+						"example": "ShopperRef123",
+						"in": "query",
+						"name": "shopper-ref",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Identifier of the shopper detail to delete.",
+						"example": "a2d4f4d8-32fa-468c-9d14-f996ec4a8bb7",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Shopper payment detail successfully deleted."
+					},
+					"401": {
+						"description": "Unauthorized access."
+					},
+					"404": {
+						"description": "Payment detail not found for the specified shopper."
+					}
+				},
+				"tags": [
+					"Shoppers"
+				],
+				"description": "This endpoint allows the removal of a specific shopper payment detail. Shopper payment details include stored payment methods, such as cards on file, which can be reused for future transactions.\n\nThe shopper reference must be provided as a query parameter, and the shopper payment detail unique identifier must be specified as a path parameter.",
+				"operationId": "delete-payment-details",
+				"summary": "Delete payment details"
+			}
+		},
+		"/omnikassa-api/order/server/api/v2/refund/transactions/{transaction_id}/refundable-details": {
+			"get": {
+				"parameters": [
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Identifier of the transaction",
+						"example": "e7a4af26-84da-11ec-8636-67621749a2d1",
+						"in": "path",
+						"name": "transaction_id",
+						"required": true,
+						"schema": {
+							"format": "uuid",
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RefundableDetails"
+								}
+							}
+						},
+						"description": "The request to retrieve the refundable details was successful"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to retrieve the refundable details was rejected because of a functional error"
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "Authorization has failed."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to retrieve the refundable details could not be fulfilled because of an internal server error"
+					}
+				},
+				"tags": [
+					"Refunds"
+				],
+				"operationId": "get-refundable-details",
+				"summary": "Get refundable details",
+				"description": "This endpoint shows which parts of a transaction are still eligible for refund, providing the remaining refundable amount."
+			}
+		},
+		"/omnikassa-api/order/server/api/v2/refund/transactions/{transaction_id}/refunds": {
+			"post": {
+				"summary": "Create refund",
+				"description": "This endpoint is used to initiate a refund for a specific transaction. You can specify the amount to be refunded, either full or partial, along with a description and reference",
+				"parameters": [
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Unique value to enforce idempotency",
+						"example": "9fd4eb02-84da-11ec-a9f1-973e359e11c9",
+						"in": "header",
+						"name": "Request-ID",
+						"required": true,
+						"schema": {
+							"format": "uuid",
+							"type": "string"
+						}
+					},
+					{
+						"description": "Identifier of the transaction",
+						"example": "e7a4af26-84da-11ec-8636-67621749a2d1",
+						"in": "path",
+						"name": "transaction_id",
+						"required": true,
+						"schema": {
+							"format": "uuid",
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RefundRequest"
+							}
+						}
+					},
+					"description": "The details of the refund.",
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RefundInfo"
+								}
+							}
+						},
+						"description": "The request to initiate a refund was successful"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to initiate a refund was rejected because of a functional error"
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "Authorization has failed."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to initiate a refund could not be fulfilled because of an internal server error"
+					}
+				},
+				"tags": [
+					"Refunds"
+				],
+				"operationId": "create-refund"
+			}
+		},
+		"/omnikassa-api/order/server/api/v2/refund/transactions/{transaction_id}/refunds/{refund_id}": {
+			"get": {
+				"parameters": [
+					{
+						"description": "The User-Agent header containing information about the client making the request.",
+						"example": "curl/8.13.0",
+						"in": "header",
+						"name": "User-Agent",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The value of this header is of the form `Bearer <token>` where `<token>` must be replaced with a valid access token. See the /gatekeeper/refresh endpoint",
+						"example": "Bearer eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Identifier of the refund",
+						"example": "22b36073-57a3-4c3d-9585-87f2e55275a5",
+						"in": "path",
+						"name": "refund_id",
+						"required": true,
+						"schema": {
+							"format": "uuid",
+							"type": "string"
+						}
+					},
+					{
+						"description": "Identifier of the transaction",
+						"example": "e7a4af26-84da-11ec-8636-67621749a2d1",
+						"in": "path",
+						"name": "transaction_id",
+						"required": true,
+						"schema": {
+							"format": "uuid",
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RefundInfo"
+								}
+							}
+						},
+						"description": "The request to retrieve the refund details was successful"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to retrieve the refund details was rejected because of a functional error"
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "Authorization has failed."
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						},
+						"description": "The request to retrieve the refund details could not be fulfilled because of an internal server error"
+					}
+				},
+				"tags": [
+					"Refunds"
+				],
+				"operationId": "get-refund-details",
+				"summary": "Get refund details",
+				"description": "This endpoint retrieves the current status of a specific refund transaction. It returns details such as the refund amount, reference, and processing status. Use this call to track the progress and outcome of a refund after it has been initiated."
+			}
+		}
+	},
+	"components": {
+		"parameters": {
+			"XJwsSignature": {
+				"name": "x-jws-signature",
+				"in": "header",
+				"required": true,
+				"description": "Detached JWS signature over the JSON notification payload. The JWS protected header contains the key ID (`kid`)\nthat identifies the Rabo Smart Pay signing key. Verify this signature before processing the event.\n",
+				"schema": {
+					"type": "string",
+					"pattern": "^[A-Za-z0-9_-]+\\.\\.[A-Za-z0-9_-]+$"
+				},
+				"example": "eyJraWQiOiJrZXktaWQiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9..MEUCIQDexampleSignature"
+			}
+		},
+		"schemas": {
+			"Amount": {
+				"description": "An amount in cents.",
+				"example": 10997,
+				"type": "integer"
+			},
+			"CardOnFile": {
+				"description": "The list of cards for the given shopper.",
+				"properties": {
+					"brand": {
+						"description": "The brand of the card.",
+						"enum": [
+							"MAESTRO",
+							"V_PAY",
+							"MASTERCARD",
+							"VISA"
+						],
+						"example": "MASTERCARD",
+						"type": "string"
+					},
+					"cardExpiry": {
+						"description": "The expiry of the card.",
+						"example": "2029-12",
+						"pattern": "^\\d{4}-\\d{2}$",
+						"type": "string"
+					},
+					"id": {
+						"description": "Uniquely identifies the card on file.",
+						"type": "string"
+					},
+					"last4Digits": {
+						"description": "The last 4 digits of the card number. of 4 digits.",
+						"pattern": "^[0-9]{4}$",
+						"type": "string"
+					},
+					"status": {
+						"description": "The status of the token.",
+						"enum": [
+							"ACTIVE",
+							"INACTIVE",
+							"DELETED",
+							"SUSPENDED"
+						],
+						"type": "string"
+					},
+					"tokenExpiry": {
+						"description": "The expiry of the token.",
+						"example": "2027-01",
+						"pattern": "^\\d{4}-\\d{2}$",
+						"type": "string"
+					}
+				},
+				"required": [
+					"brand",
+					"cardExpiry",
+					"id",
+					"last4Digits",
+					"status",
+					"tokenExpiry"
+				],
+				"type": "object"
+			},
+			"CheckoutDetails": {
+				"description": "Requested fast checkoutDetails",
+				"properties": {
+					"billingAddress": {
+						"$ref": "#/components/schemas/RequestedAddressInformation"
+					},
+					"customerInformation": {
+						"$ref": "#/components/schemas/RequestedCustomerInformation"
+					},
+					"shippingAddress": {
+						"$ref": "#/components/schemas/RequestedAddressInformation"
+					}
+				},
+				"type": "object"
+			},
+			"Currency": {
+				"description": "Currency, at this time only EUR is supported.",
+				"enum": [
+					"EUR"
+				],
+				"example": "EUR",
+				"type": "string"
+			},
+			"DateTime": {
+				"example": "2018-03-20T09:12:28Z",
+				"format": "date-time",
+				"type": "string"
+			},
+			"EnableCardOnFile": {
+				"default": "false",
+				"description": "Enables storing card details for future use. Requires shopperRef and email address.\n",
+				"example": true,
+				"type": "boolean"
+			},
+			"ErrorResponse": {
+				"type": "object",
+				"properties": {
+					"consumerMessage": {
+						"description": "An optional message that can be presented to the consumer. This field is deprecated.",
+						"type": "string"
+					},
+					"errorCode": {
+						"description": "The code of this error.",
+						"format": "int64",
+						"type": "integer"
+					},
+					"errorMessage": {
+						"description": "The error message.",
+						"type": "string"
+					},
+					"status": {
+						"description": "HTTP Status Code",
+						"format": "int64",
+						"type": "integer"
+					},
+					"title": {
+						"description": "HTTP Status",
+						"type": "string"
+					}
+				}
+			},
+			"FastCheckout": {
+				"description": "Contains fields related to fast checkout flow. when this is defined, it activates the fast checkout flow.\nWhen fast checkout is defined: \n - paymentBrandForce must be specified and set to FORCE_ALWAYS.\n - specified paymentBrand must be set to 'IDEAL'\n",
+				"properties": {
+					"requiredCheckoutFields": {
+						"description": "This field indicates the merchant's desire to receive checkout details of the shopper in\norder status response. According to GDPR, the calling party must explicitly ask for the fields\nthat contain personal information. The requested data will be provided via GET /v2/orders/{orderId} endpoint.\n\nNote: This field is needed only for the fast-checkout flow. At least one value must be defined.\n",
+						"example": [
+							"CUSTOMER_INFORMATION",
+							"BILLING_ADDRESS",
+							"SHIPPING_ADDRESS"
+						],
+						"items": {
+							"enum": [
+								"CUSTOMER_INFORMATION",
+								"BILLING_ADDRESS",
+								"SHIPPING_ADDRESS"
+							],
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"requiredCheckoutFields"
+				],
+				"type": "object"
+			},
+			"GateKeeperResponse": {
+				"properties": {
+					"durationInMillis": {
+						"description": "The duration of the access token in milliseconds.",
+						"example": 360000,
+						"type": "integer"
+					},
+					"token": {
+						"description": "The access token that authorizes the webshop to perform other API calls for a limited amount of time. After expiration a new access token must be retrieved.",
+						"example": "eyJraWQiOiJHS0wiLCJhbGciOiJFUzI1NiJ9.eyJwayMiOjEwMjQsImNpZCI6ImNjYTUtNmRjYyIsImV4cCI6MTQ4MDAwNjQ5MX0.MEQCIGZoLp7HvBS6SbHVfwCICQz_jvFabvbET2HsENcAKG_AiAYlI8WouBYYRvkbJHamR_PBL36P1b2fCy2H5mZNQtS9Q",
+						"type": "string"
+					},
+					"validUntil": {
+						"description": "The timestamp indicating when the access token expires.",
+						"example": "2018-11-24T16:54:51.216+0000",
+						"format": "ISO 8601",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"GetOrderStatusResponse": {
+				"properties": {
+					"order": {
+						"$ref": "#/components/schemas/OrderStatusResult"
+					}
+				},
+				"required": [
+					"order"
+				],
+				"type": "object"
+			},
+			"OrderAddress": {
+				"description": "This structure contains address details and is typically used in specifying billing and shipping details of an order.",
+				"properties": {
+					"city": {
+						"description": "The name of the city, will be truncated to 40 characters if longer.",
+						"example": "Amsterdam",
+						"maxLength": 40,
+						"type": "string"
+					},
+					"countryCode": {
+						"description": "The country code (ISO 3166-1 alpha-2).",
+						"example": "NL",
+						"maxLength": 2,
+						"minLength": 2,
+						"type": "string"
+					},
+					"firstName": {
+						"description": "The first name, will be truncated to 50 characters if longer.",
+						"example": "Jan",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"houseNumber": {
+						"description": "The house number, will be truncated to 100 characters if longer.\nNote: In case of payment with Visa, Mastercard, Bancontact, V PAY and Maestro This field is truncated further to 10 characters.\n",
+						"example": "12",
+						"type": "string"
+					},
+					"houseNumberAddition": {
+						"description": "Any additions to the house number, will be truncated to 6 characters if longer.",
+						"example": "a",
+						"maxLength": 6,
+						"type": "string"
+					},
+					"lastName": {
+						"description": "The last name, will be truncated to 50 characters if longer.",
+						"example": "Jansen",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"middleName": {
+						"description": "The middle name, will be truncated to 20 characters if longer.",
+						"example": "van",
+						"maxLength": 20,
+						"type": "string"
+					},
+					"postalCode": {
+						"description": "The postal code.",
+						"example": "1234AA",
+						"maxLength": 10,
+						"type": "string"
+					},
+					"street": {
+						"description": "The street name, will be truncated to 100 characters if longer.\nNote: In case of payment with Visa, Mastercard, Bancontact, V PAY and Maestro this field is truncated further to 50 characters.\n",
+						"example": "Beukenlaan",
+						"maxLength": 100,
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"OrderAmount": {
+				"description": "The total order amount in cents, including VAT. The amount must be equal to the sum over all order items of the piece price (including VAT) multiplied by the quantity.\n\nNote: if the amount is not equal to the sum of the amounts of the order items then the order items from the order announcement are filtered.",
+				"properties": {
+					"amount": {
+						"$ref": "#/components/schemas/Amount",
+						"description": "The order amount in cents."
+					},
+					"currency": {
+						"$ref": "#/components/schemas/Currency"
+					}
+				},
+				"required": [
+					"amount",
+					"currency"
+				],
+				"type": "object"
+			},
+			"OrderAnnouncementResponseV2": {
+				"description": "This structure describes the message that is returned in response to an order announcement.",
+				"properties": {
+					"omnikassaOrderId": {
+						"description": "The unique ID that Rabo Smart Pay assigned to this order. This ID can be later used to look up the order status that is communicated using the webhook notification mechanism or the order status endpoint.",
+						"example": "1d0a95f4-2589-439b-9562-c50aa19f9caf",
+						"format": "uuid",
+						"type": "string"
+					},
+					"redirectUrl": {
+						"description": "The URL to which the browser of the consumer must be redirected to. This URL points to the payment pages of Rabo Smart Pay.",
+						"example": "https://betalen.rabobank.nl/omnikassa/nl/payment-brand?token=eyJraWQiOiJFTU8iLCJhbGciOiJFUzI1NiJ9.eyJlbW8iOiJhYWZhMDAxM",
+						"format": "uri",
+						"type": "string"
+					}
+				},
+				"title": "OrderAnnouncementResponse",
+				"type": "object"
+			},
+			"OrderAnnouncementV2": {
+				"properties": {
+					"amount": {
+						"$ref": "#/components/schemas/OrderAmount"
+					},
+					"billingDetail": {
+						"$ref": "#/components/schemas/OrderAddress"
+					},
+					"customerInformation": {
+						"$ref": "#/components/schemas/OrderCustomerInformation"
+					},
+					"description": {
+						"$ref": "#/components/schemas/OrderDescription"
+					},
+					"initiatingParty": {
+						"$ref": "#/components/schemas/OrderInitiatingParty"
+					},
+					"language": {
+						"$ref": "#/components/schemas/OrderLanguage"
+					},
+					"merchantOrderId": {
+						"$ref": "#/components/schemas/OrderMerchantOrderId"
+					},
+					"merchantReturnUrl": {
+						"$ref": "#/components/schemas/OrderMerchantReturnUrl"
+					},
+					"orderItems": {
+						"$ref": "#/components/schemas/OrderItems"
+					},
+					"paymentBrand": {
+						"$ref": "#/components/schemas/OrderPaymentBrand"
+					},
+					"paymentBrandForce": {
+						"$ref": "#/components/schemas/OrderPaymentBrandForce"
+					},
+					"paymentBrandMetaData": {
+						"$ref": "#/components/schemas/OrderPaymentBrandMetaData"
+					},
+					"shippingCost": {
+						"$ref": "#/components/schemas/ShippingCost"
+					},
+					"shippingDetail": {
+						"$ref": "#/components/schemas/OrderAddress"
+					},
+					"shopperBankstatementReference": {
+						"$ref": "#/components/schemas/OrderShopperBankstatementReferenceId"
+					},
+					"shopperRef": {
+						"$ref": "#/components/schemas/ShopperRef"
+					},
+					"skipHppResultPage": {
+						"$ref": "#/components/schemas/SkipHppResultPage"
+					},
+					"timestamp": {
+						"$ref": "#/components/schemas/OrderTimestamp"
+					}
+				},
+				"required": [
+					"amount",
+					"merchantOrderId",
+					"merchantReturnUrl",
+					"timestamp"
+				],
+				"title": "OrderAnnouncement",
+				"type": "object"
+			},
+			"OrderCustomerInformation": {
+				"description": "Customer details that are typically of interest for cards transactions.",
+				"properties": {
+					"dateOfBirth": {
+						"description": "The date of birth of the customer, formatted using  DD-MM-YYYY.",
+						"example": "21-11-1977",
+						"type": "string"
+					},
+					"emailAddress": {
+						"description": "The e-mail address of the customer. If the email address contains more than 255 characters, the extra characters will be removed after the 255th character.",
+						"example": "jan@example.org",
+						"type": "string"
+					},
+					"gender": {
+						"description": "The gender of the customer.",
+						"enum": [
+							"M",
+							"F",
+							"O"
+						],
+						"example": "F",
+						"type": "string"
+					},
+					"initials": {
+						"description": "The initials of the customer. If the initials contain more than 256 characters then the extra characters are removed after the 256th character.",
+						"example": "J.",
+						"maxLength": 256,
+						"type": "string"
+					},
+					"telephoneNumber": {
+						"description": "The consumer's telephone number. If the phone number contains more than 31 characters, the extra characters are removed after the 31st character.",
+						"example": "+31204971111",
+						"maxLength": 31,
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"OrderDescription": {
+				"description": "Description of the order. If the description contains more than 35 characters then the extra characters are removed after the 35th character.",
+				"example": "Your order ORDER3559.",
+				"type": "string"
+			},
+			"OrderId": {
+				"description": "Unique order identifier, generated by Rabo Smart Pay when an order is \nannounced.\n",
+				"example": "1d0a95f4-2589-439b-9562-c50aa19f9caf",
+				"format": "uuid",
+				"type": "string"
+			},
+			"OrderInitiatingParty": {
+				"description": "This field is used to track transactions initiated by a specific party. Only supply this field in consultation with the Rabobank.",
+				"type": "string"
+			},
+			"OrderItem": {
+				"description": "This structure contains the details of a single order item of an order.",
+				"properties": {
+					"amount": {
+						"description": "The piece price of the order item, including VAT. This field can be negative to denote discounts.",
+						"properties": {
+							"amount": {
+								"$ref": "#/components/schemas/Amount"
+							},
+							"currency": {
+								"$ref": "#/components/schemas/Currency"
+							}
+						},
+						"type": "object"
+					},
+					"category": {
+						"default": "PHYSICAL",
+						"description": "Product Category.",
+						"enum": [
+							"PHYSICAL",
+							"DIGITAL"
+						],
+						"example": "DIGITAL",
+						"type": "string"
+					},
+					"description": {
+						"description": "A short description of the order item, truncated to 100 characters if longer.",
+						"example": "These distinct, feminine frames balance a classic Jackie-O styling with a modern look.",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"id": {
+						"description": "An identifier for the order item, truncated to 25 characters if longer.",
+						"example": "A1000",
+						"maxLength": 25,
+						"type": "string"
+					},
+					"name": {
+						"description": "The name of the order item, truncated to 50 characters if longer.",
+						"example": "Jackie O round glasses",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"quantity": {
+						"description": "The number of copies.",
+						"example": 7,
+						"maximum": 2147483647,
+						"minimum": 1,
+						"type": "integer"
+					},
+					"tax": {
+						"description": "The VAT of the order item.",
+						"properties": {
+							"amount": {
+								"$ref": "#/components/schemas/Amount",
+								"description": "The amount in cents. This field can be negative to denote discounts."
+							},
+							"currency": {
+								"$ref": "#/components/schemas/Currency"
+							}
+						},
+						"type": "object"
+					},
+					"vatCategory": {
+						"description": "The VAT category of the product. The values refer to the different rates used in the Netherlands.\n1 = high (21%),\n2 = low (9%),\n3 = zero (0%),\n4 = none (exempt from VAT)\n",
+						"example": 1,
+						"maximum": 4,
+						"minimum": 1,
+						"type": "integer"
+					}
+				},
+				"required": [
+					"amount",
+					"name"
+				],
+				"type": "object"
+			},
+			"OrderItems": {
+				"description": "An optional list of zero or more order items.",
+				"items": {
+					"$ref": "#/components/schemas/OrderItem"
+				},
+				"type": "array"
+			},
+			"OrderLanguage": {
+				"default": "EN",
+				"description": "The language of the payment pages.",
+				"enum": [
+					"NL",
+					"FR",
+					"DE",
+					"EN"
+				],
+				"example": "NL",
+				"format": "ISO 639-1 standard",
+				"type": "string"
+			},
+			"OrderMerchantOrderId": {
+				"description": "Generated by the webshop. This field has two types of validations based on if the shopperBankstatementReference is supplied or not.\n- if shopperBankstatementReference is supplied:\n  It allows all ascii characters up to a length of 64 characters, if the ID contains more than 64 characters, the extra characters are removed after the 64th character.\n- else:\n  It should adhere to the pattern: '[A-Za-z0-9]{1,24}', if the ID contains more than 24 characters, the extra characters are removed after the 24th character.",
+				"example": "ORDER3559",
+				"type": "string"
+			},
+			"OrderMerchantReturnUrl": {
+				"description": "The URL to which the consumer's browser will be redirected after the payment.",
+				"example": "https://my.webshop.com/return",
+				"format": "uri",
+				"type": "string"
+			},
+			"OrderPaymentBrand": {
+				"description": "This field is optional and is used to enforce a specific payment method with the consumer instead of the consumer selecting a payment method on the payment method selection page. The CARDS value ensures that the consumer can choose between payment methods: MASTERCARD, VISA, BANCONTACT, MAESTRO and V_PAY.",
+				"enum": [
+					"IDEAL",
+					"PAYPAL",
+					"MASTERCARD",
+					"VISA",
+					"BANCONTACT",
+					"MAESTRO",
+					"V_PAY",
+					"CARDS"
+				],
+				"example": "IDEAL",
+				"type": "string"
+			},
+			"OrderPaymentBrandForce": {
+				"description": "This field should only be delivered if the paymentBrand field (see above) is also specified. In the case of FORCE_ONCE, the indicated paymentBrand is only enforced on the first attempt. If this fails, the consumer can still choose another payment method. When FORCE_ALWAYS is chosen, the consumer is not allowed choose another payment method.",
+				"enum": [
+					"FORCE_ONCE",
+					"FORCE_ALWAYS"
+				],
+				"example": "FORCE_ALWAYS",
+				"type": "string"
+			},
+			"OrderPaymentBrandMetaData": {
+				"description": "Additional metadata specific to the brand as set in the paymentBrand field.",
+				"properties": {
+					"enableCardOnFile": {
+						"$ref": "#/components/schemas/EnableCardOnFile"
+					},
+					"fastCheckout": {
+						"$ref": "#/components/schemas/FastCheckout"
+					},
+					"issuerId": {
+						"description": "Use this field to immediately start an iDEAL transaction at a specific issuer. To do so set the paymentBrand field to 'IDEAL' and set this field to the BIC code of the iDEAL issuer. If this field is not included in the request then Rabo Smart Pay will first present a list of available issuers to the consumer before starting a transaction.",
+						"example": "ABNANL2A",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"OrderResultsAmount": {
+				"description": "An amount in cents.",
+				"example": "10997",
+				"type": "string"
+			},
+			"OrderResultsV2": {
+				"description": "This structure specifies the result of a single order.",
+				"properties": {
+					"errorCode": {
+						"description": "Future field, for now always empty.",
+						"type": "string"
+					},
+					"merchantOrderId": {
+						"description": "Merchant order id, as provided during order announcement.\n",
+						"example": "ORDER3559",
+						"type": "string"
+					},
+					"omnikassaOrderId": {
+						"description": "The unique ID that Rabo Smart Pay assigned to the order. This field matches the identically named field in the response of the order announcement.",
+						"example": "1d0a95f4-2589-439b-9562-c50aa19f9caf",
+						"type": "string"
+					},
+					"orderStatus": {
+						"description": "The status of the order:\n* COMPLETED - Successful payment of the order.\n* CANCELLED - The payment was cancelled.\n* EXPIRED - The consumer has not paid within the stipulated period.\n",
+						"enum": [
+							"COMPLETED",
+							"CANCELLED",
+							"EXPIRED"
+						],
+						"example": "COMPLETED",
+						"type": "string"
+					},
+					"orderStatusDateTime": {
+						"description": "Timestamp of the moment that this status is reached.",
+						"example": "2018-11-25T13:20:03.157+01:00",
+						"format": "ISO 8601",
+						"type": "string"
+					},
+					"paidAmount": {
+						"description": "When the order status is COMPLETED then this field contains the amount paid by the customer.",
+						"properties": {
+							"amount": {
+								"$ref": "#/components/schemas/OrderResultsAmount"
+							},
+							"currency": {
+								"$ref": "#/components/schemas/Currency"
+							}
+						},
+						"type": "object"
+					},
+					"poiId": {
+						"description": "Unique identification of the webshop (point of interaction), as seen from Rabo Smart Pay.",
+						"example": "2004",
+						"type": "string"
+					},
+					"totalAmount": {
+						"description": "This field contains the original order amount as supplied in the order announcement call.",
+						"properties": {
+							"amount": {
+								"$ref": "#/components/schemas/OrderResultsAmount"
+							},
+							"currency": {
+								"$ref": "#/components/schemas/Currency"
+							}
+						},
+						"type": "object"
+					},
+					"transactions": {
+						"description": "A list of transactions with type AUTHORIZE and PAYMENT",
+						"items": {
+							"description": "A list of transactions with type AUTHORIZE and PAYMENT",
+							"properties": {
+								"amount": {
+									"description": "The transaction amount.",
+									"properties": {
+										"amount": {
+											"$ref": "#/components/schemas/OrderResultsAmount",
+											"description": "The order amount in cents."
+										},
+										"currency": {
+											"$ref": "#/components/schemas/Currency"
+										}
+									},
+									"required": [
+										"amount",
+										"currency"
+									],
+									"type": "object"
+								},
+								"confirmedAmount": {
+									"description": "The amount that was confirmed by the external payment processor. This field is only filled when the transaction status is SUCCESS or ACCEPTED.",
+									"properties": {
+										"amount": {
+											"$ref": "#/components/schemas/OrderResultsAmount",
+											"description": "The order amount in cents."
+										},
+										"currency": {
+											"$ref": "#/components/schemas/Currency"
+										}
+									},
+									"required": [
+										"amount",
+										"currency"
+									],
+									"type": "object"
+								},
+								"id": {
+									"$ref": "#/components/schemas/TransactionId"
+								},
+								"lastUpdateTime": {
+									"$ref": "#/components/schemas/DateTime"
+								},
+								"paymentBrand": {
+									"$ref": "#/components/schemas/PaymentBrand"
+								},
+								"startTime": {
+									"$ref": "#/components/schemas/DateTime"
+								},
+								"status": {
+									"description": "Status of the transaction",
+									"enum": [
+										"SUCCESS",
+										"ACCEPTED",
+										"CANCELLED",
+										"EXPIRED",
+										"FAILURE"
+									],
+									"example": "SUCCESS",
+									"type": "string"
+								},
+								"type": {
+									"description": "Type of the transaction",
+									"enum": [
+										"AUTHORIZE",
+										"PAYMENT"
+									],
+									"example": "AUTHORIZE",
+									"type": "string"
+								}
+							},
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object"
+			},
+			"OrderShopperBankstatementReferenceId": {
+				"description": "Generated by the webshop. If the ID contains more than 24 characters, the extra characters are removed after the 24th character.",
+				"example": "ORDER3559",
+				"pattern": "[A-Za-z0-9]{1,24}",
+				"type": "string"
+			},
+			"OrderStatusResult": {
+				"description": "Order details, including the latest status.",
+				"properties": {
+					"checkoutDetails": {
+						"$ref": "#/components/schemas/CheckoutDetails"
+					},
+					"id": {
+						"$ref": "#/components/schemas/OrderId"
+					},
+					"merchantOrderId": {
+						"description": "Merchant order id, as provided during order announcement.\n",
+						"example": "ORDER3559",
+						"type": "string"
+					},
+					"status": {
+						"description": "The status of the order:\n* COMPLETED - Successful payment of the order.\n* CANCELLED - The payment was cancelled.\n* EXPIRED - The consumer has not paid within the stipulated period.\n* PARTIALLY_PAID - Payment of order is been partially done.\n* IN_PROGRESS - Payment of order is yet to be finalized.\n",
+						"enum": [
+							"COMPLETED",
+							"EXPIRED",
+							"PARTIALLY_PAID",
+							"IN_PROGRESS",
+							"CANCELLED"
+						],
+						"example": "COMPLETED",
+						"type": "string"
+					},
+					"totalAmount": {
+						"description": "This field contains the original order amount as supplied in the order announcement call.",
+						"properties": {
+							"amount": {
+								"$ref": "#/components/schemas/Amount"
+							},
+							"currency": {
+								"$ref": "#/components/schemas/Currency"
+							}
+						},
+						"required": [
+							"amount",
+							"currency"
+						],
+						"type": "object"
+					},
+					"transactions": {
+						"description": "List of transactions.\n",
+						"items": {
+							"description": "Transaction details.\n",
+							"properties": {
+								"amount": {
+									"description": "The amount of the transaction.\n",
+									"properties": {
+										"amount": {
+											"$ref": "#/components/schemas/Amount"
+										},
+										"currency": {
+											"$ref": "#/components/schemas/Currency"
+										}
+									},
+									"required": [
+										"amount",
+										"currency"
+									],
+									"type": "object"
+								},
+								"createdAt": {
+									"$ref": "#/components/schemas/DateTime",
+									"description": "Timestamp of transaction creation.\n"
+								},
+								"id": {
+									"$ref": "#/components/schemas/TransactionId",
+									"description": "Unique transaction identifier, generated by by Rabo Smart Pay when a\npayment or refund transaction is started.\n"
+								},
+								"lastUpdatedAt": {
+									"$ref": "#/components/schemas/DateTime",
+									"description": "Timestamp of last transaction status update.\n"
+								},
+								"paymentBrand": {
+									"$ref": "#/components/schemas/PaymentBrand"
+								},
+								"status": {
+									"description": "Status of the transaction.\n* SUCCESS - The transaction has succeeded.\n* ACCEPTED - Indicates that the transaction has been successfully processed by the third party.\n* CANCELLED - The transaction was canceled.\n* EXPIRED - The transaction has expired.\n* FAILURE - The transaction has failed.\n* NEW - The transaction is created at Smart Pay, but the final status is not yet known.\n* OPEN - The transaction is created at a third party, but the final status is not yet known.\n",
+									"enum": [
+										"SUCCESS",
+										"ACCEPTED",
+										"CANCELLED",
+										"EXPIRED",
+										"FAILURE",
+										"NEW",
+										"OPEN"
+									],
+									"example": "SUCCESS",
+									"type": "string"
+								},
+								"type": {
+									"description": "Type of the transaction",
+									"enum": [
+										"AUTHORIZE",
+										"PAYMENT"
+									],
+									"example": "PAYMENT",
+									"type": "string"
+								}
+							},
+							"required": [
+								"amount",
+								"createdAt",
+								"id",
+								"lastUpdatedAt",
+								"paymentBrand",
+								"status",
+								"type"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"merchantOrderId",
+					"status",
+					"totalAmount",
+					"transactions"
+				],
+				"type": "object"
+			},
+			"OrderTimestamp": {
+				"description": "Timestamp of the order announcement. As a rule this is the current date and time.",
+				"example": "2016-11-24T16:54:51.216+0000",
+				"format": "ISO 8601",
+				"type": "string"
+			},
+			"PaymentBrand": {
+				"description": "All the supported payment brands.",
+				"enum": [
+					"IDEAL",
+					"PAYPAL",
+					"MASTERCARD",
+					"VISA",
+					"BANCONTACT",
+					"MAESTRO",
+					"V_PAY"
+				],
+				"example": "IDEAL",
+				"type": "string"
+			},
+			"PaymentBrandsResponse": {
+				"properties": {
+					"paymentBrands": {
+						"items": {
+							"properties": {
+								"name": {
+									"$ref": "#/components/schemas/PaymentBrand"
+								},
+								"status": {
+									"description": "`Active` if payments are allowed, `Inactive` otherwise.",
+									"enum": [
+										"Active",
+										"Inactive"
+									],
+									"example": "Active",
+									"type": "string"
+								}
+							},
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object"
+			},
+			"RequestedAddressInformation": {
+				"properties": {
+					"city": {
+						"description": "The city of the address",
+						"example": "Amsterdam",
+						"type": "string"
+					},
+					"countryCode": {
+						"description": "The country code (ISO 3166-1 alpha-2).",
+						"example": "NL",
+						"type": "string"
+					},
+					"firstName": {
+						"description": "The first name of the shopper",
+						"example": "John",
+						"type": "string"
+					},
+					"houseNumber": {
+						"description": "The house number of the address",
+						"example": "123",
+						"type": "string"
+					},
+					"houseNumberAddition": {
+						"description": "The addition of the address",
+						"example": "A",
+						"type": "string"
+					},
+					"lastName": {
+						"description": "The last name of the shopper",
+						"example": "Doe",
+						"type": "string"
+					},
+					"postalCode": {
+						"example": "1015 CJ",
+						"type": "string"
+					},
+					"street": {
+						"description": "The street of the address",
+						"example": "Keizersgracht",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"RequestedCompanyInformation": {
+				"properties": {
+					"name": {
+						"description": "Company name",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"RequestedCustomerInformation": {
+				"properties": {
+					"company": {
+						"$ref": "#/components/schemas/RequestedCompanyInformation"
+					},
+					"emailAddress": {
+						"description": "The e-mail address of the shopper",
+						"example": "jan@example.org",
+						"format": "email",
+						"type": "string"
+					},
+					"firstName": {
+						"description": "The first name of the shopper (can be different from the first name in the address)",
+						"type": "string"
+					},
+					"lastName": {
+						"description": "The last name of the shopper (can be different from the first name in the address)",
+						"type": "string"
+					},
+					"telephoneNumber": {
+						"description": "The phone number of the shopper",
+						"example": "+31612345678",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"ShippingCost": {
+				"description": "The order shipping cost amount in cents. Only used for display purposes. Does not influence order total.",
+				"example": {
+					"amount": 600,
+					"currency": "EUR"
+				},
+				"properties": {
+					"amount": {
+						"$ref": "#/components/schemas/Amount",
+						"description": "The order amount in cents."
+					},
+					"currency": {
+						"$ref": "#/components/schemas/Currency"
+					}
+				},
+				"required": [
+					"amount",
+					"currency"
+				],
+				"type": "object"
+			},
+			"ShopperPaymentDetailsResponse": {
+				"properties": {
+					"cardOnFileList": {
+						"description": "The list of cards for the given shopper.",
+						"items": {
+							"$ref": "#/components/schemas/CardOnFile"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"cardOnFileList"
+				],
+				"type": "object"
+			},
+			"ShopperRef": {
+				"description": "This should be the parameter uniquely identifies the shopper within the merchant’s environment. \nWhen a card is stored, it is tied to the provided shopperRef. \nStored cards can later be retrieved using the same shopperRef during subsequent payments.\n",
+				"example": "ShopperRef123",
+				"pattern": "[A-Za-z0-9]{1,24}",
+				"type": "string"
+			},
+			"SkipHppResultPage": {
+				"default": "false",
+				"description": "This field is used by the Smart Pay API to determine whether the consumer should be redirected to the HPP result page or not. By default this field is set to false.",
+				"example": true,
+				"type": "boolean"
+			},
+			"StatusResponseV2": {
+				"description": "This schema specifies the structure of the response when retrieving the events of recently processed orders.",
+				"properties": {
+					"moreOrderResultsAvailable": {
+						"description": "Indication if there are more order results available than in this message. In that case, a status pull call can be made (with the same notification token) to retrieve additional order results. This can be repeated until the value of this property is `false`.",
+						"example": true,
+						"type": "boolean"
+					},
+					"orderResults": {
+						"items": {
+							"$ref": "#/components/schemas/OrderResultsV2"
+						},
+						"type": "array"
+					},
+					"signature": {
+						"description": "The hexadecimal representation of the cryptographic signature by applying HMAC-SHA512 on the fields above using the merchant signing key as secret key.",
+						"example": "99ca2487243fbad72bbaa456a3219db7b0d2a19777f436cedb3c045e999b86c05001bb0837b43caa3d1757321d00959ac2a161f473a103af72bf440db5147b4a",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"TransactionId": {
+				"example": "22b36073-57a3-4c3d-9585-87f2e55275a5",
+				"format": "uuid",
+				"type": "string"
+			},
+			"ConsumerContactDetails": {
+				"description": "Contact details of the consumer. Used for personalized communication and identification.",
+				"properties": {
+					"email": {
+						"$ref": "#/components/schemas/ConsumerContactDetailsEmail"
+					},
+					"firstName": {
+						"$ref": "#/components/schemas/ConsumerContactDetailsFirstName"
+					},
+					"lastName": {
+						"$ref": "#/components/schemas/ConsumerContactDetailsLastName"
+					}
+				},
+				"type": "object",
+				"required": [
+					"email",
+					"lastName"
+				]
+			},
+			"ConsumerContactDetailsEmail": {
+				"description": "Email address of the consumer.",
+				"example": "john.doe@example.com",
+				"format": "email",
+				"maxLength": 100,
+				"type": "string"
+			},
+			"ConsumerContactDetailsFirstName": {
+				"description": "First name of the consumer.",
+				"example": "John",
+				"maxLength": 50,
+				"type": "string"
+			},
+			"ConsumerContactDetailsLastName": {
+				"description": "Last name of the consumer.",
+				"example": "Doe",
+				"maxLength": 50,
+				"type": "string"
+			},
+			"RefundDescription": {
+				"description": "Reason for refund request.",
+				"example": "Customer request for refund",
+				"maxLength": 45,
+				"minLength": 0,
+				"type": "string"
+			},
+			"RefundId": {
+				"example": "a2b36073-57a3-4c3d-9585-87f2e55275aa",
+				"format": "uuid",
+				"type": "string"
+			},
+			"RefundInfo": {
+				"properties": {
+					"createdAt": {
+						"$ref": "#/components/schemas/DateTime"
+					},
+					"description": {
+						"$ref": "#/components/schemas/RefundDescription"
+					},
+					"paymentBrand": {
+						"$ref": "#/components/schemas/RefundPaymentBrand"
+					},
+					"refundId": {
+						"$ref": "#/components/schemas/RefundId"
+					},
+					"refundMoney": {
+						"$ref": "#/components/schemas/RefundMoney"
+					},
+					"refundTransactionId": {
+						"$ref": "#/components/schemas/TransactionId"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RefundStatus"
+					},
+					"transactionId": {
+						"$ref": "#/components/schemas/TransactionId"
+					},
+					"updatedAt": {
+						"$ref": "#/components/schemas/DateTime"
+					},
+					"vatCategory": {
+						"$ref": "#/components/schemas/RefundVatCategory"
+					}
+				},
+				"type": "object"
+			},
+			"RefundMoney": {
+				"properties": {
+					"amount": {
+						"$ref": "#/components/schemas/Amount"
+					},
+					"currency": {
+						"description": "3 letter currency code as defined by ISO-4217",
+						"example": "EUR",
+						"enum": [
+							"EUR"
+						],
+						"format": "iso-4217",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"RefundPaymentBrand": {
+				"description": "Payment brand",
+				"enum": [
+					"IDEAL",
+					"VISA",
+					"MASTERCARD",
+					"V_PAY",
+					"MAESTRO",
+					"PAYPAL",
+					"BANCONTACT"
+				],
+				"example": "IDEAL",
+				"type": "string"
+			},
+			"RefundReason": {
+				"description": "Indicates the business reason for the refund. Must be one of the supported refund reason categories. If not provided, the value defaults to 'OTHER'.",
+				"enum": [
+					"RETURNED_GOODS",
+					"WRONG_AMOUNT_CORRECTION",
+					"PRE_DISPUTE_REFUND",
+					"SUBSCRIPTION_REFUND",
+					"SERVICE_LATE_CANCELLATION",
+					"OTHER"
+				],
+				"example": "RETURNED_GOODS",
+				"type": "string"
+			},
+			"RefundRequest": {
+				"properties": {
+					"money": {
+						"$ref": "#/components/schemas/RefundMoney"
+					},
+					"description": {
+						"$ref": "#/components/schemas/RefundDescription"
+					},
+					"vatCategory": {
+						"$ref": "#/components/schemas/RefundVatCategory"
+					},
+					"refundReason": {
+						"$ref": "#/components/schemas/RefundReason"
+					},
+					"consumerContactDetails": {
+						"$ref": "#/components/schemas/ConsumerContactDetails"
+					}
+				},
+				"type": "object",
+				"required": [
+					"money"
+				]
+			},
+			"RefundStatus": {
+				"description": "Status of the refund request",
+				"enum": [
+					"PENDING",
+					"SUCCEEDED",
+					"FAILED",
+					"UNKNOWN"
+				],
+				"example": "PENDING",
+				"type": "string"
+			},
+			"RefundVatCategory": {
+				"description": "The VAT category of the product. The values refer to the different rates used in the Netherlands.",
+				"enum": [
+					"HIGH",
+					"LOW",
+					"ZERO"
+				],
+				"example": "LOW",
+				"type": "string"
+			},
+			"RefundableDetails": {
+				"properties": {
+					"expiryDatetime": {
+						"$ref": "#/components/schemas/DateTime"
+					},
+					"refundableMoney": {
+						"$ref": "#/components/schemas/RefundMoney"
+					},
+					"transactionId": {
+						"$ref": "#/components/schemas/TransactionId"
+					}
+				},
+				"type": "object"
+			}
+		}
+	},
+	"security": [],
+	"externalDocs": {
+		"description": "Find out more about Rabo Smart Pay",
+		"url": "https://www.rabobank.nl/bedrijven/betalen/klanten-laten-betalen/rabo-smart-pay/rabo-onlinekassa"
+	},
+	"x-readme": {
+		"explorer-enabled": false,
+		"proxy-enabled": false
+	}
+}
