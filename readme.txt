@@ -4,7 +4,7 @@ Tags: pronamic, pay, rabo, smart pay, omnikassa
 Requires at least: 5.9
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 5.0.0
+Stable tag: 5.0.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

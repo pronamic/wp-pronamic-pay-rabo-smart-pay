@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-3.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Pronamic Pay with Rabo Smart Pay 5.0.0\n"
+"Project-Id-Version: Pronamic Pay with Rabo Smart Pay 5.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pronamic-pay-rabo-"
 "smart-pay\n"
 "POT-Creation-Date: 2026-11-04T12:51:55+00:00\n"

@@ -6,10 +6,20 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+## [5.0.1] - 2026-11-11
+
 ### Fixed
 
 - Fixed refunds failing with "Object does not have `refundTransactionId` property." after Rabo Smart Pay created the refund. All properties of the Rabo Smart Pay refund response are now optional, as in the Rabo Smart Pay OpenAPI definition. The refund status is now stored as `rabo_smart_pay_refund_status` refund meta. See: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues/55
 - Fixed processing order results with a transaction without the optional `confirmedAmount` property.
+
+### Added
+
+- Added the OpenAPI definition of the Rabo Smart Pay Online Payment API (version 1.4.4) to the `documentation/` folder.
+
+Full set of changes: [`5.0.0...5.0.1`][5.0.1]
+
+[5.0.1]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v5.0.0...v5.0.1
 
 ## [5.0.0] - 2026-11-04
 
@@ -451,7 +461,7 @@ Full set of changes: [`4.3.0...4.4.0`][4.4.0]
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v5.0.0...HEAD
+[unreleased]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v5.0.1...HEAD
 [4.3.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.1.1...4.2.0
 [4.1.1]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.1.0...4.1.1
