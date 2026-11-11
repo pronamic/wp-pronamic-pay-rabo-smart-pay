@@ -12,31 +12,48 @@ namespace Pronamic\WordPress\Pay\Gateways\OmniKassa2;
 
 /**
  * Refund response class
+ *
+ * All properties of the `RefundInfo` schema in the Rabo Smart Pay OpenAPI
+ * definition are optional, Rabo Smart Pay does not always return the
+ * `refundTransactionId`, for example.
+ *
+ * @link https://docs.developer.rabobank.com/smartpay/reference/create-refund
  */
 final class RefundResponse {
 	/**
 	 * Refund ID.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public string $id;
+	public ?string $id;
 
 	/**
-	 * Transaction ID.
+	 * Refund transaction ID.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public string $transaction_id;
+	public ?string $transaction_id;
+
+	/**
+	 * Status.
+	 *
+	 * `PENDING`, `SUCCEEDED`, `FAILED` or `UNKNOWN`.
+	 *
+	 * @var string|null
+	 */
+	public ?string $status;
 
 	/**
 	 * Construct refund response.
 	 *
-	 * @param string $refund_id      Refund ID.
-	 * @param string $transaction_id Transaction ID.
+	 * @param string|null $refund_id      Refund ID.
+	 * @param string|null $transaction_id Refund transaction ID.
+	 * @param string|null $status         Status.
 	 */
-	public function __construct( string $refund_id, string $transaction_id ) {
+	public function __construct( ?string $refund_id, ?string $transaction_id, ?string $status = null ) {
 		$this->id             = $refund_id;
 		$this->transaction_id = $transaction_id;
+		$this->status         = $status;
 	}
 
 	/**
@@ -49,8 +66,9 @@ final class RefundResponse {
 		$object_access = new ObjectAccess( $data );
 
 		return new self(
-			$object_access->get_string( 'refundId' ),
-			$object_access->get_string( 'refundTransactionId' )
+			$object_access->get_optional_string( 'refundId' ),
+			$object_access->get_optional_string( 'refundTransactionId' ),
+			$object_access->get_optional_string( 'status' )
 		);
 	}
 }

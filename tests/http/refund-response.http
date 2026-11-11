@@ -1,7 +1,18 @@
-HTTP/1.1 200 OK
+HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
   "refundId": "d6b7a8f5-1e6b-4c5a-9d8f-0b3e2a1c4d5e",
-  "refundTransactionId": "7c1f0a2b-3d4e-5f60-7182-93a4b5c6d7e8"
+  "refundTransactionId": "7c1f0a2b-3d4e-5f60-7182-93a4b5c6d7e8",
+  "createdAt": "2026-11-11T09:12:28Z",
+  "updatedAt": "2026-11-11T09:12:28Z",
+  "refundMoney": {
+    "amount": 100,
+    "currency": "EUR"
+  },
+  "vatCategory": "HIGH",
+  "paymentBrand": "IDEAL",
+  "status": "SUCCEEDED",
+  "transactionId": "22b36073-57a3-4c3d-9585-87f2e55275a5",
+  "description": "Refund"
 }

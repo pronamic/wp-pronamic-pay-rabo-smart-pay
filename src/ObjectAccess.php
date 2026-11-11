@@ -139,4 +139,30 @@ final class ObjectAccess {
 
 		return $this->value->{$property};
 	}
+
+	/**
+	 * Get optional string.
+	 *
+	 * @param string $property Property.
+	 * @return string|null String or `null` when the property is missing or `null`.
+	 * @throws \Exception Throws exception when property is not a string.
+	 */
+	public function get_optional_string( string $property ): ?string {
+		$value = $this->get_optional( $property );
+
+		if ( null === $value ) {
+			return null;
+		}
+
+		if ( ! \is_string( $value ) ) {
+			throw new \Exception(
+				\sprintf(
+					'Property `%s` must be a string.',
+					\esc_html( $property )
+				)
+			);
+		}
+
+		return $value;
+	}
 }

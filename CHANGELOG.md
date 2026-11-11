@@ -6,6 +6,11 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed refunds failing with "Object does not have `refundTransactionId` property." after Rabo Smart Pay created the refund. All properties of the Rabo Smart Pay refund response are now optional, as in the Rabo Smart Pay OpenAPI definition. The refund status is now stored as `rabo_smart_pay_refund_status` refund meta. See: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues/55
+- Fixed processing order results with a transaction without the optional `confirmedAmount` property.
+
 ## [5.0.0] - 2026-11-04
 
 This major release raises the minimum PHP version to 8.3 and changes the text domain. Check your PHP version before updating.
