@@ -385,10 +385,19 @@ final class Gateway extends Core_Gateway {
 
 		$refund_response = $this->client->refund( $refund_request );
 
-		$refund->psp_id = $refund_response->id;
+		if ( null !== $refund_response->id ) {
+			$refund->psp_id = $refund_response->id;
 
-		$refund->meta['rabo_smart_pay_refund_id']             = $refund_response->id;
-		$refund->meta['rabo_smart_pay_refund_transaction_id'] = $refund_response->transaction_id;
+			$refund->meta['rabo_smart_pay_refund_id'] = $refund_response->id;
+		}
+
+		if ( null !== $refund_response->transaction_id ) {
+			$refund->meta['rabo_smart_pay_refund_transaction_id'] = $refund_response->transaction_id;
+		}
+
+		if ( null !== $refund_response->status ) {
+			$refund->meta['rabo_smart_pay_refund_status'] = $refund_response->status;
+		}
 	}
 
 	/**

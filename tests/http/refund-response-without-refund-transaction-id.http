@@ -1,0 +1,15 @@
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "refundId": "a2b36073-57a3-4c3d-9585-87f2e55275aa",
+  "createdAt": "2026-11-11T09:12:28Z",
+  "updatedAt": "2026-11-11T09:12:28Z",
+  "refundMoney": {
+    "amount": 100,
+    "currency": "EUR"
+  },
+  "paymentBrand": "IDEAL",
+  "status": "PENDING",
+  "transactionId": "22b36073-57a3-4c3d-9585-87f2e55275a5"
+}
