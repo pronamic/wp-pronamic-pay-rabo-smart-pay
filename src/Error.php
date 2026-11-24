@@ -124,6 +124,10 @@ final class Error extends \Exception {
 			$message = $consumer_message;
 		}
 
+		if ( null !== $error_message && null !== $consumer_message ) {
+			$message = \sprintf( '%s (errorMessage: "%s")', $consumer_message, $error_message );
+		}
+
 		$error = new self( $error_code, $message );
 
 		$error->set_error_message( $error_message );

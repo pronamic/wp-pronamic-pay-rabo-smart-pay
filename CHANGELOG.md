@@ -8,7 +8,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ### Fixed
 
-- The return URL handler now only updates the payment status and adds a payment note when the signature is valid and the `order_id` parameter matches the merchant order ID of the payment.
+- Rabo Smart Pay error messages now include the `errorMessage` when the response also has a `consumerMessage`, for example for error code 9999 ("Please contact Rabo Smart Pay support team and provide the errorMessage").
+- The return URL handler now only updates the payment status and adds a payment note when the signature is valid and the `order_id` parameter matches the merchant order ID of the payment. See: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues/57
 
 ## [5.0.1] - 2026-11-11
 
