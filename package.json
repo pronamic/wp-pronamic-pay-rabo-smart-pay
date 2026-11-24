@@ -1,6 +1,6 @@
 {
 	"name": "@pronamic/wp-pronamic-pay-rabo-smart-pay",
-	"version": "5.0.1",
+	"version": "5.0.2",
 	"description": "Rabo Smart Pay driver for the WordPress payment processing library.",
 	"author": {
 		"name": "Pronamic",

@@ -6,10 +6,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+## [5.0.2] - 2026-11-24
+
 ### Fixed
 
 - Rabo Smart Pay error messages now include the `errorMessage` when the response also has a `consumerMessage`, for example for error code 9999 ("Please contact Rabo Smart Pay support team and provide the errorMessage").
 - The return URL handler now only updates the payment status and adds a payment note when the signature is valid and the `order_id` parameter matches the merchant order ID of the payment. See: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/issues/57
+
+Full set of changes: [`5.0.1...5.0.2`][5.0.2]
+
+[5.0.2]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v5.0.1...v5.0.2
 
 ## [5.0.1] - 2026-11-11
 
@@ -466,7 +472,7 @@ Full set of changes: [`4.3.0...4.4.0`][4.4.0]
 ## 1.0.0 - 2017-12-13
 - First release.
 
-[unreleased]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v5.0.1...HEAD
+[unreleased]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/v5.0.2...HEAD
 [4.3.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.1.1...4.2.0
 [4.1.1]: https://github.com/pronamic/wp-pronamic-pay-rabo-smart-pay/compare/4.1.0...4.1.1
