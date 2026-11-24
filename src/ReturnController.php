@@ -142,32 +142,47 @@ final class ReturnController {
 
 			$config = $this->integration->get_config( (int) $payment->config_id );
 
-			// Note.
-			$note_values = [
-				'order_id'  => $parameters->get_order_id(),
-				'signature' => (string) $parameters->get_signature(),
-				'status'    => $parameters->get_status(),
-				'valid'     => $parameters->is_valid( $config->signing_key ) ? 'true' : 'false',
-			];
+			/**
+			 * The signature only covers the `order_id` and `status` parameters,
+			 * the `payment_id` path parameter is not signed. Therefore we also
+			 * check that the `order_id` parameter is the merchant order ID of
+			 * this payment.
+			 */
+			$merchant_order_id = (string) $payment->get_meta( 'omnikassa_2_merchant_order_id' );
 
-			$note = '';
+			$is_valid = (
+				$parameters->is_valid( $config->signing_key )
+					&&
+				'' !== $merchant_order_id
+					&&
+				\hash_equals( $merchant_order_id, $parameters->get_order_id() )
+			);
 
-			$note .= '<p>';
-			$note .= \__( 'Rabo Smart Pay return URL requested:', 'pronamic-pay-rabo-smart-pay' );
-			$note .= '</p>';
+			if ( $is_valid ) {
+				// Note.
+				$note_values = [
+					'order_id'  => $parameters->get_order_id(),
+					'signature' => (string) $parameters->get_signature(),
+					'status'    => $parameters->get_status(),
+				];
 
-			$note .= '<dl>';
+				$note = '';
 
-			foreach ( $note_values as $key => $value ) {
-				$note .= \sprintf( '<dt>%s</dt>', \esc_html( $key ) );
-				$note .= \sprintf( '<dd>%s</dd>', \esc_html( $value ) );
-			}
+				$note .= '<p>';
+				$note .= \__( 'Rabo Smart Pay return URL requested:', 'pronamic-pay-rabo-smart-pay' );
+				$note .= '</p>';
 
-			$note .= '</dl>';
+				$note .= '<dl>';
 
-			$payment->add_note( $note );
+				foreach ( $note_values as $key => $value ) {
+					$note .= \sprintf( '<dt>%s</dt>', \esc_html( $key ) );
+					$note .= \sprintf( '<dd>%s</dd>', \esc_html( $value ) );
+				}
 
-			if ( $parameters->is_valid( $config->signing_key ) ) {
+				$note .= '</dl>';
+
+				$payment->add_note( $note );
+
 				$pronamic_status = OrderStatus::transform( $parameters->get_status() );
 
 				if ( null !== $pronamic_status ) {
