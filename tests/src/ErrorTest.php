@@ -73,6 +73,35 @@ class ErrorTest extends TestCase {
 			[ 'error-5017-merchant-order-id-required.json', 5017, null, 'merchantOrderId is required' ],
 			[ 'error-5017-merchant-return-url-required.json', 5017, null, 'merchantReturnURL is required' ],
 			[ 'error-5017-order-amount.json', 5017, null, 'order amount must be greater than zero' ],
+			[ 'error-9999-contact-support.json', 9999, 'Unexpected error', 'Please contact Rabo Smart Pay support team and provide the errorMessage' ],
+		];
+	}
+
+	/**
+	 * Test exception message.
+	 *
+	 * @dataProvider message_test_provider
+	 * @param string $file    JSON source file.
+	 * @param string $message Expected exception message.
+	 */
+	public function test_message( $file, $message ) {
+		$json = \file_get_contents( __DIR__ . '/../json/' . $file, true );
+
+		$error = Error::from_json( $json );
+
+		$this->assertEquals( $message, $error->getMessage() );
+	}
+
+	/**
+	 * Message provider.
+	 *
+	 * @return array<array<string>>
+	 */
+	public static function message_test_provider() {
+		return [
+			[ 'error-5001-full-authentication-required.json', 'Full authentication is required to access this resource' ],
+			[ 'error-5017-merchant-order-id-required.json', 'merchantOrderId is required' ],
+			[ 'error-9999-contact-support.json', 'Please contact Rabo Smart Pay support team and provide the errorMessage (errorMessage: "Unexpected error")' ],
 		];
 	}
 }

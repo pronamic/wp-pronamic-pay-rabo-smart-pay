@@ -6,6 +6,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Rabo Smart Pay error messages now include the `errorMessage` when the response also has a `consumerMessage`, for example for error code 9999 ("Please contact Rabo Smart Pay support team and provide the errorMessage").
+
 ## [5.0.1] - 2026-11-11
 
 ### Fixed
