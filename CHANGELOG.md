@@ -6,6 +6,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- The return URL handler now only updates the payment status and adds a payment note when the signature is valid and the `order_id` parameter matches the merchant order ID of the payment.
+
 ## [5.0.1] - 2026-11-11
 
 ### Fixed
